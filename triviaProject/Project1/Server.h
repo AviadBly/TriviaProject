@@ -17,7 +17,7 @@ public:
 private:
 
 	void acceptClient();
-	std::string recvMsg(SOCKET socket);
+	std::string recvMsg(SOCKET socket, const int bytesNum, const int flags);
 	void clientHandler(SOCKET clientSocket);
 
 	SOCKET _serverSocket;

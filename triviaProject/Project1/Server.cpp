@@ -65,22 +65,35 @@ void Server::acceptClient()
 	clientHandler(client_socket);
 }
 
-std::string Server::recvMsg(SOCKET socket) {
+std::string Server::recvMsg(SOCKET socket, const int bytesNum, const int flags) {
 
-	const int maxLen = 4096;
-	std::string msg = "";
+	
 	try
 	{
-		char m[maxLen];
-		recv(socket, m, maxLen, 0);
-		
-		for (int i = 0; i < maxLen; i++) {
-			if (m[i] == 0) {
-				break;
-			}
-			msg += m[i];
-		}	
-		return msg;
+		if (bytesNum == 0)
+		{
+			return "";
+		}
+
+		char* data = new char[bytesNum + 1];
+		for (int i = 0; i < bytesNum + 1; i++) {
+			data[i] = '\0';
+		}
+
+		int res = recv(socket, data, bytesNum, flags);
+		//end of the string
+
+		if (res == INVALID_SOCKET)
+		{
+			std::string s = "Error while recieving from socket: ";
+			s += std::to_string(socket);
+			throw std::exception(s.c_str());
+		}
+
+		std::string received(data);
+		delete[] data;
+
+		return received;
 	
 	}
 	catch (const std::exception& e)
@@ -95,9 +108,12 @@ void Server::clientHandler(SOCKET clientSocket)
 	std::string s = "HELLO";
 	send(clientSocket, s.c_str(), s.size(), 0);  // last parameter: flag. for us will be 0.
 	std::string userMsg = "";
+	const int maxLen = 4096;
+
+
 	while (true) {
 		
-		userMsg = recvMsg(clientSocket);
+		userMsg = recvMsg(clientSocket, maxLen, 0);
 
 		std::cout << "User msg:" << userMsg << "\n";
 		if (userMsg == "Exit") {
@@ -107,10 +123,10 @@ void Server::clientHandler(SOCKET clientSocket)
 		}
 
 
-		// Closing the socket (in the level of the TCP protocol)
-		closesocket(clientSocket);
+		
 	}
 	
-
+	// Closing the socket (in the level of the TCP protocol)
+	closesocket(clientSocket);
 
 }
