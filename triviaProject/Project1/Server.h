@@ -1,24 +1,13 @@
 #pragma once
+#include "Communicator.h"
 
-#include <WinSock2.h>
-#include <Windows.h>
-#include <exception>
-#include <iostream>
-#include <string>
-#include <thread>
-
-class Server
-{
+class Server {
+	
 public:
-	Server();
-	~Server();
-	void serve(int port);
+	void run();
 
 private:
+	Communicator m_communicator;
 
-	void acceptClient();
-	std::string recvMsg(SOCKET socket);
-	void clientHandler(SOCKET clientSocket);
 
-	SOCKET _serverSocket;
 };
