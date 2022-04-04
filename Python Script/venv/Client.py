@@ -9,9 +9,12 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = (SERVER_IP, SERVER_PORT)
 sock.connect(server_address)
 
-msg = "Hello"
-sock.sendall(msg.encode())
+
+login_msg = {"username":"user1","password":"1234"}
+signup_msg={"username": "user1", "password": "1234", "mail":"user1@gmail.com"}
+data=json.dumps(signup_msg)          #USE EITHER LOGIN_MSG OR SIGNUP MSG
+sock.sendall(data.encode())
 
 server_msg = sock.recv(1024)
 server_msg = server_msg.decode()
-print(server_msg`)
+print(server_msg)
