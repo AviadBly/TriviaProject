@@ -1,5 +1,5 @@
 #include "JsonResponsePacketSerializer.h"
-
+#include "JsonRequestPacketDeserializer.h"
 using namespace nlohmann;
 std::vector<unsigned char> JsonResponePacketSerializer::serializeLoginResponse(const LoginResponse& loginResponse)
 {
@@ -8,7 +8,7 @@ std::vector<unsigned char> JsonResponePacketSerializer::serializeLoginResponse(c
 	jsonResponse["status"] = loginResponse.status;
 	jsonResponse["username"] = loginResponse.username;
 	jsonResponse["password"] = loginResponse.password;
-
+	
 	std::vector<unsigned char> jsonBits = convertJsonToBits(jsonResponse);
 	jsonBits.push_back(char(LOGIN_RESPONSE_CODE));
 	return jsonBits;

@@ -9,10 +9,10 @@
 
 class JsonRequestPacketDeserializer {
 public:
-	static LoginResponse deserializeLoginRequest(const json& jsonData);
-	static SignUpResponse deserializeSignUpRequest(const json& jsonData);
-	static ErrorResponse deserializeErrorRequest(const json& jsonData);
+	static LoginResponse deserializeLoginRequest(std::vector<char unsigned> jsonResponseBits);
+	static SignUpResponse deserializeSignUpRequest(std::vector<char unsigned> jsonResponseBits);
+	static ErrorResponse deserializeErrorRequest(std::vector<char unsigned> jsonResponseBits);
 
 private:
-	static json getJson(std::vector<char unsigned> jsonResponseBits);
+	static json& getJson(std::vector<char unsigned> jsonResponseBits);
 };
