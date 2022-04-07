@@ -13,7 +13,6 @@ public:
 	static std::vector<unsigned char> serializeSignUpResponse(const SignUpResponse& loginResponse);
 	static std::vector<unsigned char> serializeErrorResponse(const ErrorResponse& signUpResponse);
 
-
 private:
 	static std::vector<unsigned char> convertJsonToBits(const json& jsonFormat);
 };
