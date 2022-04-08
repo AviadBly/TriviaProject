@@ -13,7 +13,7 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo requestInfo)
 	requestResult.buffer = requestInfo.buffer;
 
 	//adding IRequestHandler*
-	requestResult.newHandler = new LoginRequestHandler();
+	requestResult.newHandler = this;
 
 	return requestResult;
 }

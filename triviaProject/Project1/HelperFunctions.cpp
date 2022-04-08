@@ -9,3 +9,14 @@ std::vector<unsigned char> Helper::convertStringToBits(const std::string& str)
 
 	return bits;
 }
+
+std::string Helper::convertBitsToString(const std::vector<unsigned char> bits)
+{
+	std::string str = "";
+	
+	for (int i = 0; i < bits.size(); i++) {
+		str += bits[i];
+	}
+
+	return str;
+}

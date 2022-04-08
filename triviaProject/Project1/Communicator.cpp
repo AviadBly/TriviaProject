@@ -128,7 +128,8 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		}
 
 		RequestResult request = handler.handleRequest(info);
-		std::cout << request.buffer;
+		
+		std::cout << Helper::convertBitsToString(request.buffer);
 		send(clientSocket, s.c_str(), s.size(), 0);
 		break;
 		
