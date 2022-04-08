@@ -62,7 +62,7 @@ void Communicator::acceptClient()
 
 	std::cout << "Client accepted. Communicator and client can speak" << std::endl;
 	// the function that handle the conversation with the client
-	clientHandler(client_socket);
+	handleNewClient(client_socket);
 }
 
 std::string Communicator::recvMsg(SOCKET socket, const int bytesNum, const int flags) {
@@ -103,27 +103,36 @@ std::string Communicator::recvMsg(SOCKET socket, const int bytesNum, const int f
 
 }
 
-void Communicator::clientHandler(SOCKET clientSocket)
+void Communicator::handleNewClient(SOCKET clientSocket)
 {
+	const int maxLen = 4096;
 	std::string s = "HELLO";
 	send(clientSocket, s.c_str(), s.size(), 0);  // last parameter: flag. for us will be 0.
 	std::string userMsg = "";
-	const int maxLen = 4096;
-
+	LoginRequestHandler handler;
+	RequestInfo info;
 
 	while (true) {
 		
 		userMsg = recvMsg(clientSocket, maxLen, 0);
 
-		std::cout << "User msg:" << userMsg << "\n";
-		if (userMsg == "Exit") {
-			s = "Bye";
-			send(clientSocket, s.c_str(), s.size(), 0);
-			break;
+		std::cout << "User msg:" << userMsg.substr(5) << "\n";
+					
+		info.code = userMsg[0];
+		std::cout << "code: " << info.code <<"\n";
+		info.receivalTime = time(NULL);
+		info.buffer = Helper::convertStringToBits(userMsg.substr(5));
+
+		if (!handler.isRequestRelevant(info)) {
+			throw std::exception("Irreleve request");
 		}
 
-
+		RequestResult request = handler.handleRequest(info);
+		std::cout << request.buffer;
+		send(clientSocket, s.c_str(), s.size(), 0);
+		break;
 		
+	
 	}
 	
 	// Closing the socket (in the level of the TCP protocol)

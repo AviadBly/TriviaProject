@@ -1,12 +1,12 @@
 #include "JsonRequestPacketDeserializer.h"
 
-using namespace nlohmann;
+
 
 LoginResponse JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<char unsigned> jsonResponseBits)
 {
 	LoginResponse loginRequest;
 	//get json format from bits
-	json jsonData = getJson(jsonResponseBits);
+	json jsonData = getJsonFromBits(jsonResponseBits);
 
 	loginRequest.status = jsonData.at("status");
 	loginRequest.username = jsonData.at("username");
@@ -19,7 +19,7 @@ SignUpResponse JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vect
 {
 	SignUpResponse signUpRequest;
 	//get json format from bits
-	json jsonData = getJson(jsonResponseBits);
+	json jsonData = getJsonFromBits(jsonResponseBits);
 
 	signUpRequest.status = jsonData.at("status");
 	signUpRequest.username = jsonData.at("username");
@@ -33,7 +33,7 @@ ErrorResponse JsonRequestPacketDeserializer::deserializeErrorRequest(std::vector
 {
 	ErrorResponse errorRequest;
 	//get json format from bits
-	json jsonData = getJson(jsonResponseBits);
+	json jsonData = getJsonFromBits(jsonResponseBits);
 
 	errorRequest.status = jsonData.at("status");
 	errorRequest.message = jsonData.at("message");
@@ -42,7 +42,7 @@ ErrorResponse JsonRequestPacketDeserializer::deserializeErrorRequest(std::vector
 }
 
 //convert the bits vector to json
-json& getJson(std::vector<char unsigned> jsonResponseBits)
+json JsonRequestPacketDeserializer::getJsonFromBits(std::vector<char unsigned> jsonResponseBits)
 {
 	std::string jsonString = "";
 	for (int i = 0; i < jsonResponseBits.size(); i++) {

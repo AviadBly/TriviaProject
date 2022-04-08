@@ -12,7 +12,7 @@ int main()
 		WSAInitializer wsa;
 
 		Server server;
-		server.serve(8200);
+		server.run();
 
 	}
 	catch (const std::exception& e)

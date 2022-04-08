@@ -5,7 +5,7 @@
 #include <iostream>
 #include <bitset>
 
-
+using json = nlohmann::json;
 
 class JsonResponePacketSerializer {
 public:

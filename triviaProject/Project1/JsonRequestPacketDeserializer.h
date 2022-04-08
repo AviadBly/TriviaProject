@@ -5,7 +5,7 @@
 #include <iostream>
 #include <bitset>
 
-
+using json = nlohmann::json;
 
 class JsonRequestPacketDeserializer {
 public:
@@ -14,5 +14,5 @@ public:
 	static ErrorResponse deserializeErrorRequest(std::vector<char unsigned> jsonResponseBits);
 
 private:
-	static json& getJson(std::vector<char unsigned> jsonResponseBits);
+	static json getJsonFromBits(std::vector<char unsigned> jsonResponseBits);
 };

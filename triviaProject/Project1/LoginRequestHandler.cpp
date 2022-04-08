@@ -11,6 +11,9 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo requestInfo)
 {
 	RequestResult requestResult;
 	requestResult.buffer = requestInfo.buffer;
-	requestResult.newHandler = requestInfo.
-	return RequestInfo();
+
+	//adding IRequestHandler*
+	requestResult.newHandler = new LoginRequestHandler();
+
+	return requestResult;
 }

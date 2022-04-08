@@ -1,6 +1,6 @@
 #include "JsonResponsePacketSerializer.h"
-#include "JsonRequestPacketDeserializer.h"
-using namespace nlohmann;
+
+
 std::vector<unsigned char> JsonResponePacketSerializer::serializeLoginResponse(const LoginResponse& loginResponse)
 {
 	//init json

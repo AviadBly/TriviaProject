@@ -7,7 +7,11 @@
 #include <string>
 #include <thread>
 #include <map>
+#include <ctime>
+#include <chrono>
+#include "HelperFunctions.h"
 #include "IRequestHandler.h"
+#include "LoginRequestHandler.h"
 
 class Communicator
 {
@@ -20,7 +24,8 @@ private:
 
 	void acceptClient();
 	std::string recvMsg(SOCKET socket, const int bytesNum, const int flags);
-	void clientHandler(SOCKET clientSocket);
+	void handleNewClient(SOCKET clientSocket);
+
 
 	std::map<SOCKET, IRequestHandler*> m_clients;
 

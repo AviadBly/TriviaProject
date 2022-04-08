@@ -2,6 +2,7 @@
 #include "RequestInfo.h"
 #include "RequestResult.h"
 
+
 class IRequestHandler {
 public:
 	virtual bool isRequestRelevant(RequestInfo requestInfo) = 0;
