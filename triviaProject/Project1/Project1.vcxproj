@@ -148,10 +148,13 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="RequestInfo.cpp" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="sqlite3.c" />
+    <ClCompile Include="SqliteDataBase.cpp" />
+    <ClCompile Include="User.cpp" />
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HelperFunctions.h" />
+    <ClInclude Include="IDatabase.h" />
     <ClInclude Include="IRequestHandler.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonRequestPacketDeserializer.h" />
@@ -162,6 +165,9 @@
     <ClInclude Include="RequestResult.h" />
     <ClInclude Include="Responses.h" />
     <ClInclude Include="Server.h" />
+    <ClInclude Include="sqlite3.h" />
+    <ClInclude Include="SqliteDataBase.h" />
+    <ClInclude Include="User.h" />
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
