@@ -1,9 +1,10 @@
 #pragma once
-#include "Responses.h"
 #include <vector>
-#include "json.hpp"
 #include <iostream>
 #include <bitset>
+#include "json.hpp"
+#include "Responses.h"
+
 
 using json = nlohmann::json;
 

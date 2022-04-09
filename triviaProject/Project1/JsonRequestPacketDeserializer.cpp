@@ -21,7 +21,7 @@ SignUpResponse JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vect
 	//get json format from bits
 	json jsonData = getJsonFromBits(jsonResponseBits);
 
-	signUpRequest.status = jsonData.at("status");
+	//signUpRequest.status = jsonData.at("status");
 	signUpRequest.username = jsonData.at("username");
 	signUpRequest.password = jsonData.at("password");
 	signUpRequest.email = jsonData.at("email");
@@ -45,9 +45,18 @@ ErrorResponse JsonRequestPacketDeserializer::deserializeErrorRequest(std::vector
 json JsonRequestPacketDeserializer::getJsonFromBits(std::vector<char unsigned> jsonResponseBits)
 {
 	std::string jsonString = "";
+	//create a json string, and replace all the \' with \"
 	for (int i = 0; i < jsonResponseBits.size(); i++) {
-		jsonString += jsonResponseBits[i];
+		if (jsonResponseBits[i] == '\'') {
+			jsonString += "\"";
+		}
+		else {
+			jsonString += jsonResponseBits[i];
+		}
+		
+
 	}
+	
 	std::cout << "desirizlizer:" << jsonString << "\n";
 	
 	json jsonData = json::parse(jsonString);
