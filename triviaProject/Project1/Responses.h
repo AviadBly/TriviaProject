@@ -1,6 +1,10 @@
 #pragma once
 #include <string>
 
+#define SIGN_RESPONSE_CODE 10
+#define LOGIN_RESPONSE_CODE 20
+#define ERROR_RESPONSE_CODE 50
+
 struct Response {
 	unsigned int status;
 };

@@ -1,6 +1,7 @@
 #include "Communicator.h"
 
 
+
 Communicator::Communicator()
 {
 
@@ -61,69 +62,87 @@ void Communicator::acceptClient()
 		throw std::exception(__FUNCTION__);
 
 	std::cout << "Client accepted. Communicator and client can speak" << std::endl;
+
 	// the function that handle the conversation with the client
-	clientHandler(client_socket);
+	std::thread new_user(&Communicator::handleNewClient, this, client_socket);
+	new_user.detach();
+
 }
 
-std::string Communicator::recvMsg(SOCKET socket, const int bytesNum, const int flags) {
+std::string Communicator::recvMsg(SOCKET socket) {
 
-	
+	const int maxLen = 4096;	//probobaly dont change, this is the max bytes
+	const int flag = 0;
 	try
 	{
-		if (bytesNum == 0)
-		{
-			return "";
-		}
+		char data[maxLen];
 
-		char* data = new char[bytesNum + 1];
-		for (int i = 0; i < bytesNum + 1; i++) {
-			data[i] = '\0';
-		}
-
-		int res = recv(socket, data, bytesNum, flags);
-		//end of the string
-
+		int res = recv(socket, data, maxLen, flag);		
 		if (res == INVALID_SOCKET)
 		{
 			std::string s = "Error while recieving from socket: ";
 			s += std::to_string(socket);
 			throw std::exception(s.c_str());
 		}
+		std::string received = "";
 
-		std::string received(data);
-		delete[] data;
-
+		for (int i = 0; i < res; i++) {
+			received += data[i];
+		}
+				
 		return received;
 	
 	}
 	catch (const std::exception& e)
 	{
+		std::cout << e.what();
 		closesocket(socket);
 	}
 
 }
 
-void Communicator::clientHandler(SOCKET clientSocket)
-{
-	std::string s = "HELLO";
-	send(clientSocket, s.c_str(), s.size(), 0);  // last parameter: flag. for us will be 0.
-	std::string userMsg = "";
-	const int maxLen = 4096;
+void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
+	try
+	{
+		send(clientSocket, msg.c_str(), msg.size(), 0);
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << e.what();
+		closesocket(clientSocket);
+	}
+}
 
+void Communicator::handleNewClient(SOCKET clientSocket)
+{
+	
+	sendMsg(clientSocket, "HELLO");
+	std::string userMsg = "";
+	LoginRequestHandler handler;
+	RequestInfo info;
 
 	while (true) {
 		
-		userMsg = recvMsg(clientSocket, maxLen, 0);
+		userMsg = recvMsg(clientSocket);
 
-		std::cout << "User msg:" << userMsg << "\n";
-		if (userMsg == "Exit") {
-			s = "Bye";
-			send(clientSocket, s.c_str(), s.size(), 0);
-			break;
+		std::cout << "User msg:" << userMsg.substr(5) << "\n";
+					
+		info.code = userMsg[0];
+		std::cout << "code: " << info.code <<"\n";
+		info.receivalTime = time(NULL);
+		
+		info.buffer = Helper::convertStringToBits(userMsg.substr(5));
+
+		if (!handler.isRequestRelevant(info)) {
+			throw std::exception("Irreleve request");
 		}
 
+		RequestResult request = handler.handleRequest(info);
+		SignUpResponse signUp = JsonRequestPacketDeserializer::deserializeSignUpRequest(request.buffer);
+		std::cout << Helper::convertBitsToString(request.buffer);	
 
 		
+		break;		
 	}
 	
 	// Closing the socket (in the level of the TCP protocol)
