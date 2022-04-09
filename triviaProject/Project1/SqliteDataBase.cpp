@@ -12,7 +12,7 @@ using namespace std;
 bool SqliteDataBase::open()
 {
 
-	string dbFileName = "galleryDB.sqlite";
+	string dbFileName = DATA_BASE_FILE_NAME;
 	int doesFileExist = _access(dbFileName.c_str(), 0);
 	int res = sqlite3_open(dbFileName.c_str(), &db);
 	if (res != SQLITE_OK) {
@@ -25,7 +25,7 @@ bool SqliteDataBase::open()
 
 
 
-int  SqliteDataBase::callbackUsers(void* data, int argc, char** argv, char** azColName)
+int SqliteDataBase::callbackUsers(void* data, int argc, char** argv, char** azColName)
 {
 
 	list<User>* users = (list<User>*)data;

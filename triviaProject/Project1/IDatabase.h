@@ -1,5 +1,5 @@
 #pragma once
-
+#define DATA_BASE_FILE_NAME "triviaDB.sqlite"
 
 class IDatabase
 {
