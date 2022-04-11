@@ -125,7 +125,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		
 		userMsg = recvMsg(clientSocket);
 
-		std::cout << "User msg:" << userMsg.substr(5) << "\n";
+		std::cout << "LoggedUser msg:" << userMsg.substr(5) << "\n";
 					
 		info.code = userMsg[0];
 		std::cout << "code: " << info.code <<"\n";

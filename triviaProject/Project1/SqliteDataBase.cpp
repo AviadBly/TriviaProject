@@ -4,7 +4,7 @@
 #include <algorithm>
 #include "sqlite3.h"
 #include <list>
-#include "User.h"
+#include "LoggedUser.h"
 #include <io.h>
 using namespace std;
 
@@ -28,8 +28,8 @@ bool SqliteDataBase::open()
 int SqliteDataBase::callbackUsers(void* data, int argc, char** argv, char** azColName)
 {
 
-	list<User>* users = (list<User>*)data;
-	User user;
+	list<LoggedUser>* users = (list<LoggedUser>*)data;
+	LoggedUser user;
 
 	for (int i = 0; i < argc; i++) {
 		if (string(azColName[i]) == "USERNAME") {
@@ -48,7 +48,7 @@ int SqliteDataBase::callbackUsers(void* data, int argc, char** argv, char** azCo
 	return 0;
 }
 
-void SqliteDataBase::sendCallBackUsers(sqlite3* db, const char* sqlStatement, list<User>* albums)
+void SqliteDataBase::sendCallBackUsers(sqlite3* db, const char* sqlStatement, list<LoggedUser>* albums)
 {
 	char** errMessage = nullptr;
 	int res = sqlite3_exec(db, sqlStatement, callbackUsers, albums, errMessage);
@@ -87,9 +87,9 @@ void SqliteDataBase::create()
 	}
 }
 
-const std::list<User> SqliteDataBase::getUsers()
+const std::list<LoggedUser> SqliteDataBase::getUsers()
 {
-	list<User>* newList = new list<User>;
+	list<LoggedUser>* newList = new list<LoggedUser>;
 	const char* sqlStatement = "SELECT * FROM USERNAMES;";
 	sendCallBackUsers(db, sqlStatement, newList);
 	return *newList;
@@ -108,11 +108,11 @@ void SqliteDataBase::addUser(string username, string password, string mail)
 
 bool SqliteDataBase::doesUserExist(string username)
 {
-	list<User>* newList = new list<User>;
+	list<LoggedUser>* newList = new list<LoggedUser>;
 	string sqlStatement = "SELECT * FROM USERNAMES;";
 	const char* newStatement = sqlStatement.c_str();
 	sendCallBackUsers(db, newStatement, newList);
-	std::list<User>::iterator it;
+	std::list<LoggedUser>::iterator it;
 	for (it = newList->begin(); it != newList->end(); ++it)
 	{
 		if (it->getName() == username)
@@ -127,11 +127,11 @@ bool SqliteDataBase::doesUserExist(string username)
 bool SqliteDataBase::doesPasswordMatch(string username, string password)
 {
 
-	list<User>* newList = new list<User>;
+	list<LoggedUser>* newList = new list<LoggedUser>;
 	string sqlStatement = "SELECT * FROM USERNAMES;";
 	const char* newStatement = sqlStatement.c_str();
 	sendCallBackUsers(db, newStatement, newList);
-	std::list<User>::iterator it;
+	std::list<LoggedUser>::iterator it;
 	for (it = newList->begin(); it != newList->end(); ++it)
 	{
 		if (it->getName() == username&&it->getPassword()==password)
