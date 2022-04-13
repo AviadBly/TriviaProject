@@ -5644,7 +5644,7 @@ SQLITE_API void sqlite3_value_free(sqlite3_value*);
 SQLITE_API void *sqlite3_aggregate_context(sqlite3_context*, int nBytes);
 
 /*
-** CAPI3REF: User Data For Functions
+** CAPI3REF: LoggedUser Data For Functions
 ** METHOD: sqlite3_context
 **
 ** ^The sqlite3_user_data() interface returns a copy of

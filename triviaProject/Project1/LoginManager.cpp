@@ -39,7 +39,7 @@ void LoginManager::login(const std::string username, const std::string password)
 void LoginManager::logout(const std::string username)
 {
 	bool doesExist = false;
-	for (auto iter = m_loggedUsers.begin(); iter != m_loggedUsers.end; iter++)
+	for (auto iter = m_loggedUsers.begin(); iter != m_loggedUsers.end(); iter++)
 	{
 		if (iter->getName() == username)
 		{
