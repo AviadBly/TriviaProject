@@ -134,7 +134,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		info.buffer = Helper::convertStringToBits(userMsg.substr(5));
 
 		if (!handler.isRequestRelevant(info)) {
-			throw std::exception("Irreleve request");
+			throw std::exception("Irrelevent request");
 		}
 
 		RequestResult request = handler.handleRequest(info);
