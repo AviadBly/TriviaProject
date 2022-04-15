@@ -97,7 +97,7 @@ const std::list<LoggedUser> SqliteDataBase::getUsers()
 
 void SqliteDataBase::addUser(string username, string password, string mail)
 {
-	string values = "\"" + username + "\"" + ',' + "\"" + password + "\"" + ',' + "\"" + password + "\"";
+	string values = "\"" + username + "\"" + ',' + "\"" + password + "\"" + ',' + "\"" + mail + "\"";
 	string sqlStatement = "INSERT INTO USERNAMES(USERNAME,PASSWORD,MAIL) VALUES(" + values + ");";
 	const char* newStatement = sqlStatement.c_str();
 	bool check = sendToServer(db, newStatement);

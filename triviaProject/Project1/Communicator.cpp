@@ -139,8 +139,8 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		}
 
 		RequestResult request = handler.handleRequest(info);
-		SignUpResponse signUp = JsonRequestPacketDeserializer::deserializeSignUpRequest(request.buffer);
-		std::cout << Helper::convertBitsToString(request.buffer);	
+		//SignUpResponse signUp = JsonRequestPacketDeserializer::deserializeSignUpRequest(request.buffer);
+		//std::cout << Helper::convertBitsToString(request.buffer);	
 
 		
 		break;		

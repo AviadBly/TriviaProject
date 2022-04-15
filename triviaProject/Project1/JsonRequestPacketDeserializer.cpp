@@ -21,7 +21,7 @@ SignUpResponse JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vect
 	//get json format from bits
 	json jsonData = getJsonFromBits(jsonResponseBits);
 
-	//signUpRequest.status = jsonData.at("status");
+	signUpRequest.status = jsonData.at("status");
 	signUpRequest.username = jsonData.at("username");
 	signUpRequest.password = jsonData.at("password");
 	signUpRequest.email = jsonData.at("email");

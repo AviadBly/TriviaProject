@@ -15,11 +15,13 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo requestInfo)
 RequestResult LoginRequestHandler::handleRequest(RequestInfo requestInfo)
 {
 	RequestResult requestResult;
-	requestResult.buffer = requestInfo.buffer;
-
 	
-	//adding IRequestHandler*
-	requestResult.newHandler = this;
+	if (requestInfo.code == SIGN_RESPONSE_CODE) {	//signUp
+		requestResult = signUp(requestInfo);
+	}
+	else if (requestInfo.code == LOGIN_RESPONSE_CODE) {	//login
+		requestResult = login(requestInfo);
+	}
 	
 	return requestResult;
 }
@@ -34,11 +36,11 @@ RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 		try {
 			this->m_loginManager.login(login.username, login.password);	//successfull login
 			MenuRequestHandler menu;
-			requestResult.newHandler = &menu;
+			requestResult.newHandler = this->m_handleFactory.createMenuRequestHandler();
 		}
 		catch (const std::exception& e) {	//failed login
 			std::cout << e.what() << "\n";
-			requestResult.newHandler = this;			
+			requestResult.newHandler = this->m_handleFactory.createLoginRequestHandler();
 		}			
 	}
 	else {
@@ -58,7 +60,7 @@ RequestResult LoginRequestHandler::signUp(RequestInfo requestInfo)
 		try {
 			this->m_loginManager.signup(login.username, login.password, login.email);	//successfull signUp
 			MenuRequestHandler menu;
-			requestResult.newHandler = this->m_handleFactory.createMenuRequestHandler();;
+			requestResult.newHandler = this->m_handleFactory.createMenuRequestHandler();
 		}
 		catch (const std::exception& e) {	//failed signUp
 			std::cout << e.what() << "\n";
