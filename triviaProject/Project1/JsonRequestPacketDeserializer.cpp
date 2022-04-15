@@ -2,42 +2,56 @@
 
 
 
-LoginResponse JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<char unsigned> jsonResponseBits)
+LoginRequest JsonRequestPacketDeserializer::deserializeLoginResponse(std::vector<char unsigned> jsonResponseBits)
 {
-	LoginResponse loginRequest;
+	LoginRequest loginRequest;
 	//get json format from bits
 	json jsonData = getJsonFromBits(jsonResponseBits);
 
-	loginRequest.status = jsonData.at("status");
-	loginRequest.username = jsonData.at("username");
-	loginRequest.password = jsonData.at("password");
+	try {
+		loginRequest.username = jsonData.at("username");
+		loginRequest.password = jsonData.at("password");
+	}
+	catch (const std::exception& e) {
+		throw std::exception(e.what());
+	}
+	
 
 	return loginRequest;
 }
 
-SignUpResponse JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vector<char unsigned> jsonResponseBits)
+SignupRequest JsonRequestPacketDeserializer::deserializeSignUpResponse(std::vector<char unsigned> jsonResponseBits)
 {
-	SignUpResponse signUpRequest;
+	SignupRequest signUpRequest;
 	//get json format from bits
 	json jsonData = getJsonFromBits(jsonResponseBits);
 
-	signUpRequest.status = jsonData.at("status");
-	signUpRequest.username = jsonData.at("username");
-	signUpRequest.password = jsonData.at("password");
-	signUpRequest.email = jsonData.at("email");
+	try {
+		signUpRequest.username = jsonData.at("username");
+		signUpRequest.password = jsonData.at("password");
+		signUpRequest.email = jsonData.at("email");
+	}
+	catch (const std::exception& e) {
+		throw std::exception(e.what());
+	}
+	
 
 	return signUpRequest;
 }
 
-ErrorResponse JsonRequestPacketDeserializer::deserializeErrorRequest(std::vector<char unsigned> jsonResponseBits)
+ErrorResponse JsonRequestPacketDeserializer::deserializeErrorResponse(std::vector<char unsigned> jsonResponseBits)
 {
 	ErrorResponse errorRequest;
 	//get json format from bits
 	json jsonData = getJsonFromBits(jsonResponseBits);
 
-	errorRequest.status = jsonData.at("status");
-	errorRequest.message = jsonData.at("message");
-
+	try {
+		errorRequest.message = jsonData.at("message");
+	}
+	catch (const std::exception& e) {
+		throw std::exception(e.what());
+	}
+	
 	return errorRequest;
 }
 
@@ -52,9 +66,7 @@ json JsonRequestPacketDeserializer::getJsonFromBits(std::vector<char unsigned> j
 		}
 		else {
 			jsonString += jsonResponseBits[i];
-		}
-		
-
+		}		
 	}
 	
 	std::cout << "desirizlizer:" << jsonString << "\n";

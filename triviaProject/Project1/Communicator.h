@@ -9,7 +9,7 @@
 #include <map>
 #include <ctime>
 #include <chrono>
-#include "Responses.h"
+#include "Login_SignUp_Requests.h"
 #include "JsonRequestPacketDeserializer.h"
 #include "HelperFunctions.h"
 #include "IRequestHandler.h"
@@ -23,12 +23,12 @@ public:
 	void serve(int port);
 
 private:
-
+	void handleNewClient(SOCKET clientSocket);
 	void acceptClient();
 	std::string recvMsg(SOCKET socket);
-	void sendMsg(SOCKET clientSocket, std::string msg);
-	void handleNewClient(SOCKET clientSocket);
 
+	void sendMsg(SOCKET clientSocket, std::string msg);
+	
 	RequestHandlerFactory& m_handlerFactory;
 	std::map<SOCKET, IRequestHandler*> m_clients;
 	SOCKET m_serverSocket;

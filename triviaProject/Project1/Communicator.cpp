@@ -100,7 +100,7 @@ std::string Communicator::recvMsg(SOCKET socket) {
 	}
 
 }
-
+//send string msg
 void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 	try
 	{
@@ -139,10 +139,9 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		}
 
 		RequestResult request = handler.handleRequest(info);
-		//SignUpResponse signUp = JsonRequestPacketDeserializer::deserializeSignUpRequest(request.buffer);
-		//std::cout << Helper::convertBitsToString(request.buffer);	
-
 		
+		sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
+			
 		break;		
 	}
 	
