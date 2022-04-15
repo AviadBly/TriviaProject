@@ -13,8 +13,8 @@ server_address = (SERVER_IP, SERVER_PORT)
 sock.connect(server_address)
 
 
-login_dict = {"username":"user1","password":"1234"}
-signup_dict = {"username": "user1", "password": "1234", "mail":"user1@gmail.com"}
+login_dict = {"username" : "Shahar", "password" : "456", "status" : 2}     #this is already in the database
+signup_dict = {"username": "user1", "password": "1234", "email" : "user1@gmail.com", "status" : 2}
 
 
 signup_msg = chr(SIGN_UP_CODE).encode() + len(str(signup_dict)).to_bytes(4, byteorder='big') + str(signup_dict).encode()
@@ -27,6 +27,11 @@ print(signup_msg, "length: " + str(len(signup_msg)))
 server_msg = sock.recv(1024)
 server_msg = server_msg.decode()
 
+print(server_msg)
+
 sock.sendall(signup_msg)
 
-print(server_msg)
+server_msg = sock.recv(1024)
+server_msg = server_msg.decode()
+
+print("Server said:", server_msg)
