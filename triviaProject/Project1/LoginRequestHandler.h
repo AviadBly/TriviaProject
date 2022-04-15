@@ -3,10 +3,12 @@
 #include "IRequestHandler.h"
 #include "LoginManager.h"
 #include "RequestHandlerFactory.h"
+#include "MenuRequestHandler.h"
 
 class LoginRequestHandler : public IRequestHandler {
 
 public:
+	LoginRequestHandler();
 	virtual bool isRequestRelevant(RequestInfo requestInfo);
 	virtual RequestResult handleRequest(RequestInfo requestInfo);
 

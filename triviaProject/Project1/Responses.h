@@ -4,6 +4,8 @@
 #define SIGN_RESPONSE_CODE 10
 #define LOGIN_RESPONSE_CODE 20
 #define ERROR_RESPONSE_CODE 50
+#define ERROR_STATUS 5
+#define OK_STATUS 2
 
 struct Response {
 	unsigned int status;

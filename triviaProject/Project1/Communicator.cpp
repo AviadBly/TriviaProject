@@ -34,7 +34,7 @@ void Communicator::serve(int port)
 	sa.sin_addr.s_addr = INADDR_ANY;    // when there are few ip's for the machine. We will use always "INADDR_ANY"
 	
 	// Connects between the socket and the configuration (port and etc..)
-	if (bind(m_serverSocket, (struct sockaddr*)&sa, sizeof(sa)) == SOCKET_ERROR)
+	if (_WINSOCK2API_::bind(m_serverSocket, (struct sockaddr*)&sa, sizeof(sa)) == SOCKET_ERROR)
 		throw std::exception(__FUNCTION__ " - bind");
 
 	// Start listening for incoming requests of clients
@@ -120,7 +120,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	std::string userMsg = "";
 	LoginRequestHandler handler;
 	RequestInfo info;
-
+	
 	while (true) {
 		
 		userMsg = recvMsg(clientSocket);
