@@ -18,7 +18,7 @@
 class Communicator
 {
 public:
-	Communicator();
+	Communicator(RequestHandlerFactory& handlerFactory);
 	~Communicator();
 	void serve(int port);
 
@@ -29,8 +29,7 @@ private:
 	void sendMsg(SOCKET clientSocket, std::string msg);
 	void handleNewClient(SOCKET clientSocket);
 
-
+	RequestHandlerFactory& m_handlerFactory;
 	std::map<SOCKET, IRequestHandler*> m_clients;
-
 	SOCKET m_serverSocket;
 };

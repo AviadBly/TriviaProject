@@ -2,7 +2,7 @@
 
 
 
-Communicator::Communicator()
+Communicator::Communicator(RequestHandlerFactory& handlerFactory) : m_handlerFactory(handlerFactory)
 {
 
 	// this server use TCP. that why SOCK_STREAM & IPPROTO_TCP
@@ -118,7 +118,8 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	
 	sendMsg(clientSocket, "HELLO");
 	std::string userMsg = "";
-	LoginRequestHandler handler;
+	
+	LoginRequestHandler handler(this->m_handlerFactory.getLoginManger(), this->m_handlerFactory);
 	RequestInfo info;
 	
 	while (true) {

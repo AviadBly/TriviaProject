@@ -2,9 +2,9 @@
 #include "LoginRequestHandler.h"
 #include "Responses.h"
 
-LoginRequestHandler::LoginRequestHandler()
+
+LoginRequestHandler::LoginRequestHandler(LoginManager& loginManager, RequestHandlerFactory& handleFactory) : m_loginManager(loginManager) , m_handleFactory(handleFactory)
 {
-	this->m_handleFactory
 }
 
 bool LoginRequestHandler::isRequestRelevant(RequestInfo requestInfo)

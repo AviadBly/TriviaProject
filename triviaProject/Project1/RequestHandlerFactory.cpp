@@ -8,8 +8,10 @@ RequestHandlerFactory::RequestHandlerFactory(IDatabase* database) {
 
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {
-	this->m_loginManager.
-	return nullptr;
+	//not sure if its correct
+	LoginRequestHandler loginRequestHandler(getLoginManger(), *this);
+
+	return &loginRequestHandler;
 }
 
 LoginManager& RequestHandlerFactory::getLoginManger()

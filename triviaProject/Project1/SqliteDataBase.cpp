@@ -94,6 +94,7 @@ const std::list<LoggedUser> SqliteDataBase::getUsers()
 	sendCallBackUsers(db, sqlStatement, newList);
 	return *newList;
 }
+
 void SqliteDataBase::addUser(string username, string password, string mail)
 {
 	string values = "\"" + username + "\"" + ',' + "\"" + password + "\"" + ',' + "\"" + password + "\"";

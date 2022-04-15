@@ -5,10 +5,14 @@
 #include "RequestHandlerFactory.h"
 #include "MenuRequestHandler.h"
 
+class RequestHandlerFactory;
+
 class LoginRequestHandler : public IRequestHandler {
 
 public:
-	LoginRequestHandler();
+	
+	LoginRequestHandler(LoginManager& loginManager, RequestHandlerFactory& handleFactory);
+
 	virtual bool isRequestRelevant(RequestInfo requestInfo);
 	virtual RequestResult handleRequest(RequestInfo requestInfo);
 
