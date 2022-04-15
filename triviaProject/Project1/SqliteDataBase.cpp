@@ -94,9 +94,10 @@ const std::list<LoggedUser> SqliteDataBase::getUsers()
 	sendCallBackUsers(db, sqlStatement, newList);
 	return *newList;
 }
+
 void SqliteDataBase::addUser(string username, string password, string mail)
 {
-	string values = "\"" + username + "\"" + ',' + "\"" + password + "\"" + ',' + "\"" + password + "\"";
+	string values = "\"" + username + "\"" + ',' + "\"" + password + "\"" + ',' + "\"" + mail + "\"";
 	string sqlStatement = "INSERT INTO USERNAMES(USERNAME,PASSWORD,MAIL) VALUES(" + values + ");";
 	const char* newStatement = sqlStatement.c_str();
 	bool check = sendToServer(db, newStatement);
@@ -109,7 +110,7 @@ void SqliteDataBase::addUser(string username, string password, string mail)
 bool SqliteDataBase::doesUserExist(string username)
 {
 	list<LoggedUser>* newList = new list<LoggedUser>;
-	string sqlStatement = "SELECT * FROM USERNAMES;";
+	string sqlStatement = "SELECT * FROM USERNAMES WHERE USERNAME=\"" + username + "\";";
 	const char* newStatement = sqlStatement.c_str();
 	sendCallBackUsers(db, newStatement, newList);
 	std::list<LoggedUser>::iterator it;
@@ -128,13 +129,13 @@ bool SqliteDataBase::doesPasswordMatch(string username, string password)
 {
 
 	list<LoggedUser>* newList = new list<LoggedUser>;
-	string sqlStatement = "SELECT * FROM USERNAMES;";
+	string sqlStatement = "SELECT * FROM USERNAMES WHERE USERNAME=\"" + username + "\";";
 	const char* newStatement = sqlStatement.c_str();
 	sendCallBackUsers(db, newStatement, newList);
 	std::list<LoggedUser>::iterator it;
 	for (it = newList->begin(); it != newList->end(); ++it)
 	{
-		if (it->getName() == username&&it->getPassword()==password)
+		if (it->getName() == username && it->getPassword() == password)
 		{
 			return true;
 		}
