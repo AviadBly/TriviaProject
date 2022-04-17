@@ -9,7 +9,11 @@
 #include <map>
 #include <ctime>
 #include <chrono>
+<<<<<<< HEAD
 #include "Login_SignUp_Requests.h"
+=======
+#include "Requests.h"
+>>>>>>> 44cd3734195bd29a880b123a012af922fa0c279f
 #include "JsonRequestPacketDeserializer.h"
 #include "HelperFunctions.h"
 #include "IRequestHandler.h"
