@@ -1,18 +1,9 @@
 #include "RoomManager.h"
 #include "MyException.h"
 
-RoomManager::RoomManager()
-{
-	nextRoomId = 1;
-}
-
 void RoomManager::createRoom(LoggedUser user, RoomData data)
 {
 	
-	Room newRoom;
-	newRoom.addUser(user); //add the user who created the room
-	m_rooms.insert(std::pair<unsigned int, Room>(nextRoomId, newRoom));
-	nextRoomId++;
 }
 
 void RoomManager::deleteRoom(int ID)

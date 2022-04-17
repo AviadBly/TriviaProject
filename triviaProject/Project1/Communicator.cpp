@@ -2,7 +2,7 @@
 
 
 
-Communicator::Communicator(RequestHandlerFactory& handlerFactory) : m_handlerFactory(handlerFactory)
+Communicator::Communicator()
 {
 
 	// this server use TCP. that why SOCK_STREAM & IPPROTO_TCP
@@ -34,7 +34,7 @@ void Communicator::serve(int port)
 	sa.sin_addr.s_addr = INADDR_ANY;    // when there are few ip's for the machine. We will use always "INADDR_ANY"
 	
 	// Connects between the socket and the configuration (port and etc..)
-	if (_WINSOCK2API_::bind(m_serverSocket, (struct sockaddr*)&sa, sizeof(sa)) == SOCKET_ERROR)
+	if (bind(m_serverSocket, (struct sockaddr*)&sa, sizeof(sa)) == SOCKET_ERROR)
 		throw std::exception(__FUNCTION__ " - bind");
 
 	// Start listening for incoming requests of clients
@@ -100,7 +100,7 @@ std::string Communicator::recvMsg(SOCKET socket) {
 	}
 
 }
-//send string msg
+
 void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 	try
 	{
@@ -118,10 +118,9 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	
 	sendMsg(clientSocket, "HELLO");
 	std::string userMsg = "";
-	
-	LoginRequestHandler handler(this->m_handlerFactory.getLoginManger(), this->m_handlerFactory);
+	LoginRequestHandler handler;
 	RequestInfo info;
-	
+
 	while (true) {
 		
 		userMsg = recvMsg(clientSocket);
@@ -135,13 +134,14 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		info.buffer = Helper::convertStringToBits(userMsg.substr(5));
 
 		if (!handler.isRequestRelevant(info)) {
-			throw std::exception("Irrelevent request");
+			throw std::exception("Irreleve request");
 		}
 
 		RequestResult request = handler.handleRequest(info);
+		SignUpResponse signUp = JsonRequestPacketDeserializer::deserializeSignUpRequest(request.buffer);
+		std::cout << Helper::convertBitsToString(request.buffer);	
+
 		
-		sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
-			
 		break;		
 	}
 	

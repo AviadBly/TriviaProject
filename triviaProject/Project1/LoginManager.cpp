@@ -4,16 +4,6 @@
 #include "MyException.h"
 
 
-LoginManager::LoginManager()
-{
-	this->m_database = nullptr;
-}
-
-LoginManager::LoginManager(IDatabase* database)
-{
-	this->m_database = database;
-}
-
 void LoginManager::signup(const std::string username, const std::string password, const std::string email)
 {
 	

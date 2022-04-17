@@ -9,7 +9,7 @@
 #include <map>
 #include <ctime>
 #include <chrono>
-#include "Login_SignUp_Requests.h"
+#include "Responses.h"
 #include "JsonRequestPacketDeserializer.h"
 #include "HelperFunctions.h"
 #include "IRequestHandler.h"
@@ -18,18 +18,19 @@
 class Communicator
 {
 public:
-	Communicator(RequestHandlerFactory& handlerFactory);
+	Communicator();
 	~Communicator();
 	void serve(int port);
 
 private:
-	void handleNewClient(SOCKET clientSocket);
+
 	void acceptClient();
 	std::string recvMsg(SOCKET socket);
-
 	void sendMsg(SOCKET clientSocket, std::string msg);
-	
-	RequestHandlerFactory& m_handlerFactory;
+	void handleNewClient(SOCKET clientSocket);
+
+
 	std::map<SOCKET, IRequestHandler*> m_clients;
+
 	SOCKET m_serverSocket;
 };

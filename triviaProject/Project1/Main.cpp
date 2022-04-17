@@ -3,8 +3,6 @@
 #include <iostream>
 #include <fstream>
 #include "Server.h"
-#include "SqliteDataBase.h"
-#include "MyException.h"
 
 int main()
 {
@@ -12,12 +10,8 @@ int main()
 	try
 	{
 		WSAInitializer wsa;
-		SqliteDataBase sqlDataBase;
-		if (!sqlDataBase.open()) {
-			throw MyException("Error with data base");
-		}
 
-		Server server(&sqlDataBase);
+		Server server;
 		server.run();
 
 	}
