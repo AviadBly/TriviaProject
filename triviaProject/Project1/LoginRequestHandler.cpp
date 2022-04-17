@@ -36,7 +36,7 @@ void LoginRequestHandler::loadErrorMsg(RequestResult& requestResult, std::string
 
 }
 
-
+//login and signup need some SOLID
 RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 {
 	RequestResult requestResult;
@@ -59,6 +59,8 @@ RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 		
 		requestResult.newHandler = this->m_handleFactory.createMenuRequestHandler();
 		loginResponse.status = loginResponse.status_ok;	//status ok
+		requestResult.buffer = JsonResponsePacketSerializer::serializeLoginResponse(loginResponse);
+	
 	}
 	catch (const std::exception& e) {	//if the login faild, return error msg
 		std::cout << e.what() << "\n";
