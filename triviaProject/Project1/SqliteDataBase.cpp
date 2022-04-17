@@ -23,7 +23,41 @@ bool SqliteDataBase::open()
 
 }
 
+int SqliteDataBase::callbackStats(void* data, int argc, char** argv, char** azColName)
+{
 
+	list<LoggedUser>* users = (list<LoggedUser>*)data;
+	LoggedUser user;
+
+	for (int i = 0; i < argc; i++) {
+		if (string(azColName[i]) == "USERNAME") {
+			user.setName((argv[i]));
+		}
+		else if (string(azColName[i]) == "PASSWORD") {
+			user.setPassword(argv[i]);
+		}
+		else if (string(azColName[i]) == "MAIL")
+		{
+			user.setMail(argv[i]);
+		}
+
+	}
+	users->push_back(user);
+	return 0;
+}
+
+void SqliteDataBase::sendCallBackStats(sqlite3* db, const char* sqlStatement, list<LoggedUser>* albums)
+{
+	char** errMessage = nullptr;
+	int res = sqlite3_exec(db, sqlStatement, callbackUsers, albums, errMessage);
+	if (res != SQLITE_OK) {
+		std::cout << res << std::endl;
+		cout << "Error!" << endl;
+	}
+
+
+
+}
 
 int SqliteDataBase::callbackUsers(void* data, int argc, char** argv, char** azColName)
 {
@@ -99,7 +133,13 @@ void SqliteDataBase::create()
 	{
 		cout << "INSERT QUESTIONS PROBLEM- EITHER EXISTS OR GENERAL ERROR" << endl;
 	}
-
+	sqlStatement = "CREATE TABLE STATISTICS(USERNAME TEXT NOT NULL, AVGTIME DOUBLE NOT NULL,CORRECT INTEGER NOT NULL,TOTAL INTEGER NOT NULL,GAMES INTEGER NOT NULL);";
+	const char* newStatement = sqlStatement.c_str();
+	bool check = sendToServer(db, newStatement);
+	if (!check)
+	{
+		cout << "CREATE STATISTICS PROBLEM- EITHER EXISTS OR GENERAL ERROR" << endl;
+	}
 }
 
 const std::list<LoggedUser> SqliteDataBase::getUsers()

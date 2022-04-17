@@ -21,4 +21,7 @@ private:
 	static bool sendToServer(sqlite3* db, const char* sqlStatement);
 	void sendCallBackUsers(sqlite3* db, const char* sqlStatement, list<LoggedUser>* albums);
 	static int callbackUsers(void* data, int argc, char** argv, char** azColName);
+	static int callbackStats(void* data, int argc, char** argv, char** azColName);
+	void sendCallBackStats(sqlite3* db, const char* sqlStatement, list<LoggedUser>* albums);
+	
  };
