@@ -8,7 +8,7 @@ RequestHandlerFactory::RequestHandlerFactory(IDatabase* database) {
 
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {
-	//not sure if its correct
+	//this is incorrect, to do
 	LoginRequestHandler loginRequestHandler(getLoginManger(), *this);
 
 	return &loginRequestHandler;

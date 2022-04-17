@@ -60,7 +60,7 @@ json JsonRequestPacketDeserializer::getJsonFromBits(std::vector<char unsigned> j
 {
 	std::string jsonString = "";
 	//create a json string, and replace all the \' with \"
-	for (int i = 0; i < jsonResponseBits.size(); i++) {
+	for (unsigned int i = 0; i < jsonResponseBits.size(); i++) {
 		if (jsonResponseBits[i] == '\'') {
 			jsonString += "\"";
 		}

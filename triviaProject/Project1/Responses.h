@@ -21,12 +21,12 @@ struct ErrorResponse {
 	std::string message;
 };
 
-struct LogoutResponse {
+struct LogoutResponse : public Response {
 
 };
 
-struct GetRoomResponse : public Response {
-	std::vector<RoomData> rooms;
+struct GetRoomsResponse : public Response {
+	std::vector<std::string> rooms;
 };
 
 struct GetPlayersInRoomResponse {

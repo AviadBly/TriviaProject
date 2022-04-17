@@ -16,6 +16,6 @@ public:
 
 
 private:
-	static int nextRoomId;
+	int nextRoomId;
 	map<unsigned int, Room> m_rooms;
 };
