@@ -171,7 +171,7 @@
     <ClInclude Include="RequestHandlerFactory.h" />
     <ClInclude Include="RequestInfo.h" />
     <ClInclude Include="RequestResult.h" />
-    <ClInclude Include="Login_SignUp_Requests.h" />
+    <ClInclude Include="Requests.h" />
     <ClInclude Include="Responses.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomManager.h" />

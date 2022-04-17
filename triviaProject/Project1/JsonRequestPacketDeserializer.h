@@ -3,17 +3,24 @@
 #include <iostream>
 #include <bitset>
 #include "json.hpp"
-#include "Login_SignUp_Requests.h"
+#include "Requests.h"
 #include "Responses.h"
 
 using json = nlohmann::json;
 
 class JsonRequestPacketDeserializer {
 public:
-	static LoginRequest deserializeLoginResponse(std::vector<char unsigned> jsonResponseBits);
-	static SignupRequest deserializeSignUpResponse(std::vector<char unsigned> jsonResponseBits);
-	static ErrorResponse deserializeErrorResponse(std::vector<char unsigned> jsonResponseBits);
-
+	//login
+	static LoginRequest deserializeLoginRequest(std::vector<char unsigned> jsonRequestBits);
+	static SignupRequest deserializeSignUpRequest(std::vector<char unsigned> jsonRequestBits);
+	//error
+	//static ErrorRequest deserializeErrorRequest(std::vector<char unsigned> jsonRequestBits);
+	
+	//rooms
+	static CreateRoomRequest deserializeCreateRoomRequest(std::vector<char unsigned> jsonRequestBits);
+	static JoinRoomRequest deserializeJoinRoomRequest(std::vector<char unsigned> jsonRequestBits);
+	static GetPlayersInRoomRequest deserializeGetPlayersInRoomRequest(std::vector<char unsigned> jsonRequestBits);
+	
 private:
-	static json getJsonFromBits(std::vector<char unsigned> jsonResponseBits);
+	static json getJsonFromBits(std::vector<char unsigned> jsonRequestBits);
 };

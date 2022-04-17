@@ -1,5 +1,5 @@
 #pragma once
-#include "Login_SignUp_Requests.h"
+#include "Requests.h"
 #include "Responses.h"
 #include <vector>
 #include "json.hpp"

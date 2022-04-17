@@ -1,6 +1,6 @@
 #include "RequestInfo.h"
 #include "LoginRequestHandler.h"
-#include "Login_SignUp_Requests.h"
+#include "Requests.h"
 
 
 LoginRequestHandler::LoginRequestHandler(LoginManager& loginManager, RequestHandlerFactory& handleFactory) : m_loginManager(loginManager) , m_handleFactory(handleFactory)
@@ -45,7 +45,7 @@ RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 
 	
 	try {
-		loginRequest = JsonRequestPacketDeserializer::deserializeLoginResponse(requestResult.buffer);
+		loginRequest = JsonRequestPacketDeserializer::deserializeLoginRequest(requestResult.buffer);
 	}
 	catch (const std::exception& e) {	//if there was a problem with the json format, return error msg
 		loadErrorMsg(requestResult, e.what());
@@ -80,7 +80,7 @@ RequestResult LoginRequestHandler::signUp(RequestInfo requestInfo)
 	SignupRequest signUp;
 
 	try {
-		signUp = JsonRequestPacketDeserializer::deserializeSignUpResponse(requestResult.buffer);
+		signUp = JsonRequestPacketDeserializer::deserializeSignUpRequest(requestResult.buffer);
 	}
 	catch (const std::exception& e) {
 		loadErrorMsg(requestResult, e.what());
