@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -155,6 +155,7 @@
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SqliteDataBase.cpp" />
     <ClCompile Include="LoggedUser.cpp" />
+    <ClCompile Include="StatisticsManager.cpp" />
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,7 +172,15 @@
     <ClInclude Include="RequestHandlerFactory.h" />
     <ClInclude Include="RequestInfo.h" />
     <ClInclude Include="RequestResult.h" />
+<<<<<<< HEAD
     <ClInclude Include="Requests.h" />
+=======
+<<<<<<< HEAD
+    <ClInclude Include="Login_SignUp_Requests.h" />
+=======
+    <ClInclude Include="Requests.h" />
+>>>>>>> 44cd3734195bd29a880b123a012af922fa0c279f
+>>>>>>> 928e187a8540f806632ae1f6c84f9a7604372e71
     <ClInclude Include="Responses.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomManager.h" />
@@ -179,6 +188,7 @@
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SqliteDataBase.h" />
     <ClInclude Include="LoggedUser.h" />
+    <ClInclude Include="StatisticsManager.h" />
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
