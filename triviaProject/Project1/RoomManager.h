@@ -8,6 +8,7 @@ using namespace std;
 class RoomManager
 {
 public:
+	RoomManager();
 	void createRoom(LoggedUser user,RoomData data);
 	void deleteRoom(int ID);
 	unsigned int getRoomState(int ID);
@@ -15,5 +16,6 @@ public:
 
 
 private:
-	map<int, Room> m_rooms;
+	int nextRoomId;
+	map<unsigned int, Room> m_rooms;
 };

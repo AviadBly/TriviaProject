@@ -1,23 +1,50 @@
 #pragma once
 #include <string>
-
-#define SIGN_RESPONSE_CODE 10
-#define LOGIN_RESPONSE_CODE 20
-#define ERROR_RESPONSE_CODE 50
+#include <vector>
+#include "Room.h"
 
 struct Response {
 	unsigned int status;
-};
-
-struct ErrorResponse : public Response {
-	std::string message;
+	const unsigned int status_ok = 2;
+	const unsigned int status_error = 5;
 };
 
 struct LoginResponse : public Response {
-	std::string username;
-	std::string password;
+	
 };
 
-struct SignUpResponse : public LoginResponse {
-	std::string email;
+struct SignUpResponse : public Response {
+
+};
+
+struct ErrorResponse {
+	std::string message;
+};
+
+struct LogoutResponse : public Response {
+
+};
+
+struct GetRoomsResponse : public Response {
+	std::vector<std::string> rooms;
+};
+
+struct GetPlayersInRoomResponse {
+	std::vector<std::string> players;
+};
+
+struct getHighScoreResponse : public Response {
+	std::vector<std::string> statistics;
+};
+
+struct getPersonalStatsResponse : public Response {
+	std::vector<std::string> statistics;
+};
+
+struct JoinRoomResponse : public Response {
+
+};
+
+struct CreateRoomResponse : public Response {
+
 };

@@ -14,7 +14,7 @@ std::string Helper::convertBitsToString(const std::vector<unsigned char> bits)
 {
 	std::string str = "";
 	
-	for (int i = 0; i < bits.size(); i++) {
+	for (unsigned int i = 0; i < bits.size(); i++) {
 		str += bits[i];
 	}
 
