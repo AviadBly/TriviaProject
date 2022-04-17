@@ -13,6 +13,10 @@ class LoginRequestHandler : public IRequestHandler {
 public:
 	
 	LoginRequestHandler(LoginManager& loginManager, RequestHandlerFactory& handleFactory);
+<<<<<<< HEAD
+=======
+	//LoginRequestHandler(LoginManager& loginManager);
+>>>>>>> 44cd3734195bd29a880b123a012af922fa0c279f
 
 	virtual bool isRequestRelevant(RequestInfo requestInfo);
 	virtual RequestResult handleRequest(RequestInfo requestInfo);
