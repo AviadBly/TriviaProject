@@ -18,7 +18,7 @@ bool SqliteDataBase::open()
 	if (res != SQLITE_OK) {
 		db = nullptr;
 		cout << "Failed to open DB" << endl;
-		return false;
+		return -1;
 	}
 
 }

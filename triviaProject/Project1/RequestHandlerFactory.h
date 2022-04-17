@@ -7,10 +7,6 @@
 #include "MenuRequestHandler.h"
 
 class LoginRequestHandler;
-<<<<<<< HEAD
-=======
-class MenuRequestHandler;
->>>>>>> 44cd3734195bd29a880b123a012af922fa0c279f
 
 class RequestHandlerFactory {
 
@@ -23,8 +19,6 @@ public:
 	MenuRequestHandler* createMenuRequestHandler();
 
 private:
-	LoginRequestHandler* m_loginRequestHandler; //this is against the uml but it way better
-	MenuRequestHandler* m_menuRequestHandler; //this is against the uml but it way better
 	LoginManager m_loginManager;
 	IDatabase* m_database;
 };

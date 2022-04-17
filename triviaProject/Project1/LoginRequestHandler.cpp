@@ -1,10 +1,6 @@
 #include "RequestInfo.h"
 #include "LoginRequestHandler.h"
-<<<<<<< HEAD
 #include "Login_SignUp_Requests.h"
-=======
-#include "Requests.h"
->>>>>>> 44cd3734195bd29a880b123a012af922fa0c279f
 
 
 LoginRequestHandler::LoginRequestHandler(LoginManager& loginManager, RequestHandlerFactory& handleFactory) : m_loginManager(loginManager) , m_handleFactory(handleFactory)
@@ -40,11 +36,7 @@ void LoginRequestHandler::loadErrorMsg(RequestResult& requestResult, std::string
 
 }
 
-<<<<<<< HEAD
 
-=======
-//login and signup need some SOLID
->>>>>>> 44cd3734195bd29a880b123a012af922fa0c279f
 RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 {
 	RequestResult requestResult;
@@ -53,11 +45,7 @@ RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 
 	
 	try {
-<<<<<<< HEAD
 		loginRequest = JsonRequestPacketDeserializer::deserializeLoginResponse(requestResult.buffer);
-=======
-		loginRequest = JsonRequestPacketDeserializer::deserializeLoginRequest(requestResult.buffer);
->>>>>>> 44cd3734195bd29a880b123a012af922fa0c279f
 	}
 	catch (const std::exception& e) {	//if there was a problem with the json format, return error msg
 		loadErrorMsg(requestResult, e.what());
@@ -71,11 +59,6 @@ RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 		
 		requestResult.newHandler = this->m_handleFactory.createMenuRequestHandler();
 		loginResponse.status = loginResponse.status_ok;	//status ok
-<<<<<<< HEAD
-=======
-		requestResult.buffer = JsonResponsePacketSerializer::serializeLoginResponse(loginResponse);
-	
->>>>>>> 44cd3734195bd29a880b123a012af922fa0c279f
 	}
 	catch (const std::exception& e) {	//if the login faild, return error msg
 		std::cout << e.what() << "\n";
@@ -97,11 +80,7 @@ RequestResult LoginRequestHandler::signUp(RequestInfo requestInfo)
 	SignupRequest signUp;
 
 	try {
-<<<<<<< HEAD
 		signUp = JsonRequestPacketDeserializer::deserializeSignUpResponse(requestResult.buffer);
-=======
-		signUp = JsonRequestPacketDeserializer::deserializeSignUpRequest(requestResult.buffer);
->>>>>>> 44cd3734195bd29a880b123a012af922fa0c279f
 	}
 	catch (const std::exception& e) {
 		loadErrorMsg(requestResult, e.what());
