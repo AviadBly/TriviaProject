@@ -86,15 +86,7 @@
     <ClInclude Include="JsonResponsePacketSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Requests.h">
-=======
-<<<<<<< HEAD
-    <ClInclude Include="Login_SignUp_Requests.h">
-=======
-    <ClInclude Include="Requests.h">
->>>>>>> 44cd3734195bd29a880b123a012af922fa0c279f
->>>>>>> 928e187a8540f806632ae1f6c84f9a7604372e71
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="json.hpp">
