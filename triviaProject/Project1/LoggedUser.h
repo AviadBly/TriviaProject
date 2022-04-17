@@ -27,4 +27,30 @@ private:
 	std::string m_mail;
 };
 
-class 
+class StatsUser
+{
+public:
+
+	StatsUser(std::string name, double time, int correct, int total, int games)
+	{
+		m_name = name;
+		m_time = time;
+		m_correct = correct;
+		m_total = total;
+		m_games = games;
+	}
+	StatsUser() = default;
+
+	void setName(std::string name);
+	void setTime(double time);
+	void setCorrect(int correct);
+	void setTotal(int total);
+	void setGames(int games);
+private:
+	std::string m_name;
+	double m_time;
+	int m_correct;
+	int m_total;
+	int m_games;
+};
+

@@ -11,5 +11,5 @@ private:
 	IDatabase* m_database;
 public:
 	vector<string> getHighScore();
-	vector<string> getUserStatistics();
+	vector<string> getUserStatistics(string username);
 };

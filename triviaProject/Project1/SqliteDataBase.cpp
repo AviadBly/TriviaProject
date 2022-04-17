@@ -26,30 +26,37 @@ bool SqliteDataBase::open()
 int SqliteDataBase::callbackStats(void* data, int argc, char** argv, char** azColName)
 {
 
-	list<LoggedUser>* users = (list<LoggedUser>*)data;
-	LoggedUser user;
+	list<StatsUser>* stats = (list<StatsUser>*)data;
+	StatsUser user;
 
 	for (int i = 0; i < argc; i++) {
 		if (string(azColName[i]) == "USERNAME") {
 			user.setName((argv[i]));
 		}
-		else if (string(azColName[i]) == "PASSWORD") {
-			user.setPassword(argv[i]);
+		else if (string(azColName[i]) == "AVGTIME") {
+			user.setTime(stoi(argv[i]));
 		}
-		else if (string(azColName[i]) == "MAIL")
+		else if (string(azColName[i]) == "CORRECT")
 		{
-			user.setMail(argv[i]);
+			user.setCorrect(stoi(argv[i]));
+		}
+		else if (string(azColName[i]) == "TOTAL") {
+			user.setTotal(stoi(argv[i]));
+		}
+		else if (string(azColName[i]) == "GAMES")
+		{
+			user.setGames(stoi(argv[i]));
 		}
 
 	}
-	users->push_back(user);
+	stats->push_back(user);
 	return 0;
 }
 
-void SqliteDataBase::sendCallBackStats(sqlite3* db, const char* sqlStatement, list<LoggedUser>* albums)
+void SqliteDataBase::sendCallBackStats(sqlite3* db, const char* sqlStatement, list<StatsUser>* albums)
 {
 	char** errMessage = nullptr;
-	int res = sqlite3_exec(db, sqlStatement, callbackUsers, albums, errMessage);
+	int res = sqlite3_exec(db, sqlStatement, callbackStats, albums, errMessage);
 	if (res != SQLITE_OK) {
 		std::cout << res << std::endl;
 		cout << "Error!" << endl;
@@ -150,6 +157,8 @@ const std::list<LoggedUser> SqliteDataBase::getUsers()
 	return *newList;
 }
 
+
+
 void SqliteDataBase::addUser(string username, string password, string mail)
 {
 	string values = "\"" + username + "\"" + ',' + "\"" + password + "\"" + ',' + "\"" + mail + "\"";
@@ -196,4 +205,46 @@ bool SqliteDataBase::doesPasswordMatch(string username, string password)
 		}
 	}
 	return false;
+}
+
+const std::list<StatsUser> SqliteDataBase::getStats(string username)
+{
+	list<StatsUser>* newList = new list<StatsUser>;
+	string sqlStatement = "SELECT * FROM STATISTICS WHERE USERNAME=\""+username+"\";";
+	const char* newStatement = sqlStatement.c_str();
+	sendCallBackStats(db, newStatement, newList);
+	return *newList;
+}
+
+const std::list<StatsUser> SqliteDataBase::getStatsGeneral()
+{
+	list<StatsUser>* newList = new list<StatsUser>;
+	string sqlStatement = "SELECT * FROM STATISTICS;";
+	const char* newStatement = sqlStatement.c_str();
+	sendCallBackStats(db, newStatement, newList);
+	return *newList;
+}
+
+double SqliteDataBase::getPlayerAvarageAnswerTime(string username)
+{
+	list<StatsUser> newList = getStats(username);
+	return newList.front().getTime();
+}
+
+int SqliteDataBase::getNumOfCorrectAnswers(string username)
+{
+	list<StatsUser> newList = getStats(username);
+	return newList.front().getCorrect();
+}
+
+int SqliteDataBase::getNumOfTotalAnswers(string username)
+{
+	list<StatsUser> newList = getStats(username);
+	return newList.front().getTotal();
+}
+
+int SqliteDataBase::getNumOfPlayerGames(string username)
+{
+	list<StatsUser> newList = getStats(username);
+	return newList.front().getGames();
 }

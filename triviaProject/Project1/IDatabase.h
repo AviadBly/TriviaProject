@@ -10,4 +10,10 @@ public:
 	virtual bool doesUserExist(string username) = 0;
 	virtual bool doesPasswordMatch(string username,string password) = 0;
 	virtual void addUser(string username,string password,string email) = 0;
+	virtual double getPlayerAvarageAnswerTime(string username)=0;
+	virtual int getNumOfCorrectAnswers(string username)=0;
+	virtual int getNumOfTotalAnswers(string username)=0;
+	virtual int getNumOfPlayerGames(string username)=0;
+	virtual const std::list<StatsUser> getStatsGeneral()=0;
+
 };
