@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <vector>
+#include "Room.h"
 
 struct Response {
 	unsigned int status;
@@ -17,4 +19,32 @@ struct SignUpResponse : public Response {
 
 struct ErrorResponse {
 	std::string message;
+};
+
+struct LogoutResponse {
+
+};
+
+struct GetRoomResponse : public Response {
+	std::vector<RoomData> rooms;
+};
+
+struct GetPlayersInRoomResponse {
+	std::vector<std::string> players;
+};
+
+struct getHighScoreResponse : public Response {
+	std::vector<std::string> statistics;
+};
+
+struct getPersonalStatsResponse : public Response {
+	std::vector<std::string> statistics;
+};
+
+struct JoinRoomResponse : public Response {
+
+};
+
+struct CreateRoomResponse : public Response {
+
 };
