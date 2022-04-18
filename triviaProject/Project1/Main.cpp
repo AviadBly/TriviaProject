@@ -8,13 +8,13 @@
 
 int main()
 {
-	RoomData rm;
+	/*RoomData rm;
 	GetRoomsResponse r;
 	rm.name = "one";
 	r.rooms.push_back(rm);
 	rm.name = "two";
 	r.rooms.push_back(rm);
-	JsonResponsePacketSerializer::serializeGetRoomResponse(r);
+	JsonResponsePacketSerializer::serializeGetRoomResponse(r);*/
 	/*try
 	{
 		WSAInitializer wsa;

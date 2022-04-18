@@ -19,7 +19,7 @@ public:
 
 private:
 
-	//RequestResult signOut(RequestInfo requestInfo);
+	RequestResult signOut(RequestInfo requestInfo);
 	RequestResult getRooms(RequestInfo requestInfo);
 	RequestResult getPlayersInRoom(RequestInfo requestInfo);
 	RequestResult joinRoom(RequestInfo requestInfo);

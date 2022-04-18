@@ -17,7 +17,6 @@ public:
 	const std::list<LoggedUser> getUsers();
 	/***************************************************************************/
 
-
 	virtual double getPlayerAvarageAnswerTime(string username) ;
 	virtual int getNumOfCorrectAnswers(string username) ;
 	virtual int getNumOfTotalAnswers(string username) ;

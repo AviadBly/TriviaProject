@@ -21,7 +21,7 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 		case CREATE_ROOM_CODE:
 
 		case GET_ROOM_REQUEST:
-
+			getRooms(requestInfo);
 		case GET_PLAYERS_IN_ROOM_REQUEST_CODE:
 		case JOIN_ROOM_REQUEST_CODE:
 		case GET_STATISTICS_REQUEST_CODE:
@@ -37,15 +37,22 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 	return requestResult;
 }
 
+RequestResult MenuRequestHandler::signOut(RequestInfo requestInfo)
+{
+
+	this->m_handlerFactory.getLoginManger().logout();
+}
+
 RequestResult MenuRequestHandler::getRooms(RequestInfo requestInfo)
 {
 	GetRoomsResponse getRoomsResponse;
 	RequestResult requestResult;
-	std::vector<std::string> roomNames;
-	//this->m_roomManager.getRooms()[0];
-	//getRoomsResponse.rooms
-	//requestResult.buffer = JsonResponsePacketSerializer::serializeGetRoomResponse()
+	std::vector<RoomData> roomsData;
 
+	getRoomsResponse.rooms = roomsData;
+	
+	requestResult.buffer = JsonResponsePacketSerializer::serializeGetRoomResponse(getRoomsResponse);
+	
 	return requestResult;
 }
 

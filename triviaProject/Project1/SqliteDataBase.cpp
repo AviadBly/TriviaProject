@@ -127,8 +127,8 @@ void SqliteDataBase::create()
 		cout << "CREATE USERNAMES PROBLEM- EITHER EXISTS OR GENERAL ERROR" << endl;
 	}
 	sqlStatement = "CREATE TABLE QUESTIONS (QUESTION TEXT NOT NULL, ANSWER1 TEXT NOT NULL, ANSWER2 TEXT NOT NULL, ANSWER3 TEXT NOT NULL, ANSWER4 TEXT NOT NULL);";
-	const char* newStatement = sqlStatement.c_str();
-	bool check = sendToServer(db, newStatement);
+	newStatement = sqlStatement.c_str();
+	check = sendToServer(db, newStatement);
 	if (!check)
 	{
 		cout << "CREATE QUESTIONS PROBLEM- EITHER EXISTS OR GENERAL ERROR" << endl;
@@ -141,8 +141,8 @@ void SqliteDataBase::create()
 		cout << "INSERT QUESTIONS PROBLEM- EITHER EXISTS OR GENERAL ERROR" << endl;
 	}
 	sqlStatement = "CREATE TABLE STATISTICS(USERNAME TEXT NOT NULL, AVGTIME DOUBLE NOT NULL,CORRECT INTEGER NOT NULL,TOTAL INTEGER NOT NULL,GAMES INTEGER NOT NULL);";
-	const char* newStatement = sqlStatement.c_str();
-	bool check = sendToServer(db, newStatement);
+	newStatement = sqlStatement.c_str();
+	check = sendToServer(db, newStatement);
 	if (!check)
 	{
 		cout << "CREATE STATISTICS PROBLEM- EITHER EXISTS OR GENERAL ERROR" << endl;
