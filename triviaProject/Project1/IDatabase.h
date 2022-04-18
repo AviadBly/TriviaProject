@@ -1,7 +1,9 @@
 #pragma once
 #define DATA_BASE_FILE_NAME "triviaDB.sqlite"
 #include <iostream>
+#include "LoggedUser.h"
 using namespace std;
+#include <list>
 class IDatabase
 {
 public:
@@ -14,6 +16,6 @@ public:
 	virtual int getNumOfCorrectAnswers(string username)=0;
 	virtual int getNumOfTotalAnswers(string username)=0;
 	virtual int getNumOfPlayerGames(string username)=0;
-	virtual const std::list<StatsUser> getStatsGeneral()=0;
+	virtual const list<StatsUser> getStatsGeneral()=0;
 
 };

@@ -8,9 +8,9 @@ using namespace std;
 vector<string> StatisticsManager::getHighScore()
 {
 	//confusing function but don't blame me because instructions were confusing too >:( !!
-	list<StatsUser> allStats;
+	
 	vector<int> top5;
-	allStats = m_database->getStatsGeneral();
+	list<StatsUser> allStats = m_database->getStatsGeneral();
 	vector<int> scores;
 	
 	//get only the scores

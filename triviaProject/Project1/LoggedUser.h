@@ -46,6 +46,11 @@ public:
 	void setCorrect(int correct);
 	void setTotal(int total);
 	void setGames(int games);
+	const std::string& getName() const;
+	const int getCorrect();
+	const int getTotal();
+	const int getGames();
+	const double getTime();
 private:
 	std::string m_name;
 	double m_time;
