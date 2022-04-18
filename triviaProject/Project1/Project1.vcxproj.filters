@@ -134,5 +134,8 @@
     <ClInclude Include="Responses.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MenuRequestHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

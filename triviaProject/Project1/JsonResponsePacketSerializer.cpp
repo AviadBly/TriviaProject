@@ -88,7 +88,16 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetRoomRespons
 {
 	//init json
 	json jsonResponse;
-	jsonResponse["rooms"] = getRoomsResponse.rooms;
+	for (auto i = getRoomsResponse.rooms.begin(); i != getRoomsResponse.rooms.end(); i++) {
+		jsonResponse["id"] += i->id;
+		jsonResponse["isActive"] += i->isActive;
+		jsonResponse["maxPlayers"] += i->maxPlayers;
+		jsonResponse["name"] += i->name;
+		jsonResponse["numOfQuestionsInGame"] += i->numOfQuestionsInGame;
+		jsonResponse["timePerQuestion"] += i->timePerQuestion;
+	}
+	
+
 	std::cout << jsonResponse;
 
 	std::vector<unsigned char> jsonBits = convertJsonToBits(jsonResponse, unsigned char(1));

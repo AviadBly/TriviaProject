@@ -5,6 +5,8 @@
 #include "LoggedUser.h"
 #include "LoginRequestHandler.h"
 #include "MenuRequestHandler.h"
+#include "StatisticsManager.h"
+#include "RoomManager.h"
 
 class LoginRequestHandler;
 class MenuRequestHandler;
@@ -13,15 +15,22 @@ class RequestHandlerFactory {
 
 public:
 	RequestHandlerFactory(IDatabase* database);
-
+	~RequestHandlerFactory();
 	LoginRequestHandler* createLoginRequestHandler();
-	LoginManager& getLoginManger();
-
+	
 	MenuRequestHandler* createMenuRequestHandler();
 
+	//getters
+	LoginManager& getLoginManger();
+	RoomManager& getRoomManager();
+	StatisticsManager& getStatisticsManager();
+
 private:
-	LoginRequestHandler* m_loginRequestHandler; //this is against the uml but it way better
-	MenuRequestHandler* m_menuRequestHandler; //this is against the uml but it way better
+	//pointer to handler, so you dont have to create new ones all the time
+	LoginRequestHandler* m_loginRequestHandler; //this is against the uml but its way better
+	
+	RoomManager m_roomManager;
+	StatisticsManager m_statisticsManager;
 	LoginManager m_loginManager;
 	IDatabase* m_database;
 };

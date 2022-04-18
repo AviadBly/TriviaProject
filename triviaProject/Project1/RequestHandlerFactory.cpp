@@ -6,6 +6,12 @@ RequestHandlerFactory::RequestHandlerFactory(IDatabase* database) : m_loginManag
 	this->m_loginRequestHandler = new LoginRequestHandler(m_loginManager, *this);
 }
 
+RequestHandlerFactory::~RequestHandlerFactory()
+{
+	delete this->m_database;
+	delete this->m_loginRequestHandler;
+}
+
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {
 	return (this->m_loginRequestHandler);
@@ -18,7 +24,6 @@ LoginManager& RequestHandlerFactory::getLoginManger()
 
 MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler()
 {
-	//to do
-	return nullptr;
+	return new MenuRequestHandler(*this);
 }
 

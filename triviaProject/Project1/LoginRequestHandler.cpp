@@ -40,7 +40,7 @@ void LoginRequestHandler::loadErrorMsg(RequestResult& requestResult, std::string
 RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 {
 	RequestResult requestResult;
-	requestResult.buffer = requestInfo.buffer;
+	
 	LoginRequest loginRequest;
 
 	
@@ -78,7 +78,7 @@ RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 RequestResult LoginRequestHandler::signUp(RequestInfo requestInfo)
 {
 	RequestResult requestResult;
-	requestResult.buffer = requestInfo.buffer;
+	
 	SignupRequest signUp;
 
 	try {

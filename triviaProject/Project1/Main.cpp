@@ -8,8 +8,14 @@
 
 int main()
 {
-	
-	try
+	RoomData rm;
+	GetRoomsResponse r;
+	rm.name = "one";
+	r.rooms.push_back(rm);
+	rm.name = "two";
+	r.rooms.push_back(rm);
+	JsonResponsePacketSerializer::serializeGetRoomResponse(r);
+	/*try
 	{
 		WSAInitializer wsa;
 		SqliteDataBase sqlDataBase;
@@ -24,6 +30,6 @@ int main()
 	catch (const std::exception& e)
 	{
 		std::cout << "Exception was thrown in function: " << e.what() << std::endl;
-	}
+	}*/
 	
 }
