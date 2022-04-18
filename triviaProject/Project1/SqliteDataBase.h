@@ -13,6 +13,7 @@ public:
 	virtual bool doesUserExist(string username) ;
 	virtual bool doesPasswordMatch(string username, string password) ;
 	const std::list<StatsUser> getStats(string username);
+	const std::list<StatsUser> getStatsGeneral();
 	virtual void addUser(string username,string password,string mail) ;
 	const std::list<LoggedUser> getUsers();
 	/***************************************************************************/

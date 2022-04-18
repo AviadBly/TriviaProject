@@ -137,9 +137,6 @@
     <ClInclude Include="Responses.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MenuRequestHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StatisticsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>

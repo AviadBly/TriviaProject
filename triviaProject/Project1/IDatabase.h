@@ -1,9 +1,9 @@
 #pragma once
 #define DATA_BASE_FILE_NAME "triviaDB.sqlite"
 #include <iostream>
-#include <list>
-
+#include "LoggedUser.h"
 using namespace std;
+#include <list>
 class IDatabase
 {
 public:
