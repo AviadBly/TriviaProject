@@ -21,10 +21,11 @@ class Room
 public:
 	void addUser(LoggedUser user);
 	void removeUser(LoggedUser user);
-	list<string> getAllUsers();
-	RoomData getData();
-	
+	list<string> getAllUsers() const;
+	RoomData getData() const;
+	bool canNewUserJoin();
 private:
+	
 	RoomData m_metadata;
 	vector<LoggedUser> m_users;
 
