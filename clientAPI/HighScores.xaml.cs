@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace clientAPI
 {
     /// <summary>
-    /// Interaction logic for HighScoreWindow.xaml
+    /// Interaction logic for HighScores.xaml
     /// </summary>
-    public partial class HighScoreWindow : Window
+    public partial class HighScores : Window
     {
-        public HighScoreWindow()
+        public HighScores()
         {
             InitializeComponent();
         }
