@@ -37,7 +37,7 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 	return requestResult;
 }
 
-RequestResult MenuRequestHandler::signOut(RequestInfo requestInfo)
+RequestResult MenuRequestHandler::logOut(RequestInfo requestInfo)
 {
 	return RequestResult();
 	//this->m_handlerFactory.getLoginManger().logout();
@@ -67,12 +67,12 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo requestInfo)
 	
 	for (auto i = m_roomManager.getRooms().begin(); i != m_roomManager.getRooms().end(); i++) {
 	
-		/*if (i->id == getPlayersInRoomRequest.roomId) {
+		if (i->id == getPlayersInRoomRequest.roomId) {
 			for (auto m = i->getAllUsers().begin(); m != i->getAllUsers().end(); m++)[
 				getPlayersInRoomResponseRoomsResponse.players.push_back(*m);
 			]
 			
-		}*/
+		}
 		
 	}
 
@@ -125,7 +125,9 @@ RequestResult MenuRequestHandler::getHighScore(RequestInfo requestInfo)
 	GetHighScoreResponse getHighScoreResponse;
 	RequestResult requestResult;
 
+	getHighScoreResponse.statistics = m_statisticsManager.getHighScore();
 
+	requestResult.buffer = JsonResponsePacketSerializer::serializeHighScoreResponse(getHighScoreResponse);
 
 	return requestResult;
 }
