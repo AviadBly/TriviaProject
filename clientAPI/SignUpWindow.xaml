@@ -14,10 +14,10 @@
             <Separator></Separator>
             
             <Label Content="Username" Foreground="white"/>
-            <TextBlock Name="UsernameText" Background="#545d6a" Foreground="White" FontSize="18" ></TextBlock>
+            <TextBox Name="UsernameText" Background="#545d6a" Foreground="White" FontSize="18" ></TextBox>
 
             <Label Content="Email" Foreground="white"/>
-            <TextBlock Name="EmailText" Background="#545d6a" Foreground="White" FontSize="18" ></TextBlock>
+            <TextBox Name="EmailText" Background="#545d6a" Foreground="White" FontSize="18" ></TextBox>
 
             <Label Content="Password" Foreground="white"/>
             <PasswordBox Name="PasswordText" Background="#545d6a" Foreground="White" FontSize="18"/>

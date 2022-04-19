@@ -12,8 +12,8 @@
             <Label Content="login" Foreground="White" FontSize="25" HorizontalAlignment="Center"/>
             <Separator></Separator>
             <Label Content="Username" Foreground="white"/>
-            <TextBlock Name="UsernameText" Background="#545d6a" Foreground="White" FontSize="18" ></TextBlock>
-
+            <TextBox Name="UsernameText" Background="#545d6a" Foreground="White" FontSize="18" ></TextBox>
+            
             <Label Content="Password" Foreground="white"/>
             <PasswordBox Name="PasswordText" Background="#545d6a" Foreground="White" FontSize="18"/>
             <Button x:Name="LoginSubmitButton" Content="Login" Margin="40" Background="SkyBlue" Height="30" Width="100" />
