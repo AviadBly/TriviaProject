@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:clientAPI"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
-    <Grid>
+        Title="Login" Height="450" Width="500" FontSize="15" Background="Blue">
+    <Border Background="#2e3137" CornerRadius="50" Margin="40">
+        <StackPanel Margin="40">
+
+            <Label Content="login" Foreground="White" FontSize="25" HorizontalAlignment="Center"/>
+            <Separator></Separator>
+            <Label Content="Username" Foreground="white"/>
+            <TextBlock Name="UsernameText" Background="#545d6a" Foreground="White" FontSize="18" ></TextBlock>
+
+            <Label Content="Password" Foreground="white"/>
+            <PasswordBox Name="PasswordText" Background="#545d6a" Foreground="White" FontSize="18"/>
+            <Button x:Name="SubmitButton" Content="Login" Margin="40" Background="SkyBlue" Height="30" Width="100" />
         
-    </Grid>
+        </StackPanel>
+    </Border>
 </Window>
