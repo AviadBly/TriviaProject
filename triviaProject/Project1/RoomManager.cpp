@@ -39,13 +39,13 @@ unsigned int RoomManager::getRoomState(int ID)
 	throw MyException("Error!: No such ID! ");
 }
 
-vector<RoomData> RoomManager::getRooms()
+vector<Room> RoomManager::getRooms()
 {
-	vector<RoomData> newVector;
+	vector<Room> newVector;
 	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
 	{
-		RoomData currData=it->second.getData();
-		newVector.push_back(currData);
+		Room currRoom = it->second;
+		newVector.push_back(currRoom);
 	}
 	return newVector;
 }

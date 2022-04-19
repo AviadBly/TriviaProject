@@ -12,7 +12,7 @@ public:
 	void createRoom(LoggedUser user,RoomData data);
 	void deleteRoom(int ID);
 	unsigned int getRoomState(int ID);
-	vector<RoomData> getRooms();
+	vector<Room> getRooms();
 
 
 private:
