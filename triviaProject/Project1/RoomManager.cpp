@@ -49,3 +49,4 @@ vector<Room> RoomManager::getRooms()
 	}
 	return newVector;
 }
+
