@@ -1,0 +1,33 @@
+﻿<Window x:Class="clientAPI.JoinRoom"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:clientAPI"
+        mc:Ignorable="d"
+        Title="Create Room" Height="730" Width="565" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
+    <Grid Margin="20">
+        <Label Content="Join Room" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Center" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="505" Margin="0,77,0,0">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="0"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="0"/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Separator Margin="0,77,49,0"></Separator>
+        <Border Background="#85C1E9" Margin="10,228,49,150" CornerRadius="40"  >
+            <StackPanel Margin="20,20,10,10">
+                <Label Content="Active Rooms:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
+                <ListBox   d:ItemsSource="{d:SampleData ItemCount=6}" SelectionChanged="ListBox_SelectionChanged" />
+
+
+
+
+            </StackPanel>
+        </Border>
+        
+    </Grid>
+</Window>

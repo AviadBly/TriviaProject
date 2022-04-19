@@ -5,16 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:clientAPI"
         mc:Ignorable="d"
-        Title="Trivia Menu" Height="800" Width="750" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
-    <Grid Margin="20">
-        <Label Content="Israeli Trivia" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Center" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold"/>
-        <Button Content="Create Room" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="82" Width="240" FontSize="30" Foreground="#1F618D" Background="#76D7C4" FontWeight="bold"/>
-        <Button Content="Join Room" HorizontalAlignment="right" Margin="460,0,0,0" VerticalAlignment="Center" Height="82" Width="240" FontSize="30" Click="Button_Click"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
-        <Button Content="Statistics" HorizontalAlignment="Center" Margin="0,496,0,0" VerticalAlignment="Top" Height="82" Width="240" FontSize="30" Click="Button_Click"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
+        Title="Trivia Menu" Height="730" Width="565" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
+    <Grid Margin="10,20,20,-16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Israeli Trivia" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Left" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" Margin="81,-10,0,10" Grid.RowSpan="3" Width="348"/>
+        <Button Content="Create Room" HorizontalAlignment="Left" Margin="10,240,0,0" VerticalAlignment="Top" Height="82" Width="202" FontSize="30" Foreground="#1F618D" Background="#76D7C4" FontWeight="bold"/>
+        <Button Content="Join Room" HorizontalAlignment="Left" Margin="336,240,0,0" VerticalAlignment="Top" Height="82" Width="198" FontSize="30" Click="Button_Click"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
+        <Button Content="Statistics" HorizontalAlignment="Center" Margin="0,397,0,0" VerticalAlignment="Top" Height="82" Width="240" FontSize="30" Click="Button_Click"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
 
-        <Button Content="Exit" HorizontalAlignment="Left" Margin="15,652,0,0" VerticalAlignment="Top" Height="82" Width="151" FontSize="30" Click="Button_Click"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
-        <Button Content="Surprise" HorizontalAlignment="Left" Margin="514,652,0,0" VerticalAlignment="Top" Height="82" Width="152" FontSize="30" Click="Button_Click"  Background="red" Foreground="#1F618D" FontWeight="bold"/>
-        <Image Margin="206,110,206,484" Source="/Image1.png" Stretch="Fill"/>
+        <Button Content="Exit" HorizontalAlignment="Left" Margin="10,578,0,0" VerticalAlignment="Top" Height="82" Width="151" FontSize="30" Click="Button_Click"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
+        <Button Content="Surprise" HorizontalAlignment="Left" Margin="382,578,0,0" VerticalAlignment="Top" Height="82" Width="152" FontSize="30" Click="Button_Click"  Background="red" Foreground="#1F618D" FontWeight="bold"/>
+        <Image Margin="180,78,205,514" Source="/Image1.png" Stretch="Fill"/>
 
     </Grid>
 
