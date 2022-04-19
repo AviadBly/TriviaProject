@@ -33,11 +33,11 @@ struct GetPlayersInRoomResponse {
 	std::vector<std::string> players;
 };
 
-struct getHighScoreResponse : public Response {
+struct GetHighScoreResponse : public Response {
 	std::vector<std::string> statistics;
 };
 
-struct getPersonalStatsResponse : public Response {
+struct GetPersonalStatsResponse : public Response {
 	std::vector<std::string> statistics;
 };
 

@@ -88,17 +88,6 @@ GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRo
 	return getPlayersInRoomRequest;
 }
 
-GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetRoomsRequest(std::vector<char unsigned> jsonRequestBits)
-{
-	GetPlayersInRoomRequest getPlayersInRoomRequest;
-	//get json format from bits
-	json jsonData = getJsonFromBits(jsonRequestBits);
-
-
-	getPlayersInRoomRequest.roomId = jsonData.at("roomId");
-
-	return getPlayersInRoomRequest;
-}
 //ErrorResponse JsonRequestPacketDeserializer::deserializeErrorResponse(std::vector<char unsigned> jsonResponseBits)
 //{
 //	ErrorResponse errorRequest;
