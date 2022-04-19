@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:clientAPI"
         mc:Ignorable="d"
-         Title="Create Room" Height="800" Width="750" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
+         Title="Create Room" Height="730" Width="565" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
     <Grid Margin="20">
-        <Label Content="Create Room" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Center" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="610" Margin="0,77,0,10">
+        <Label Content="Create Room" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Center" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="505" Margin="0,77,0,0">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -17,7 +17,7 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Separator Margin="0,0,0,4"></Separator>
+        <Separator Margin="0,77,49,0"></Separator>
         <Border Background="#85C1E9" Margin="10,228,49,150" CornerRadius="40"  >
             <StackPanel Margin="20,20,10,10">
                 <Label Content="Room Name:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
