@@ -26,7 +26,7 @@ struct LogoutResponse : public Response {
 };
 
 struct GetRoomsResponse : public Response {
-	std::vector<RoomData> rooms;
+	std::vector<Room> rooms;
 };
 
 struct GetPlayersInRoomResponse {

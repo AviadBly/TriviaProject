@@ -38,7 +38,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeErrorResponse(
 	return jsonBits;
 }
 
-std::vector<unsigned char> JsonResponsePacketSerializer::serializeLogoutResponse(const LogoutResponse logoutResponse)
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeLogoutResponse(const LogoutResponse& logoutResponse)
 {
 	//init json
 	json jsonResponse;
@@ -49,7 +49,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeLogoutResponse
 	return jsonBits;
 }
 
-std::vector<unsigned char> JsonResponsePacketSerializer::serializeCreateRoomResponse(const CreateRoomResponse createRoomResponse)
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeCreateRoomResponse(const CreateRoomResponse& createRoomResponse)
 {
 	//init json
 	json jsonResponse;
@@ -60,7 +60,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeCreateRoomResp
 	return jsonBits;
 }
 
-std::vector<unsigned char> JsonResponsePacketSerializer::serializeJoinRoomResponse(const JoinRoomResponse joinRoomResponse)
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeJoinRoomResponse(const JoinRoomResponse& joinRoomResponse)
 {
 	//init json
 	json jsonResponse;
@@ -71,7 +71,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeJoinRoomRespon
 	return jsonBits;
 }
 
-std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(const GetPlayersInRoomResponse getPlayersInRoomResponse)
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(const GetPlayersInRoomResponse& getPlayersInRoomResponse)
 {
 	//init json
 	json jsonResponse;
@@ -84,20 +84,23 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetPlayersInRo
 }
 
 //this may not be final
-std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetRoomResponse(const GetRoomsResponse getRoomsResponse)
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetRoomResponse(const GetRoomsResponse& getRoomsResponse)
 {
 	//init json
 	json jsonResponse;
 	for (auto i = getRoomsResponse.rooms.begin(); i != getRoomsResponse.rooms.end(); i++) {
-		jsonResponse["id"] += i->id;
-		jsonResponse["isActive"] += i->isActive;
-		jsonResponse["maxPlayers"] += i->maxPlayers;
-		jsonResponse["name"] += i->name;
-		jsonResponse["numOfQuestionsInGame"] += i->numOfQuestionsInGame;
-		jsonResponse["timePerQuestion"] += i->timePerQuestion;
+		
+		RoomData data = i->getData();
+		//add the roomData to the json format
+		jsonResponse["isActive"] += data.isActive;
+		jsonResponse["maxPlayers"] += data.maxPlayers;
+		jsonResponse["name"] += data.name;
+		jsonResponse["numOfQuestionsInGame"] += data.numOfQuestionsInGame;
+		jsonResponse["timePerQuestion"] += data.timePerQuestion;
+		
 	}
 	
-
+	
 	std::cout << jsonResponse;
 
 	std::vector<unsigned char> jsonBits = convertJsonToBits(jsonResponse, unsigned char(1));
@@ -106,7 +109,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetRoomRespons
 }
 
 //this may not be final
-std::vector<unsigned char> JsonResponsePacketSerializer::serializeHighScoreResponse(const getHighScoreResponse getHighScoreResponse)
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeHighScoreResponse(const GetHighScoreResponse& getHighScoreResponse)
 {
 	//init json
 	json jsonResponse;
@@ -117,6 +120,8 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeHighScoreRespo
 
 	return jsonBits;
 }
+
+
 
 //return a vector of bits from the given jsonFormat message + 4 bits of the length of the message + the code
 std::vector<unsigned char> JsonResponsePacketSerializer::convertJsonToBits(const json& jsonFormat, unsigned char code)

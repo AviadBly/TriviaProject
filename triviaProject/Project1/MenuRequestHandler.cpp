@@ -37,7 +37,7 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 	return requestResult;
 }
 
-RequestResult MenuRequestHandler::signOut(RequestInfo requestInfo)
+RequestResult MenuRequestHandler::logOut(RequestInfo requestInfo)
 {
 	return RequestResult();
 	//this->m_handlerFactory.getLoginManger().logout();
@@ -48,7 +48,7 @@ RequestResult MenuRequestHandler::getRooms(RequestInfo requestInfo)
 	GetRoomsResponse getRoomsResponse;
 	RequestResult requestResult;
 	
-	getRoomsResponse.rooms = this->m_roomManager.getRooms();;
+	getRoomsResponse.rooms = this->m_roomManager.getRooms();
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetRoomResponse(getRoomsResponse);
 	
@@ -67,13 +67,15 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo requestInfo)
 	
 	for (auto i = m_roomManager.getRooms().begin(); i != m_roomManager.getRooms().end(); i++) {
 	
-		/*if (i->id == getPlayersInRoomRequest.roomId) {
-			for (auto m = i->getAllUsers().begin(); m != i->getAllUsers().end(); m++)[
+		//finds the room with the given id
+		if (i->getData().id == getPlayersInRoomRequest.roomId) {
+
+			for (auto m = i->getAllUsers().begin(); m != i->getAllUsers().end(); m++){
 				getPlayersInRoomResponseRoomsResponse.players.push_back(*m);
-			]
+			}
 			
-		}*/
-		
+		} 
+	
 	}
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(getPlayersInRoomResponseRoomsResponse);
@@ -89,9 +91,18 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo requestInfo)
 	RequestResult requestResult;
 	JoinRoomResponse joinRoomResponse;
 	
+	joinRoomResponse.status = joinRoomResponse.status_error;
 	//to do: check if you the user can join room
+	for (auto i = m_roomManager.getRooms().begin(); i != m_roomManager.getRooms().end(); i++) {
 
+		//finds the room with the given id
+		if (i->getData().id && i->canNewUserJoin()) {
 
+			joinRoomResponse.status = joinRoomResponse.status_ok;
+		}
+
+	}
+	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeJoinRoomResponse(joinRoomResponse);
 
 	return requestResult;
@@ -125,7 +136,9 @@ RequestResult MenuRequestHandler::getHighScore(RequestInfo requestInfo)
 	GetHighScoreResponse getHighScoreResponse;
 	RequestResult requestResult;
 
+	getHighScoreResponse.statistics = m_statisticsManager.getHighScore();
 
+	requestResult.buffer = JsonResponsePacketSerializer::serializeHighScoreResponse(getHighScoreResponse);
 
 	return requestResult;
 }
