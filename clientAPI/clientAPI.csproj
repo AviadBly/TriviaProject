@@ -7,4 +7,16 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Bronze Medal.jpg" />
+    <None Remove="gold medal.jpg" />
+    <None Remove="Silver Medal.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Bronze Medal.jpg" />
+    <Resource Include="gold medal.jpg" />
+    <Resource Include="Silver Medal.jpg" />
+  </ItemGroup>
+
 </Project>
