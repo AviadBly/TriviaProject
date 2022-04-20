@@ -23,5 +23,23 @@ namespace clientAPI
         {
             InitializeComponent();
         }
+
+        private void clickSignUp(object sender, RoutedEventArgs e)
+        {
+
+            TextBox? usernameText = sender as TextBox;
+
+            string username = UsernameText.Text;
+            string password = PasswordText.Password.ToString();
+            string email = EmailText.Text;
+
+            if (username != null)
+                Console.WriteLine(username);
+
+
+            menu menuWindow = new menu();
+            menuWindow.Show();
+            this.Close();
+        }
     }
 }

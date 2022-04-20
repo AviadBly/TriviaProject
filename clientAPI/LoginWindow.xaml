@@ -16,7 +16,7 @@
             
             <Label Content="Password" Foreground="white"/>
             <PasswordBox Name="PasswordText" Background="#545d6a" Foreground="White" FontSize="18"/>
-            <Button x:Name="LoginSubmitButton" Content="Login" Margin="40" Background="SkyBlue" Height="30" Width="100" />
+            <Button x:Name="LoginSubmitButton" Click ="clickLogin" Content="Login" Margin="40" Background="SkyBlue" Height="30" Width="100" />
         
         </StackPanel>
     </Border>
