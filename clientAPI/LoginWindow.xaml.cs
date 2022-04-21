@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
+using System.Text.Json;
+
 
 namespace clientAPI
 {
@@ -31,6 +33,30 @@ namespace clientAPI
             
         }
 
+        
+        public class gg {
+            //public gg(int status)
+            //{
+            //    this.status = status;
+            //}
+
+            //public int status = 0;
+            //public int g
+            //{
+            //    get => status;
+
+            //}
+
+            //set { myPropertyVar = value; }
+            public gg(int status)
+            {
+                this.status = status;
+            }
+            public int Status { get; set; } 
+            public int status = 0;
+            
+        }
+
         private void clickLogin(object sender, RoutedEventArgs e)
         {
 
@@ -39,9 +65,7 @@ namespace clientAPI
             //{
             //    return;
             //}
-
-            TextBox? usernameText = sender as TextBox;
-
+            
             string username = UsernameText.Text;
             string password = PasswordText.Password.ToString();
             if (username != null)   
