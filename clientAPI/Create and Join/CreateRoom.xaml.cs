@@ -1,4 +1,6 @@
-﻿using System;
+﻿using clientAPI.Create_and_Join;
+using clientAPI.Login_and_Signup;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,18 @@ namespace clientAPI
         public CreateRoom()
         {
             InitializeComponent();
+        }
+
+        private void clickExit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            menu menu = new menu();
+            menu.Show();
+        }
+
+        private void clickCreate(object sender, RoutedEventArgs e)
+        {
+            Room newRoom = new Room();
         }
     }
 }

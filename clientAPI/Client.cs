@@ -77,12 +77,12 @@ namespace clientAPI
             this.m_socket.Write(Encoding.ASCII.GetBytes(finalMsg));
         }
 
-        public byte[] receiver()
-        {
-            byte[] msgBytes = new byte;
+        //public byte[] receiver()
+        //{
+        //    byte[] msgBytes = new byte;
 
-            return msgBytes
-        }
+        //    return msgBytes
+        //}
 
     }
 }

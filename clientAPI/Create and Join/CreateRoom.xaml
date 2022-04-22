@@ -18,7 +18,7 @@
             </Label.RenderTransform>
         </Label>
         <Separator Margin="0,77,49,0"></Separator>
-        <Border Background="#85C1E9" Margin="10,228,49,150" CornerRadius="40"  >
+        <Border Background="#85C1E9" Margin="10,188,49,50" CornerRadius="40"  >
             <StackPanel Margin="20,20,10,10">
                 <Label Content="Room Name:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
                 <TextBox Name="Name" Background="#545d6a" Height="41" Foreground="White"/>
@@ -31,8 +31,13 @@
 
 
 
+
+
             </StackPanel>
+
         </Border>
+        <Button Content="Create Room" FontSize="30" HorizontalAlignment="Left" Margin="48,546,0,0" VerticalAlignment="Top" Height="50" RenderTransformOrigin="0.474,0.602" Width="214" Click="clickCreate"/>
+        <Button Content="Go back" FontSize="20" HorizontalAlignment="Left" Margin="356,546,0,0" VerticalAlignment="Top" Height="50" RenderTransformOrigin="0.474,0.602" Width="88" Click="clickExit"/>
 
 
 

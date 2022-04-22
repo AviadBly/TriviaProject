@@ -33,13 +33,22 @@ namespace clientAPI
             string password = PasswordText.Password.ToString();
             string email = EmailText.Text;
 
-            if (username != null)
-                Console.WriteLine(username);
+
+            if (username.Length > 8 || password.Length > 8)
+            {
+                MessageBox.Show("Username or password length must be under 8 characters!");
+
+            }
+            else
+            {
+                MessageBox.Show("Username Created successfully!");
 
 
-            menu menuWindow = new menu();
-            menuWindow.Show();
-            this.Close();
+
+                menu menuWindow = new menu();
+                menuWindow.Show();
+                this.Close();
+            }
         }
     }
 }

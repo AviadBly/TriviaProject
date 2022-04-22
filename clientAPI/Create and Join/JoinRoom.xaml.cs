@@ -28,6 +28,16 @@ namespace clientAPI
         {
 
         }
+        private void clickExit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            menu menu = new menu();
+            menu.Show();
+        }
 
+        private void clickJoin(object sender, RoutedEventArgs e)
+        {
+          
+        }
     }
 }

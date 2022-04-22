@@ -7,16 +7,28 @@
         mc:Ignorable="d"
         Title="Trivia Menu" Height="730" Width="565" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
     <Grid Margin="10,20,20,-16">
-       
-        
-        <Label Content="Israeli Trivia" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Left" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" Margin="81,-10,0,10" Grid.RowSpan="3" Width="348"/>
-        <Button Content="Create Room" Click="clickCreate"  HorizontalAlignment="Left" Margin="10,240,0,0" VerticalAlignment="Top" Height="82" Width="202" FontSize="30" Foreground="#1F618D" Background="#76D7C4" FontWeight="bold"/>
-        <Button Content="Join Room" Click="JoinClick" HorizontalAlignment="Left" Margin="336,240,0,0" VerticalAlignment="Top" Height="82" Width="198" FontSize="30"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold" />
-        <Button Content="Statistics" Click="clickStats" HorizontalAlignment="Center" Margin="0,397,0,0" VerticalAlignment="Top" Height="82" Width="240" FontSize="30" Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
+
+
+        <Label Content="Israeli Trivia" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Left" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" Margin="17,15,0,605" Width="377"/>
+        <Button Content="Create Room" Click="clickCreate"  HorizontalAlignment="Left" Margin="0,130,0,0" VerticalAlignment="Top" Height="82" Width="202" FontSize="30" Foreground="#1F618D" Background="#76D7C4" FontWeight="bold"/>
+        <Button Content="Join Room" Click="JoinClick" HorizontalAlignment="Left" Margin="0,238,0,0" VerticalAlignment="Top" Height="82" Width="198" FontSize="30"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold" />
+        <Button Content="Statistics" Click="clickStats" HorizontalAlignment="Left" Margin="268,226,0,0" VerticalAlignment="Top" Height="82" Width="240" FontSize="30" Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
 
         <Button Content="Exit" HorizontalAlignment="Left" Margin="10,578,0,0" VerticalAlignment="Top" Height="82" Width="151" FontSize="30" Click="clickExit"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
         <Button Content="Surprise" HorizontalAlignment="Left" Margin="382,578,0,0" VerticalAlignment="Top" Height="82" Width="152" FontSize="30" Click="clickSurprise"  Background="red" Foreground="#1F618D" FontWeight="bold"/>
-        <Image Margin="180,78,205,514" Source="/Image1.png" Stretch="Fill"/>
+        <Grid HorizontalAlignment="Left" Height="130" Margin="146,411,0,0" VerticalAlignment="Top" Width="248" Background="Turquoise">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1" />
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+            <GridSplitter Width="5" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Height="82" Margin="106,0,102,0" VerticalAlignment="Top" />
+            <Button  Background="#85C1E9" Content="Login" FontSize="30"  Foreground="#1F618D" FontWeight="bold" HorizontalAlignment="Right" VerticalAlignment="Center" Height="170" Click="clickLogin" Width="133" Grid.ColumnSpan="3" Margin="0,0,120,0"/>
+            <Button  Background="#85C1E9"  Content="Sign up" FontSize="30" Foreground="#1F618D" FontWeight="bold" HorizontalAlignment="Center" VerticalAlignment="Center" Height="170" Click="clickSign" Grid.Column="2" Width="126"/>
+
+        </Grid>
+        <Image Margin="352,105,27,505" Source="/Pictures/Image1.png" Stretch="Fill"/>
 
     </Grid>
 

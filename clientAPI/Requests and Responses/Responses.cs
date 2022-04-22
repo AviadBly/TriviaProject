@@ -80,9 +80,9 @@ namespace clientAPI.Requests_and_Responses
             this.statistics = statistics;
         }
 
-        public Statistics
        
-	}
+       
+	};
 	internal class  GetPersonalStatsResponse :  Response
 	{
 		List<string> statistics;
