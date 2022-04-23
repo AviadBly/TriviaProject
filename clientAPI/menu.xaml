@@ -9,7 +9,7 @@
     <Grid Margin="10,20,20,-16">
 
 
-        <Label Content="Israeli Trivia" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Left" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" Margin="17,15,0,605" Width="377"/>
+        <Label Content="Israeli Trivia" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Left" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" Margin="17,15,0,580" Width="441"/>
         <Button Content="Create Room" Click="clickCreate"  HorizontalAlignment="Left" Margin="0,130,0,0" VerticalAlignment="Top" Height="82" Width="202" FontSize="30" Foreground="#1F618D" Background="#76D7C4" FontWeight="bold"/>
         <Button Content="Join Room" Click="JoinClick" HorizontalAlignment="Left" Margin="0,238,0,0" VerticalAlignment="Top" Height="82" Width="198" FontSize="30"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold" />
         <Button Content="Statistics" Click="clickStats" HorizontalAlignment="Left" Margin="268,226,0,0" VerticalAlignment="Top" Height="82" Width="240" FontSize="30" Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>

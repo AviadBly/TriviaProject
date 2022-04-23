@@ -71,13 +71,14 @@ namespace clientAPI
             string username = UsernameText.Text;
             string password = PasswordText.Password.ToString();
 
-            //LoginRequest loginRequest = new LoginRequest(username, password);
+            
             if (username == null || password == null)
             {
                 return;
-            }   
+            }
+            LoginRequest loginRequest = new LoginRequest(username, password);
 
-         //   Console.WriteLine(loginRequest);
+            
 
             menu menuWindow = new menu();
             menuWindow.Show();

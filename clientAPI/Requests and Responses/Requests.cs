@@ -42,6 +42,20 @@ namespace clientAPI.Requests
         public uint RoomId { get; set; }
 
     }
+
+    internal class LoginRequest
+    {
+       string  username;
+       string password;
+
+        public LoginRequest(string username, string password)
+        {
+            this.username = username;
+            this.password = password;
+        }
+        public string Username { get; set;}
+        public string Password { get; set; }
+    }
     internal class JoinRoomRequest
     {
         uint roomId;

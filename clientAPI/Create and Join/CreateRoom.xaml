@@ -21,7 +21,7 @@
         <Border Background="#85C1E9" Margin="10,188,49,50" CornerRadius="40"  >
             <StackPanel Margin="20,20,10,10">
                 <Label Content="Room Name:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
-                <TextBox Name="Name" Background="#545d6a" Height="41" Foreground="White"/>
+                <TextBox Name="roomName" Background="#545d6a" Height="41" Foreground="White"/>
                 <Label Content="Time Per Question:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
                 <TextBox Name="Time" Background="#545d6a" Height="41" Foreground="White"/>
                 <Label Content="Amount of Players:" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74"/>

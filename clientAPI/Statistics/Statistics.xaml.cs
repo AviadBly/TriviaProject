@@ -24,9 +24,13 @@ namespace clientAPI
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+       
 
+        private void backClick(object sender, RoutedEventArgs e)
+        {
+            menu menu = new menu();
+            menu.Show();
+            this.Close();
         }
     }
 }

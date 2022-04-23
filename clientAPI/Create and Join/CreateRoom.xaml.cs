@@ -1,5 +1,6 @@
 ﻿using clientAPI.Create_and_Join;
 using clientAPI.Login_and_Signup;
+using clientAPI.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+static class constants
+{
+    public const int MAXQUESTIONS = 10;
+}
 
 namespace clientAPI
 {
@@ -35,7 +40,13 @@ namespace clientAPI
 
         private void clickCreate(object sender, RoutedEventArgs e)
         {
-            Room newRoom = new Room();
+            uint players = Convert.ToUInt32(Players.Text);
+            uint time = Convert.ToUInt32(Time.Text);
+
+            CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text,players, constants.MAXQUESTIONS,time);
+
+
+            
         }
     }
 }
