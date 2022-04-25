@@ -14,7 +14,7 @@ namespace clientAPI
     internal class Client
     {
         private NetworkStream? m_socket;
-        public Client(String server)
+        public Client(String server, Int32 port)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace clientAPI
                 // Note, for this client to work you need to have a TcpServer
                 // connected to the same address as specified by the server, port
                 // combination.
-                Int32 port = 8200;
+                //Int32 port = 8200;
                 TcpClient client = new TcpClient(server, port);
 
                 // Translate the passed message into ASCII and store it as a Byte array.
