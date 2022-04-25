@@ -17,6 +17,7 @@ struct LoginRequest {
 	std::string password;
 };
 
+
 struct SignupRequest : public LoginRequest {
 	std::string email;
 };
