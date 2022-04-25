@@ -13,7 +13,7 @@ namespace clientAPI
 {
     internal class Client
     {
-        private NetworkStream? m_socket;
+        private NetworkStream m_socket;
         public Client(String server, Int32 port)
         {
             try
@@ -79,7 +79,6 @@ namespace clientAPI
 
         public byte[] receiver()
         {
-
 
             // Buffer to store the response bytes.
             byte[] data = new Byte[256];

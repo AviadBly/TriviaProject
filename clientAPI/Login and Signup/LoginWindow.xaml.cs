@@ -59,6 +59,7 @@ namespace clientAPI
             LoginRequest loginRequest = new LoginRequest(username, password);
 
             Client client = new Client("127.0.0.1", 8200);
+
             byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
 
             client.sender(System.Text.Encoding.Default.GetString(data), 4);
