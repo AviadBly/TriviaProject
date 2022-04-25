@@ -1,4 +1,7 @@
-﻿using System;
+﻿using clientAPI.Create_and_Join;
+using clientAPI.Login_and_Signup;
+using clientAPI.Requests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +14,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+static class constants
+{
+    public const int MAXQUESTIONS = 10;
+}
 
 namespace clientAPI
 {
@@ -22,6 +29,24 @@ namespace clientAPI
         public CreateRoom()
         {
             InitializeComponent();
+        }
+
+        private void clickExit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            menu menu = new menu();
+            menu.Show();
+        }
+
+        private void clickCreate(object sender, RoutedEventArgs e)
+        {
+            uint players = Convert.ToUInt32(Players.Text);
+            uint time = Convert.ToUInt32(Time.Text);
+
+            CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text,players, constants.MAXQUESTIONS,time);
+
+
+            
         }
     }
 }

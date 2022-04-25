@@ -1,4 +1,5 @@
-﻿using System;
+﻿using clientAPI.Requests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,13 +34,27 @@ namespace clientAPI
             string password = PasswordText.Password.ToString();
             string email = EmailText.Text;
 
-            if (username != null)
-                Console.WriteLine(username);
+
+            if (username.Length > 8 || password.Length > 8|| username.Length<4||password.Length<4)
+            {
+                MessageBox.Show("Username or password length must be under 8 characters and over 4 characters!");
+
+            }
+            else
+            {
+                SignUpRequest signUpRequest = new SignUpRequest(username, password, email);
+                //
+                //
 
 
-            menu menuWindow = new menu();
-            menuWindow.Show();
-            this.Close();
+                MessageBox.Show("Username Created successfully!");
+
+
+
+                menu menuWindow = new menu();
+                menuWindow.Show();
+                this.Close();
+            }
         }
     }
 }

@@ -79,9 +79,9 @@ namespace clientAPI
 
         public byte[] receiver()
         {
-            byte[] msgBytes = new byte[1096];
+            byte[] msgBytes = new byte;
 
-            return msgBytes;
+            return msgBytes
         }
 
     }

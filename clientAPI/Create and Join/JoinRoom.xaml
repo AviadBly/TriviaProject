@@ -18,16 +18,19 @@
             </Label.RenderTransform>
         </Label>
         <Separator Margin="0,77,49,0"></Separator>
-        <Border Background="#85C1E9" Margin="10,228,49,150" CornerRadius="40"  >
+        <Border Background="#85C1E9" Margin="10,228,49,39" CornerRadius="40"  >
             <StackPanel Margin="20,20,10,10">
                 <Label Content="Active Rooms:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
-                <ListBox   d:ItemsSource="{d:SampleData ItemCount=6}" SelectionChanged="ListBox_SelectionChanged" />
+                <ListBox  Name="roomsList" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=6}" SelectionChanged="ListBox_SelectionChanged" />
 
 
 
 
             </StackPanel>
         </Border>
-        
+        <Button Content="Join Room" FontSize="30" HorizontalAlignment="Left" Margin="29,559,0,0" VerticalAlignment="Top" Height="50" RenderTransformOrigin="0.474,0.602" Width="214" Click="clickJoin"/>
+        <Button Content="Go back" FontSize="20" HorizontalAlignment="Left" Margin="348,559,0,0" VerticalAlignment="Top" Height="50" RenderTransformOrigin="0.541,0.51" Width="88" Click="clickExit"/>
+
+
     </Grid>
 </Window>
