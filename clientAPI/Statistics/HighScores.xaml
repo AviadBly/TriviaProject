@@ -8,9 +8,9 @@
         Title="HighScores" Height="730" Width="565" Background="#6a6b6f"  >
     <Grid>
         <Label Content="High Scores!" HorizontalAlignment="Center" Margin="0,59,0,0" VerticalAlignment="Top" Width="298" Height="95" FontSize="50" Foreground="Yellow"/>
-        <Label Content="Player 1" HorizontalAlignment="Left" Margin="222,517,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20"/>
-        <Label Content="Player 2" HorizontalAlignment="Left" Margin="66,517,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20"/>
-        <Label Content="Player 3" HorizontalAlignment="Left" Margin="378,522,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20"/>
+        <TextBlock Name="player1" HorizontalAlignment="Left" Margin="222,517,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20"/>
+        <TextBlock Name="player2" HorizontalAlignment="Left" Margin="66,517,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20"/>
+        <TextBlock Name="player3" HorizontalAlignment="Left" Margin="378,522,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20" Text=""/>
         <Label Content="The Goverment  Is Proud!" HorizontalAlignment="Left" Margin="18,543,0,0" VerticalAlignment="Top" Width="564" Height="116" FontSize="40" FontStretch="SemiCondensed" FontStyle="Oblique" FontWeight="Bold" Foreground="Yellow"/>
         <Image Margin="85,154,85,197" Source="/Pictures/Image5.png" Stretch="Fill"/>
         <Button Content="Go Back" Click="ClickExit" FontSize="30" HorizontalAlignment="Left" Margin="398,625,0,0" VerticalAlignment="Top" Height="58" Width="124"/>

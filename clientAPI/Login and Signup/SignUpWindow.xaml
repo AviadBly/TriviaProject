@@ -22,7 +22,7 @@
             <Label Content="Password" Foreground="white"/>
             <PasswordBox Name="PasswordText" Background="#545d6a" Foreground="White" FontSize="18"/>
             <Button x:Name="SignUpSubmitButton" Click="clickSignUp" Content="SignUp" Margin="20" Background="SkyBlue" Height="30" Width="100" />
-            <Button Content="Have an existing account? Login here" FontSize="18" Height="34" Width="320" Background="SkyBlue" Click="Button_Click"/>
+            <Button Content="Have an existing account? Login here" FontSize="18" Height="34" Width="320" Background="SkyBlue" Click="click_Login"/>
 
         </StackPanel>
     </Border>

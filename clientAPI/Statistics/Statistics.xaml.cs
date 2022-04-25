@@ -32,5 +32,19 @@ namespace clientAPI
             menu.Show();
             this.Close();
         }
+
+        private void ClickPersonal(object sender, RoutedEventArgs e)
+        {
+            Personal personal = new Personal();
+            personal.Show();
+            this.Close();
+        }
+
+        private void ClickScores(object sender, RoutedEventArgs e)
+        {
+            HighScores scores = new HighScores();
+            scores.Show();
+            this.Close();
+        }
     }
 }

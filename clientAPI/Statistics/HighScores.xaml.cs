@@ -22,7 +22,7 @@ namespace clientAPI
         public HighScores()
         {
             InitializeComponent();
-     
+            updateStrings();
         }
 
         private void ClickExit(object sender, RoutedEventArgs e)
@@ -31,5 +31,18 @@ namespace clientAPI
             menu menu = new menu();
             menu.Show();
         }
+        private void updateStrings()
+        {
+            string string1 = "hello";
+            string string2 = "goodbye";
+            string string3 = "thank you";
+
+            
+            player1.SetValue(TextBlock.TextProperty,string1);
+            player2.SetValue(TextBlock.TextProperty,string2);
+            player3.SetValue(TextBlock.TextProperty,string3);
+        }
+
+
     }
 }
