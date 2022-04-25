@@ -56,5 +56,12 @@ namespace clientAPI
                 this.Close();
             }
         }
+
+        private void click_Login(object sender, RoutedEventArgs e)
+        {
+            LoginWindow window = new LoginWindow();
+            window.Show();
+            this.Close();
+        }
     }
 }
