@@ -14,8 +14,9 @@
         </Grid.RowDefinitions>
         <Label Content="Statistics" HorizontalAlignment="Center" Margin="0,33,0,0" VerticalAlignment="Top" Width="193" FontWeight="UltraBold" FontSize="40" Foreground="#979A9A"/>
         <Separator Margin="0,-135,0,139"></Separator>
-        <Button Content="Personal Statistics" HorizontalAlignment="Center" Margin="0,140,0,0" VerticalAlignment="Top" Height="135" Width="352" Click="Button_Click" FontSize="40" FontStyle="Oblique"  Background="#76D7C4" Foreground="#1F618D"/>
-        <Button Content="High Scores" HorizontalAlignment="Center" Margin="0,357,0,0" VerticalAlignment="Top" Height="135" Width="352" Click="Button_Click" FontSize="40" FontStyle="Oblique"  Background="#76D7C4" Foreground="#1F618D" Grid.RowSpan="2"/>
+        <Button Content="Personal Statistics" HorizontalAlignment="Center" Margin="0,140,0,0" VerticalAlignment="Top" Height="135" Width="352"  FontSize="40" FontStyle="Oblique"  Background="#76D7C4" Foreground="#1F618D"/>
+        <Button Content="High Scores" HorizontalAlignment="Center" Margin="0,357,0,0" VerticalAlignment="Top" Height="135" Width="352"  FontSize="40" FontStyle="Oblique"  Background="#76D7C4" Foreground="#1F618D" Grid.RowSpan="2"/>
+        <Button Content="Go Back" HorizontalAlignment="Left" FontSize="30" Height="86" Margin="405,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="125" Click="backClick"/>
 
     </Grid>
 </Window>

@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using clientAPI.Requests;
+using clientAPI.Requests_and_Responses;
 
 namespace clientAPI
 {

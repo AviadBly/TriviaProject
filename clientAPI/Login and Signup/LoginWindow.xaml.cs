@@ -15,7 +15,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using clientAPI.Requests;
+using clientAPI.Requests_and_Responses;
 
 namespace clientAPI
 {
@@ -33,29 +33,6 @@ namespace clientAPI
             
         }
 
-        
-        public class gg {
-            //public gg(int status)
-            //{
-            //    this.status = status;
-            //}
-
-            //public int status = 0;
-            //public int g
-            //{
-            //    get => status;
-
-            //}
-
-            //set { myPropertyVar = value; }
-            public gg(int status)
-            {
-                this.status = status;
-            }
-            public int Status { get; set; } 
-            public int status = 0;
-            
-        }
 
         private void clickLogin(object sender, RoutedEventArgs e)
         {
@@ -71,13 +48,16 @@ namespace clientAPI
             string username = UsernameText.Text;
             string password = PasswordText.Password.ToString();
 
-            //LoginRequest loginRequest = new LoginRequest(username, password);
+            
             if (username == null || password == null)
             {
                 return;
-            }   
+            }
 
-         //   Console.WriteLine(loginRequest);
+
+            LoginRequest loginRequest = new LoginRequest(username, password);
+
+            
 
             menu menuWindow = new menu();
             menuWindow.Show();

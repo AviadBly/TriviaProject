@@ -45,7 +45,7 @@ namespace clientAPI.Requests_and_Responses
         {
             this.message = message;
         }
-		public string Message { get; set; }
+		public string Message { get; set; } = default!;
     };
 	internal class LogOutResponse : Response
 	{
