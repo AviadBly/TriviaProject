@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Text.Json;
+using clientAPI.Requests_and_Responses;
+using clientAPI.JsonHelpers;
 
 namespace clientAPI
 {
@@ -32,6 +34,8 @@ namespace clientAPI
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             
+            //LoginRequest login = new LoginRequest("14", "jfkaja");
+            //test g = new test(1);
         }
 
         private void JoinClick(object sender, RoutedEventArgs e)
@@ -43,6 +47,16 @@ namespace clientAPI
 
         private void clickCreate(object sender, RoutedEventArgs e)
         {
+            //LoginRequest l = new LoginRequest("15", "ta");
+
+            //byte[] buffer = JsonHelpers.JsonFormatSerilizer.loginSerilizer(l);
+
+            //LoginResponse response = new LoginResponse(1);
+            //byte[] msg = Encoding.ASCII.GetBytes(JsonSerializer.Serialize(response));
+            //LoginResponse loginR = JsonHelpers.JsonFormatDeserilizer.loginResponseDeserilizer(msg);
+
+            //Console.WriteLine(loginR.ToString());
+
             CreateRoom createRoom = new CreateRoom();
             createRoom.Show();
             this.Close();

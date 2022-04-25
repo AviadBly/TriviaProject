@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using clientAPI.Requests;
+using clientAPI.Requests_and_Responses;
 
 namespace clientAPI
 {
@@ -77,12 +77,12 @@ namespace clientAPI
             this.m_socket.Write(Encoding.ASCII.GetBytes(finalMsg));
         }
 
-        public byte[] receiver()
-        {
-            byte[] msgBytes = new byte;
+        //public byte[] receiver()
+        //{
+        //    byte[] msgBytes = new byte;
 
-            return msgBytes
-        }
+        //    return msgBytes
+        //}
 
     }
 }

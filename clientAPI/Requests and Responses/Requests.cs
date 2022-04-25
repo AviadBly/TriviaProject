@@ -4,8 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace clientAPI.Requests
+namespace clientAPI.Requests_and_Responses
 {
+
+    internal class test
+    {
+        int t;
+        test(int g)
+        {
+            t = g;
+        }
+    }
     internal class Requests
     {
         string username;
@@ -45,16 +54,16 @@ namespace clientAPI.Requests
 
     internal class LoginRequest
     {
-       string  username;
-       string password;
+        string? username;
+        string? password;
 
-        public LoginRequest(string username, string password)
+        public LoginRequest(string? username, string? password)
         {
-            this.username = username;
-            this.password = password;
+            Username = username;
+            Password = password;
         }
-        public string Username { get; set;}
-        public string Password { get; set; }
+        public string? Username { get; set; } = default!;
+        public string? Password { get; set; } = default!;
     }
     internal class JoinRoomRequest
     {

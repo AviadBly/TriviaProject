@@ -1,4 +1,4 @@
-﻿using clientAPI.Requests;
+﻿using clientAPI.Requests_and_Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
