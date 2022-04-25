@@ -16,6 +16,7 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using clientAPI.Requests_and_Responses;
+using clientAPI.Client;
 
 namespace clientAPI
 {
@@ -57,7 +58,7 @@ namespace clientAPI
 
             LoginRequest loginRequest = new LoginRequest(username, password);
 
-            
+            Client client("127.0.0.1");
 
             menu menuWindow = new menu();
             menuWindow.Show();

@@ -8,9 +8,9 @@ using System.Text.Json;
 
 namespace clientAPI.JsonHelpers
 {
-    internal class JsonFormatSerilizer
+    internal class JsonFormatSerializer
     {
-        public static byte[] loginSerilizer(LoginRequest loginRequest)
+        public static byte[] loginSerializer(LoginRequest loginRequest)
         {
 
             string resultStringJson = JsonSerializer.Serialize(loginRequest);
@@ -19,7 +19,35 @@ namespace clientAPI.JsonHelpers
 
         }
 
+        public static byte[] signUpSerializer(SignUpRequest signUpRequest)
+        {
+            string resultStringJson =  JsonSerializer.Serialize(signUpRequest);
 
+            return Encoding.ASCII.GetBytes(resultStringJson.ToString());
+        }
+
+        public static byte[] getPlayersInRoomSerializer(GetPlayersInRoomRequest getPlayersInRoomRequest)
+        {
+            string resultStringJson = JsonSerializer.Serialize(getPlayersInRoomRequest);
+
+            return Encoding.ASCII.GetBytes(resultStringJson.ToString());
+        }
+
+        public static byte[] joinRoomSerializer(JoinRoomRequest joinRoomRequest)
+        {
+            string resultStringJson = JsonSerializer.Serialize(joinRoomRequest);
+
+            return Encoding.ASCII.GetBytes(resultStringJson.ToString());
+        }
+
+        public static byte[] createSerializer(CreateRoomRequest createRoomRequest)
+        {
+            string resultStringJson = JsonSerializer.Serialize(createRoomRequest);
+
+            return Encoding.ASCII.GetBytes(resultStringJson.ToString());
+        }
+
+        
     }
 
 }

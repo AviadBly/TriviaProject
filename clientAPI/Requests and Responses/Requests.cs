@@ -7,14 +7,7 @@ using System.Threading.Tasks;
 namespace clientAPI.Requests_and_Responses
 {
 
-    internal class test
-    {
-        int t;
-        test(int g)
-        {
-            t = g;
-        }
-    }
+ 
     internal class Requests
     {
         string username;
@@ -40,17 +33,7 @@ namespace clientAPI.Requests_and_Responses
         }
         public string Email { get; set; }
     }
-    internal class GetPlayersInRoom
-    {
-        uint roomId;
-
-        public GetPlayersInRoom(uint roomId)
-        {
-            this.roomId = roomId;
-        }
-        public uint RoomId { get; set; }
-
-    }
+    
 
     internal class LoginRequest
     {
@@ -65,6 +48,7 @@ namespace clientAPI.Requests_and_Responses
         public string? Username { get; set; } = default!;
         public string? Password { get; set; } = default!;
     }
+
     internal class JoinRoomRequest
     {
         uint roomId;
@@ -95,6 +79,18 @@ namespace clientAPI.Requests_and_Responses
 
         public uint AnswerTimeout { get; set; }
             
+
+    }
+
+    internal class GetPlayersInRoomRequest
+    {
+        uint roomId;
+
+        public GetPlayersInRoomRequest(uint roomId)
+        {
+            this.roomId = roomId;
+        }
+        public uint RoomId { get; set; }
 
     }
 }
