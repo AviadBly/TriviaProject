@@ -80,6 +80,11 @@ namespace clientAPI
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool AllocConsole();
 
-        
+        private void signClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            SignUpWindow window=new SignUpWindow();
+            window.Show();
+        }
     }
 }

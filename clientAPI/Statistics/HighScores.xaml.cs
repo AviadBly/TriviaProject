@@ -22,6 +22,14 @@ namespace clientAPI
         public HighScores()
         {
             InitializeComponent();
+     
+        }
+
+        private void ClickExit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            menu menu = new menu();
+            menu.Show();
         }
     }
 }

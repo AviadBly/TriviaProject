@@ -24,6 +24,7 @@
                 <Label Content="(To Do)" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74"/>
             </StackPanel>
         </Border>
+        <Button Content="Go Back" FontSize="30" HorizontalAlignment="Left" Margin="343,113,0,0" Grid.Row="2" VerticalAlignment="Top" Height="70" RenderTransformOrigin="1.085,0.824" Width="159" Click="Button_Click"/>
 
 
     </Grid>
