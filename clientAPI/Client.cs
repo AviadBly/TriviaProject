@@ -11,70 +11,65 @@ using clientAPI.Requests_and_Responses;
 
 namespace clientAPI
 {
-    internal class Client
+    public class Client
     {
         private NetworkStream m_socket;
-        public Client(String server, Int32 port)
+
+        
+            public Client(String server, Int32 port)
         {
             try
             {
-                // Create a TcpClient.
-                // Note, for this client to work you need to have a TcpServer
-                // connected to the same address as specified by the server, port
-                // combination.
-                //Int32 port = 8200;
+                
                 TcpClient client = new TcpClient(server, port);
-
-                // Translate the passed message into ASCII and store it as a Byte array.
-                //Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
-
-                // Get a client stream for reading and writing.
-                //  Stream stream = client.GetStream();
-
+              
                 this.m_socket = client.GetStream();
 
-              // Send the message to the connected TcpServer.
-                //stream.Write(data, 0, data.Length);
-
-                //Console.WriteLine("Sent: {0}", message);
-
-                //// Receive the TcpServer.response.
-
-                //// Buffer to store the response bytes.
-                //data = new Byte[256];
-
-                //// String to store the response ASCII representation.
-                //String responseData = String.Empty;
-
-                //// Read the first batch of the TcpServer response bytes.
-                //Int32 bytes = stream.Read(data, 0, data.Length);
-                //responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                //Console.WriteLine("Received: {0}", responseData);
-
+              
                 //// Close everything.
                 //stream.Close();
                 //client.Close();
             }
-            catch (Exception ex)
+            catch (Exception ex) //error with creating socket
             {
                 Console.WriteLine(ex.ToString());
             }
 
             
         }
+        private byte[] intToBytes(int numInteger)
+        {
+            byte[] intBytes = BitConverter.GetBytes(numInteger);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(intBytes);
 
+            return intBytes;
+        }
         public void sender(string msg, byte code)
         {
-            string len = Convert.ToString(msg.Length, 2).PadLeft(32, '0');
-
-            string finalMsg = code + len + msg;
-            
-            if(m_socket == null)
+            if (m_socket == null)
             {
                 return;
             }
+
+            int len = msg.Length;
+            //code - 1 byte, len - 4 bytes, msg - depends on length
+            byte[] finalMsg = new byte[1 + 4 + msg.Length];
+            byte[] intBytes = intToBytes(len);
+            finalMsg[0] = code;
+            //len - 4 bytes
+            for (int i = 1; i <= 4; i++)
+            {
+                finalMsg[i] = intBytes[i - 1];
+            }
+            
+            for(int i = 5; i < len + 5; i++)
+            {
+                finalMsg[i] = (byte)(msg[i - 5]);
+            }
+            
             //write the msg with the format: code + length of data + data
-            this.m_socket.Write(Encoding.ASCII.GetBytes(finalMsg));
+            this.m_socket.Write(finalMsg);
         }
 
         public byte[] receiver()

@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Text.Json;
 using clientAPI.Requests_and_Responses;
 using clientAPI.JsonHelpers;
+using clientAPI;
 
 namespace clientAPI
 {
@@ -21,7 +22,7 @@ namespace clientAPI
     /// Interaction logic for menu.xaml
     /// </summary>
     /// 
-   
+    //private Client client;
     public partial class menu : Window
     {
         public menu()
@@ -69,8 +70,8 @@ namespace clientAPI
         }
         private void clickSign(object sender, RoutedEventArgs e)
         {
-            SignUpWindow signWindow = new SignUpWindow();
-            signWindow.Show();
+            //SignUpWindow signWindow = new SignUpWindow();
+            //signWindow.Show();
             this.Close();
         }
 

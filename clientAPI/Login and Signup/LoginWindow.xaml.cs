@@ -16,6 +16,7 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using clientAPI.Requests_and_Responses;
+using clientAPI.JsonHelpers;
 using clientAPI;
 
 namespace clientAPI
@@ -25,27 +26,22 @@ namespace clientAPI
     /// </summary>
     public partial class LoginWindow : Window
     {
+        public static Client appClient;
+
         public LoginWindow()
         {
             load(this, null);
-           
+            
             InitializeComponent();
 
             
+            appClient = new Client("127.0.0.1", 8200);
         }
 
-
+        
         private void clickLogin(object sender, RoutedEventArgs e)
         {
-
-            //NetworkStream? stream = client("127.0.0.1");
-            //if(stream == null)
-            //{
-            //    return;
-            //}
-
-            
-
+          
             string username = UsernameText.Text;
             string password = PasswordText.Password.ToString();
 
@@ -58,14 +54,16 @@ namespace clientAPI
 
             LoginRequest loginRequest = new LoginRequest(username, password);
 
-            Client client = new Client("127.0.0.1", 8200);
+            
 
             byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
 
-            client.sender(System.Text.Encoding.Default.GetString(data), 4);
+            appClient.sender(System.Text.Encoding.Default.GetString(data), 20);
 
-            byte[] returnMsg = client.receiver();
+            byte[] returnMsg = appClient.receiver();
             Console.Write(returnMsg);
+            
+            LoginResponse loginResponse = JsonHelpers.JsonFormatDeserializer.loginResponseDeserializer(returnMsg.Skip(5).ToArray());
 
             menu menuWindow = new menu();
             menuWindow.Show();
@@ -76,16 +74,18 @@ namespace clientAPI
         {
             AllocConsole();
         }
-
+      
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool AllocConsole();
 
         private void signClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
-            SignUpWindow window=new SignUpWindow();
+            //this.Close();
+            SignUpWindow window = new SignUpWindow();
+            Hide();
             window.Show();
+            
         }
     }
 }

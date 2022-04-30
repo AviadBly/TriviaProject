@@ -15,7 +15,7 @@ namespace clientAPI.JsonHelpers
 
             string resultStringJson = JsonSerializer.Serialize(loginRequest);
 
-            return Encoding.ASCII.GetBytes(resultStringJson);
+            return Encoding.UTF8.GetBytes(resultStringJson);
 
         }
 

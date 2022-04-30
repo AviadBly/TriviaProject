@@ -20,8 +20,11 @@ namespace clientAPI
     /// </summary>
     public partial class SignUpWindow : Window
     {
+
+        private Client client;
         public SignUpWindow()
         {
+            
             InitializeComponent();
         }
 
@@ -48,7 +51,7 @@ namespace clientAPI
             {
                 SignUpRequest signUpRequest = new SignUpRequest(username, password, email);
                 //
-                //
+                
 
 
                 MessageBox.Show("Username Created successfully!");
