@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:clientAPI"
+        xmlns:local="clr-namespace:clientAPI" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Create Room" Height="730" Width="565" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
     <Grid Margin="20">
@@ -18,18 +18,28 @@
             </Label.RenderTransform>
         </Label>
         <Separator Margin="0,77,49,0"></Separator>
-        <Border Background="#85C1E9" Margin="10,228,49,39" CornerRadius="40"  >
+        <Border Background="#85C1E9" Margin="10,228,10,36" CornerRadius="40"  >
             <StackPanel Margin="20,20,10,10">
                 <Label Content="Active Rooms:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
-                <ListBox  Name="roomsList" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=6}" SelectionChanged="ListBox_SelectionChanged" />
-
+                <ListBox
+                    Name="roomsList"
+                  IsEnabled="{Binding IsChecked, ElementName=EnableListBox}">
+                    <TextBlock
+                    Text="Plain" />
+                    <TextBlock
+                    Text="Old" />
+                    <TextBlock
+                    Text="ListBox" />
+                    <TextBlock
+                    Text="Full of junk" />
+                </ListBox>
 
 
 
             </StackPanel>
         </Border>
-        <Button Content="Join Room" FontSize="30" HorizontalAlignment="Left" Margin="29,559,0,0" VerticalAlignment="Top" Height="50" RenderTransformOrigin="0.474,0.602" Width="214" Click="clickJoin"/>
-        <Button Content="Go back" FontSize="20" HorizontalAlignment="Left" Margin="348,559,0,0" VerticalAlignment="Top" Height="50" RenderTransformOrigin="0.541,0.51" Width="88" Click="clickExit"/>
+        <Button Content="Go back" FontSize="20" HorizontalAlignment="Left" Margin="311,533,0,0" VerticalAlignment="Top" Height="50" RenderTransformOrigin="0.541,0.51" Width="128" Click="clickExit"/>
+        <Button Content="Join" FontSize="30" HorizontalAlignment="Left" Margin="311,351,0,0" VerticalAlignment="Top" Height="50" RenderTransformOrigin="0.541,0.51" Width="128" Click="clickJoin"/>
 
 
     </Grid>
