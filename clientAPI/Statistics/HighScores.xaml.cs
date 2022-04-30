@@ -35,16 +35,38 @@ namespace clientAPI
         }
         private void updateStrings()
         {
-            string string1 = "hello";
-            string string2 = "goodbye";
-            string string3 = "thank you";
+            client.sender("", Requests_and_Responses.Requests.GET_HIGH_SCORES_REQUEST_CODE);
 
-            
-            player1.SetValue(TextBlock.TextProperty,string1);
-            player2.SetValue(TextBlock.TextProperty,string2);
-            player3.SetValue(TextBlock.TextProperty,string3);
+            byte[] returnMsg = client.receiver();
+            Console.Write(returnMsg);
 
-            
+            Requests_and_Responses.GetHighScoreResponse highScoreResponse = JsonHelpers.JsonFormatDeserializer.GetHighScoreResponseDeserializer(returnMsg.Skip(5).ToArray());
+
+            //login failed
+            if (highScoreResponse.Status == Requests_and_Responses.Response.status_error)
+            {
+                return;
+            }
+
+            for (int i = 0; i < highScoreResponse.highest.Count; i++)
+            {
+                if(i==0)
+                {
+                    player1.SetValue(TextBlock.TextProperty, highScoreResponse.highest[i]);
+
+                }
+                if (i == 1)
+                {
+                    player2.SetValue(TextBlock.TextProperty, highScoreResponse.highest[i]);
+
+                }
+                if (i == 2)
+                {
+                    player3.SetValue(TextBlock.TextProperty, highScoreResponse.highest[i]);
+
+                }
+            }
+
         }
 
 
