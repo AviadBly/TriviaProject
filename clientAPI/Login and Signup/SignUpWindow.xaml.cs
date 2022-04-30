@@ -75,7 +75,6 @@ namespace clientAPI
                 MessageBox.Show("Username Created successfully!");
 
 
-
                 menu menuWindow = new menu(ref client);
                 menuWindow.Show();
                 this.Close();

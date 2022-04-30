@@ -51,22 +51,14 @@ namespace clientAPI
 
         private void JoinClick(object sender, RoutedEventArgs e)
         {
-           JoinRoom joinRoom = new JoinRoom();
+            JoinRoom joinRoom = new JoinRoom(ref client);
             joinRoom.Show();
             this.Close();
         }
 
         private void clickCreate(object sender, RoutedEventArgs e)
         {
-            //LoginRequest l = new LoginRequest("15", "ta");
-
-            //byte[] buffer = JsonHelpers.JsonFormatSerilizer.loginSerilizer(l);
-
-            //LoginResponse response = new LoginResponse(1);
-            //byte[] msg = Encoding.ASCII.GetBytes(JsonSerializer.Serialize(response));
-            //LoginResponse loginR = JsonHelpers.JsonFormatDeserilizer.loginResponseDeserilizer(msg);
-
-            //Console.WriteLine(loginR.ToString());
+            
 
             CreateRoom createRoom = new CreateRoom(ref client);
             createRoom.Show();
@@ -74,8 +66,8 @@ namespace clientAPI
         }
         private void clickLogin(object sender, RoutedEventArgs e)
         {
-            LoginWindow loginRoom = new LoginWindow();
-            loginRoom.Show();
+            //LoginWindow loginRoom = new LoginWindow();
+            //loginRoom.Show();
             this.Close();
         }
         private void clickSign(object sender, RoutedEventArgs e)
@@ -87,7 +79,7 @@ namespace clientAPI
 
         private void clickStats(object sender, RoutedEventArgs e)
         {
-            Statistics statsWindow = new Statistics();
+            Statistics statsWindow = new Statistics(ref client);
             statsWindow.Show();
             this.Close();
         }
