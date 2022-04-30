@@ -11,18 +11,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using clientAPI;
 
 namespace clientAPI
 {
     /// <summary>
     /// Interaction logic for Personal.xaml
     /// </summary>
+    private Client client;
     public partial class Personal : Window
     {
-        public Personal()
+        public Personal(ref Client appClient)
         {
             InitializeComponent();
-            updateStrings(); 
+
+            client = appClient;
         }
 
 
@@ -33,20 +36,17 @@ namespace clientAPI
         private void ClickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu=new menu();
+            menu menu=new menu(ref client);
             menu.Show();
         }
 
-        private void updateStrings()
+        private void updateStrings(string timeText, string correctText, string totalText)
         {
-            string string1 = "hello";
-            string string2 = "goodbye";
-            string string3 = "thank you";
+            
+            time.SetValue(TextBlock.TextProperty, timeText);
+            correct.SetValue(TextBlock.TextProperty, correctText);
+            total.SetValue(TextBlock.TextProperty, totalText);
 
-
-            time.SetValue(TextBlock.TextProperty, string1);
-            correct.SetValue(TextBlock.TextProperty, string2);
-            total.SetValue(TextBlock.TextProperty, string3);
         }
     }
 }

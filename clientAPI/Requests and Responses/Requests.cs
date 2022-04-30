@@ -87,7 +87,6 @@ namespace clientAPI.Requests_and_Responses
         public string RoomName { get; set; }
         public uint MaxUsers { get; set; }
         public uint QuestionCount { get; set; }
-
         public uint AnswerTimeout { get; set; }
             
 
