@@ -56,7 +56,7 @@ namespace clientAPI
           
             byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
 
-            appClient.sender(System.Text.Encoding.Default.GetString(data), 20);
+            appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.LOGIN_REQUEST_CODE);
 
             byte[] returnMsg = appClient.receiver();
             Console.Write(returnMsg);
