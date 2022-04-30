@@ -17,11 +17,11 @@
         <Border Background="#85C1E9" Margin="30,162,29,80" CornerRadius="40" Grid.RowSpan="3"  >
             <StackPanel Margin="20,20,10,10">
                 <Label Content="Avarage Time Per Answer:" FontSize="30" Foreground="Purple" FontWeight="Bold"/>
-                <Label Content="(To Do) ms" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74"/>
+                <TextBlock Name="time" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74"/>
                 <Label Content="Correct Answers:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
-                <Label Content="(To Do)" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74"/>
+                <TextBlock Name="correct" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74"/>
                 <Label Content="Total Answers:" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74"/>
-                <Label Content="(To Do)" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74"/>
+                <TextBlock Name="total" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74"/>
             </StackPanel>
         </Border>
         <Button Content="Go Back" FontSize="30" HorizontalAlignment="Left" Margin="343,113,0,0" Grid.Row="2" VerticalAlignment="Top" Height="70" RenderTransformOrigin="1.085,0.824" Width="159" Click="ClickExit"/>
