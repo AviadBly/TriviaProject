@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using clientAPI.Requests_and_Responses;
+using clientAPI;
 
 namespace clientAPI
 {
@@ -32,6 +34,7 @@ namespace clientAPI
         {
 
         }
+
         private void clickSignUp(object sender, RoutedEventArgs e)
         {
 
@@ -42,23 +45,38 @@ namespace clientAPI
             string email = EmailText.Text;
 
 
-            if (username.Length > 8 || password.Length > 8|| username.Length<4||password.Length<4)
+            if (username.Length > 8 || password.Length > 8 || username.Length < 4 || password.Length < 4)
             {
                 MessageBox.Show("Username or password length must be under 8 characters and over 4 characters!");
 
             }
             else
-            {
+            { 
+                
                 SignUpRequest signUpRequest = new SignUpRequest(username, password, email);
 
-                client.sender("45", 1);
+                
+                byte[] data = JsonHelpers.JsonFormatSerializer.signUpSerializer(signUpRequest);
+
+                client.sender(System.Text.Encoding.Default.GetString(data), Requests.SIGN_UP_REQUEST_CODE);
+
+                byte[] returnMsg = client.receiver();
+                Console.Write(returnMsg);
+
+                SignUpResponse signUpResponse = JsonHelpers.JsonFormatDeserializer.signUpResponseDeserializer(returnMsg.Skip(5).ToArray());
+
+                //login failed
+                if (signUpResponse.Status == Response.status_error)
+                {
+                    return;
+                }
 
 
                 MessageBox.Show("Username Created successfully!");
 
 
 
-                menu menuWindow = new menu();
+                menu menuWindow = new menu(ref client);
                 menuWindow.Show();
                 this.Close();
             }

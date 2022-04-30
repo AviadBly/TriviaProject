@@ -28,9 +28,9 @@ namespace clientAPI.Requests_and_Responses
         }
 		
 	};
-	internal class signUpResponse : Response
+	internal class SignUpResponse : Response
 	{
-		public signUpResponse(uint status) : base(status)
+		public SignUpResponse(uint status) : base(status)
 		{
 
 		}

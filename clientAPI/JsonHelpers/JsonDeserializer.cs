@@ -11,26 +11,26 @@ namespace clientAPI.JsonHelpers
     internal class JsonFormatDeserializer
     {
         //byte[0] - code, byte[1,2,3,4] - length, rest = jsonstring
-        public static LoginResponse? loginResponseDeserializer(byte[] buffer)
+        public static LoginResponse loginResponseDeserializer(byte[] buffer)
         {
             
 
             string jsonString = System.Text.Encoding.Default.GetString(buffer);
             
 
-            LoginResponse? response = JsonSerializer.Deserialize<LoginResponse>(jsonString);
+            LoginResponse response = JsonSerializer.Deserialize<LoginResponse>(jsonString);
 
             return response;
         }
 
-        public static signUpResponse? signUpResponseDeserializer(byte[] buffer)
+        public static SignUpResponse signUpResponseDeserializer(byte[] buffer)
         {
             
 
             string jsonString = System.Text.Encoding.Default.GetString(buffer);
            
             
-            signUpResponse? response = JsonSerializer.Deserialize<signUpResponse>(jsonString);
+            SignUpResponse response = JsonSerializer.Deserialize<SignUpResponse>(jsonString);
 
             return response;
         }
