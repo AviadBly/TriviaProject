@@ -10,16 +10,16 @@ namespace clientAPI.Requests_and_Responses
  
     internal class Requests
     {
-        public const uint SIGN_UP_REQUEST_CODE  = 10;
-        public const uint LOGIN_REQUEST_CODE = 20;
-        public const uint ERROR_RESPONSE_CODE = 50;
+        public const byte SIGN_UP_REQUEST_CODE  = 10;
+        public const byte LOGIN_REQUEST_CODE = 20;
+        public const byte ERROR_RESPONSE_CODE = 50;
 
-        public const uint CREATE_ROOM_CODE = 30;
-        public const uint GET_ROOM_REQUEST = 31;
-        public const uint GET_PLAYERS_IN_ROOM_REQUEST_CODE = 32;
-        public const uint JOIN_ROOM_REQUEST_CODE = 33;
-        public const uint GET_STATISTICS_REQUEST_CODE = 34;
-        public const uint LOGOUT_REQUEST_CODE = 35;
+        public const byte CREATE_ROOM_CODE = 30;
+        public const byte GET_ROOM_REQUEST = 31;
+        public const byte GET_PLAYERS_IN_ROOM_REQUEST_CODE = 32;
+        public const byte JOIN_ROOM_REQUEST_CODE = 33;
+        public const byte GET_STATISTICS_REQUEST_CODE = 34;
+        public const byte LOGOUT_REQUEST_CODE = 35;
 
         string username;
         string password;
