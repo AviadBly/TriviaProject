@@ -76,7 +76,7 @@ namespace clientAPI
         {
 
             // Buffer to store the response bytes.
-            byte[] data = new Byte[256];
+            byte[] data = new Byte[1024];
 
             // String to store the response ASCII representation.
             String responseData = String.Empty;
