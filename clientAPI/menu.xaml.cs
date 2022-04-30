@@ -15,6 +15,7 @@ using System.Text.Json;
 using clientAPI.Requests_and_Responses;
 using clientAPI.JsonHelpers;
 using clientAPI;
+using System.Globalization;
 
 namespace clientAPI
 {
@@ -22,7 +23,15 @@ namespace clientAPI
     /// Interaction logic for menu.xaml
     /// </summary>
     /// 
-    //private Client client;
+    public class NotEmptyValidationRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            return string.IsNullOrWhiteSpace((value ?? "").ToString())
+                ? new ValidationResult(false, "Field is required.")
+                : ValidationResult.ValidResult;
+        }
+    }
     public partial class menu : Window
     {
         public menu()

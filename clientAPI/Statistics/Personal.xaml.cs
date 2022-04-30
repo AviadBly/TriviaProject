@@ -22,6 +22,7 @@ namespace clientAPI
         public Personal()
         {
             InitializeComponent();
+            updateStrings(); 
         }
 
 
@@ -34,6 +35,18 @@ namespace clientAPI
             this.Close();
             menu menu=new menu();
             menu.Show();
+        }
+
+        private void updateStrings()
+        {
+            string string1 = "hello";
+            string string2 = "goodbye";
+            string string3 = "thank you";
+
+
+            time.SetValue(TextBlock.TextProperty, string1);
+            correct.SetValue(TextBlock.TextProperty, string2);
+            total.SetValue(TextBlock.TextProperty, string3);
         }
     }
 }

@@ -19,10 +19,10 @@
             <Label Content="Email" Foreground="white"/>
             <TextBox Name="EmailText" Background="#545d6a" Foreground="White" FontSize="18" ></TextBox>
 
-            <Label Content="Password" Foreground="white"/>
-            <PasswordBox Name="PasswordText" Background="#545d6a" Foreground="White" FontSize="18"/>
-            <Button x:Name="SignUpSubmitButton" Click="clickSignUp" Content="SignUp" Margin="20" Background="SkyBlue" Height="30" Width="100" />
-            <Button Content="Have an existing account? Login here" FontSize="18" Height="34" Width="320" Background="SkyBlue" Click="click_Login"/>
+            <Label Content="Password" Foreground="white" />
+            <PasswordBox Name="PasswordText" Background="#545d6a" Foreground="White" FontSize="18" KeyDown="PasswordBox_KeyDown"/>
+            <Button x:Name="SignUpSubmitButton" Foreground="Black" Click="clickSignUp" Content="SignUp" Margin="20" Background="SkyBlue" Height="30" Width="100"  />
+            <Button Content="Have an existing account? Login here" Foreground="Black" FontSize="16" Height="34" Width="320" Background="SkyBlue" Click="click_Login"/>
 
         </StackPanel>
     </Border>

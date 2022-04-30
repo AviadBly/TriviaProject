@@ -70,5 +70,13 @@ namespace clientAPI
             window.Show();
             this.Close();
         }
+
+        private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                clickSignUp(this, new RoutedEventArgs());
+            }
+        }
     }
 }

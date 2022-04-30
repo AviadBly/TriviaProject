@@ -3,17 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:clientAPI"
+        xmlns:local="clr-namespace:clientAPI" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="HighScores" Height="730" Width="565" Background="#6a6b6f"  >
     <Grid>
-        <Label Content="High Scores!" HorizontalAlignment="Center" Margin="0,59,0,0" VerticalAlignment="Top" Width="298" Height="95" FontSize="50" Foreground="Yellow"/>
-        <TextBlock Name="player1" HorizontalAlignment="Left" Margin="222,517,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20"/>
-        <TextBlock Name="player2" HorizontalAlignment="Left" Margin="66,517,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20"/>
-        <TextBlock Name="player3" HorizontalAlignment="Left" Margin="378,522,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20" Text=""/>
+        <TextBlock Name="player1" Background="SkyBlue" HorizontalAlignment="Left" Margin="318,126,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20"/>
+        <TextBlock Name="player2" Background="SkyBlue" HorizontalAlignment="Left" Margin="318,302,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20"/>
+        <TextBlock Background="SkyBlue" Name="player3" HorizontalAlignment="Left" Margin="318,461,0,0" VerticalAlignment="Top" Width="156" Height="42" FontSize="20" Text=""/>
         <Label Content="The Goverment  Is Proud!" HorizontalAlignment="Left" Margin="18,543,0,0" VerticalAlignment="Top" Width="564" Height="116" FontSize="40" FontStretch="SemiCondensed" FontStyle="Oblique" FontWeight="Bold" Foreground="Yellow"/>
-        <Image Margin="85,154,85,197" Source="/Pictures/Image5.png" Stretch="Fill"/>
-        <Button Content="Go Back" Click="ClickExit" FontSize="30" HorizontalAlignment="Left" Margin="398,625,0,0" VerticalAlignment="Top" Height="58" Width="124"/>
+        <Button Content="Go Back" Click="ClickExit" FontSize="30" HorizontalAlignment="Left" Margin="351,618,0,0" VerticalAlignment="Top" Height="58" Width="153"/>
+        <materialDesign:PackIcon Kind="TrophyVariantOutline" Margin="68,65,0,0" Height="163" Width="264" RenderTransformOrigin="0.517,0.549" />
+        <materialDesign:PackIcon Kind="MedalOutline" Margin="150,426,0,0" Height="112" Width="100" />
+        <materialDesign:PackIcon Kind="MedalOutline"  Margin="129,255,0,0" Height="135" Width="142"/>
 
 
 
