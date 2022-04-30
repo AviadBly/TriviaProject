@@ -19,6 +19,7 @@ namespace clientAPI
     /// </summary>
     public partial class Statistics : Window
     {
+        Client client;
         public Statistics()
         {
             InitializeComponent();
@@ -28,7 +29,7 @@ namespace clientAPI
 
         private void backClick(object sender, RoutedEventArgs e)
         {
-            menu menu = new menu();
+            menu menu = new menu(ref );
             menu.Show();
             this.Close();
         }
