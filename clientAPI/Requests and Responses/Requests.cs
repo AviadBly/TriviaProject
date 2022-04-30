@@ -10,6 +10,17 @@ namespace clientAPI.Requests_and_Responses
  
     internal class Requests
     {
+        public uint SIGN_UP_REQUEST_CODE  = 10;
+        public uint LOGIN_REQUEST_CODE = 20;
+        public uint ERROR_RESPONSE_CODE = 50;
+
+        public uint CREATE_ROOM_CODE = 30;
+        public uint GET_ROOM_REQUEST = 31;
+        public uint GET_PLAYERS_IN_ROOM_REQUEST_CODE = 32;
+        public uint JOIN_ROOM_REQUEST_CODE = 33;
+        public uint GET_STATISTICS_REQUEST_CODE = 34;
+        public uint LOGOUT_REQUEST_CODE = 35;
+
         string username;
         string password;
         public Requests(string username, string password)

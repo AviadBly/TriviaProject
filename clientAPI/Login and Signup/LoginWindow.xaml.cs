@@ -51,7 +51,7 @@ namespace clientAPI
                 return;
             }
 
-
+            //create a login request
             LoginRequest loginRequest = new LoginRequest(username, password);
           
             byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
@@ -63,14 +63,15 @@ namespace clientAPI
             
             LoginResponse loginResponse = JsonHelpers.JsonFormatDeserializer.loginResponseDeserializer(returnMsg.Skip(5).ToArray());
 
-            if(loginResponse.Status != 5)
+            //login failed
+            if(loginResponse.Status == Response.status_error)
             {
-                menu menuWindow = new menu(ref appClient);
-                menuWindow.Show();
-                Hide();
+                return;               
             }
 
-            
+            menu menuWindow = new menu(ref appClient);
+            menuWindow.Show();
+            Hide();
         }
 
         private void load(object sender, EventArgs e)

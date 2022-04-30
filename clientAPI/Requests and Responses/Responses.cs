@@ -8,10 +8,10 @@ namespace clientAPI.Requests_and_Responses
 {
 	internal class Response
 	{
-	
-		uint status;
-		const uint status_ok = 2;
-		const uint status_error = 5;
+
+        public uint status;
+        public const uint status_ok = 2;
+		public const uint status_error = 5;
 
         public Response(uint status)
         {

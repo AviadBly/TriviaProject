@@ -26,15 +26,17 @@ namespace clientAPI
     /// </summary>
     public partial class CreateRoom : Window
     {
-        public CreateRoom()
+        private Client client;
+        public CreateRoom(ref Client appClient)
         {
+            client = appClient;
             InitializeComponent();
         }
 
         private void clickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu = new menu();
+            menu menu = new menu(ref client);
             menu.Show();
         }
 

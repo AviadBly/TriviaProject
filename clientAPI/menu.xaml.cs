@@ -34,6 +34,7 @@ namespace clientAPI
     }
     public partial class menu : Window
     {
+        private Client client;
         public menu(ref Client appClient)
         {
             InitializeComponent();
@@ -67,7 +68,7 @@ namespace clientAPI
 
             //Console.WriteLine(loginR.ToString());
 
-            CreateRoom createRoom = new CreateRoom();
+            CreateRoom createRoom = new CreateRoom(ref client);
             createRoom.Show();
             this.Close();
         }
@@ -79,8 +80,8 @@ namespace clientAPI
         }
         private void clickSign(object sender, RoutedEventArgs e)
         {
-            //SignUpWindow signWindow = new SignUpWindow();
-            //signWindow.Show();
+            SignUpWindow signWindow = new SignUpWindow(ref client);
+            signWindow.Show();
             this.Close();
         }
 
