@@ -93,6 +93,9 @@ namespace clientAPI.Requests_and_Responses
         {
             this.statistics = statistics;
         }
+
+        public List<string> Statistics { get; set; }
+
     }
     internal class JoinRoomResponse : Response
     {

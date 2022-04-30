@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using clientAPI.Requests_and_Responses;
 using clientAPI;
 
 namespace clientAPI
@@ -18,9 +19,10 @@ namespace clientAPI
     /// <summary>
     /// Interaction logic for Personal.xaml
     /// </summary>
-    private Client client;
+    
     public partial class Personal : Window
     {
+        private Client client;
         public Personal(ref Client appClient)
         {
             InitializeComponent();
@@ -31,12 +33,36 @@ namespace clientAPI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
+            client.sender("", Requests.GET_STATISTICS_REQUEST_CODE);
+            
+            byte[] returnMsg = client.receiver();
+            
 
+            GetPersonalStatsResponse getPersonalStatsResponse = JsonHelpers.JsonFormatDeserializer.GetPersonalStatsResponseDeserializer(returnMsg.Skip(5).ToArray());
+
+            Console.Write(getPersonalStatsResponse);
+            //login failed
+            if (getPersonalStatsResponse.Status == Response.status_error)
+            {
+                return;
+            }
+
+            List<string> statsList = getPersonalStatsResponse.Statistics;
+            string[] statsArr = new string[3];
+
+            int i = 0;
+            foreach (string stat in statsList)
+            {
+                statsArr[i] = stat;
+            }
+
+            updateStrings(statsArr[0], statsArr[1], statsArr[2]);
         }
         private void ClickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu=new menu(ref client);
+            menu menu = new menu(ref client);
             menu.Show();
         }
 
