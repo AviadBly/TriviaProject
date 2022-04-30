@@ -24,6 +24,11 @@ namespace clientAPI
             InitializeComponent();
         }
 
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void ClickExit(object sender, RoutedEventArgs e)
         {
             this.Close();

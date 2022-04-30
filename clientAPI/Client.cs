@@ -13,8 +13,8 @@ namespace clientAPI
 {
     internal class Client
     {
-        private NetworkStream? m_socket;
-        public Client(String server)
+        private NetworkStream m_socket;
+        public Client(String server, Int32 port)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace clientAPI
                 // Note, for this client to work you need to have a TcpServer
                 // connected to the same address as specified by the server, port
                 // combination.
-                Int32 port = 8200;
+                //Int32 port = 8200;
                 TcpClient client = new TcpClient(server, port);
 
                 // Translate the passed message into ASCII and store it as a Byte array.
@@ -77,12 +77,22 @@ namespace clientAPI
             this.m_socket.Write(Encoding.ASCII.GetBytes(finalMsg));
         }
 
-        //public byte[] receiver()
-        //{
-        //    byte[] msgBytes = new byte;
+        public byte[] receiver()
+        {
 
-        //    return msgBytes
-        //}
+            // Buffer to store the response bytes.
+            byte[] data = new Byte[256];
+
+            // String to store the response ASCII representation.
+            String responseData = String.Empty;
+
+            // Read the first batch of the TcpServer response bytes.
+            Int32 bytes = this.m_socket.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            Console.WriteLine("Received: {0}", responseData);
+
+            return data;
+        }
 
     }
 }

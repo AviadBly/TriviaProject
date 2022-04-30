@@ -16,6 +16,7 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using clientAPI.Requests_and_Responses;
+using clientAPI;
 
 namespace clientAPI
 {
@@ -57,7 +58,14 @@ namespace clientAPI
 
             LoginRequest loginRequest = new LoginRequest(username, password);
 
-            
+            Client client = new Client("127.0.0.1", 8200);
+
+            byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
+
+            client.sender(System.Text.Encoding.Default.GetString(data), 4);
+
+            byte[] returnMsg = client.receiver();
+            Console.Write(returnMsg);
 
             menu menuWindow = new menu();
             menuWindow.Show();
