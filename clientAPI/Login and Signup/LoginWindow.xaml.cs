@@ -53,9 +53,7 @@ namespace clientAPI
 
 
             LoginRequest loginRequest = new LoginRequest(username, password);
-
-            
-
+          
             byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
 
             appClient.sender(System.Text.Encoding.Default.GetString(data), 20);
@@ -65,9 +63,14 @@ namespace clientAPI
             
             LoginResponse loginResponse = JsonHelpers.JsonFormatDeserializer.loginResponseDeserializer(returnMsg.Skip(5).ToArray());
 
-            menu menuWindow = new menu();
-            menuWindow.Show();
-            this.Close();
+            if(loginResponse.Status != 5)
+            {
+                menu menuWindow = new menu(ref appClient);
+                menuWindow.Show();
+                Hide();
+            }
+
+            
         }
 
         private void load(object sender, EventArgs e)
@@ -82,7 +85,7 @@ namespace clientAPI
         private void signClick(object sender, RoutedEventArgs e)
         {
             //this.Close();
-            SignUpWindow window = new SignUpWindow();
+            SignUpWindow window = new SignUpWindow(ref appClient);
             Hide();
             window.Show();
             

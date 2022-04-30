@@ -34,7 +34,7 @@ namespace clientAPI
     }
     public partial class menu : Window
     {
-        public menu()
+        public menu(ref Client appClient)
         {
             InitializeComponent();
             JoinRoom joinRoom = new JoinRoom();

@@ -22,9 +22,9 @@ namespace clientAPI
     {
 
         private Client client;
-        public SignUpWindow()
+        public SignUpWindow(ref Client appClient)
         {
-            
+            client = appClient;
             InitializeComponent();
         }
 
@@ -50,8 +50,8 @@ namespace clientAPI
             else
             {
                 SignUpRequest signUpRequest = new SignUpRequest(username, password, email);
-                //
-                
+
+                client.sender("45", 1);
 
 
                 MessageBox.Show("Username Created successfully!");
