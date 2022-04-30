@@ -19,8 +19,10 @@ namespace clientAPI
     /// </summary>
     public partial class HighScores : Window
     {
-        public HighScores()
+        private Client client;
+        public HighScores(ref Client appClient)
         {
+            client = appClient;
             InitializeComponent();
             updateStrings();
         }
@@ -28,7 +30,7 @@ namespace clientAPI
         private void ClickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu = new menu();
+            menu menu = new menu(ref client);
             menu.Show();
         }
         private void updateStrings()
@@ -41,6 +43,8 @@ namespace clientAPI
             player1.SetValue(TextBlock.TextProperty,string1);
             player2.SetValue(TextBlock.TextProperty,string2);
             player3.SetValue(TextBlock.TextProperty,string3);
+
+            
         }
 
 

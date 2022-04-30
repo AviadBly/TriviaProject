@@ -20,7 +20,7 @@ namespace clientAPI
     /// </summary>
     public partial class JoinRoom : Window
     {
-        public Client client;
+        private Client client;
         public JoinRoom(ref Client appClient)
         {
             client = appClient;
