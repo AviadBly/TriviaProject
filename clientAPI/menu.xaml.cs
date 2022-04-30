@@ -38,7 +38,7 @@ namespace clientAPI
         public menu(ref Client appClient)
         {
             InitializeComponent();
-            JoinRoom joinRoom = new JoinRoom();
+            
            
         }
         
