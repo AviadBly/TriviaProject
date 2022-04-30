@@ -47,8 +47,25 @@ namespace clientAPI
 
             CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text,players, constants.MAXQUESTIONS,time);
 
-
             
+
+            byte[] data = JsonHelpers.JsonFormatSerializer.createSerializer(createRoomRequest);
+
+            client.sender(System.Text.Encoding.Default.GetString(data), Requests.CREATE_ROOM_CODE);
+
+            byte[] returnMsg = client.receiver();
+            Console.Write(returnMsg);
+
+            CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
+
+            //login failed
+            if (createRoomResponse.Status == Response.status_error)
+            {
+                return;
+            }
+
+
+
         }
     }
 }
