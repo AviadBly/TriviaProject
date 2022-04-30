@@ -23,30 +23,17 @@ namespace clientAPI.Requests_and_Responses
         public const byte GET_HIGH_SCORES_REQUEST_CODE = 35;
         
 
-        string username;
-        string password;
-        public Requests(string username, string password)
-        {
-            this.username = username;
-            this.password = password;
-        }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        //string username;
+        //string password;
+        //public Requests(string username, string password)
+        //{
+        //    this.username = username;
+        //    this.password = password;
+        //}
+        //public string Username { get; set; }
+        //public string Password { get; set; }
 
     }
-    internal class SignUpRequest:  Requests
-    {
-        string email;
-
-        public SignUpRequest(string username, string password,string email) : base(username, password)
-        {
-            this.Username = username;
-            this.Password = password;
-            this.email = email;
-        }
-        public string Email { get; set; }
-    }
-    
 
     internal class LoginRequest
     {
@@ -61,7 +48,20 @@ namespace clientAPI.Requests_and_Responses
         public string? Username { get; set; } = default!;
         public string? Password { get; set; } = default!;
     }
+    internal class SignUpRequest: LoginRequest
+    {
+        
+        string email;
 
+        public SignUpRequest(string username, string password,string email) : base(username, password)
+        {
+            
+            Email = email;
+        }
+        
+        public string Email { get; set; }
+    }
+    
     internal class JoinRoomRequest
     {
         uint roomId;
