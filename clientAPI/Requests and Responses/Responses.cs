@@ -80,9 +80,9 @@ namespace clientAPI.Requests_and_Responses
             this.statistics = statistics;
         }
 
-       
-       
-	};
+        
+
+    };
 	internal class  GetPersonalStatsResponse :  Response
 	{
 		List<string> statistics;
@@ -91,6 +91,9 @@ namespace clientAPI.Requests_and_Responses
         {
             this.statistics = statistics;
         }
+
+        public List<string> Statistics { get; set; }
+
     }
     internal class JoinRoomResponse : Response
     {

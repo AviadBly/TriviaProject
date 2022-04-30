@@ -20,6 +20,7 @@ namespace clientAPI.Requests_and_Responses
         public const byte JOIN_ROOM_REQUEST_CODE = 33;
         public const byte GET_STATISTICS_REQUEST_CODE = 34;
         public const byte LOGOUT_REQUEST_CODE = 35;
+        
 
         string username;
         string password;
