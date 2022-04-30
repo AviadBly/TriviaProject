@@ -80,6 +80,8 @@ namespace clientAPI.Requests_and_Responses
             this.statistics = statistics;
         }
 
+        public List<string> highest { get;set; }
+
        
        
 	};
