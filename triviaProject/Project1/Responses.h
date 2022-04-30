@@ -1,15 +1,20 @@
 #pragma once
 #include <string>
 
-class Response {
+struct Response {
 	unsigned int status;
+	const unsigned int status_ok = 2;
+	const unsigned int status_error = 5;
 };
 
-class LoginResponse : public Response {
-	std::string username;
-	std::string password;
+struct LoginResponse : public Response {
+	
 };
 
-class SignUpResponse : public LoginResponse {
-	std::string email;
+struct SignUpResponse : public Response {
+
+};
+
+struct ErrorResponse {
+	std::string message;
 };

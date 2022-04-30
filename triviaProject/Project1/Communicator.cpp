@@ -1,7 +1,8 @@
 #include "Communicator.h"
 
 
-Communicator::Communicator()
+
+Communicator::Communicator(RequestHandlerFactory& handlerFactory) : m_handlerFactory(handlerFactory)
 {
 
 	// this server use TCP. that why SOCK_STREAM & IPPROTO_TCP
@@ -33,7 +34,7 @@ void Communicator::serve(int port)
 	sa.sin_addr.s_addr = INADDR_ANY;    // when there are few ip's for the machine. We will use always "INADDR_ANY"
 	
 	// Connects between the socket and the configuration (port and etc..)
-	if (bind(m_serverSocket, (struct sockaddr*)&sa, sizeof(sa)) == SOCKET_ERROR)
+	if (_WINSOCK2API_::bind(m_serverSocket, (struct sockaddr*)&sa, sizeof(sa)) == SOCKET_ERROR)
 		throw std::exception(__FUNCTION__ " - bind");
 
 	// Start listening for incoming requests of clients
@@ -61,69 +62,87 @@ void Communicator::acceptClient()
 		throw std::exception(__FUNCTION__);
 
 	std::cout << "Client accepted. Communicator and client can speak" << std::endl;
+
 	// the function that handle the conversation with the client
-	clientHandler(client_socket);
+	std::thread new_user(&Communicator::handleNewClient, this, client_socket);
+	new_user.detach();
+
 }
 
-std::string Communicator::recvMsg(SOCKET socket, const int bytesNum, const int flags) {
+std::string Communicator::recvMsg(SOCKET socket) {
 
-	
+	const int maxLen = 4096;	//probobaly dont change, this is the max bytes
+	const int flag = 0;
 	try
 	{
-		if (bytesNum == 0)
-		{
-			return "";
-		}
+		char data[maxLen];
 
-		char* data = new char[bytesNum + 1];
-		for (int i = 0; i < bytesNum + 1; i++) {
-			data[i] = '\0';
-		}
-
-		int res = recv(socket, data, bytesNum, flags);
-		//end of the string
-
+		int res = recv(socket, data, maxLen, flag);		
 		if (res == INVALID_SOCKET)
 		{
 			std::string s = "Error while recieving from socket: ";
 			s += std::to_string(socket);
 			throw std::exception(s.c_str());
 		}
+		std::string received = "";
 
-		std::string received(data);
-		delete[] data;
-
+		for (int i = 0; i < res; i++) {
+			received += data[i];
+		}
+				
 		return received;
 	
 	}
 	catch (const std::exception& e)
 	{
+		std::cout << e.what();
 		closesocket(socket);
 	}
 
 }
+//send string msg
+void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
+	try
+	{
+		send(clientSocket, msg.c_str(), msg.size(), 0);
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << e.what();
+		closesocket(clientSocket);
+	}
+}
 
-void Communicator::clientHandler(SOCKET clientSocket)
+void Communicator::handleNewClient(SOCKET clientSocket)
 {
-	std::string s = "HELLO";
-	send(clientSocket, s.c_str(), s.size(), 0);  // last parameter: flag. for us will be 0.
+	
+	sendMsg(clientSocket, "HELLO");
 	std::string userMsg = "";
-	const int maxLen = 4096;
-
-
+	
+	LoginRequestHandler handler(this->m_handlerFactory.getLoginManger(), this->m_handlerFactory);
+	RequestInfo info;
+	
 	while (true) {
 		
-		userMsg = recvMsg(clientSocket, maxLen, 0);
+		userMsg = recvMsg(clientSocket);
 
-		std::cout << "User msg:" << userMsg << "\n";
-		if (userMsg == "Exit") {
-			s = "Bye";
-			send(clientSocket, s.c_str(), s.size(), 0);
-			break;
+		std::cout << "LoggedUser msg:" << userMsg.substr(5) << "\n";
+					
+		info.code = userMsg[0];
+		std::cout << "code: " << info.code <<"\n";
+		info.receivalTime = time(NULL);
+		
+		info.buffer = Helper::convertStringToBits(userMsg.substr(5));
+
+		if (!handler.isRequestRelevant(info)) {
+			throw std::exception("Irrelevent request");
 		}
 
-
+		RequestResult request = handler.handleRequest(info);
 		
+		sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
+			
+		break;		
 	}
 	
 	// Closing the socket (in the level of the TCP protocol)
