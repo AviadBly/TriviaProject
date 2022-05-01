@@ -45,7 +45,7 @@ RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 
 	
 	try {
-		loginRequest = JsonRequestPacketDeserializer::deserializeLoginRequest(requestResult.buffer);
+		loginRequest = JsonRequestPacketDeserializer::deserializeLoginRequest(requestInfo.buffer);
 	}
 	catch (const std::exception& e) {	//if there was a problem with the json format, return error msg
 		loadErrorMsg(requestResult, e.what());
@@ -82,7 +82,7 @@ RequestResult LoginRequestHandler::signUp(RequestInfo requestInfo)
 	SignupRequest signUp;
 
 	try {
-		signUp = JsonRequestPacketDeserializer::deserializeSignUpRequest(requestResult.buffer);
+		signUp = JsonRequestPacketDeserializer::deserializeSignUpRequest(requestInfo.buffer);
 	}
 	catch (const std::exception& e) {
 		loadErrorMsg(requestResult, e.what());

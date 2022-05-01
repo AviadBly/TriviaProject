@@ -116,36 +116,42 @@ void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 void Communicator::handleNewClient(SOCKET clientSocket)
 {
 	
-	sendMsg(clientSocket, "HELLO");
+	//sendMsg(clientSocket, "HELLO");
 	std::string userMsg = "";
 	
 	LoginRequestHandler handler(this->m_handlerFactory.getLoginManger(), this->m_handlerFactory);
 	RequestInfo info;
-	
-	while (true) {
-		
-		userMsg = recvMsg(clientSocket);
+	try {
+		while (true) {
 
-		std::cout << "LoggedUser msg:" << userMsg.substr(5) << "\n";
-					
-		info.code = userMsg[0];
-		std::cout << "code: " << info.code <<"\n";
-		info.receivalTime = time(NULL);
-		
-		info.buffer = Helper::convertStringToBits(userMsg.substr(5));
+			userMsg = recvMsg(clientSocket);
 
-		if (!handler.isRequestRelevant(info)) {
-			throw std::exception("Irrelevent request");
+			std::cout << "LoggedUser msg:" << userMsg.substr(5) << "\n";
+
+			info.code = userMsg[0];
+			std::cout << "code: " << info.code << "\n";
+			info.receivalTime = time(NULL);
+
+			info.buffer = Helper::convertStringToBits(userMsg.substr(5));
+
+			if (!handler.isRequestRelevant(info)) {
+				std::cout << "Irrelevent request\n";
+				continue;
+			}
+
+			RequestResult request = handler.handleRequest(info);
+
+			sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
+
+			break;
 		}
-
-		RequestResult request = handler.handleRequest(info);
-		
-		sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
-			
-		break;		
+	}
+	catch(std::exception e) {
+		// Closing the socket (in the level of the TCP protocol)
+		closesocket(clientSocket);
 	}
 	
-	// Closing the socket (in the level of the TCP protocol)
-	closesocket(clientSocket);
+	
+	
 
 }

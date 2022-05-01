@@ -5,7 +5,7 @@ json JsonRequestPacketDeserializer::getJsonFromBits(std::vector<char unsigned> j
 {
 
 	std::string jsonString = "";
-	//create a json string, and replace all the \' with \" because \' is'nt registered well
+	//create a json string, and replace all the \' with \"       because \' is'nt registered well
 	for (unsigned int i = 0; i < jsonBits.size(); i++) {
 		if (jsonBits[i] == '\'') {
 			jsonString += "\"";
@@ -29,8 +29,8 @@ LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<
 	//get json format from bits
 	json jsonData = getJsonFromBits(jsonRequestBits);
 
-	loginRequest.username = jsonData.at("username");
-	loginRequest.password = jsonData.at("password");
+	loginRequest.username = jsonData.at(USERNAME_TEXT);
+	loginRequest.password = jsonData.at(PASSWORD_TEXT);
 	
 	return loginRequest;
 }
@@ -41,10 +41,10 @@ SignupRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vecto
 	//get json format from bits
 	json jsonData = getJsonFromBits(jsonRequestBits);
 
-	
-	signUpRequest.username = jsonData.at("username");
-	signUpRequest.password = jsonData.at("password");
-	signUpRequest.email = jsonData.at("email");
+	std::cout << jsonData << "\n";
+	signUpRequest.username = jsonData.at(USERNAME_TEXT);
+	signUpRequest.password = jsonData.at(PASSWORD_TEXT);
+	signUpRequest.email = jsonData.at(EMAIL_TEXT);
 	
 	
 	return signUpRequest;

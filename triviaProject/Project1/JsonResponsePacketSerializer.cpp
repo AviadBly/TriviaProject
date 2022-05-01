@@ -121,7 +121,14 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeHighScoreRespo
 	return jsonBits;
 }
 
+std::vector<unsigned char> JsonResponsePacketSerializer::intToBytes(int numInteger)
+{
+	vector<unsigned char> arrayOfByte(4);
+	for (int i = 0; i < 4; i++)
+		arrayOfByte[3 - i] = (numInteger >> (i * 8));
 
+	return arrayOfByte;
+}
 
 //return a vector of bits from the given jsonFormat message + 4 bits of the length of the message + the code
 std::vector<unsigned char> JsonResponsePacketSerializer::convertJsonToBits(const json& jsonFormat, unsigned char code)
@@ -137,10 +144,11 @@ std::vector<unsigned char> JsonResponsePacketSerializer::convertJsonToBits(const
 
 	//add the length of the data 
 	unsigned int length = jsonString.length();
+	std::vector<unsigned char> tempLengthBytes = intToBytes(length);
 
-	std::string binaryStringLength = std::bitset<32>(length).to_string();
-	for (unsigned int i = 0; i < binaryStringLength.length(); i++) {
-		jsonBits.push_back(binaryStringLength[i]);
+	//runs 4 times because an integer is 32 bytes and each byte is 8, so 32/8=4
+	for (unsigned int i = 0; i < 4; i++) {
+		jsonBits.push_back(tempLengthBytes[i]);
 	}
 
 	std::cout << jsonString << "\n";

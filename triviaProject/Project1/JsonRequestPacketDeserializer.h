@@ -6,6 +6,10 @@
 #include "Requests.h"
 #include "Responses.h"
 
+#define USERNAME_TEXT "Username"
+#define PASSWORD_TEXT "Password"
+#define EMAIL_TEXT "Email"
+
 using json = nlohmann::json;
 
 class JsonRequestPacketDeserializer {

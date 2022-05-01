@@ -6,6 +6,7 @@
 #include <iostream>
 #include <bitset>
 
+
 using json = nlohmann::json;
 
 class JsonResponsePacketSerializer {
@@ -25,7 +26,10 @@ public:
 
 	static std::vector<unsigned char> serializeHighScoreResponse(const GetHighScoreResponse& getHighScoreResponse);
 
+	
+
 
 private:
 	static std::vector<unsigned char> convertJsonToBits(const json& jsonFormat, unsigned char code);
+	static std::vector<unsigned char> intToBytes(int numInteger);
 };
