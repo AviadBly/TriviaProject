@@ -40,6 +40,10 @@ namespace clientAPI
             InitializeComponent();
             
            
+        }   
+        public menu()
+        {
+
         }
         
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -101,9 +105,35 @@ namespace clientAPI
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+       
+        private void clickLogOut(object sender, RoutedEventArgs e)
         {
 
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Confirmation", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                
+
+                client.sender("", Requests.LOGOUT_REQUEST_CODE);
+
+                byte[] returnMsg = client.receiver();
+                Console.Write(returnMsg);
+
+                LogOutResponse logOutResponse = JsonHelpers.JsonFormatDeserializer.LogOutResponseDeserializer(returnMsg.Skip(5).ToArray());
+
+                //login failed
+                if (logOutResponse.Status == Response.status_error)
+                {
+                    return;
+                }
+
+                this.Close();
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.Show();
+            }
+
+
+                
         }
     }
 }
