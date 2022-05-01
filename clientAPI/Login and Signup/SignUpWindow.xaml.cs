@@ -57,7 +57,7 @@ namespace clientAPI
 
                 
                 byte[] data = JsonHelpers.JsonFormatSerializer.signUpSerializer(signUpRequest);
-
+                Console.WriteLine(data);
                 client.sender(System.Text.Encoding.Default.GetString(data), Requests.SIGN_UP_REQUEST_CODE);
 
                 byte[] returnMsg = client.receiver();

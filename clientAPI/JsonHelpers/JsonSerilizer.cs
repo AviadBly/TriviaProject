@@ -14,7 +14,7 @@ namespace clientAPI.JsonHelpers
         {
 
             string resultStringJson = JsonSerializer.Serialize(loginRequest);
-
+            Console.WriteLine(resultStringJson);
             return Encoding.UTF8.GetBytes(resultStringJson);
 
         }
@@ -22,28 +22,28 @@ namespace clientAPI.JsonHelpers
         public static byte[] signUpSerializer(SignUpRequest signUpRequest)
         {
             string resultStringJson =  JsonSerializer.Serialize(signUpRequest);
-
+            Console.WriteLine(resultStringJson);
             return Encoding.ASCII.GetBytes(resultStringJson.ToString());
         }
 
         public static byte[] getPlayersInRoomSerializer(GetPlayersInRoomRequest getPlayersInRoomRequest)
         {
             string resultStringJson = JsonSerializer.Serialize(getPlayersInRoomRequest);
-
+            Console.WriteLine(resultStringJson);
             return Encoding.ASCII.GetBytes(resultStringJson.ToString());
         }
 
         public static byte[] joinRoomSerializer(JoinRoomRequest joinRoomRequest)
         {
             string resultStringJson = JsonSerializer.Serialize(joinRoomRequest);
-
+            Console.WriteLine(resultStringJson);
             return Encoding.ASCII.GetBytes(resultStringJson.ToString());
         }
 
         public static byte[] createSerializer(CreateRoomRequest createRoomRequest)
         {
             string resultStringJson = JsonSerializer.Serialize(createRoomRequest);
-
+            Console.WriteLine(resultStringJson);
             return Encoding.ASCII.GetBytes(resultStringJson.ToString());
         }
 
