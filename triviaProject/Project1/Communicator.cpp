@@ -143,7 +143,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 
 			sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
 
-			break;
+			
 		}
 	}
 	catch(std::exception e) {
