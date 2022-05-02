@@ -6,6 +6,17 @@
 #include <iostream>
 #include <bitset>
 
+#define STATUS_TEXT "Status"
+#define MESSAGE_TEXT "Message"
+#define PLAYERS_TEXT "Players"
+
+#define IS_ACTIVE_TEXT "IsActive"
+
+#define MAX_PLAYERS_TEXT "MaxPlayers"
+#define NAME_TEXT "Name"
+#define NUM_OF_QUESTIONS_IN_GAME_TEXT "NumOfQuestionsInGame"
+#define TIME_PER_QUESTION_TEXT "TimePerQuestion"
+#define STATISTICS_TEXT "Statistics"
 
 using json = nlohmann::json;
 

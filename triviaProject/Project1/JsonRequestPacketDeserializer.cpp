@@ -56,10 +56,10 @@ CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(st
 	//get json format from bits
 	json jsonData = getJsonFromBits(jsonRequestBits);
 		
-	createRoomRequest.answerTimeout = jsonData.at("answerTimeout");
-	createRoomRequest.maxUsers = jsonData.at("maxUsers");
-	createRoomRequest.questionCount = jsonData.at("questionCount");
-	createRoomRequest.roomName = jsonData.at("roomName");
+	createRoomRequest.answerTimeout = jsonData.at(ANSWER_TIMEOUT_TEXT);
+	createRoomRequest.maxUsers = jsonData.at(MAX_USERS_TEXT);
+	createRoomRequest.questionCount = jsonData.at(QUESTION_COUNT_TEXT);
+	createRoomRequest.roomName = jsonData.at(ROOM_NAME_TEXT);
 	
 	return createRoomRequest;
 }
@@ -71,7 +71,7 @@ JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(std::v
 	json jsonData = getJsonFromBits(jsonRequestBits);
 	
 	
-	joinRoomRequest.roomId = jsonData.at("roomId");
+	joinRoomRequest.roomId = jsonData.at(ROOM_ID_TEXT);
 	
 	return joinRoomRequest;
 }
@@ -83,7 +83,7 @@ GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRo
 	json jsonData = getJsonFromBits(jsonRequestBits);
 
 
-	getPlayersInRoomRequest.roomId = jsonData.at("roomId");
+	getPlayersInRoomRequest.roomId = jsonData.at(ROOM_ID_TEXT);
 
 	return getPlayersInRoomRequest;
 }

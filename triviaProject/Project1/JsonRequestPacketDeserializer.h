@@ -10,6 +10,12 @@
 #define PASSWORD_TEXT "Password"
 #define EMAIL_TEXT "Email"
 
+#define ANSWER_TIMEOUT_TEXT "AnswerTimeout"
+#define MAX_USERS_TEXT "MaxUsers"
+#define QUESTION_COUNT_TEXT "QuestionCount"
+#define ROOM_NAME_TEXT "RoomName"
+
+#define ROOM_ID_TEXT "RoomId"
 using json = nlohmann::json;
 
 class JsonRequestPacketDeserializer {
