@@ -48,30 +48,36 @@ namespace clientAPI
             
             if (username == null || password == null)
             {
+                MessageBox.Show("Please Enter a valid username!");
                 return;
             }
-
-            //create a login request
-            LoginRequest loginRequest = new LoginRequest(username, password);
-          
-            byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
-
-            MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.LOGIN_REQUEST_CODE);
-
-            byte[] returnMsg = MainProgram.appClient.receiver();
-            Console.Write(returnMsg);
-            
-            LoginResponse loginResponse = JsonHelpers.JsonFormatDeserializer.loginResponseDeserializer(returnMsg.Skip(5).ToArray());
-
-            //login failed
-            if(loginResponse.Status == Response.status_error)
+            else
             {
-                return;               
+                //create a login request
+                LoginRequest loginRequest = new LoginRequest(username, password);
+
+                byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
+
+                MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.LOGIN_REQUEST_CODE);
+
+                byte[] returnMsg = MainProgram.appClient.receiver();
+                Console.Write(returnMsg);
+
+                LoginResponse loginResponse = JsonHelpers.JsonFormatDeserializer.loginResponseDeserializer(returnMsg.Skip(5).ToArray());
+
+                //login failed
+                if (loginResponse.Status == Response.status_error)
+                {
+                    MessageBox.Show("Error! Username or password is incorrect!");
+                    return;
+                }
+
+                menu menuWindow = new menu(username);
+                menuWindow.Show();
+                Close();
             }
-            
-            menu menuWindow = new menu();
-            menuWindow.Show();
-            Close();
+
+           
         }
         
         private void signClick(object sender, RoutedEventArgs e)

@@ -20,6 +20,10 @@ bool SqliteDataBase::open()
 		cout << "Failed to open DB" << endl;
 		return false;
 	}
+	if (doesFileExist != SQLITE_OK)
+	{
+		create();
+	}
 
 }
 
@@ -89,10 +93,10 @@ int SqliteDataBase::callbackUsers(void* data, int argc, char** argv, char** azCo
 	return 0;
 }
 
-void SqliteDataBase::sendCallBackUsers(sqlite3* db, const char* sqlStatement, list<LoggedUser>* albums)
+void SqliteDataBase::sendCallBackUsers(sqlite3* db, const char* sqlStatement, list<LoggedUser>* users)
 {
 	char** errMessage = nullptr;
-	int res = sqlite3_exec(db, sqlStatement, callbackUsers, albums, errMessage);
+	int res = sqlite3_exec(db, sqlStatement, callbackUsers, users, errMessage);
 	if (res != SQLITE_OK) {
 		std::cout << res << std::endl;
 		cout << "Error!" << endl;

@@ -37,10 +37,17 @@ namespace clientAPI
         private Client client;
         public menu()
         {
+
             InitializeComponent();
             
            
-        }   
+        } 
+        public menu(string username)
+        {
+            
+            InitializeComponent();
+            updateUsername(username);
+        }
    
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -131,5 +138,11 @@ namespace clientAPI
 
                 
         }
+        private void updateUsername(string username1)
+        {
+            username.SetValue(TextBlock.TextProperty, username1);
+        }
+
+        
     }
 }

@@ -43,12 +43,17 @@ namespace clientAPI
             string username = UsernameText.Text;
             string password = PasswordText.Password.ToString();
             string email = EmailText.Text;
+            
 
 
-            if (username.Length > 8 || password.Length > 8 || username.Length < 4 || password.Length < 4)
+            if (username.Length > 10 || password.Length > 10 || username.Length < 4 || password.Length < 4)
             {
-                MessageBox.Show("Username or password length must be under 8 characters and over 4 characters!");
+                MessageBox.Show("Username or password length must be under 10 characters and over 4 characters!");
 
+            }
+            else if(email.Contains('@') == false || email.Substring('@') != "gmail.com")
+            {
+                MessageBox.Show("email must be used in @gmail.com format!");
             }
             else
             { 
@@ -68,6 +73,7 @@ namespace clientAPI
                 //login failed
                 if (signUpResponse.Status == Response.status_error)
                 {
+                    MessageBox.Show("Error: Username already exists");
                     return;
                 }
 
