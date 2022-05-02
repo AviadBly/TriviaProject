@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using clientAPI.Create_and_Join;
 
 namespace clientAPI
 {
@@ -33,6 +34,12 @@ namespace clientAPI
             this.Close();
             menu menu = new menu();
             menu.Show();
+        }
+
+        
+        private void showActiveRooms(List<Room> rooms)
+        {
+            //TO DO, AVIAD,  show the rooms on the screen
         }
 
         private void clickJoin(object sender, RoutedEventArgs e)

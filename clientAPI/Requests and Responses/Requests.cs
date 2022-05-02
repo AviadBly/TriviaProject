@@ -67,25 +67,23 @@ namespace clientAPI.Requests_and_Responses
         uint roomId;
         public JoinRoomRequest(uint roomId)
         {
-            this.roomId=roomId;
+            RoomId = roomId;
         }
         public uint RoomId { get; set; }
     };
 
     internal class  CreateRoomRequest
     {
-        string roomName;
-        uint maxUsers;
-        uint questionCount;
-        uint answerTimeout;
+        
 
         public CreateRoomRequest(string roomName, uint maxUsers, uint questionCount, uint answerTimeout)
         {
-            this.roomName = roomName;
-            this.maxUsers = maxUsers;
-            this.questionCount = questionCount;
-            this.answerTimeout = answerTimeout;
+            RoomName = roomName;
+            MaxUsers = maxUsers;
+            QuestionCount = questionCount;
+            AnswerTimeout = answerTimeout;
         }
+        
         public string RoomName { get; set; }
         public uint MaxUsers { get; set; }
         public uint QuestionCount { get; set; }
@@ -96,11 +94,11 @@ namespace clientAPI.Requests_and_Responses
 
     internal class GetPlayersInRoomRequest
     {
-        uint roomId;
+        
 
         public GetPlayersInRoomRequest(uint roomId)
         {
-            this.roomId = roomId;
+            RoomId = roomId;
         }
         public uint RoomId { get; set; }
 

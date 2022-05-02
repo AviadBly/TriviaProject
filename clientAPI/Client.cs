@@ -87,7 +87,7 @@ namespace clientAPI
                 // Read the first batch of the TcpServer response bytes.
                 Int32 bytes = this.m_socket.Read(serverBytes, 0, serverBytes.Length);
             }
-            catch (ArgumentException e)
+            catch (System.IO.IOException e)
             {
                 if (e.Source != null)
                     Console.WriteLine("IOException source: {0}", e.Source);

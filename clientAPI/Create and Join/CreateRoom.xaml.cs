@@ -47,8 +47,8 @@ namespace clientAPI
 
             CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text,players, constants.MAXQUESTIONS,time);
 
-            
 
+            Console.Write(createRoomRequest);
             byte[] data = JsonHelpers.JsonFormatSerializer.createSerializer(createRoomRequest);
 
             MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.CREATE_ROOM_CODE);
@@ -61,10 +61,11 @@ namespace clientAPI
             //login failed
             if (createRoomResponse.Status == Response.status_error)
             {
+                Console.Write("NOPE room succesfully");
                 return;
             }
 
-            
+            Console.Write("Createed room succesfully");
 
         }
     }

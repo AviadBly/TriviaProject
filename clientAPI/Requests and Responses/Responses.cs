@@ -15,7 +15,7 @@ namespace clientAPI.Requests_and_Responses
 
         public Response(uint status)
         {
-            this.status = status;
+            Status = status;
         }
 		public uint Status { get; set; }
 
@@ -67,7 +67,7 @@ namespace clientAPI.Requests_and_Responses
 
         public GetPlayersInRoomResponse(List<string> players)
         {
-            this.players = players;
+            Players = players;
         }
 		public List<string> Players { get; set; }
     }
@@ -91,7 +91,7 @@ namespace clientAPI.Requests_and_Responses
 
         public GetPersonalStatsResponse(List<string> statistics, uint status) :base(status)
         {
-            this.statistics = statistics;
+            Statistics = statistics;
         }
 
         public List<string> Statistics { get; set; }
