@@ -35,17 +35,13 @@ namespace clientAPI
     public partial class menu : Window
     {
         private Client client;
-        public menu(ref Client appClient)
+        public menu()
         {
             InitializeComponent();
             
            
         }   
-        public menu()
-        {
-
-        }
-        
+   
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             
@@ -55,7 +51,7 @@ namespace clientAPI
 
         private void JoinClick(object sender, RoutedEventArgs e)
         {
-            JoinRoom joinRoom = new JoinRoom(ref client);
+            JoinRoom joinRoom = new JoinRoom();
             joinRoom.Show();
             this.Close();
         }
@@ -64,7 +60,7 @@ namespace clientAPI
         {
             
 
-            CreateRoom createRoom = new CreateRoom(ref client);
+            CreateRoom createRoom = new CreateRoom();
             createRoom.Show();
             this.Close();
         }
@@ -76,14 +72,14 @@ namespace clientAPI
         }
         private void clickSign(object sender, RoutedEventArgs e)
         {
-            SignUpWindow signWindow = new SignUpWindow(ref client);
+            SignUpWindow signWindow = new SignUpWindow();
             signWindow.Show();
             this.Close();
         }
 
         private void clickStats(object sender, RoutedEventArgs e)
         {
-            Statistics statsWindow = new Statistics(ref client);
+            Statistics statsWindow = new Statistics();
             statsWindow.Show();
             this.Close();
         }
@@ -112,11 +108,11 @@ namespace clientAPI
             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Confirmation", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                
 
-                client.sender("", Requests.LOGOUT_REQUEST_CODE);
 
-                byte[] returnMsg = client.receiver();
+                MainProgram.appClient.sender("", Requests.LOGOUT_REQUEST_CODE);
+
+                byte[] returnMsg = MainProgram.appClient.receiver();
                 Console.Write(returnMsg);
 
                 LogOutResponse logOutResponse = JsonHelpers.JsonFormatDeserializer.LogOutResponseDeserializer(returnMsg.Skip(5).ToArray());

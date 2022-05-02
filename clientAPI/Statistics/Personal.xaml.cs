@@ -22,21 +22,21 @@ namespace clientAPI
     
     public partial class Personal : Window
     {
-        private Client client;
-        public Personal(ref Client appClient)
+        
+        public Personal()
         {
             InitializeComponent();
 
-            client = appClient;
+            
         }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+            MainProgram.appClient.sender("", Requests.GET_STATISTICS_REQUEST_CODE);
             
-            client.sender("", Requests.GET_STATISTICS_REQUEST_CODE);
-            
-            byte[] returnMsg = client.receiver();
+            byte[] returnMsg = MainProgram.appClient.receiver();
             
 
             GetPersonalStatsResponse getPersonalStatsResponse = JsonHelpers.JsonFormatDeserializer.GetPersonalStatsResponseDeserializer(returnMsg.Skip(5).ToArray());
@@ -62,7 +62,7 @@ namespace clientAPI
         private void ClickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu = new menu(ref client);
+            menu menu = new menu();
             menu.Show();
         }
 

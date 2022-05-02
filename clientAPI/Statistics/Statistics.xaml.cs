@@ -19,10 +19,10 @@ namespace clientAPI
     /// </summary>
     public partial class Statistics : Window
     {
-        Client client;
-        public Statistics(ref Client appClient)
+        
+        public Statistics()
         {
-            client = appClient;
+            
             InitializeComponent();
         }
 
@@ -30,21 +30,21 @@ namespace clientAPI
 
         private void backClick(object sender, RoutedEventArgs e)
         {
-            menu menu = new menu(ref client);
+            menu menu = new menu();
             menu.Show();
             this.Close();
         }
 
         private void ClickPersonal(object sender, RoutedEventArgs e)
         {
-            Personal personal = new Personal(ref client);
+            Personal personal = new Personal();
             personal.Show();
             this.Close();
         }
 
         private void ClickScores(object sender, RoutedEventArgs e)
         {
-            HighScores scores = new HighScores(ref client);
+            HighScores scores = new HighScores();
             scores.Show();
             this.Close();
         }
