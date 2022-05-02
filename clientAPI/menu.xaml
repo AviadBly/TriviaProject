@@ -11,20 +11,20 @@
      TextOptions.TextFormattingMode="Ideal"
      TextOptions.TextRenderingMode="Auto"
      FontFamily="{DynamicResource MaterialDesignFont}"
-      Title="Trivia Menu" Height="730" Width="565" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
+      Title="Trivia Menu" Height="730" Width="625" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
     <Grid Margin="10,20,20,-16">
 
         <materialDesign:PackIcon Kind="FoodKosher" Margin="439,10,0,0" Height="65" Width="69" Background="Wheat"/>
         <Label Content="Israeli Trivia" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Left" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" Margin="17,15,0,580" Width="441"/>
-        <Button Content="Create Room" Click="clickCreate"  HorizontalAlignment="Left" Margin="0,130,0,0" VerticalAlignment="Top" Height="82" Width="220" FontSize="30" Foreground="#1F618D" Background="#76D7C4" FontWeight="bold"/>
-        <Button Content="Join Room" Click="JoinClick" HorizontalAlignment="Left" Margin="0,238,0,0" VerticalAlignment="Top" Height="82" Width="220" FontSize="30"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold" />
-        <Button Content="Statistics" Click="clickStats" HorizontalAlignment="Left" Margin="270,238,0,0" VerticalAlignment="Top" Height="82" Width="240" FontSize="30" Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
+        <Button Content="Create Room" Click="clickCreate"  HorizontalAlignment="Left" Margin="48,121,0,0" VerticalAlignment="Top" Height="82" Width="220" FontSize="30" Foreground="#1F618D" Background="#76D7C4" FontWeight="bold"/>
+        <Button Content="Join Room" Click="JoinClick" HorizontalAlignment="Left" Margin="48,238,0,0" VerticalAlignment="Top" Height="82" Width="220" FontSize="30"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold" />
+        <Button Content="Statistics" Click="clickStats" HorizontalAlignment="Left" Margin="319,238,0,0" VerticalAlignment="Top" Height="82" Width="240" FontSize="30" Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
 
         <Button Content="Exit" HorizontalAlignment="Left" Margin="10,578,0,0" VerticalAlignment="Top" Height="82" Width="151" FontSize="30" Click="clickExit"  Background="#76D7C4" Foreground="#1F618D" FontWeight="bold"/>
-        <Button Content="Surprise" HorizontalAlignment="Left" Margin="382,578,0,0" VerticalAlignment="Top" Height="82" Width="152" FontSize="30" Click="clickSurprise"  Background="red" Foreground="#1F618D" FontWeight="bold"/>
-        <Image Margin="310,112,69,498" Source="/Pictures/Image1.png" Stretch="Fill"/>
+        <Button Content="Surprise" HorizontalAlignment="Left" Margin="407,578,0,0" VerticalAlignment="Top" Height="82" Width="152" FontSize="30" Click="clickSurprise"  Background="red" Foreground="#1F618D" FontWeight="bold"/>
+        <Image Margin="382,112,36,498" Source="/Pictures/Image1.png" Stretch="Fill"/>
         <Button Content="Log out / Switch Accounts " FontSize="30" HorizontalAlignment="Center" Margin="0,458,0,0" VerticalAlignment="Top" Width="412" Height="93" Click="clickLogOut"/>
-        <TextBox Name="username" HorizontalAlignment="Center" Height="76" Margin="0,355,0,0" TextWrapping="Wrap" VerticalContentAlignment="Center" Text="TextBox" VerticalAlignment="Top" Width="280" FontSize="40" TextAlignment="Center" Background="AliceBlue" Foreground="#1F618D"/>
+        <TextBox Name="username" HorizontalAlignment="Center" Height="76" Margin="0,355,0,0" TextWrapping="Wrap" VerticalContentAlignment="Center" Text="TextBox" VerticalAlignment="Top" Width="334" FontSize="35" TextAlignment="Center" Background="AliceBlue" Foreground="#1F618D"/>
 
     </Grid>
 
