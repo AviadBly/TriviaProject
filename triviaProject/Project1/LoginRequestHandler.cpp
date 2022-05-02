@@ -31,6 +31,7 @@ void LoginRequestHandler::loadErrorMsg(RequestResult& requestResult, std::string
 	std::cout << msg;
 	ErrorResponse errorMsg;
 	errorMsg.message = msg;
+	errorMsg.status = errorMsg.status_error;
 	requestResult.newHandler = nullptr;
 	requestResult.buffer = JsonResponsePacketSerializer::serializeErrorResponse(errorMsg);
 

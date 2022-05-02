@@ -30,7 +30,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeErrorResponse(
 {
 	//init json
 	json jsonResponse;
-	//jsonResponse["status"] = errorResponse.status;
+	jsonResponse[STATUS_TEXT] = errorResponse.status;
 	jsonResponse[MESSAGE_TEXT] = errorResponse.message;
 	
 	std::vector<unsigned char> jsonBits = convertJsonToBits(jsonResponse, unsigned char(ERROR_RESPONSE_CODE));

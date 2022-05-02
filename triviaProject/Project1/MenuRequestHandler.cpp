@@ -8,7 +8,7 @@ MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& handlerFactory) : 
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo)
 {
-	int code = requestInfo.code;
+	unsigned int code = requestInfo.code;
 	return code == CREATE_ROOM_CODE || code == GET_ROOM_REQUEST || code == GET_PLAYERS_IN_ROOM_REQUEST_CODE || code == JOIN_ROOM_REQUEST_CODE || code == GET_STATISTICS_REQUEST_CODE || code == LOGOUT_REQUEST_CODE;
 }
 
@@ -19,11 +19,13 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 	try {
 		switch (requestInfo.code) {
 		case CREATE_ROOM_CODE:
-
+			createRoom(requestInfo);
 		case GET_ROOM_REQUEST:
 			getRooms(requestInfo);
 		case GET_PLAYERS_IN_ROOM_REQUEST_CODE:
+			getPlayersInRoom(requestInfo);
 		case JOIN_ROOM_REQUEST_CODE:
+
 		case GET_STATISTICS_REQUEST_CODE:
 		case LOGOUT_REQUEST_CODE:
 			std::cout << "hey";

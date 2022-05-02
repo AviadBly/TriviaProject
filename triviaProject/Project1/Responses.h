@@ -17,7 +17,7 @@ struct SignUpResponse : public Response {
 
 };
 
-struct ErrorResponse {
+struct ErrorResponse : public Response{
 	std::string message;
 };
 
