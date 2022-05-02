@@ -72,21 +72,43 @@ namespace clientAPI
             this.m_socket.Write(finalMsg);
         }
 
+
+        //returns a byte array
         public byte[] receiver()
         {
 
             // Buffer to store the response bytes.
-            byte[] data = new Byte[1024];
+            byte[] serverBytes = new Byte[1024];
 
             // String to store the response ASCII representation.
             String responseData = String.Empty;
+            try
+            {
+                // Read the first batch of the TcpServer response bytes.
+                Int32 bytes = this.m_socket.Read(serverBytes, 0, serverBytes.Length);
+            }
+            catch (ArgumentException e)
+            {
+                if (e.Source != null)
+                    Console.WriteLine("IOException source: {0}", e.Source);
+                return new byte[0];
+            }
+            
 
-            // Read the first batch of the TcpServer response bytes.
-            Int32 bytes = this.m_socket.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            byte[] lenBytes = serverBytes.Skip(1).Take(4).ToArray();
+
+            // If the system architecture is little-endian (that is, little end first),
+            // reverse the byte array.
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(lenBytes);
+
+            int msgLength = BitConverter.ToInt32(lenBytes, 0);
+            //code + len + data
+            byte[] trimedMsg = serverBytes.Take(1 + 4 + msgLength).ToArray();
+            responseData = System.Text.Encoding.UTF8.GetString(trimedMsg);
             Console.WriteLine("Received: {0}", responseData);
 
-            return data;
+            return trimedMsg;
         }
 
     }

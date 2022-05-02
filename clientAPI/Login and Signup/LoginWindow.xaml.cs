@@ -26,16 +26,16 @@ namespace clientAPI
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public static Client appClient;
+        
 
         public LoginWindow()
         {
-            load(this, null);
+            
             
             InitializeComponent();
 
             
-            appClient = new Client("127.0.0.1", 8200);
+            
         }
 
         
@@ -56,9 +56,9 @@ namespace clientAPI
           
             byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
 
-            appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.LOGIN_REQUEST_CODE);
+            MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.LOGIN_REQUEST_CODE);
 
-            byte[] returnMsg = appClient.receiver();
+            byte[] returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
             
             LoginResponse loginResponse = JsonHelpers.JsonFormatDeserializer.loginResponseDeserializer(returnMsg.Skip(5).ToArray());
@@ -68,28 +68,18 @@ namespace clientAPI
             {
                 return;               
             }
-
-            menu menuWindow = new menu(ref appClient);
+            
+            menu menuWindow = new menu();
             menuWindow.Show();
-            Hide();
+            Close();
         }
-
-        private void load(object sender, EventArgs e)
-        {
-            AllocConsole();
-        }
-      
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool AllocConsole();
-
+        
         private void signClick(object sender, RoutedEventArgs e)
         {
-            //this.Close();
-            SignUpWindow window = new SignUpWindow(ref appClient);
-            Hide();
-            window.Show();
             
+            SignUpWindow window = new SignUpWindow();          
+            window.Show();
+            Close();
         }
 
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)

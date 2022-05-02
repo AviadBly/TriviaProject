@@ -20,10 +20,10 @@ namespace clientAPI
     /// </summary>
     public partial class JoinRoom : Window
     {
-        private Client client;
-        public JoinRoom(ref Client appClient)
+        
+        public JoinRoom()
         {
-            client = appClient;
+            
             InitializeComponent();
         }
 
@@ -31,7 +31,7 @@ namespace clientAPI
         private void clickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu = new menu(ref client);
+            menu menu = new menu();
             menu.Show();
         }
 
@@ -46,9 +46,9 @@ namespace clientAPI
 
                 byte[] data = JsonHelpers.JsonFormatSerializer.joinRoomSerializer(joinRoomRequest);
 
-                client.sender(System.Text.Encoding.Default.GetString(data), Requests.JOIN_ROOM_REQUEST_CODE);
+                MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.JOIN_ROOM_REQUEST_CODE);
 
-                byte[] returnMsg = client.receiver();
+                byte[] returnMsg = MainProgram.appClient.receiver();
                 Console.Write(returnMsg);
 
                 JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Skip(5).ToArray());

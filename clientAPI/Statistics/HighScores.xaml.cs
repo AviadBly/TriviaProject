@@ -19,10 +19,10 @@ namespace clientAPI
     /// </summary>
     public partial class HighScores : Window
     {
-        private Client client;
-        public HighScores(ref Client appClient)
+        
+        public HighScores()
         {
-            client = appClient;
+            
             InitializeComponent();
             updateStrings();
         }
@@ -30,14 +30,14 @@ namespace clientAPI
         private void ClickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu = new menu(ref client);
+            menu menu = new menu();
             menu.Show();
         }
         private void updateStrings()
         {
-            client.sender("", Requests_and_Responses.Requests.GET_HIGH_SCORES_REQUEST_CODE);
+            MainProgram.appClient.sender("", Requests_and_Responses.Requests.GET_HIGH_SCORES_REQUEST_CODE);
 
-            byte[] returnMsg = client.receiver();
+            byte[] returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
 
             Requests_and_Responses.GetHighScoreResponse highScoreResponse = JsonHelpers.JsonFormatDeserializer.GetHighScoreResponseDeserializer(returnMsg.Skip(5).ToArray());

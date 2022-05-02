@@ -26,17 +26,17 @@ namespace clientAPI
     /// </summary>
     public partial class CreateRoom : Window
     {
-        private Client client;
-        public CreateRoom(ref Client appClient)
+        
+        public CreateRoom()
         {
-            client = appClient;
+            
             InitializeComponent();
         }
 
         private void clickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu = new menu(ref client);
+            menu menu = new menu();
             menu.Show();
         }
 
@@ -51,13 +51,13 @@ namespace clientAPI
 
             byte[] data = JsonHelpers.JsonFormatSerializer.createSerializer(createRoomRequest);
 
-            client.sender(System.Text.Encoding.Default.GetString(data), Requests.CREATE_ROOM_CODE);
+            MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.CREATE_ROOM_CODE);
 
-            byte[] returnMsg = client.receiver();
+            byte[] returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
 
             CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
-
+            Console.Write(createRoomResponse);
             //login failed
             if (createRoomResponse.Status == Response.status_error)
             {

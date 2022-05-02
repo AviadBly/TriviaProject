@@ -23,10 +23,10 @@ namespace clientAPI
     public partial class SignUpWindow : Window
     {
 
-        private Client client;
-        public SignUpWindow(ref Client appClient)
+        
+        public SignUpWindow()
         {
-            client = appClient;
+            
             InitializeComponent();
         }
 
@@ -58,9 +58,9 @@ namespace clientAPI
                 
                 byte[] data = JsonHelpers.JsonFormatSerializer.signUpSerializer(signUpRequest);
                 Console.WriteLine(data);
-                client.sender(System.Text.Encoding.Default.GetString(data), Requests.SIGN_UP_REQUEST_CODE);
+                MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.SIGN_UP_REQUEST_CODE);
 
-                byte[] returnMsg = client.receiver();
+                byte[] returnMsg = MainProgram.appClient.receiver();
                 Console.Write(returnMsg);
 
                 SignUpResponse signUpResponse = JsonHelpers.JsonFormatDeserializer.signUpResponseDeserializer(returnMsg.Skip(5).ToArray());
@@ -75,7 +75,7 @@ namespace clientAPI
                 MessageBox.Show("Username Created successfully!");
 
 
-                menu menuWindow = new menu(ref client);
+                menu menuWindow = new menu();
                 menuWindow.Show();
                 this.Close();
             }
