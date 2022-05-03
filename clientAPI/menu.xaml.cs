@@ -140,7 +140,8 @@ namespace clientAPI
         }
         private void updateUsername(string username1)
         {
-            username.SetValue(TextBlock.TextProperty, username1);
+            username.IsReadOnly = true;
+            username.Text="Welcome "+username1+"!";
         }
 
         

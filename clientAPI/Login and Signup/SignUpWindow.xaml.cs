@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using clientAPI.Requests_and_Responses;
 using clientAPI;
+using System.Threading;
+using System.Globalization;
+
 
 namespace clientAPI
 {
@@ -43,18 +46,20 @@ namespace clientAPI
             string username = UsernameText.Text;
             string password = PasswordText.Password.ToString();
             string email = EmailText.Text;
-            
-
+            string search = "@";
+            int indexSearch = email.IndexOf(search);
+            string subEmail = email.Substring(indexSearch+1);
 
             if (username.Length > 10 || password.Length > 10 || username.Length < 4 || password.Length < 4)
             {
                 MessageBox.Show("Username or password length must be under 10 characters and over 4 characters!");
 
             }
-            //else if(email.Contains('@') == false || email.Substring('@') != "gmail.com")
-            //{
-            //    MessageBox.Show("email must be used in @gmail.com format!");
-            //}
+            
+            else if(email.Contains('@') == false || subEmail.Equals("gmail.com")==false)
+            {
+                MessageBox.Show("email must be used in @gmail.com format!");
+            }
             else
             { 
                 
@@ -81,7 +86,7 @@ namespace clientAPI
                 MessageBox.Show("Username Created successfully!");
 
 
-                menu menuWindow = new menu();
+                menu menuWindow = new menu(username);
                 menuWindow.Show();
                 this.Close();
             }

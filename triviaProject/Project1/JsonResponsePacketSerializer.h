@@ -17,6 +17,8 @@
 #define NUM_OF_QUESTIONS_IN_GAME_TEXT "NumOfQuestionsInGame"
 #define TIME_PER_QUESTION_TEXT "TimePerQuestion"
 #define STATISTICS_TEXT "Statistics"
+#define ID_TEXT "Id"
+#define METADATA_TEXT "Metadata"
 
 using json = nlohmann::json;
 
