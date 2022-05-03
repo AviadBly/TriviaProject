@@ -1,7 +1,7 @@
 #include "JsonRequestPacketDeserializer.h"
 
 //convert the bits vector to json
-json JsonRequestPacketDeserializer::getJsonFromBits(std::vector<char unsigned> jsonBits)
+json JsonRequestPacketDeserializer::getJsonFromBits(std::vector<BYTE> jsonBits)
 {
 
 	std::string jsonString = "";
@@ -23,7 +23,7 @@ json JsonRequestPacketDeserializer::getJsonFromBits(std::vector<char unsigned> j
 	return jsonData;
 }
 
-LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<char unsigned> jsonRequestBits)
+LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<BYTE> jsonRequestBits)
 {
 	LoginRequest loginRequest;
 	//get json format from bits
@@ -35,7 +35,7 @@ LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<
 	return loginRequest;
 }
 
-SignupRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vector<char unsigned> jsonRequestBits)
+SignupRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vector<BYTE> jsonRequestBits)
 {
 	SignupRequest signUpRequest;
 	//get json format from bits
@@ -50,7 +50,7 @@ SignupRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vecto
 	return signUpRequest;
 }
 
-CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(std::vector<char unsigned> jsonRequestBits)
+CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(std::vector<BYTE> jsonRequestBits)
 {
 	CreateRoomRequest createRoomRequest;
 	//get json format from bits
@@ -64,7 +64,7 @@ CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(st
 	return createRoomRequest;
 }
 
-JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(std::vector<char unsigned> jsonRequestBits)
+JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(std::vector<BYTE> jsonRequestBits)
 {
 	JoinRoomRequest joinRoomRequest;
 	//get json format from bits
@@ -76,7 +76,7 @@ JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(std::v
 	return joinRoomRequest;
 }
 
-GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(std::vector<char unsigned> jsonRequestBits)
+GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(std::vector<BYTE> jsonRequestBits)
 {
 	GetPlayersInRoomRequest getPlayersInRoomRequest;
 	//get json format from bits
@@ -88,7 +88,7 @@ GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRo
 	return getPlayersInRoomRequest;
 }
 
-//ErrorResponse JsonRequestPacketDeserializer::deserializeErrorResponse(std::vector<char unsigned> jsonResponseBits)
+//ErrorResponse JsonRequestPacketDeserializer::deserializeErrorResponse(std::vector<BYTE> jsonResponseBits)
 //{
 //	ErrorResponse errorRequest;
 //	//get json format from bits

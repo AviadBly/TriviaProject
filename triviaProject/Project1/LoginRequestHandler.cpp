@@ -58,7 +58,8 @@ RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 	try {
 		this->m_loginManager.login(loginRequest.username, loginRequest.password);	//this throws an error if login failed
 		
-		requestResult.newHandler = this->m_handleFactory.createMenuRequestHandler();
+		LoggedUser loggeduser(loginRequest.username, loginRequest.password);
+		requestResult.newHandler = this->m_handleFactory.createMenuRequestHandler(loggeduser);
 		loginResponse.status = loginResponse.status_ok;	//status ok
 		requestResult.buffer = JsonResponsePacketSerializer::serializeLoginResponse(loginResponse);
 	
@@ -93,8 +94,9 @@ RequestResult LoginRequestHandler::signUp(RequestInfo requestInfo)
 	SignUpResponse signUpResponse;
 	try {
 		this->m_loginManager.signup(signUp.username, signUp.password, signUp.email);	//successfull signUp
-			
-		requestResult.newHandler = this->m_handleFactory.createMenuRequestHandler();
+		
+		LoggedUser loggeduser(signUp.username, signUp.password);
+		requestResult.newHandler = this->m_handleFactory.createMenuRequestHandler(loggeduser);
 		
 		signUpResponse.status = signUpResponse.status_ok;
 		requestResult.buffer = JsonResponsePacketSerializer::serializeSignupRequest(signUpResponse);

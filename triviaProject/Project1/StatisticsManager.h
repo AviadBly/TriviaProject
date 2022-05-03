@@ -7,9 +7,13 @@ using namespace std;
 
 class StatisticsManager
 {
-private:
-	IDatabase* m_database;
+
 public:
+
+	StatisticsManager(IDatabase* database);
 	vector<string> getHighScore();
 	vector<string> getUserStatistics(string username);
+
+private:
+	IDatabase* m_database;
 };

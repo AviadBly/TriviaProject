@@ -21,16 +21,16 @@ using json = nlohmann::json;
 class JsonRequestPacketDeserializer {
 public:
 	//login
-	static LoginRequest deserializeLoginRequest(std::vector<char unsigned> jsonRequestBits);
-	static SignupRequest deserializeSignUpRequest(std::vector<char unsigned> jsonRequestBits);
+	static LoginRequest deserializeLoginRequest(std::vector<BYTE> jsonRequestBits);
+	static SignupRequest deserializeSignUpRequest(std::vector<BYTE> jsonRequestBits);
 	//error
-	//static ErrorRequest deserializeErrorRequest(std::vector<char unsigned> jsonRequestBits);
+	//static ErrorRequest deserializeErrorRequest(std::vector<BYTE> jsonRequestBits);
 	
 	//rooms
-	static CreateRoomRequest deserializeCreateRoomRequest(std::vector<char unsigned> jsonRequestBits);
-	static JoinRoomRequest deserializeJoinRoomRequest(std::vector<char unsigned> jsonRequestBits);
-	static GetPlayersInRoomRequest deserializeGetPlayersInRoomRequest(std::vector<char unsigned> jsonRequestBits);
+	static CreateRoomRequest deserializeCreateRoomRequest(std::vector<BYTE> jsonRequestBits);
+	static JoinRoomRequest deserializeJoinRoomRequest(std::vector<BYTE> jsonRequestBits);
+	static GetPlayersInRoomRequest deserializeGetPlayersInRoomRequest(std::vector<BYTE> jsonRequestBits);
 	
 private:
-	static json getJsonFromBits(std::vector<char unsigned> jsonRequestBits);
+	static json getJsonFromBits(std::vector<BYTE> jsonRequestBits);
 };

@@ -41,12 +41,13 @@ unsigned int RoomManager::getRoomState(int ID)
 
 vector<Room> RoomManager::getRooms()
 {
-	vector<Room> newVector;
+	vector<Room> newVector(0);
 	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
 	{
 		Room currRoom = it->second;
 		newVector.push_back(currRoom);
 	}
+
 	return newVector;
 }
 

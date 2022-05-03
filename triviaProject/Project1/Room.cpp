@@ -8,6 +8,10 @@ Room::Room(RoomData metadata, LoggedUser user)
 	this->m_users.push_back(user);
 }
 
+Room::Room()
+{
+}
+
 void Room::addUser(LoggedUser user)
 {
 	if (canNewUserJoin()) {

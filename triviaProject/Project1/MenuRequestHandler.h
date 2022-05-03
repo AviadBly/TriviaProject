@@ -12,7 +12,7 @@ class RequestHandlerFactory;
 
 class MenuRequestHandler : public IRequestHandler {
 public:
-	MenuRequestHandler(RequestHandlerFactory& handlerFactory);
+	MenuRequestHandler(RequestHandlerFactory& handlerFactory, LoggedUser newUser);
 
 	virtual bool isRequestRelevant(RequestInfo requestInfo) override;
 	virtual RequestResult handleRequest(RequestInfo requestInfo) override;
@@ -25,6 +25,7 @@ private:
 	RequestResult joinRoom(RequestInfo requestInfo);
 	RequestResult createRoom(RequestInfo requestInfo);
 	RequestResult getHighScore(RequestInfo requestInfo);
+	RequestResult getPersonalStatistics(RequestInfo requestInfo);
 
 
 	LoggedUser m_user;

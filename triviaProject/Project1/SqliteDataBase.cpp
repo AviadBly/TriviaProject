@@ -25,6 +25,7 @@ bool SqliteDataBase::open()
 		create();
 	}
 
+	return true;
 }
 
 int SqliteDataBase::callbackStats(void* data, int argc, char** argv, char** azColName)

@@ -97,8 +97,10 @@ std::string Communicator::recvMsg(SOCKET socket) {
 	{
 		std::cout << e.what();
 		closesocket(socket);
+		return "";
 	}
 
+	
 }
 //send string msg
 void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
@@ -119,7 +121,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	
 	std::string userMsg = "";
 	
-	LoginRequestHandler handler(this->m_handlerFactory.getLoginManger(), this->m_handlerFactory);
+	
 	RequestInfo info;
 	RequestResult request;
 	//first create the login requestHandler
@@ -144,7 +146,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 			}
 
 			request = request.newHandler->handleRequest(info);
-
+			
 			sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
 
 			

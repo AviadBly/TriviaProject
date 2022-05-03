@@ -1,15 +1,17 @@
 #include "MenuRequestHandler.h"
 
 
-MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& handlerFactory) : m_handlerFactory(handlerFactory), m_statisticsManager(handlerFactory.getStatisticsManager()), m_roomManager(handlerFactory.getRoomManager())
+MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& handlerFactory, LoggedUser newUser) : m_handlerFactory(handlerFactory), m_statisticsManager(handlerFactory.getStatisticsManager()), m_roomManager(handlerFactory.getRoomManager())
 {
-
+	this->m_user = newUser;
 }
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo)
 {
 	unsigned int code = requestInfo.code;
-	return code == CREATE_ROOM_CODE || code == GET_ROOM_REQUEST || code == GET_PLAYERS_IN_ROOM_REQUEST_CODE || code == JOIN_ROOM_REQUEST_CODE || code == GET_STATISTICS_REQUEST_CODE || code == LOGOUT_REQUEST_CODE;
+	return code == CREATE_ROOM_CODE || code == GET_ROOM_REQUEST || code == GET_PLAYERS_IN_ROOM_REQUEST_CODE
+		|| code == JOIN_ROOM_REQUEST_CODE || code == GET_PERSONAL_STATISTICS_REQUEST_CODE || code == LOGOUT_REQUEST_CODE
+		|| code == GET_HIGH_SCORES_REQUEST_CODE;
 }
 
 RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
@@ -30,9 +32,12 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 		case JOIN_ROOM_REQUEST_CODE:
 			requestResult = joinRoom(requestInfo);
 			break;
-		case GET_STATISTICS_REQUEST_CODE:
-			requestResult = getHighScore(requestInfo);
+		case GET_PERSONAL_STATISTICS_REQUEST_CODE:
+			requestResult = getPersonalStatistics(requestInfo);
 			break;
+		case GET_HIGH_SCORES_REQUEST_CODE:
+			requestResult = getHighScore(requestInfo);
+			break;		
 		case LOGOUT_REQUEST_CODE:
 			std::cout << "logout";
 			break;
@@ -169,9 +174,23 @@ RequestResult MenuRequestHandler::getHighScore(RequestInfo requestInfo)
 	GetHighScoreResponse getHighScoreResponse;
 	RequestResult requestResult;
 
+	getHighScoreResponse.status = getHighScoreResponse.status_ok;
 	getHighScoreResponse.statistics = m_statisticsManager.getHighScore();
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeHighScoreResponse(getHighScoreResponse);
+
+	return requestResult;
+}
+
+RequestResult MenuRequestHandler::getPersonalStatistics(RequestInfo requestInfo)
+{
+	GetPersonalStatsResponse getPersonalStatsResponse;
+	RequestResult requestResult;
+
+	getPersonalStatsResponse.status = getPersonalStatsResponse.status_ok;
+	getPersonalStatsResponse.statistics = m_statisticsManager.getUserStatistics(this->m_user.getName());
+
+	requestResult.buffer = JsonResponsePacketSerializer::serializePersonalStatisticsResponse(getPersonalStatsResponse);
 
 	return requestResult;
 }

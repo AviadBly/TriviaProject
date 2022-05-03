@@ -18,7 +18,7 @@ public:
 	~RequestHandlerFactory();
 	LoginRequestHandler* createLoginRequestHandler();
 	
-	MenuRequestHandler* createMenuRequestHandler();
+	MenuRequestHandler* createMenuRequestHandler(LoggedUser newUser);
 
 	//getters
 	LoginManager& getLoginManger();

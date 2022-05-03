@@ -1,12 +1,16 @@
 #pragma once
 #include <string>
 #include <vector>
+
 #include "Room.h"
 
+#define BYTE unsigned char
+using namespace std;
+
 struct Response {
-	unsigned int status;
-	const unsigned int status_ok = 2;
-	const unsigned int status_error = 5;
+	BYTE status;
+	const BYTE status_ok = 2;
+	const BYTE status_error = 5;
 };
 
 struct LoginResponse : public Response {
@@ -18,7 +22,7 @@ struct SignUpResponse : public Response {
 };
 
 struct ErrorResponse : public Response{
-	std::string message;
+	string message;
 };
 
 struct LogoutResponse : public Response {
@@ -26,19 +30,19 @@ struct LogoutResponse : public Response {
 };
 
 struct GetRoomsResponse : public Response {
-	std::vector<Room> rooms;
+	vector<Room> rooms;
 };
 
 struct GetPlayersInRoomResponse {
-	std::vector<std::string> players;
+	vector<std::string> players;
 };
 
 struct GetHighScoreResponse : public Response {
-	std::vector<std::string> statistics;
+	vector<string> statistics;
 };
 
 struct GetPersonalStatsResponse : public Response {
-	std::vector<std::string> statistics;
+	vector<string> statistics;
 };
 
 struct JoinRoomResponse : public Response {

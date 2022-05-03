@@ -20,7 +20,7 @@ class Room
 {
 public:
 	Room(RoomData metadata, LoggedUser user);
-	
+	Room();
 	void addUser(LoggedUser user);
 	void removeUser(LoggedUser user);
 	vector<string> getAllUsers() const;
