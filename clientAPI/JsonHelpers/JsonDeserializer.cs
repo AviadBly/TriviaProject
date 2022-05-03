@@ -59,6 +59,18 @@ namespace clientAPI.JsonHelpers
             return response;
         }
 
+        public static GetRoomsResponse? GetRoomsResponseDeserializer(byte[] buffer)
+        {
+
+
+            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+
+
+            GetRoomsResponse? response = JsonSerializer.Deserialize<GetRoomsResponse>(jsonString);
+
+            return response;
+        }
+
         public static GetPlayersInRoomResponse? GetPlayersInRoomResponseDeserializer(byte[] buffer)
         {
           

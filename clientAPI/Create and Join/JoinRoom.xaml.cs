@@ -24,7 +24,7 @@ namespace clientAPI
         
         public JoinRoom()
         {
-            
+            getRooms();
             InitializeComponent();
         }
 
@@ -40,6 +40,28 @@ namespace clientAPI
         private void showActiveRooms(List<Room> rooms)
         {
             //TO DO, AVIAD,  show the rooms on the screen
+        }
+
+        private List<Room> getRooms()
+        {
+            List<Room> rooms = new List<Room>();
+
+            MainProgram.appClient.sender("", Requests.GET_ROOM_REQUEST);    //ask for rooms
+
+            byte[] returnMsg = MainProgram.appClient.receiver();
+
+            //Room r = new Room(1, 2, "he", 3);
+            
+            GetRoomsResponse getRoomsResponse = JsonHelpers.JsonFormatDeserializer.GetRoomsResponseDeserializer(returnMsg.Skip(5).ToArray());
+
+            Console.Write(getRoomsResponse.ToString());
+            //login failed
+            if (getRoomsResponse.Status == Response.status_error)
+            {
+                return new List<Room>();
+            }
+
+            return getRoomsResponse.Rooms;
         }
 
         private void clickJoin(object sender, RoutedEventArgs e)

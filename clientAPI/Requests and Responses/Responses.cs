@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using clientAPI.Create_and_Join;
 
 namespace clientAPI.Requests_and_Responses
 {
@@ -56,14 +57,19 @@ namespace clientAPI.Requests_and_Responses
 
 	};
 
-	//internal class  GetRoomsResponse :  Response
-	//{
-	//	vector<Room> rooms;
-	//};
+    internal class GetRoomsResponse : Response
+    {
+        
+        public GetRoomsResponse(List<Room> rooms, uint status) : base(status)
+        {
+            Rooms = rooms;
+        }
+        public List<Room> Rooms { get; set; }
+    };
 
-	internal class  GetPlayersInRoomResponse
+    internal class  GetPlayersInRoomResponse
 	{
-		List<string> players;
+		
 
         public GetPlayersInRoomResponse(List<string> players)
         {

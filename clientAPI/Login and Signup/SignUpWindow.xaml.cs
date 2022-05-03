@@ -51,10 +51,10 @@ namespace clientAPI
                 MessageBox.Show("Username or password length must be under 10 characters and over 4 characters!");
 
             }
-            else if(email.Contains('@') == false || email.Substring('@') != "gmail.com")
-            {
-                MessageBox.Show("email must be used in @gmail.com format!");
-            }
+            //else if(email.Contains('@') == false || email.Substring('@') != "gmail.com")
+            //{
+            //    MessageBox.Show("email must be used in @gmail.com format!");
+            //}
             else
             { 
                 

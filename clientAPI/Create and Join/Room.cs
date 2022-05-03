@@ -9,18 +9,29 @@ namespace clientAPI.Create_and_Join
 {
     internal class Room
     {
-	struct RoomData
+	public class RoomData
 	{
-		uint  id;
-		string name;
-		uint  maxPlayers;
-		uint numOfQuestionsInGame;
-		uint timePerQuestion;
-		uint isActive;
-	};
+		
+			public uint Id { get; set; }
+			public string Name { get; set; } = string.Empty;
+			public uint MaxPlayers { get; set; }
+			public uint NumOfQuestionsInGame { get; set; }
+			public uint TimePerQuestion { get; set; }
+			public bool IsActive { get; set; }
 
-	private RoomData m_metadata;
-	private List<LoggedUser>  m_users;
 
+		};
+
+	
+
+		public Room(RoomData metaData, List<string> players)
+        {
+			Metadata = metaData;
+			Players = players;
+
+		}
+		
+		public RoomData Metadata { get; set; }
+		public List<string> Players { get; set; }
 	}
 }
