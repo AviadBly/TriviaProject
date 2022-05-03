@@ -37,10 +37,14 @@ namespace clientAPI
         private Client client;
         public menu()
         {
-
-            InitializeComponent();
             
+            
+            InitializeComponent();
+            username.Text = "Hey ;)";
+
            
+
+
         } 
         public menu(string username)
         {
@@ -48,7 +52,7 @@ namespace clientAPI
             InitializeComponent();
             updateUsername(username);
         }
-   
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             
@@ -116,11 +120,11 @@ namespace clientAPI
             if (messageBoxResult == MessageBoxResult.Yes)
             {
 
-
+               
                 MainProgram.appClient.sender("", Requests.LOGOUT_REQUEST_CODE);
 
                 byte[] returnMsg = MainProgram.appClient.receiver();
-                Console.Write(returnMsg);
+                
 
                 LogOutResponse logOutResponse = JsonHelpers.JsonFormatDeserializer.LogOutResponseDeserializer(returnMsg.Skip(5).ToArray());
 
@@ -129,6 +133,8 @@ namespace clientAPI
                 {
                     return;
                 }
+
+
 
                 this.Close();
                 LoginWindow loginWindow = new LoginWindow();

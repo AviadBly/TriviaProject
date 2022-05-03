@@ -14,7 +14,7 @@ vector<string> StatisticsManager::getHighScore()
 {
 	//confusing function but don't blame me because instructions were confusing too >:( !!
 	
-	vector<int> top5;
+	int* top3 = new int[3];
 	list<StatsUser> allStats = m_database->getStatsGeneral();
 	vector<int> scores;
 	
@@ -24,27 +24,50 @@ vector<string> StatisticsManager::getHighScore()
 		scores.push_back(iter->getCorrect());
 	}
 
-	//get the 5 highest scores
-	for (int i = 0; i < 5; i++)
+	//get the 3 highest scores
+	for (int i = 0; i < 3; i++)
 	{
-		top5.push_back(*max_element(scores.begin(), scores.end()));
-	}
-
-	vector<string> top5names;
-	//5 times, match the score to the name and insert the name to a final vector.
-	for (int i = 0; i < 5; i++)
-	{
-		for (auto iter = allStats.begin(); iter != allStats.end(); iter++)
+		top3[i]=(*max_element(scores.begin(), scores.end()));
+		int max = *max_element(scores.begin(), scores.end());
+		for (auto iter = scores.begin(); iter != scores.end(); iter++)
 		{
-			if (iter->getCorrect() == top5[i])
+			if (*iter == max)
 			{
-				top5names.push_back(iter->getName());
+				scores.erase(iter);
+				break;
 			}
 		}
 	}
-	
 
-	return top5names;
+	vector<string> top3names;
+	//3 times, match the score to the name and insert the name to a final vector.
+	for (auto iter = allStats.begin(); iter != allStats.end(); iter++)
+	{
+		if (iter->getCorrect() == top3[0])
+		{
+			top3names.push_back(iter->getName());
+			break;
+		}
+	}
+	for (auto iter = allStats.begin(); iter != allStats.end(); iter++)
+	{
+		if (iter->getCorrect() == top3[1])
+		{
+			top3names.push_back(iter->getName());
+			break;
+		}
+	}
+	for (auto iter = allStats.begin(); iter != allStats.end(); iter++)
+	{
+		if (iter->getCorrect() == top3[2])
+		{
+			top3names.push_back(iter->getName());
+			break;
+		}
+	}
+
+
+	return top3names;
 }
 
 vector<string> StatisticsManager::getUserStatistics(string username)

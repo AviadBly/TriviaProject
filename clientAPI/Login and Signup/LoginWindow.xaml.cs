@@ -19,6 +19,7 @@ using clientAPI.Requests_and_Responses;
 using clientAPI.JsonHelpers;
 using clientAPI;
 
+
 namespace clientAPI
 {
     /// <summary>
@@ -26,8 +27,8 @@ namespace clientAPI
     /// </summary>
     public partial class LoginWindow : Window
     {
-        
 
+        
         public LoginWindow()
         {
             
@@ -71,9 +72,9 @@ namespace clientAPI
                     return;
                 }
 
+
                 
-
-
+                
                 menu menuWindow = new menu(username);
                 menuWindow.Show();
                 Close();
