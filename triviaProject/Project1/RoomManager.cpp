@@ -9,8 +9,8 @@ RoomManager::RoomManager()
 void RoomManager::createRoom(LoggedUser user, RoomData data)
 {
 	
-	Room newRoom;
-	newRoom.addUser(user); //add the user who created the room
+	Room newRoom(data, user); //create the room
+	
 	m_rooms.insert(std::pair<unsigned int, Room>(nextRoomId, newRoom));
 	nextRoomId++;
 }

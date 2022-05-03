@@ -116,11 +116,15 @@ void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 void Communicator::handleNewClient(SOCKET clientSocket)
 {
 	
-	//sendMsg(clientSocket, "HELLO");
+	
 	std::string userMsg = "";
 	
 	LoginRequestHandler handler(this->m_handlerFactory.getLoginManger(), this->m_handlerFactory);
 	RequestInfo info;
+	RequestResult request;
+	//first create the login requestHandler
+	request.newHandler = this->m_handlerFactory.createLoginRequestHandler();
+
 	try {
 		while (true) {
 
@@ -134,12 +138,12 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 
 			info.buffer = Helper::convertStringToBits(userMsg.substr(5));
 
-			if (!handler.isRequestRelevant(info)) {
+			if (!request.newHandler->isRequestRelevant(info)) {
 				std::cout << "Irrelevent request\n";
 				continue;
 			}
 
-			RequestResult request = handler.handleRequest(info);
+			request = request.newHandler->handleRequest(info);
 
 			sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
 

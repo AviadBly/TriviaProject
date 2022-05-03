@@ -88,20 +88,46 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetRoomRespons
 {
 	//init json
 	json jsonResponse;
+	std::string roomStr = "Room";
+	int roomNum = 1;
 	for (auto i = getRoomsResponse.rooms.begin(); i != getRoomsResponse.rooms.end(); i++) {
 		
 		RoomData data = i->getData();
 		//add the roomData to the json format
-		jsonResponse[IS_ACTIVE_TEXT] += data.isActive;
-		jsonResponse[MAX_PLAYERS_TEXT] += data.maxPlayers;
-		jsonResponse[NAME_TEXT] += data.name;
-		jsonResponse[NUM_OF_QUESTIONS_IN_GAME_TEXT] += data.numOfQuestionsInGame;
-		jsonResponse[TIME_PER_QUESTION_TEXT] += data.timePerQuestion;
+		//jsonResponse[roomStr + to_string(roomNum)][METADATA_TEXT] = ;
+
+		//jsonResponse[roomStr + to_string(roomNum)][PLAYERS_TEXT] = i->getAllUsers();
+
+		jsonResponse["Rooms"] += {  {METADATA_TEXT, {
+			   
+			{IS_ACTIVE_TEXT, data.isActive},
+			{ MAX_PLAYERS_TEXT, data.maxPlayers },
+			{ NAME_TEXT, data.name },
+			{ NUM_OF_QUESTIONS_IN_GAME_TEXT, data.numOfQuestionsInGame },
+			{ TIME_PER_QUESTION_TEXT, data.timePerQuestion },
+			{ NAME_TEXT,data.name },
+			{ ID_TEXT, data.id }
+			}  }, { PLAYERS_TEXT, i->getAllUsers() }    };
+
+		/*jsonResponse[roomStr + to_string(roomNum)][METADATA_TEXT][IS_ACTIVE_TEXT] = data.isActive;
+		jsonResponse[roomStr + to_string(roomNum)][METADATA_TEXT][MAX_PLAYERS_TEXT] = data.maxPlayers;
+		jsonResponse[roomStr + to_string(roomNum)][METADATA_TEXT][NAME_TEXT] = data.name;
+		jsonResponse[roomStr + to_string(roomNum)][METADATA_TEXT][NUM_OF_QUESTIONS_IN_GAME_TEXT] = data.numOfQuestionsInGame;
+		jsonResponse[roomStr + to_string(roomNum)][METADATA_TEXT][TIME_PER_QUESTION_TEXT] = data.timePerQuestion;
+		jsonResponse[roomStr + to_string(roomNum)][METADATA_TEXT][NAME_TEXT] = data.name;
+		jsonResponse[roomStr + to_string(roomNum)][METADATA_TEXT][ID_TEXT] = data.id;*/
+		//add the players
+		//std::string playerStr = "Player";
+		//int playerNum = 1;
 		
+		std::cout << jsonResponse;
+					
+		
+		roomNum++;
 	}
 	
 	
-	std::cout << jsonResponse;
+	std::cout << "final:\n" << jsonResponse << "\n";
 
 	std::vector<unsigned char> jsonBits = convertJsonToBits(jsonResponse, unsigned char(1));
 

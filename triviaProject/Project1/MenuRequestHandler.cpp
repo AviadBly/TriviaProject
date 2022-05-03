@@ -19,17 +19,27 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 	try {
 		switch (requestInfo.code) {
 		case CREATE_ROOM_CODE:
-			createRoom(requestInfo);
+			requestResult =  createRoom(requestInfo);
+			break;
 		case GET_ROOM_REQUEST:
-			getRooms(requestInfo);
+			requestResult =  getRooms(requestInfo);
+			break;
 		case GET_PLAYERS_IN_ROOM_REQUEST_CODE:
-			getPlayersInRoom(requestInfo);
+			requestResult =  getPlayersInRoom(requestInfo);
+			break;
 		case JOIN_ROOM_REQUEST_CODE:
-
+			requestResult = joinRoom(requestInfo);
+			break;
 		case GET_STATISTICS_REQUEST_CODE:
+			requestResult = getHighScore(requestInfo);
+			break;
 		case LOGOUT_REQUEST_CODE:
-			std::cout << "hey";
+			std::cout << "logout";
+			break;
 		}
+
+		requestResult.newHandler = this;
+
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what() << "\n";
@@ -50,10 +60,28 @@ RequestResult MenuRequestHandler::getRooms(RequestInfo requestInfo)
 	GetRoomsResponse getRoomsResponse;
 	RequestResult requestResult;
 	
+	RoomData d;
+	d.id = 1;
+	d.maxPlayers = 5;
+	d.name = "firstR";
+	d.numOfQuestionsInGame = 6;
+	d.timePerQuestion = 12;
+	
+
+	this->m_roomManager.createRoom(LoggedUser("sha", "123"), d);
+
+	d.id = 2;
+	d.name = "secondRoom";
+	d.numOfQuestionsInGame = 11;
+	d.timePerQuestion = 20;
+	
+	this->m_roomManager.createRoom(LoggedUser("gal", "568"), d);
+
 	getRoomsResponse.rooms = this->m_roomManager.getRooms();
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetRoomResponse(getRoomsResponse);
 	
+
 	return requestResult;
 }
 
@@ -82,6 +110,7 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo requestInfo)
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(getPlayersInRoomResponseRoomsResponse);
 	
+
 	return requestResult;
 }
 
@@ -106,6 +135,7 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo requestInfo)
 	}
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeJoinRoomResponse(joinRoomResponse);
+	
 
 	return requestResult;
 }
@@ -129,6 +159,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
 	createRoomResponse.status = createRoomResponse.status_ok;
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeCreateRoomResponse(createRoomResponse);
+	
 
 	return requestResult;
 }

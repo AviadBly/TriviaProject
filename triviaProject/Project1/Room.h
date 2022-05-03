@@ -13,17 +13,21 @@ struct RoomData
 	unsigned int maxPlayers;
 	unsigned int numOfQuestionsInGame;
 	unsigned int timePerQuestion;
-	unsigned int isActive;
+	bool isActive;
 };
 
 class Room
 {
 public:
+	Room(RoomData metadata, LoggedUser user);
+	
 	void addUser(LoggedUser user);
 	void removeUser(LoggedUser user);
-	list<string> getAllUsers() const;
+	vector<string> getAllUsers() const;
 	RoomData getData() const;
 	bool canNewUserJoin();
+
+	
 private:
 	
 	RoomData m_metadata;
