@@ -24,7 +24,8 @@ namespace clientAPI
         {
             
             InitializeComponent();
-            updateStrings();
+            string[] places = getHighScorePlayers();
+            updateStrings(places[0], places[1], places[2]);
         }
 
         private void ClickExit(object sender, RoutedEventArgs e)
@@ -33,7 +34,8 @@ namespace clientAPI
             menu menu = new menu();
             menu.Show();
         }
-        private void updateStrings()
+
+        private string[] getHighScorePlayers()
         {
             MainProgram.appClient.sender("", Requests_and_Responses.Requests.GET_HIGH_SCORES_REQUEST_CODE);
 
@@ -45,27 +47,23 @@ namespace clientAPI
             //login failed
             if (highScoreResponse.Status == Requests_and_Responses.Response.status_error)
             {
-                return;
+                Console.WriteLine("Error");
+                return null;
             }
 
-            for (int i = 0; i < highScoreResponse.highest.Count; i++)
-            {
-                if(i==0)
-                {
-                    player1.SetValue(TextBlock.TextProperty, highScoreResponse.highest[i]);
+            string[] place = new string[3];
+            place[0] = highScoreResponse.HighScorePlayers[0];
+            place[1] = highScoreResponse.HighScorePlayers[1];
+            place[2] = highScoreResponse.HighScorePlayers[2];
 
-                }
-                if (i == 1)
-                {
-                    player2.SetValue(TextBlock.TextProperty, highScoreResponse.highest[i]);
+            return place;
+        }
 
-                }
-                if (i == 2)
-                {
-                    player3.SetValue(TextBlock.TextProperty, highScoreResponse.highest[i]);
-
-                }
-            }
+        private void updateStrings(string firstPlace, string secondPlace, string thirdPlace)
+        {                      
+            player1.SetValue(TextBlock.TextProperty, firstPlace);
+            player2.SetValue(TextBlock.TextProperty, secondPlace);
+            player3.SetValue(TextBlock.TextProperty, thirdPlace);
 
         }
 

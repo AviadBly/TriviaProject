@@ -27,17 +27,16 @@ namespace clientAPI
         {
             InitializeComponent();
 
-            
+            string[] statsArr = getPersonalStatistics();
+            updateStrings(statsArr[0], statsArr[1], statsArr[2], statsArr[3]);
         }
 
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private string[] getPersonalStatistics()
         {
+            MainProgram.appClient.sender("", Requests.GET_PERSONAL_STATISTICS_REQUEST_CODE);
 
-            MainProgram.appClient.sender("", Requests.GET_STATISTICS_REQUEST_CODE);
-            
             byte[] returnMsg = MainProgram.appClient.receiver();
-            
+
 
             GetPersonalStatsResponse getPersonalStatsResponse = JsonHelpers.JsonFormatDeserializer.GetPersonalStatsResponseDeserializer(returnMsg.Skip(5).ToArray());
 
@@ -45,11 +44,11 @@ namespace clientAPI
             //login failed
             if (getPersonalStatsResponse.Status == Response.status_error)
             {
-                return;
+                return null;
             }
 
-            List<string> statsList = getPersonalStatsResponse.Statistics;
-            string[] statsArr = new string[3];
+            List<string> statsList = getPersonalStatsResponse.PersonalStatistics;
+            string[] statsArr = new string[4];
 
             int i = 0;
             foreach (string stat in statsList)
@@ -57,8 +56,9 @@ namespace clientAPI
                 statsArr[i] = stat;
             }
 
-            updateStrings(statsArr[0], statsArr[1], statsArr[2]);
+            return statsArr;
         }
+      
         private void ClickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -66,12 +66,14 @@ namespace clientAPI
             menu.Show();
         }
 
-        private void updateStrings(string timeText, string correctText, string totalText)
+        //this need change, only one button change
+        private void updateStrings(string avgAnswerTime, string correctAnswers, string totalAnswers, string numberOfGames)
         {
             
-            time.SetValue(TextBlock.TextProperty, timeText);
-            correct.SetValue(TextBlock.TextProperty, correctText);
-            total.SetValue(TextBlock.TextProperty, totalText);
+            time.SetValue(TextBlock.TextProperty, avgAnswerTime);
+            correct.SetValue(TextBlock.TextProperty, correctAnswers);
+            total.SetValue(TextBlock.TextProperty, totalAnswers);
+            //TO DO, add a button of numberOfGames
 
         }
     }

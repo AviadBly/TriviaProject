@@ -3,26 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using clientAPI.Create_and_Join;
 
 namespace clientAPI.Requests_and_Responses
 {
 	internal class Response
 	{
 
-        public uint status;
-        public const uint status_ok = 2;
-		public const uint status_error = 5;
+        
+        public const byte status_ok = 2;
+		public const byte status_error = 5;
 
-        public Response(uint status)
+        public Response(byte status)
         {
             Status = status;
         }
-		public uint Status { get; set; }
+		public byte Status { get; set; }
 
     }
     internal class LoginResponse : Response
     {
-        public LoginResponse(uint status) : base(status)
+        public LoginResponse(byte status) : base(status)
         {
 			
         }
@@ -30,7 +31,7 @@ namespace clientAPI.Requests_and_Responses
 	};
 	internal class SignUpResponse : Response
 	{
-		public SignUpResponse(uint status) : base(status)
+		public SignUpResponse(byte status) : base(status)
 		{
 
 		}
@@ -49,21 +50,26 @@ namespace clientAPI.Requests_and_Responses
     };
 	internal class LogOutResponse : Response
 	{
-		public LogOutResponse(uint status) : base(status)
+		public LogOutResponse(byte status) : base(status)
 		{
 
 		}
 
 	};
 
-	//internal class  GetRoomsResponse :  Response
-	//{
-	//	vector<Room> rooms;
-	//};
+    internal class GetRoomsResponse : Response
+    {
+        
+        public GetRoomsResponse(List<Room> rooms, byte status) : base(status)
+        {
+            Rooms = rooms;
+        }
+        public List<Room> Rooms { get; set; }
+    };
 
-	internal class  GetPlayersInRoomResponse
+    internal class  GetPlayersInRoomResponse
 	{
-		List<string> players;
+		
 
         public GetPlayersInRoomResponse(List<string> players)
         {
@@ -73,39 +79,38 @@ namespace clientAPI.Requests_and_Responses
     }
     internal class  GetHighScoreResponse : Response
 	{
-		List<string> statistics;
 
-        public GetHighScoreResponse(List<string> statistics,uint status) :base (status)
+        public GetHighScoreResponse(List<string> highScorePlayers, byte status) :base (status)
         {
-            this.statistics = statistics;
+            HighScorePlayers = highScorePlayers;
         }
 
-        public List<string> highest { get;set; }
+        public List<string> HighScorePlayers { get;set; }
 
        
        
 	};
 	internal class  GetPersonalStatsResponse :  Response
 	{
-		List<string> statistics;
-
-        public GetPersonalStatsResponse(List<string> statistics, uint status) :base(status)
+		
+        public GetPersonalStatsResponse(List<string> personalStatistics, byte status) : base(status)
         {
-            Statistics = statistics;
+            PersonalStatistics = personalStatistics;
         }
-
-        public List<string> Statistics { get; set; }
+                            
+        public List<string> PersonalStatistics { get; set; }
 
     }
+
     internal class JoinRoomResponse : Response
     {
-        public JoinRoomResponse(uint status) : base(status)
+        public JoinRoomResponse(byte status) : base(status)
         {
         }
     }
     internal class CreateRoomResponse : Response
     {
-        public CreateRoomResponse(uint status) : base(status)
+        public CreateRoomResponse(byte status) : base(status)
         {
         }
     }

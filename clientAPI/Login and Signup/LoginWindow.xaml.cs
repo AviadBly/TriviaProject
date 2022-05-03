@@ -35,10 +35,9 @@ namespace clientAPI
             InitializeComponent();
 
             
-            
         }
 
-        
+
         private void clickLogin(object sender, RoutedEventArgs e)
         {
           
@@ -71,6 +70,9 @@ namespace clientAPI
                     MessageBox.Show("Error! Username or password is incorrect!");
                     return;
                 }
+
+                
+
 
                 menu menuWindow = new menu(username);
                 menuWindow.Show();
