@@ -24,8 +24,11 @@ namespace clientAPI
         
         public JoinRoom()
         {
-            getRooms();
+            
             InitializeComponent();
+            List<Room> rooms = getRooms();
+            //maybe check here if rooms isnt empty
+            showActiveRooms(rooms);
         }
 
         
@@ -44,13 +47,12 @@ namespace clientAPI
 
         private List<Room> getRooms()
         {
-            List<Room> rooms = new List<Room>();
+            
 
             MainProgram.appClient.sender("", Requests.GET_ROOM_REQUEST);    //ask for rooms
 
             byte[] returnMsg = MainProgram.appClient.receiver();
 
-            //Room r = new Room(1, 2, "he", 3);
             
             GetRoomsResponse getRoomsResponse = JsonHelpers.JsonFormatDeserializer.GetRoomsResponseDeserializer(returnMsg.Skip(5).ToArray());
 

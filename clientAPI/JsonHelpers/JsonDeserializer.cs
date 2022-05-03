@@ -62,11 +62,16 @@ namespace clientAPI.JsonHelpers
         public static GetRoomsResponse? GetRoomsResponseDeserializer(byte[] buffer)
         {
 
-
+            
             string jsonString = System.Text.Encoding.Default.GetString(buffer);
 
 
             GetRoomsResponse? response = JsonSerializer.Deserialize<GetRoomsResponse>(jsonString);
+
+            if(response == null)
+            {
+                return new GetRoomsResponse(new List<Create_and_Join.Room>(), Response.status_error);
+            }
 
             return response;
         }
