@@ -28,7 +28,8 @@ namespace clientAPI
             InitializeComponent();
             List<Room> rooms = getRooms();
             //maybe check here if rooms isnt empty
-            showActiveRooms(rooms);
+            if(rooms != null)
+             showActiveRooms(rooms);
         }
 
         
@@ -42,7 +43,20 @@ namespace clientAPI
         
         private void showActiveRooms(List<Room> rooms)
         {
-            //TO DO, AVIAD,  show the rooms on the screen
+            foreach(Room room in rooms)
+            {
+                if(room.Metadata.IsActive==true)
+                {
+                    string fullRoom = room.Metadata.Name + " Max Players:" + room.Metadata.MaxPlayers;
+                    if (roomsList.Items.Contains(fullRoom)==false)
+                    {
+                        
+                        roomsList.Items.Add(fullRoom);
+                    }
+                    
+                }
+                
+            }
         }
 
         private List<Room> getRooms()
