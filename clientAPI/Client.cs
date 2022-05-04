@@ -103,7 +103,7 @@ namespace clientAPI
                 Array.Reverse(lenBytes);
 
             int msgLength = BitConverter.ToInt32(lenBytes, 0);
-            //code + len + data
+                                    //code + len + data
             byte[] trimedMsg = serverBytes.Take(1 + 4 + msgLength).ToArray();
             responseData = System.Text.Encoding.UTF8.GetString(trimedMsg);
             Console.WriteLine("Received: {0}", responseData);
