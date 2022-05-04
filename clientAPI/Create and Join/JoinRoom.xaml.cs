@@ -85,24 +85,12 @@ namespace clientAPI
             string id;
             if (roomsList.SelectedItem != null)
             {
-                id = roomsList.SelectedItem.ToString();
-                uint fixedId = Convert.ToUInt32(id);
-                JoinRoomRequest joinRoomRequest = new JoinRoomRequest(fixedId);
+                //TO DO, this doesnt bring the id of the room
+                //id = roomsList.SelectedItem.ToString();
+                //uint fixedId = Convert.ToUInt32(id);
 
-                byte[] data = JsonHelpers.JsonFormatSerializer.joinRoomSerializer(joinRoomRequest);
-
-                MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.JOIN_ROOM_REQUEST_CODE);
-
-                byte[] returnMsg = MainProgram.appClient.receiver();
-                Console.Write(returnMsg);
-
-                JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
-
-                //login failed
-                if (joinRoomResponse.Status == Response.status_error)
-                {
-                    return;
-                }
+                //1 - testing
+                sendJoinRoomRequest(1);
             }
             else
             {
@@ -110,6 +98,27 @@ namespace clientAPI
             }
               
                     
+        }
+
+        private bool sendJoinRoomRequest(uint roomId)
+        {
+            JoinRoomRequest joinRoomRequest = new JoinRoomRequest(roomId);
+
+            byte[] data = JsonHelpers.JsonFormatSerializer.joinRoomSerializer(joinRoomRequest);
+
+            MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.JOIN_ROOM_REQUEST_CODE);
+
+            byte[] returnMsg = MainProgram.appClient.receiver();
+            Console.Write(returnMsg);
+
+            JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
+
+            //login failed
+            if (joinRoomResponse.Status == Response.status_error)
+            {
+                return false;
+            }
+            return true;
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
