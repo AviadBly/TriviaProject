@@ -39,25 +39,40 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 			requestResult = getHighScore(requestInfo);
 			break;		
 		case LOGOUT_REQUEST_CODE:
-			std::cout << "logout";
+			requestResult = logOut(requestInfo);
+			delete this;
 			break;
 		}
 
-		requestResult.newHandler = this;
+		if (requestResult.newHandler == nullptr) {
+			requestResult.newHandler = this;
+		}
+		
 
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what() << "\n";
 	}
 	
-
+	
 	return requestResult;
 }
 
 RequestResult MenuRequestHandler::logOut(RequestInfo requestInfo)
 {
-	return RequestResult();
-	//this->m_handlerFactory.getLoginManger().logout();
+
+	LogoutResponse logoutResponse;
+	
+	RequestResult requestResult;
+
+	logoutResponse.status = logoutResponse.status_ok;
+	requestResult.buffer = JsonResponsePacketSerializer::serializeLogoutResponse(logoutResponse);
+
+	this->m_user = LoggedUser();
+
+	requestResult.newHandler = this->m_handlerFactory.createLoginRequestHandler();
+	
+	return requestResult;
 }
 
 RequestResult MenuRequestHandler::getRooms(RequestInfo requestInfo)
@@ -93,27 +108,29 @@ RequestResult MenuRequestHandler::getRooms(RequestInfo requestInfo)
 RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo requestInfo)
 {
 
-	GetPlayersInRoomResponse getPlayersInRoomResponseRoomsResponse;
+	GetPlayersInRoomResponse getPlayersInRoomResponse;
 	GetPlayersInRoomRequest getPlayersInRoomRequest;
 	RequestResult requestResult;
 
 	getPlayersInRoomRequest = JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(requestInfo.buffer);
 
-	
-	for (auto i = m_roomManager.getRooms().begin(); i != m_roomManager.getRooms().end(); i++) {
+	auto rooms = m_roomManager.getRooms();
+
+	for (auto i = rooms.begin(); i != rooms.end(); i++) {
 	
 		//finds the room with the given id
 		if (i->getData().id == getPlayersInRoomRequest.roomId) {
 
-			for (auto m = i->getAllUsers().begin(); m != i->getAllUsers().end(); m++){
-				getPlayersInRoomResponseRoomsResponse.players.push_back(*m);
+			auto allPlayers = i->getAllUsers();
+			for (auto m = allPlayers.begin(); m != allPlayers.end(); m++){
+				getPlayersInRoomResponse.players.push_back(*m);
 			}
 			
 		} 
 	
 	}
 
-	requestResult.buffer = JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(getPlayersInRoomResponseRoomsResponse);
+	requestResult.buffer = JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(getPlayersInRoomResponse);
 	
 
 	return requestResult;

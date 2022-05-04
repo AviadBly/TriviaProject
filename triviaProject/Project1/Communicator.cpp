@@ -69,6 +69,16 @@ void Communicator::acceptClient()
 
 }
 
+int bytesToInt(BYTE bytes[]) {
+
+	int num = int((unsigned char)(bytes[0]) << 24 |
+		(unsigned char)(bytes[1]) << 16 |
+		(unsigned char)(bytes[2]) << 8 |
+		(unsigned char)(bytes[3]));
+
+	return num;
+}
+
 std::string Communicator::recvMsg(SOCKET socket) {
 
 	const int maxLen = 4096;	//probobaly dont change, this is the max bytes
@@ -84,10 +94,20 @@ std::string Communicator::recvMsg(SOCKET socket) {
 			s += std::to_string(socket);
 			throw std::exception(s.c_str());
 		}
-		std::string received = "";
 
-		for (int i = 0; i < res; i++) {
-			received += data[i];
+		std::string received = "";
+		BYTE lenBytes[4];
+
+		received += data[0];
+		for (int i = 0; i < 4; i++) {
+			lenBytes[i] = data[i + 1];
+			received += data[i + 1];
+		}
+
+		int dataLen = bytesToInt(lenBytes);
+
+ 		for (int i = 0; i < dataLen; i++) {
+			received += data[i + 5];
 		}
 				
 		return received;
@@ -124,6 +144,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	
 	RequestInfo info;
 	RequestResult request;
+
 	//first create the login requestHandler
 	request.newHandler = this->m_handlerFactory.createLoginRequestHandler();
 
@@ -148,8 +169,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 			request = request.newHandler->handleRequest(info);
 			
 			sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
-
-			
+		
 		}
 	}
 	catch(std::exception e) {

@@ -89,7 +89,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeGetRoomResponse(const G
 	//init json
 	json jsonResponse;
 	std::string roomStr = "Room";
-	int roomNum = 1;
+	
 	for (auto i = getRoomsResponse.rooms.begin(); i != getRoomsResponse.rooms.end(); i++) {
 		
 		RoomData data = i->getData();
@@ -111,7 +111,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeGetRoomResponse(const G
 		std::cout << jsonResponse;
 					
 		
-		roomNum++;
+		
 	}
 	
 	
