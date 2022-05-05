@@ -47,7 +47,7 @@ namespace clientAPI
             {
                 if(room.Metadata.IsActive==true)
                 {
-                    string fullRoom = room.Metadata.Name + " Max Players:" + room.Metadata.MaxPlayers;
+                    string fullRoom = room.Metadata.Name;
                     if (roomsList.Items.Contains(fullRoom)==false)
                     {
                         
@@ -58,6 +58,8 @@ namespace clientAPI
                 
             }
         }
+
+        
 
         private List<Room> getRooms()
         {
@@ -82,15 +84,29 @@ namespace clientAPI
 
         private void clickJoin(object sender, RoutedEventArgs e)
         {
-            string id;
+            uint id=0;
             if (roomsList.SelectedItem != null)
             {
-                //TO DO, this doesnt bring the id of the room
-                //id = roomsList.SelectedItem.ToString();
-                //uint fixedId = Convert.ToUInt32(id);
 
-                //1 - testing
-                sendJoinRoomRequest(1);
+                List<Room> rooms = getRooms();
+                string item= roomsList.SelectedItem.ToString();
+                foreach (Room room in rooms)
+                {
+                    if (room.Metadata.Name == item)
+                    {
+                        id = room.Metadata.Id;
+                        break;
+                    }
+                }
+                if(id==0)
+                {
+                    MessageBox.Show("Selection Error!");
+                }
+                else
+                {
+                    sendJoinRoomRequest(id);
+                }
+               
             }
             else
             {
