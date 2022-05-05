@@ -6,6 +6,9 @@
 class IRequestHandler;
 
 struct RequestResult {
+	RequestResult() {
+		newHandler = nullptr;
+	}
 	std::vector<BYTE> buffer;
 	IRequestHandler* newHandler;
 };

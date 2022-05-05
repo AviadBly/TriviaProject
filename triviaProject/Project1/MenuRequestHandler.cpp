@@ -41,20 +41,17 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 		case LOGOUT_REQUEST_CODE:
 			requestResult = logOut(requestInfo);
 			delete this;
-			break;
+			return requestResult;
 		}
-
-		if (requestResult.newHandler == nullptr) {
-			requestResult.newHandler = this;
-		}
-		
 
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what() << "\n";
 	}
 	
-	
+	if (requestResult.newHandler == nullptr) {
+		requestResult.newHandler = this;
+	}
 	return requestResult;
 }
 
