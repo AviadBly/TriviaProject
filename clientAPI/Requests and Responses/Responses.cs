@@ -67,11 +67,11 @@ namespace clientAPI.Requests_and_Responses
         public List<Room> Rooms { get; set; }
     };
 
-    internal class  GetPlayersInRoomResponse
-	{
+    internal class  GetPlayersInRoomResponse : Response
+    {
 		
 
-        public GetPlayersInRoomResponse(List<string> players)
+        public GetPlayersInRoomResponse(List<string> players, byte status) : base(status)
         {
             Players = players;
         }

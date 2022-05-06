@@ -134,7 +134,27 @@ namespace clientAPI
             {
                 return false;
             }
+            sendGetPlayersInRoom();
             return true;
+        }
+
+        private List<string> sendGetPlayersInRoom()
+        {
+            MainProgram.appClient.sender("", Requests.GET_PLAYERS_IN_ROOM_REQUEST_CODE);    //ask for rooms
+
+            byte[] returnMsg = MainProgram.appClient.receiver();
+
+
+            GetPlayersInRoomResponse getPlayersInRoomResponse = JsonHelpers.JsonFormatDeserializer.GetPlayersInRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
+
+            Console.Write(getPlayersInRoomResponse.ToString());
+            //login failed
+            if (getPlayersInRoomResponse.Status == Response.status_error)
+            {
+                return null;
+            }
+
+            return getPlayersInRoomResponse.Players;
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -61,7 +61,7 @@ namespace clientAPI
             //login failed
             if (createRoomResponse.Status == Response.status_error)
             {
-                Console.Write("NOPE room succesfully");
+                Console.Write("NOPE room BAD ROOM");
                 return;
             }
 
