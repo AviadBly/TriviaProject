@@ -54,6 +54,7 @@ namespace clientAPI
             foreach (string stat in statsList)
             {
                 statsArr[i] = stat;
+                i++;
             }
 
             return statsArr;
@@ -66,14 +67,15 @@ namespace clientAPI
             menu.Show();
         }
 
-        //this need change, only one button change
+        
         private void updateStrings(string avgAnswerTime, string correctAnswers, string totalAnswers, string numberOfGames)
         {
             
             time.SetValue(TextBlock.TextProperty, avgAnswerTime);
             correct.SetValue(TextBlock.TextProperty, correctAnswers);
             total.SetValue(TextBlock.TextProperty, totalAnswers);
-            //TO DO, add a button of numberOfGames
+            games.SetValue(TextBlock.TextProperty, numberOfGames);
+            
 
         }
     }
