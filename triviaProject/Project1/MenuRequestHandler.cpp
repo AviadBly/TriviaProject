@@ -142,13 +142,15 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo requestInfo)
 	JoinRoomResponse joinRoomResponse;
 	
 	joinRoomResponse.status = joinRoomResponse.status_error;
-	//to do: check if you the user can join room
-	for (auto i = m_roomManager.getRooms().begin(); i != m_roomManager.getRooms().end(); i++) {
+	
+	auto rooms = m_roomManager.getRooms();
+	for (auto i = rooms.begin(); i != rooms.end(); i++) {
 
 		//finds the room with the given id
 		if (i->getData().id && i->canNewUserJoin()) {
 
 			joinRoomResponse.status = joinRoomResponse.status_ok;
+			break;
 		}
 
 	}

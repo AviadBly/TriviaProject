@@ -36,6 +36,22 @@ void LoginRequestHandler::loadErrorMsg(RequestResult& requestResult, std::string
 	requestResult.buffer = JsonResponsePacketSerializer::serializeErrorResponse(errorMsg);
 
 }
+	
+
+bool LoginRequestHandler::isUsernameValid(string& username) {
+
+	const unsigned int MIN_SIZE = 2;
+	if (username.size() < MIN_SIZE) {	//sets min size for the username
+		return false;
+	}
+
+	//only allows letters or numbers
+	auto it = find_if_not(username.begin(), username.end(), ::isalnum);
+	if (it != username.end()) {
+		return false;
+	}
+
+}
 
 //login and signup need some SOLID
 RequestResult LoginRequestHandler::login(RequestInfo requestInfo)

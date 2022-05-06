@@ -24,6 +24,8 @@ private:
 
 	void loadErrorMsg(RequestResult& requestResult, std::string msg);
 
+	static bool isUsernameValid(string& username);
+
 	LoginManager& m_loginManager;
 	RequestHandlerFactory& m_handleFactory;
 };
