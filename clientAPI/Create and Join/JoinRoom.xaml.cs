@@ -21,15 +21,15 @@ namespace clientAPI
     /// </summary>
     public partial class JoinRoom : Window
     {
-        
+        private List<Room> rooms;
         public JoinRoom()
         {
             
             InitializeComponent();
-            List<Room> rooms = getRooms();
+            this.rooms = getRooms();
             //maybe check here if rooms isnt empty
-            if(rooms != null)
-             showActiveRooms(rooms);
+            
+            showActiveRooms();
         }
 
         
@@ -41,9 +41,9 @@ namespace clientAPI
         }
 
         
-        private void showActiveRooms(List<Room> rooms)
+        private void showActiveRooms()
         {
-            foreach(Room room in rooms)
+            foreach(Room room in this.rooms)
             {
                 if(room.Metadata.IsActive==true)
                 {
@@ -84,13 +84,13 @@ namespace clientAPI
 
         private void clickJoin(object sender, RoutedEventArgs e)
         {
-            uint id=0;
+            uint id = 0;
             if (roomsList.SelectedItem != null)
             {
 
-                List<Room> rooms = getRooms();
+                
                 string item= roomsList.SelectedItem.ToString();
-                foreach (Room room in rooms)
+                foreach (Room room in this.rooms)
                 {
                     if (room.Metadata.Name == item)
                     {

@@ -233,23 +233,35 @@ const std::list<StatsUser> SqliteDataBase::getStatsGeneral()
 double SqliteDataBase::getPlayerAvarageAnswerTime(string username)
 {
 	list<StatsUser> newList = getStats(username);
+	if (newList.size() == 0) {
+		return 0;
+	}
 	return newList.front().getTime();
 }
 
 int SqliteDataBase::getNumOfCorrectAnswers(string username)
 {
 	list<StatsUser> newList = getStats(username);
+	if (newList.size() == 0) {
+		return 0;
+	}
 	return newList.front().getCorrect();
 }
 
 int SqliteDataBase::getNumOfTotalAnswers(string username)
 {
 	list<StatsUser> newList = getStats(username);
+	if (newList.size() == 0) {
+		return 0;
+	}
 	return newList.front().getTotal();
 }
 
 int SqliteDataBase::getNumOfPlayerGames(string username)
 {
 	list<StatsUser> newList = getStats(username);
+	if (newList.size() == 0) {
+		return 0;
+	}
 	return newList.front().getGames();
 }
