@@ -134,13 +134,17 @@ namespace clientAPI
             {
                 return false;
             }
-            sendGetPlayersInRoom();
+            sendGetPlayersInRoom(roomId);
             return true;
         }
 
-        private List<string> sendGetPlayersInRoom()
+        private List<string> sendGetPlayersInRoom(uint roomId)
         {
-            MainProgram.appClient.sender("", Requests.GET_PLAYERS_IN_ROOM_REQUEST_CODE);    //ask for rooms
+            GetPlayersInRoomRequest getPlayersInRoomRequest = new GetPlayersInRoomRequest(roomId);
+
+            byte[] data = JsonHelpers.JsonFormatSerializer.getPlayersInRoomSerializer(getPlayersInRoomRequest);
+
+            MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.GET_PLAYERS_IN_ROOM_REQUEST_CODE);    //ask for rooms
 
             byte[] returnMsg = MainProgram.appClient.receiver();
 
@@ -148,12 +152,7 @@ namespace clientAPI
             GetPlayersInRoomResponse getPlayersInRoomResponse = JsonHelpers.JsonFormatDeserializer.GetPlayersInRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
 
             Console.Write(getPlayersInRoomResponse.ToString());
-            //login failed
-            if (getPlayersInRoomResponse.Status == Response.status_error)
-            {
-                return null;
-            }
-
+            
             return getPlayersInRoomResponse.Players;
         }
 
