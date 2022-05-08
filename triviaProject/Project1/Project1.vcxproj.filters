@@ -102,6 +102,9 @@
     <ClCompile Include="RoomAdminRequestHandler.cpp">
       <Filter>Source Files\Requests and Responses</Filter>
     </ClCompile>
+    <ClCompile Include="RoomMemberRequestHandler.cpp">
+      <Filter>Source Files\Requests and Responses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelperFunctions.h">
@@ -177,6 +180,9 @@
       <Filter>Header Files\Requests and Responses</Filter>
     </ClInclude>
     <ClInclude Include="RoomAdminRequestHandler.h">
+      <Filter>Header Files\Requests and Responses</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomMemberRequestHandler.h">
       <Filter>Header Files\Requests and Responses</Filter>
     </ClInclude>
   </ItemGroup>
