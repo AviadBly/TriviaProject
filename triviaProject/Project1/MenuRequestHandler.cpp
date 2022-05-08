@@ -6,7 +6,7 @@ MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& handlerFactory, Lo
 	this->m_user = newUser;
 }
 
-bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo)
+bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
 {
 	unsigned int code = requestInfo.code;
 	return code == CREATE_ROOM_CODE || code == GET_ROOM_REQUEST || code == GET_PLAYERS_IN_ROOM_REQUEST_CODE

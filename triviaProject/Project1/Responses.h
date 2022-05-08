@@ -52,3 +52,7 @@ struct JoinRoomResponse : public Response {
 struct CreateRoomResponse : public Response {
 
 };
+
+struct GetRoomStateRespone : public Response {
+
+};

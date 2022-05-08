@@ -22,6 +22,8 @@
 #define ID_TEXT "Id"
 #define METADATA_TEXT "Metadata"
 
+
+
 using json = nlohmann::json;
 
 class JsonResponsePacketSerializer {
@@ -43,10 +45,11 @@ public:
 
 	static std::vector<BYTE> serializePersonalStatisticsResponse(const GetPersonalStatsResponse& getHighScoreResponse);
 
-	
+	static std::vector<BYTE> serializeGetRoomStateResponse(const GetRoomStateRespone& getRoomStateRespone);
 
 
 private:
 	static std::vector<BYTE> convertJsonToBits(const json& jsonFormat, BYTE code);
+	
 	static std::vector<BYTE> intToBytes(int numInteger);
 };

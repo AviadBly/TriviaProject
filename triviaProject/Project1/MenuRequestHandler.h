@@ -14,8 +14,8 @@ class MenuRequestHandler : public IRequestHandler {
 public:
 	MenuRequestHandler(RequestHandlerFactory& handlerFactory, LoggedUser newUser);
 
-	virtual bool isRequestRelevant(RequestInfo requestInfo) override;
-	virtual RequestResult handleRequest(RequestInfo requestInfo) override;
+	virtual bool isRequestRelevant(RequestInfo requestInfo) const;
+	virtual RequestResult handleRequest(RequestInfo requestInfo);
 
 private:
 

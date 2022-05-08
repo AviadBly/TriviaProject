@@ -165,7 +165,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 				std::cout << "Irrelevent request\n";
 				continue;
 			}
-
+			
 			request = request.newHandler->handleRequest(info);
 			
 			sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));

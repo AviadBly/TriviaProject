@@ -149,6 +149,20 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializePersonalStatisticsRespo
 	return jsonBits;
 }
 
+
+
+std::vector<BYTE> JsonResponsePacketSerializer::serializeGetRoomStateResponse(const GetRoomStateRespone& getRoomStateRespone) {
+
+	//init json
+	json jsonResponse;
+	jsonResponse[STATUS_TEXT] = getRoomStateRespone.status;
+	std::cout << jsonResponse;
+
+	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
+
+	return jsonBits;
+}
+
 std::vector<BYTE> JsonResponsePacketSerializer::intToBytes(int numInteger)
 {
 	vector<BYTE> arrayOfByte(4);
