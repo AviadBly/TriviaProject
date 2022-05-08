@@ -53,6 +53,25 @@ struct CreateRoomResponse : public Response {
 
 };
 
-struct GetRoomStateRespone : public Response {
+struct GetRoomStateResponse : public Response {
+	bool hasGameBegun;
+	vector<string> players;
+	unsigned int questionCount;
+	unsigned int answerTimeout;
+
+};
+
+struct closeRoomResponse :public Response
+{
+
+};
+
+struct startRoomResponse :public Response
+{
+
+};
+
+struct leaveRoomResponse :public Response
+{
 
 };

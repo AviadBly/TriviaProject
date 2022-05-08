@@ -151,17 +151,63 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializePersonalStatisticsRespo
 
 
 
-std::vector<BYTE> JsonResponsePacketSerializer::serializeGetRoomStateResponse(const GetRoomStateRespone& getRoomStateRespone) {
+std::vector<BYTE> JsonResponsePacketSerializer::serializeGetRoomStateResponse(const GetRoomStateResponse& getRoomStateResponse) {
 
 	//init json
 	json jsonResponse;
-	jsonResponse[STATUS_TEXT] = getRoomStateRespone.status;
+	jsonResponse[STATUS_TEXT] = getRoomStateResponse.status;
+	jsonResponse[GAME_BEGUN_TEXT] = getRoomStateResponse.hasGameBegun;
+	jsonResponse[PLAYERS_TEXT] = getRoomStateResponse.players;
+	jsonResponse[ANSWER_COUNT_TEXT] = getRoomStateResponse.questionCount;
+	jsonResponse[ANSWER_TIMEOUT_TEXT] = getRoomStateResponse.answerTimeout;
 	std::cout << jsonResponse;
 
 	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
 
 	return jsonBits;
 }
+
+
+std::vector<BYTE> JsonResponsePacketSerializer::serializeStartGameResponse(const startRoomResponse& startRoomResponse) {
+		
+	//init json
+	json jsonResponse;
+	jsonResponse[STATUS_TEXT] = startRoomResponse.status;
+
+	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
+
+	return jsonBits;
+
+}
+std::vector<BYTE> JsonResponsePacketSerializer::serializeCloseGameResponse(const closeRoomResponse& closeRoomResponse) {
+
+	//init json
+	json jsonResponse;
+	jsonResponse[STATUS_TEXT] = closeRoomResponse.status;
+
+	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
+
+	return jsonBits;
+
+}
+
+std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveGameResponse(const leaveRoomResponse& leaveRoomResponse) {
+
+	//init json
+	json jsonResponse;
+	jsonResponse[STATUS_TEXT] = leaveRoomResponse.status;
+
+	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
+
+	return jsonBits;
+
+}
+
+
+
+
+
+
 
 std::vector<BYTE> JsonResponsePacketSerializer::intToBytes(int numInteger)
 {
