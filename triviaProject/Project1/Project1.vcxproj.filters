@@ -99,6 +99,12 @@
     <ClCompile Include="WSAInitializer.cpp">
       <Filter>Source Files\Server</Filter>
     </ClCompile>
+    <ClCompile Include="RoomAdminRequestHandler.cpp">
+      <Filter>Source Files\Requests and Responses</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomMemberRequestHandler.cpp">
+      <Filter>Source Files\Requests and Responses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelperFunctions.h">
@@ -171,6 +177,12 @@
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="LoginRequestHandler.h">
+      <Filter>Header Files\Requests and Responses</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomAdminRequestHandler.h">
+      <Filter>Header Files\Requests and Responses</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomMemberRequestHandler.h">
       <Filter>Header Files\Requests and Responses</Filter>
     </ClInclude>
   </ItemGroup>

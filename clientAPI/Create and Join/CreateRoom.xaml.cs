@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
 static class constants
 {
     public const int MAXQUESTIONS = 10;
@@ -26,10 +28,10 @@ namespace clientAPI
     /// </summary>
     public partial class CreateRoom : Window
     {
-        
+
         public CreateRoom()
         {
-            
+
             InitializeComponent();
         }
 
@@ -45,7 +47,7 @@ namespace clientAPI
             uint players = Convert.ToUInt32(Players.Text);
             uint time = Convert.ToUInt32(Time.Text);
 
-            CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text,players, constants.MAXQUESTIONS,time);
+            CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, constants.MAXQUESTIONS, time);
 
 
             Console.Write(createRoomRequest);
@@ -67,6 +69,12 @@ namespace clientAPI
 
             Console.Write("Createed room succesfully");
 
+        }
+
+        private void previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

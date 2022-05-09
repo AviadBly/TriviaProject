@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:clientAPI" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="500" FontSize="15" Background="#3b82f5">
-    <Border Background="#2e3137" CornerRadius="50" Margin="40,40,40,19">
+        Title="Login" Height="475" Width="525" FontSize="15" Background="#3b82f5">
+    <Border Background="#2e3137" CornerRadius="50" Margin="40,40,40,11">
         <StackPanel Margin="40,40,40,10">
 
             <Label Content="login" Foreground="White" FontSize="25" HorizontalAlignment="Center"/>
@@ -16,7 +16,7 @@
             <Label Content="Password" Foreground="white"/>
             <PasswordBox Name="PasswordText" Background="#545d6a" Foreground="White" FontSize="18" KeyDown="PasswordBox_KeyDown"/>
             <Button x:Name="LoginSubmitButton" Foreground="Black" Click ="clickLogin" Content="Login" Margin="40" Background="SkyBlue" Height="30" Width="100" />
-            <Button Content="Don't have an account?! REGISTER NOW! >:(" Foreground="Black" Height="34" Width="328" Background="SkyBlue" FontStyle="Oblique" FontWeight="Bold" Click="signClick"/>
+            <Button Content="Don't have an account?! REGISTER NOW! >:(" Foreground="Black" Height="42" Width="332" Background="SkyBlue" FontStyle="Oblique" FontWeight="Bold" Click="signClick"/>
 
         </StackPanel>
     </Border>

@@ -5,6 +5,6 @@
 
 class IRequestHandler {
 public:
-	virtual bool isRequestRelevant(RequestInfo requestInfo) = 0;
+	virtual bool isRequestRelevant(RequestInfo requestInfo) const = 0;
 	virtual RequestResult handleRequest(RequestInfo requestInfo) = 0;
 };

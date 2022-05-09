@@ -14,6 +14,7 @@
 #define GET_HIGH_SCORES_REQUEST_CODE 35
 
 
+
 struct LoginRequest {
 	std::string username;
 	std::string password;
