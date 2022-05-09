@@ -16,7 +16,7 @@ public:
 	LoginManager& getLoginManger();
 	RoomManager& getRoomManager();
 
-private:
+protected:
 
 	RequestResult leaveRoom(RequestInfo requestInfo);
 	RequestResult getRoomState(RequestInfo requestInfo);

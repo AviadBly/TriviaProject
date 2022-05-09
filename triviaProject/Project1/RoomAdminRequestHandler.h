@@ -4,24 +4,14 @@
 #include "RequestHandlerFactory.h"
 #include "MenuRequestHandler.h"
 
-class RoomAdminRequestHandler : IRequestHandler {
+class RoomAdminRequestHandler : public RoomMemberRequestHandler {
 
 public:
 
 	RoomAdminRequestHandler(Room room, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
-	virtual bool isRequestRelevant(RequestInfo requestInfo) const;
-	virtual RequestResult handleRequest(RequestInfo requestInfo);
-
-	LoginManager& getLoginManger();
-	RoomManager& getRoomManager();
+	virtual bool isRequestRelevant(RequestInfo requestInfo) const override;
+	virtual RequestResult handleRequest(RequestInfo requestInfo) override;
 
 private:
 
-	RequestResult getRoomState(RequestInfo requestInfo);
-
-
-	Room m_room;
-	LoggedUser m_user;
-	RoomManager& m_roomManager;
-	RequestHandlerFactory& m_handlerFactory;
 };
