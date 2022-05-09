@@ -136,6 +136,16 @@ namespace clientAPI.JsonHelpers
             return response;
         }
 
+        public static CloseRoomResponse? CloseRoomResponseDeserializer(byte[] buffer)
+        {
 
+
+            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+
+
+            CloseRoomResponse? response = JsonSerializer.Deserialize<CloseRoomResponse>(jsonString);
+
+            return response;
+        }
     }
 }

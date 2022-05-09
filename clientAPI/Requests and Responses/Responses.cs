@@ -114,4 +114,13 @@ namespace clientAPI.Requests_and_Responses
         {
         }
     }
+
+    internal class CloseRoomResponse : Response
+    {
+        public CloseRoomResponse(byte status) : base(status)
+        {
+
+        }
+    }
+
 }

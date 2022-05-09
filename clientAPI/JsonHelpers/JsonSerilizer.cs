@@ -47,7 +47,9 @@ namespace clientAPI.JsonHelpers
             return Encoding.ASCII.GetBytes(resultStringJson.ToString());
         }
 
-        
+   
+
+
     }
 
 }
