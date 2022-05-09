@@ -114,4 +114,41 @@ namespace clientAPI.Requests_and_Responses
         {
         }
     }
+    internal class CloseRoomResponse : Response
+    {
+        public CloseRoomResponse(byte status) : base(status)
+        {
+        }
+    }
+    internal class LeaveRoomResponse : Response
+    {
+        public LeaveRoomResponse(byte status) : base(status)
+        {
+        }
+    }
+    internal class StartRoomResponse : Response
+    {
+        public StartRoomResponse(byte status) : base(status)
+        {
+        }
+    }
+    internal class GetRoomStateResponse : Response
+    {
+        public GetRoomStateResponse(byte status,bool hasGameBegun, List<string> players, uint answerCount, uint answerTimeOut) : base(status)
+        {
+            _hasGameBegun = hasGameBegun;
+            _players = players;
+            _answerCount = answerCount;
+            _answerTimeOut = answerTimeOut;
+
+        }
+       public  bool _hasGameBegun { get; set; }
+
+        public List<string> _players { get; set; }
+       public  uint _answerCount { get; set; }
+
+        public uint _answerTimeOut { get; set; }
+    }
+
+
 }
