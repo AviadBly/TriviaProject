@@ -9,11 +9,17 @@ class RoomAdminRequestHandler : IRequestHandler {
 public:
 
 	RoomAdminRequestHandler(Room room, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
-	virtual bool isRequestRelevant() const;
+	virtual bool isRequestRelevant(RequestInfo requestInfo) const;
 	virtual RequestResult handleRequest(RequestInfo requestInfo);
 
+	LoginManager& getLoginManger();
+	RoomManager& getRoomManager();
 
 private:
+
+	RequestResult getRoomState(RequestInfo requestInfo);
+
+
 	Room m_room;
 	LoggedUser m_user;
 	RoomManager& m_roomManager;

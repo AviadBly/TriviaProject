@@ -61,17 +61,17 @@ struct GetRoomStateResponse : public Response {
 
 };
 
-struct closeRoomResponse :public Response
+struct CloseRoomResponse :public Response
 {
 
 };
 
-struct startRoomResponse :public Response
+struct StartRoomResponse :public Response
 {
 
 };
 
-struct leaveRoomResponse :public Response
+struct LeaveRoomResponse :public Response
 {
 
 };

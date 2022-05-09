@@ -21,10 +21,9 @@
 #define HIGH_SCORE_PLAYERS "HighScorePlayers"
 #define ID_TEXT "Id"
 #define METADATA_TEXT "Metadata"
-#define GAME_BEGUN_TEXT "hasGameBegun"
+#define GAME_BEGUN_TEXT "HasGameBegun"
 #define ANSWER_COUNT_TEXT "AnswerCount"
-#define	ANSWER_TIMEOUT_TEXT "answerTimeOut"
-
+#define	ANSWER_TIMEOUT_TEXT "AnswerTimeOut"
 
 
 using json = nlohmann::json;
@@ -50,11 +49,11 @@ public:
 
 	static std::vector<BYTE> serializeGetRoomStateResponse(const GetRoomStateResponse& getRoomStateRespone);
 
-	std::vector<BYTE> serializeStartGameResponse(const startRoomResponse& startRoomResponse);
+	static std::vector<BYTE> serializeStartGameResponse(const StartRoomResponse& startRoomResponse);
 
-	std::vector<BYTE> serializeCloseGameResponse(const closeRoomResponse& closeRoomResponse);
+	static std::vector<BYTE> serializeCloseGameResponse(const CloseRoomResponse& closeRoomResponse);
 
-	std::vector<BYTE> serializeLeaveGameResponse(const leaveRoomResponse& leaveRoomResponse);
+	static std::vector<BYTE> serializeLeaveGameResponse(const LeaveRoomResponse& leaveRoomResponse);
 
 
 private:

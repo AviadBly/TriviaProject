@@ -168,7 +168,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeGetRoomStateResponse(co
 }
 
 
-std::vector<BYTE> JsonResponsePacketSerializer::serializeStartGameResponse(const startRoomResponse& startRoomResponse) {
+std::vector<BYTE> JsonResponsePacketSerializer::serializeStartGameResponse(const StartRoomResponse& startRoomResponse) {
 		
 	//init json
 	json jsonResponse;
@@ -179,7 +179,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeStartGameResponse(const
 	return jsonBits;
 
 }
-std::vector<BYTE> JsonResponsePacketSerializer::serializeCloseGameResponse(const closeRoomResponse& closeRoomResponse) {
+std::vector<BYTE> JsonResponsePacketSerializer::serializeCloseGameResponse(const CloseRoomResponse& closeRoomResponse) {
 
 	//init json
 	json jsonResponse;
@@ -191,7 +191,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeCloseGameResponse(const
 
 }
 
-std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveGameResponse(const leaveRoomResponse& leaveRoomResponse) {
+std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveGameResponse(const LeaveRoomResponse& leaveRoomResponse) {
 
 	//init json
 	json jsonResponse;
