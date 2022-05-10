@@ -16,6 +16,7 @@
 #define ROOM_NAME_TEXT "RoomName"
 
 #define ROOM_ID_TEXT "RoomId"
+
 using json = nlohmann::json;
 
 class JsonRequestPacketDeserializer {

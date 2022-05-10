@@ -6,6 +6,7 @@
 #include "Responses.h"
 #include <iostream>
 #include <bitset>
+#include "JsonRequestPacketDeserializer.h"
 
 #define STATUS_TEXT "Status"
 #define MESSAGE_TEXT "Message"
@@ -23,7 +24,7 @@
 #define METADATA_TEXT "Metadata"
 #define GAME_BEGUN_TEXT "HasGameBegun"
 #define ANSWER_COUNT_TEXT "AnswerCount"
-#define	ANSWER_TIMEOUT_TEXT "AnswerTimeOut"
+
 
 
 using json = nlohmann::json;

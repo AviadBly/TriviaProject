@@ -1,4 +1,4 @@
-#include "RoomMemberRequestHandler.h"
+#include "RoomRequestHandlers.h"
 
 RoomMemberRequestHandler::RoomMemberRequestHandler(Room room, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_roomManager(roomManager), m_handlerFactory(handlerFactory)
 {
@@ -31,6 +31,10 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo requestInfo)
 		case LEAVE_ROOM_REQUEST_CODE:
 			requestResult = leaveRoom(requestInfo);
 			break;
+		case GET_ROOM_STATE_REQUEST_CODE:
+			requestResult = getRoomState(requestInfo);
+			break;
+		
 		}
 
 	}

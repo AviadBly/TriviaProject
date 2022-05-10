@@ -179,10 +179,7 @@
     <ClInclude Include="LoginRequestHandler.h">
       <Filter>Header Files\Requests and Responses</Filter>
     </ClInclude>
-    <ClInclude Include="RoomAdminRequestHandler.h">
-      <Filter>Header Files\Requests and Responses</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomMemberRequestHandler.h">
+    <ClInclude Include="RoomRequestHandlers.h">
       <Filter>Header Files\Requests and Responses</Filter>
     </ClInclude>
   </ItemGroup>
