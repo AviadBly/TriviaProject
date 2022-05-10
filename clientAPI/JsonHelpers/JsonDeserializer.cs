@@ -135,6 +135,52 @@ namespace clientAPI.JsonHelpers
 
             return response;
         }
+        public static LeaveRoomResponse? LeaveRoomResponseDeserializer(byte[] buffer)
+        {
+
+
+            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+
+
+            LeaveRoomResponse? response = JsonSerializer.Deserialize<LeaveRoomResponse>(jsonString);
+
+            return response;
+        }
+        public static CloseRoomResponse? CloseRoomResponseDeserializer(byte[] buffer)
+        {
+
+
+            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+
+
+            CloseRoomResponse? response = JsonSerializer.Deserialize<CloseRoomResponse>(jsonString);
+
+            return response;
+        }
+        public static StartRoomResponse? StartRoomResponseDeserializer(byte[] buffer)
+        {
+
+
+            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+
+
+            StartRoomResponse? response = JsonSerializer.Deserialize<StartRoomResponse>(jsonString);
+
+            return response;
+        }
+        public static GetRoomStateResponse? GetRoomStateResponseDeserializer(byte[] buffer)
+        {
+
+
+            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+
+
+            GetRoomStateResponse? response = JsonSerializer.Deserialize<GetRoomStateResponse>(jsonString);
+
+            return response;
+        }
+
+
 
 
     }
