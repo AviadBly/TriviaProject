@@ -59,7 +59,9 @@ namespace clientAPI.Game
 
         private void showPlayers()
         {
-            
+            Current.Content = room.Metadata.Name.ToString();
+            MaxPlayers.Content = room.Metadata.MaxPlayers.ToString();
+
             foreach (string player in this.players)
             {
                 
