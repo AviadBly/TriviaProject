@@ -168,7 +168,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 			
 			request = request.newHandler->handleRequest(info);
 			this->m_clients[clientSocket] = request.newHandler;
-
+			
 			sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
 			
 		}

@@ -31,6 +31,7 @@ protected:
 
 };
 
+
 class RoomAdminRequestHandler : public RoomMemberRequestHandler {
 
 public:
