@@ -85,8 +85,8 @@ namespace clientAPI
 
                 MessageBox.Show("Username Created successfully!");
 
-
-                menu menuWindow = new menu(username);
+                MainProgram.mainUser = username;
+                menu menuWindow = new menu(MainProgram.mainUser);
                 menuWindow.Show();
                 this.Close();
             }
