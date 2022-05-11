@@ -13,7 +13,7 @@ public:
 	void deleteRoom(int ID);
 	unsigned int getRoomState(int ID);
 	vector<Room> getRooms();
-
+	void setRoomActive(int ID);
 
 private:
 	int nextRoomId;

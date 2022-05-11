@@ -52,6 +52,11 @@ bool Room::canNewUserJoin()
 	return this->m_users.size() < this->m_metadata.maxPlayers && this->m_metadata.isActive;
 }
 
+void Room::setIsActive(bool isActive)
+{
+	this->m_metadata.isActive = isActive;
+}
+
 RoomData Room::getData() const
 {
 	return this->m_metadata;

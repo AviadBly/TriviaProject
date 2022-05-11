@@ -158,7 +158,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 			info.code = userMsg[0];
 			std::cout << "code: " << info.code << "\n";
 			info.receivalTime = time(NULL);
-
+			
 			info.buffer = Helper::convertStringToBits(userMsg.substr(5));
 
 			if (!request.newHandler->isRequestRelevant(info)) {

@@ -66,6 +66,10 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)
 	return requestResult;
 }
 
+RoomData RoomMemberRequestHandler::getRoomData() {
+
+}
+
 RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo requestInfo)
 {
 	GetRoomStateResponse getRoomStateResponse;

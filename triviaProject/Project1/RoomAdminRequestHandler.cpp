@@ -19,12 +19,11 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo requestInfo)
 	try {
 		switch (requestInfo.code) {
 		case CLOSE_ROOM_REQUEST_CODE:
-			
+			requestResult = closeRoom(requestInfo);
 			break;
 		case START_GAME_REQUEST_CODE:
-
+			requestResult = startGame(requestInfo);;
 			break;
-
 		case GET_ROOM_STATE_REQUEST_CODE:
 			requestResult = getRoomState(requestInfo);
 			break;
@@ -47,8 +46,12 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo requestInfo)
 {
 
 	RequestResult requestResult;
+	StartRoomResponse StartRoomResponse;
+	m_room.setIsActive(true); 
+	this->m_roomManager.setRoomActive(m_room.getData().id);
+	StartRoomResponse.status = StartRoomResponse.status_ok;
 
-	
+	requestResult.buffer = JsonResponsePacketSerializer::serializeStartGameResponse(StartRoomResponse);
 
 	return requestResult;
 }
@@ -56,9 +59,14 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo requestInfo)
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo requestInfo)
 {
 	RequestResult requestResult;
-
+	CloseRoomResponse closeRoomResponse;
 	
 	this->m_roomManager.deleteRoom(m_room.getData().id);
+	//leaveRoom(requestInfo);		//maybe add this later to leave room
+	
+	closeRoomResponse.status = closeRoomResponse.status_ok;
+
+	requestResult.buffer = JsonResponsePacketSerializer::serializeCloseGameResponse(closeRoomResponse);
 
 
 	return requestResult;
