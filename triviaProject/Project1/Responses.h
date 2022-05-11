@@ -8,9 +8,9 @@
 using namespace std;
 
 struct Response {
-	BYTE status;
-	const BYTE status_ok = 2;
-	const BYTE status_error = 5;
+	int status;
+	const int status_ok = 2;
+	const int status_error = 5;
 };
 
 struct LoginResponse : public Response {
@@ -54,6 +54,8 @@ struct CreateRoomResponse : public Response {
 };
 
 struct GetRoomStateResponse : public Response {
+	const int statusRoomNotFound = 7;
+
 	bool hasGameBegun;
 	vector<string> players;
 	unsigned int questionCount;
