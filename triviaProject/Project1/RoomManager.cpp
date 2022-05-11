@@ -51,3 +51,8 @@ vector<Room> RoomManager::getRooms()
 	return newVector;
 }
 
+void RoomManager::setRoomActive(int ID)
+{
+	m_rooms[ID].setIsActive(true);
+}
+

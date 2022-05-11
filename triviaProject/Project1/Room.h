@@ -26,7 +26,7 @@ public:
 	vector<string> getAllUsers() const;
 	RoomData getData() const;
 	bool canNewUserJoin();
-
+	void setIsActive(bool isActive);
 	
 private:
 	
