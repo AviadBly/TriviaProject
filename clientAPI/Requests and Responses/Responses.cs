@@ -68,11 +68,19 @@ namespace clientAPI.Requests_and_Responses
     };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     internal class  GetPlayersInRoomResponse : Response
     {
 		
 
         public GetPlayersInRoomResponse(List<string> players, byte status) :base(status)
+=======
+    internal class  GetPlayersInRoomResponse
+    {
+		
+
+        public GetPlayersInRoomResponse(List<string> players)
+>>>>>>> 560178a404e216ac59082f1e9789e605093efda0
 =======
     internal class  GetPlayersInRoomResponse
     {
