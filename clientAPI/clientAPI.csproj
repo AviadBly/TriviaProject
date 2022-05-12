@@ -8,15 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Pictures\IsraelFlag.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Pictures\IsraelFlag.png" />
   </ItemGroup>
 
 </Project>

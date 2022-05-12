@@ -36,6 +36,7 @@ unsigned int RoomManager::getRoomState(int ID)
 			return currData.isActive;
 		}
 	}
+	return false;
 	throw MyException("Error!: No such ID! ");
 }
 

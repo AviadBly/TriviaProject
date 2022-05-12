@@ -32,4 +32,6 @@ private:
 	RequestHandlerFactory& m_handlerFactory;
 	std::map<SOCKET, IRequestHandler*> m_clients;
 	SOCKET m_serverSocket;
+
+
 };

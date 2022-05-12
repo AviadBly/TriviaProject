@@ -67,11 +67,11 @@ namespace clientAPI.Requests_and_Responses
         public List<Room> Rooms { get; set; }
     };
 
-    internal class  GetPlayersInRoomResponse :Response
+    internal class  GetPlayersInRoomResponse
     {
 		
 
-        public GetPlayersInRoomResponse(List<string> players,byte status) :base(status)
+        public GetPlayersInRoomResponse(List<string> players)
         {
             Players = players;
         }
@@ -134,6 +134,7 @@ namespace clientAPI.Requests_and_Responses
     }
     internal class GetRoomStateResponse : Response
     {
+        const int statusRoomNotFound = 7;
         public GetRoomStateResponse(byte status,bool hasGameBegun, List<string> players, uint answerCount, uint answerTimeOut) : base(status)
         {
             _hasGameBegun = hasGameBegun;
@@ -145,7 +146,7 @@ namespace clientAPI.Requests_and_Responses
        public  bool _hasGameBegun { get; set; }
 
         public List<string> _players { get; set; }
-       public  uint _answerCount { get; set; }
+        public  uint _answerCount { get; set; }
 
         public uint _answerTimeOut { get; set; }
     }

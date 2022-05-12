@@ -182,5 +182,8 @@
     <ClInclude Include="RoomRequestHandlers.h">
       <Filter>Header Files\Requests and Responses</Filter>
     </ClInclude>
+    <ClInclude Include="ICryptoAlgorithm.h">
+      <Filter>Header Files\Server</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

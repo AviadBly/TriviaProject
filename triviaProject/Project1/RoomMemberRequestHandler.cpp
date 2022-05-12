@@ -66,23 +66,29 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)
 	return requestResult;
 }
 
-RoomData RoomMemberRequestHandler::getRoomData() {
-
-}
 
 RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo requestInfo)
 {
 	GetRoomStateResponse getRoomStateResponse;
 	
 	RequestResult requestResult;
+	//if room exist
+	if (m_roomManager.getRoomState(m_room.getData().id)) {
+		getRoomStateResponse.status = getRoomStateResponse.status_ok;
+		RoomData roomData = this->m_room.getData();
 
-	getRoomStateResponse.status = getRoomStateResponse.status_ok;
-	RoomData roomData = this->m_room.getData();
-	
-	getRoomStateResponse.answerTimeout = roomData.timePerQuestion;	//I am not sure if its true
-	getRoomStateResponse.questionCount = roomData.numOfQuestionsInGame;
-	getRoomStateResponse.hasGameBegun = roomData.isActive;
-	getRoomStateResponse.players = m_room.getAllUsers();
+		getRoomStateResponse.answerTimeout = roomData.timePerQuestion;	//I am not sure if its true
+		getRoomStateResponse.questionCount = roomData.numOfQuestionsInGame;
+		getRoomStateResponse.hasGameBegun = roomData.isActive;
+		getRoomStateResponse.players = m_room.getAllUsers();
+
+	}
+	else {//if room doesnt exist
+		getRoomStateResponse.status = getRoomStateResponse.statusRoomNotFound;
+
+		delete this;
+	}
+
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetRoomStateResponse(getRoomStateResponse);
 

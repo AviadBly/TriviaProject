@@ -62,7 +62,7 @@ RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo requestInfo)
 	CloseRoomResponse closeRoomResponse;
 	
 	this->m_roomManager.deleteRoom(m_room.getData().id);
-	//leaveRoom(requestInfo);		//maybe add this later to leave room
+	//leaveRoom(requestInfo);		//maybe add this later to leave the room
 	
 	closeRoomResponse.status = closeRoomResponse.status_ok;
 
