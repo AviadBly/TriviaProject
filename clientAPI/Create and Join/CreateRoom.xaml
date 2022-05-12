@@ -31,7 +31,7 @@
 
         </Border>
         <Button Content="Create Room" FontSize="30" HorizontalAlignment="Left" Margin="60,597,0,0" VerticalAlignment="Top" Height="66" RenderTransformOrigin="0.474,0.602" Width="214" Click="clickCreate"/>
-        <Button  Content="Go back" FontSize="20" HorizontalAlignment="Left" Margin="356,597,0,0" VerticalAlignment="Top" Height="66" RenderTransformOrigin="0.474,0.602" Width="120" Click="clickExit"/>
+        <Button Content="Go back" FontSize="20" HorizontalAlignment="Left" Margin="356,597,0,0" VerticalAlignment="Top" Height="66" RenderTransformOrigin="0.474,0.602" Width="120" Click="clickExit"/>
 
 
 

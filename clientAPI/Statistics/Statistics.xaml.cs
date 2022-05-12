@@ -27,10 +27,10 @@ namespace clientAPI
         }
 
        
-        
+
         private void backClick(object sender, RoutedEventArgs e)
         {
-            menu menu = new menu(MainProgram.mainUser);
+            menu menu = new menu();
             menu.Show();
             this.Close();
         }
