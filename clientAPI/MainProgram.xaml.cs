@@ -27,7 +27,7 @@ namespace clientAPI
     public partial class MainProgram : Window
     {
         public static Client appClient;
-        public static string username;
+        public static string MainUsername;
         
         
         public MainProgram()

@@ -31,7 +31,7 @@ namespace clientAPI.Create_and_Join
 	internal class Room
     {
 
-		public Room(RoomData metaData, List<string> players)
+		public Room(RoomData metaData, IList<string> players)
         {
 			Metadata = metaData;
 			Players = players;
@@ -39,6 +39,6 @@ namespace clientAPI.Create_and_Join
 		}
 		
 		public RoomData Metadata { get; set; }
-		public List<string> Players { get; set; }
+		public IList<string> Players { get; set; }
 	}
 }

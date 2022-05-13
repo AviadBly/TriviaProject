@@ -23,19 +23,19 @@ namespace clientAPI.Game
     public partial class WaitingRoom : Window
     {
         private Room m_room;
-        List<string> players;
+        
         public WaitingRoom(RoomData metaData)
         {
-            players = getPlayers();
+            var players = getPlayers();
             m_room = new Room(metaData, players);
             
             InitializeComponent();
-            showPlayers();
+            showPlayers(m_room.Players);
         }
 
 
         //TO DO, ask getPlayers every 1 second
-        private List<string> getPlayers()
+        private IList<string> getPlayers()
         {
 
 
@@ -69,17 +69,17 @@ namespace clientAPI.Game
         {
             MessageBox.Show("Left Room");
 
-            menu menuWindow = new menu(MainProgram.username);      //go to menu
+            menu menuWindow = new menu(MainProgram.MainUsername);      //go to menu
             menuWindow.Show();
             Close();
         }
 
-        private void showPlayers()
+        private void showPlayers(IList<string> players)
         {
             Current.Content = m_room.Metadata.Name.ToString();
             MaxPlayers.Content = m_room.Metadata.MaxPlayers.ToString();
 
-            foreach (string player in this.players)
+            foreach (string player in players)
             {
                 
 
