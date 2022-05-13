@@ -40,7 +40,7 @@ namespace clientAPI
         private void clickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu = new menu();
+            menu menu = new menu(MainProgram.MainUsername);
             menu.Show();
         }
 
@@ -72,11 +72,11 @@ namespace clientAPI
             Console.Write("Createed room succesfully");
 
             
-            RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
+            //RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
             
-            WaitingRoom waitingRoom = new WaitingRoom(metaData);
-            waitingRoom.Show();
-            Close();
+            //WaitingRoom waitingRoom = new WaitingRoom(metaData);
+            //waitingRoom.Show();
+            //Close();
 
         }
 

@@ -36,7 +36,7 @@ namespace clientAPI
         private void clickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu = new menu();
+            menu menu = new menu(MainProgram.MainUsername);
             menu.Show();
         }
 

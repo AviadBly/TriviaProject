@@ -73,8 +73,8 @@ namespace clientAPI
                 }
 
 
-                
-                
+
+                MainProgram.MainUsername = username;
                 menu menuWindow = new menu(username);
                 menuWindow.Show();
                 Close();
