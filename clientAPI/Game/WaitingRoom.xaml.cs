@@ -23,14 +23,21 @@ namespace clientAPI.Game
     public partial class WaitingRoom : Window
     {
         private Room m_room;
-        
+
         public WaitingRoom(RoomData metaData)
         {
-            var players = getPlayers();
-            m_room = new Room(metaData, players);
-            
             InitializeComponent();
-            showPlayers(m_room.Players);
+
+            var players = getPlayers();
+
+            m_room = new Room(metaData, new List<string>());
+            m_room.PlayersUpdated += RoomPlayersUpdated;
+            m_room.UpdatePlayers(players);
+        }
+
+        private void RoomPlayersUpdated(IList<string> players)
+        {
+            showPlayers(players);
         }
 
 
@@ -46,8 +53,8 @@ namespace clientAPI.Game
 
             GetPlayersInRoomResponse getPlayersResponse = JsonHelpers.JsonFormatDeserializer.GetPlayersInRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
 
-            
-            if(getPlayersResponse == null)
+
+            if (getPlayersResponse == null)
             {
                 return new List<string>();
             }
@@ -81,18 +88,13 @@ namespace clientAPI.Game
 
             foreach (string player in players)
             {
-                
-
-                if (PlayerList.Items.Contains(player) == false)
+                if (!PlayerList.Items.Contains(player))
                 {
-
-                        PlayerList.Items.Add(player);
+                    PlayerList.Items.Add(player);
                 }
-
             }
-
         }
-       
+
     }
 
 

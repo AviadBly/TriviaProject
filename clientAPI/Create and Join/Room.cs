@@ -31,5 +31,22 @@ namespace clientAPI.Create_and_Join
 		
 		public RoomData Metadata { get; set; }
 		public IList<string> Players { get; set; }
+
+		public event Action<IList<string>> PlayersUpdated;
+
+		public void UpdatePlayers(IList<string> players)
+        {
+			if (Players == null)
+				Players = new List<string>();
+
+			Players.Clear();
+			
+			foreach (var player in players)
+            {
+				Players.Add(player);
+            }
+
+			PlayersUpdated?.Invoke(Players);
+        }
 	}
 }
