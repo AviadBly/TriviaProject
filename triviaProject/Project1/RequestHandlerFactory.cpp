@@ -38,6 +38,3 @@ RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(Lo
 	return new RoomAdminRequestHandler(room, loggedUser, m_roomManager, *this);
 }
 
-
-
-
