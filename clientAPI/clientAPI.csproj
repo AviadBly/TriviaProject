@@ -8,7 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pictures\Image5.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Pictures\Image5.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Pictures\Image1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
