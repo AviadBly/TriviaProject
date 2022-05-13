@@ -72,11 +72,11 @@ namespace clientAPI
             Console.Write("Createed room succesfully");
 
             
-            RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
+            //RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
             
-            WaitingRoom waitingRoom = new WaitingRoom(metaData);
-            waitingRoom.Show();
-            Close();
+            //WaitingRoom waitingRoom = new WaitingRoom(metaData);
+            //waitingRoom.Show();
+            //Close();
 
         }
 
