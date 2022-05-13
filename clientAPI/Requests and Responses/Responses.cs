@@ -59,8 +59,8 @@ namespace clientAPI.Requests_and_Responses
 
     internal class GetRoomsResponse : Response
     {
-        public static uint roomNotFoundStatus = 7;
-        public static uint startedGameStatus = 10;
+        public const uint roomNotFoundStatus = 7;
+        public const uint startedGameStatus = 10;
         public GetRoomsResponse(List<Room> rooms, byte status) : base(status)
         {
             Rooms = rooms;

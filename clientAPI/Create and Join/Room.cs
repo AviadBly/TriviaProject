@@ -17,15 +17,6 @@ namespace clientAPI.Create_and_Join
 		public uint TimePerQuestion { get; set; }
 		public bool IsActive { get; set; }
 
-		public RoomData(uint id, string name, uint maxPlayers, uint numOfQuestions, uint timePerQuestion, bool isActive)
-		{
-			Id = id;
-			Name = name;
-			MaxPlayers = maxPlayers;
-			NumOfQuestionsInGame = numOfQuestions;
-			TimePerQuestion = timePerQuestion;
-			IsActive = isActive;
-		}
 	};
 
 	internal class Room
