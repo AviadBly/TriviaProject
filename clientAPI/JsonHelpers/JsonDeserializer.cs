@@ -76,7 +76,7 @@ namespace clientAPI.JsonHelpers
             return response;
         }
 
-        public static GetPlayersInRoomResponse? GetPlayersInRoomResponseDeserializer(byte[] buffer)
+        public static GetPlayersInRoomResponse GetPlayersInRoomResponseDeserializer(byte[] buffer)
         {
           
 
@@ -84,7 +84,10 @@ namespace clientAPI.JsonHelpers
            
 
             GetPlayersInRoomResponse? response = JsonSerializer.Deserialize<GetPlayersInRoomResponse>(jsonString);
-
+            if(response == null)
+            {
+                throw new Exception("Jsonn error");
+            }
             return response;
         }
 

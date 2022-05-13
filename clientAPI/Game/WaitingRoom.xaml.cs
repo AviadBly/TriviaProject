@@ -22,19 +22,19 @@ namespace clientAPI.Game
     /// </summary>
     public partial class WaitingRoom : Window
     {
-        private Room room;
+        private Room m_room;
         List<string> players;
-        public WaitingRoom()
+        public WaitingRoom(RoomData metaData)
         {
             players = getPlayers();
+            m_room = new Room(metaData, players);
+            
             InitializeComponent();
             showPlayers();
         }
 
 
-
-
-
+        //TO DO, ask getPlayers every 1 second
         private List<string> getPlayers()
         {
 
@@ -46,21 +46,38 @@ namespace clientAPI.Game
 
             GetPlayersInRoomResponse getPlayersResponse = JsonHelpers.JsonFormatDeserializer.GetPlayersInRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
 
-            Console.Write(getPlayersResponse.ToString());
-            //login failed
-            if (getPlayersResponse.Status == Response.status_error)
+            
+            if(getPlayersResponse == null)
             {
                 return new List<string>();
             }
 
+            //login failed
+            if (getPlayersResponse.Status == GetPlayersInRoomResponse.roomNotFoundStatus)
+            {
+                MessageBox.Show("Closed Room");
+                leaveRoom();
+            }
+            Console.WriteLine(getPlayersResponse.Players);
+
+            Console.WriteLine(getPlayersResponse.Status);
+
             return getPlayersResponse.Players;
         }
 
+        private void leaveRoom()
+        {
+            MessageBox.Show("Left Room");
+
+            menu menuWindow = new menu(MainProgram.username);      //go to menu
+            menuWindow.Show();
+            Close();
+        }
 
         private void showPlayers()
         {
-            Current.Content = room.Metadata.Name.ToString();
-            MaxPlayers.Content = room.Metadata.MaxPlayers.ToString();
+            Current.Content = m_room.Metadata.Name.ToString();
+            MaxPlayers.Content = m_room.Metadata.MaxPlayers.ToString();
 
             foreach (string player in this.players)
             {

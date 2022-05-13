@@ -59,7 +59,8 @@ namespace clientAPI.Requests_and_Responses
 
     internal class GetRoomsResponse : Response
     {
-        
+        public static uint roomNotFoundStatus = 7;
+        public static uint startedGameStatus = 10;
         public GetRoomsResponse(List<Room> rooms, byte status) : base(status)
         {
             Rooms = rooms;
@@ -67,36 +68,12 @@ namespace clientAPI.Requests_and_Responses
         public List<Room> Rooms { get; set; }
     };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     internal class  GetPlayersInRoomResponse : Response
     {
 		
-
-        public GetPlayersInRoomResponse(List<string> players, byte status) :base(status)
-=======
-    internal class  GetPlayersInRoomResponse
-    {
-		
-
-        public GetPlayersInRoomResponse(List<string> players)
->>>>>>> 560178a404e216ac59082f1e9789e605093efda0
-=======
-    internal class  GetPlayersInRoomResponse
-    {
-		
-
-        public GetPlayersInRoomResponse(List<string> players)
->>>>>>> 560178a404e216ac59082f1e9789e605093efda0
-=======
-    internal class  GetPlayersInRoomResponse
-    {
-		
-
-        public GetPlayersInRoomResponse(List<string> players)
->>>>>>> 560178a404e216ac59082f1e9789e605093efda0
-        {
+        public const uint roomNotFoundStatus = 7;
+        public GetPlayersInRoomResponse(List<string> players, byte status) :base(status) {
             Players = players;
         }
 		public List<string> Players { get; set; }
