@@ -30,7 +30,7 @@ namespace clientAPI
 
         private void backClick(object sender, RoutedEventArgs e)
         {
-            menu menu = new menu();
+            menu menu = new menu(MainProgram.MainUsername);
             menu.Show();
             this.Close();
         }
