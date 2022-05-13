@@ -15,6 +15,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using clientAPI.Game;
+using clientAPI.Create_and_Join;
 
 static class constants
 {
@@ -49,7 +51,7 @@ namespace clientAPI
 
             CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, constants.MAXQUESTIONS, time);
 
-
+            
             Console.Write(createRoomRequest);
             byte[] data = JsonHelpers.JsonFormatSerializer.createSerializer(createRoomRequest);
 
@@ -68,6 +70,13 @@ namespace clientAPI
             }
 
             Console.Write("Createed room succesfully");
+
+            
+            RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
+            
+            WaitingRoom waitingRoom = new WaitingRoom(metaData);
+            waitingRoom.Show();
+            Close();
 
         }
 

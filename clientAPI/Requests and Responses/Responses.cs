@@ -59,7 +59,8 @@ namespace clientAPI.Requests_and_Responses
 
     internal class GetRoomsResponse : Response
     {
-        
+        public static uint roomNotFoundStatus = 7;
+        public static uint startedGameStatus = 10;
         public GetRoomsResponse(List<Room> rooms, byte status) : base(status)
         {
             Rooms = rooms;
@@ -67,12 +68,12 @@ namespace clientAPI.Requests_and_Responses
         public List<Room> Rooms { get; set; }
     };
 
-    internal class  GetPlayersInRoomResponse
+
+    internal class  GetPlayersInRoomResponse : Response
     {
 		
-
-        public GetPlayersInRoomResponse(List<string> players)
-        {
+        public const uint roomNotFoundStatus = 7;
+        public GetPlayersInRoomResponse(List<string> players, byte status) :base(status) {
             Players = players;
         }
 		public List<string> Players { get; set; }
