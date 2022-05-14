@@ -59,8 +59,8 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeLeaveGameResponse(leaveRoomResponse);
 
-	requestResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(this->m_user);	//change back to menu handler
-	
+		//change back to menu handler
+	requestResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(m_user);
 	delete this;
 
 	return requestResult;
@@ -72,8 +72,11 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo requestInfo)
 	GetRoomStateResponse getRoomStateResponse;
 	
 	RequestResult requestResult;
-	//if room exist
-	if (m_roomManager.getRoomState(m_room.getData().id)) {
+
+	m_room = m_roomManager.getSingleRoom(m_room.getData().id);
+
+	//checks if room still exist, because the default return of getSingleRoom is a room with id=0
+	if (m_room.getData().id != 0) {
 		getRoomStateResponse.status = getRoomStateResponse.status_ok;
 		RoomData roomData = this->m_room.getData();
 

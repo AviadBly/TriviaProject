@@ -10,6 +10,12 @@ Room::Room(RoomData metadata, LoggedUser user)
 
 Room::Room()
 {
+	this->m_metadata.id = 0;
+	this->m_metadata.isActive = 0;
+	this->m_metadata.maxPlayers = 0;
+	this->m_metadata.name = "";
+	this->m_metadata.timePerQuestion = 0;
+	this->m_metadata.numOfQuestionsInGame = 0;
 }
 
 void Room::addUser(LoggedUser user)

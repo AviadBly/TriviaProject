@@ -6,13 +6,28 @@ RoomManager::RoomManager()
 	nextRoomId = 1;
 }
 
-void RoomManager::createRoom(LoggedUser user, RoomData data)
+//create room and return the id of the room created
+unsigned int RoomManager::createRoom(LoggedUser user, RoomData data)
 {
-	
+	data.id = nextRoomId;
 	Room newRoom(data, user); //create the room
 	
 	m_rooms.insert(std::pair<unsigned int, Room>(nextRoomId, newRoom));
 	nextRoomId++;
+	return data.id;
+}
+
+Room RoomManager::getSingleRoom(int ID)
+{
+	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
+	{
+		if (it->first == ID)
+		{
+			return it->second;
+		}
+	}
+	
+	return Room();
 }
 
 void RoomManager::deleteRoom(int ID)
