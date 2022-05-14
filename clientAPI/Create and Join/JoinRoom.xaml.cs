@@ -22,6 +22,7 @@ namespace clientAPI
     public partial class JoinRoom : Window
     {
         private List<Room> rooms;
+        
         public JoinRoom()
         {
             
@@ -104,7 +105,13 @@ namespace clientAPI
                 }
                 else
                 {
-                    sendJoinRoomRequest(id);
+                    if (sendJoinRoomRequest(id))
+                    {
+                        Waiting menu = new menu(MainProgram.MainUsername);
+                        menu.Show();
+                        leaveRoom();
+                        Close();
+                    }
                 }
                
             }
