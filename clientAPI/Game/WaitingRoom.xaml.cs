@@ -133,7 +133,7 @@ namespace clientAPI.Game
             return getRoomStateResponse._players;
         }
 
-        private void leaveRoom()
+        private void leaveRoom(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Left Room");
 
@@ -156,6 +156,7 @@ namespace clientAPI.Game
             }
         }
 
+        
     }
 
 
