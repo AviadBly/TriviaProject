@@ -60,7 +60,7 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)
 	requestResult.buffer = JsonResponsePacketSerializer::serializeLeaveGameResponse(leaveRoomResponse);
 
 	requestResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(this->m_user);	//change back to menu handler
-	
+	requestResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(m_user);
 	delete this;
 
 	return requestResult;
