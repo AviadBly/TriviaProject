@@ -142,7 +142,7 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo requestInfo)
 	JoinRoomResponse joinRoomResponse;
 	
 	joinRoomResponse.status = joinRoomResponse.status_error;
-	
+	Room wantedRoom;
 	auto rooms = m_roomManager.getRooms();
 	for (auto i = rooms.begin(); i != rooms.end(); i++) {
 
@@ -150,13 +150,15 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo requestInfo)
 		if (i->getData().id && i->canNewUserJoin()) {
 
 			joinRoomResponse.status = joinRoomResponse.status_ok;
+			wantedRoom = *i;
+			
 			break;
 		}
 
 	}
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeJoinRoomResponse(joinRoomResponse);
-	
+	requestResult.newHandler = this->m_handlerFactory.createRoomMemberRequestHandler(m_user, wantedRoom);
 
 	return requestResult;
 }
@@ -174,13 +176,14 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
 	roomData.name = createRoomRequest.roomName;
 	roomData.timePerQuestion = createRoomRequest.answerTimeout;
 	roomData.numOfQuestionsInGame = createRoomRequest.questionCount;
-
+	roomData.isActive = false;
+	//maybe we should add id next
 	
 	m_roomManager.createRoom(this->m_user, roomData);
 	createRoomResponse.status = createRoomResponse.status_ok;
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeCreateRoomResponse(createRoomResponse);
-	
+	requestResult.newHandler = this->m_handlerFactory.createRoomAdminRequestHandler(m_user, Room(roomData, m_user));
 
 	return requestResult;
 }

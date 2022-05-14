@@ -161,6 +161,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 			
 			info.buffer = Helper::convertStringToBits(userMsg.substr(5));
 
+
 			if (!request.newHandler->isRequestRelevant(info)) {
 				std::cout << "Irrelevent request\n";
 				continue;
