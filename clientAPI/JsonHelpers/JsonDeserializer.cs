@@ -117,9 +117,10 @@ namespace clientAPI.JsonHelpers
 
         public static JoinRoomResponse? JoinRoomResponseDeserializer(byte[] buffer)
         {
+            if (buffer == null || buffer.Length == 0)
+                return null;
 
-
-            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+            string jsonString = Encoding.Default.GetString(buffer);
 
 
             JoinRoomResponse? response = JsonSerializer.Deserialize<JoinRoomResponse>(jsonString);
@@ -129,9 +130,10 @@ namespace clientAPI.JsonHelpers
 
         public static CreateRoomResponse? CreateRoomResponseDeserializer(byte[] buffer)
         {
+            if (buffer == null || buffer.Length == 0)
+                return null;
 
-
-            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+            string jsonString = Encoding.Default.GetString(buffer);
 
 
             CreateRoomResponse? response = JsonSerializer.Deserialize<CreateRoomResponse>(jsonString);
@@ -140,9 +142,10 @@ namespace clientAPI.JsonHelpers
         }
         public static LeaveRoomResponse? LeaveRoomResponseDeserializer(byte[] buffer)
         {
+            if (buffer == null || buffer.Length == 0)
+                return null;
 
-
-            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+            string jsonString = Encoding.Default.GetString(buffer);
 
 
             LeaveRoomResponse? response = JsonSerializer.Deserialize<LeaveRoomResponse>(jsonString);
@@ -151,9 +154,10 @@ namespace clientAPI.JsonHelpers
         }
         public static CloseRoomResponse? CloseRoomResponseDeserializer(byte[] buffer)
         {
+            if (buffer == null || buffer.Length == 0)
+                return null;
 
-
-            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+            string jsonString = Encoding.Default.GetString(buffer);
 
 
             CloseRoomResponse? response = JsonSerializer.Deserialize<CloseRoomResponse>(jsonString);
@@ -162,9 +166,10 @@ namespace clientAPI.JsonHelpers
         }
         public static StartRoomResponse? StartRoomResponseDeserializer(byte[] buffer)
         {
+            if (buffer == null || buffer.Length == 0)
+                return null;
 
-
-            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+            string jsonString = Encoding.Default.GetString(buffer);
 
 
             StartRoomResponse? response = JsonSerializer.Deserialize<StartRoomResponse>(jsonString);
@@ -173,9 +178,10 @@ namespace clientAPI.JsonHelpers
         }
         public static GetRoomStateResponse? GetRoomStateResponseDeserializer(byte[] buffer)
         {
+            if (buffer == null || buffer.Length == 0)
+                return null;
 
-
-            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+            string jsonString = Encoding.Default.GetString(buffer);
 
 
             GetRoomStateResponse? response = JsonSerializer.Deserialize<GetRoomStateResponse>(jsonString);

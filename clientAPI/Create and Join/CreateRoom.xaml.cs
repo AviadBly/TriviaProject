@@ -68,15 +68,15 @@ namespace clientAPI
                 Console.Write("NOPE room BAD ROOM");
                 return;
             }
-
+            
             Console.Write("Createed room succesfully");
+           
 
-            
-            //RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
-            
-            //WaitingRoom waitingRoom = new WaitingRoom(metaData);
-            //waitingRoom.Show();
-            //Close();
+            RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
+
+            WaitingRoom waitingRoom = new WaitingRoom(metaData, true);
+            waitingRoom.Show();
+            Close();
 
         }
 

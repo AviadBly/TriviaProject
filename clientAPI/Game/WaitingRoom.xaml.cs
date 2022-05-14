@@ -29,11 +29,12 @@ namespace clientAPI.Game
 
         private CancellationTokenSource m_updatePlayersCancellationToken;
         private Task m_updatePlayersTask;
-
-        public WaitingRoom(RoomData metaData)
+        private bool isAdmin;
+        
+        public WaitingRoom(RoomData metaData, bool isUserAdmin)
         {
             InitializeComponent();
-
+            isAdmin = isUserAdmin;
             m_room = new Room(metaData, new List<string>());
             m_room.PlayersUpdated += RoomPlayersUpdated;
 
@@ -60,7 +61,9 @@ namespace clientAPI.Game
             m_updatePlayersCancellationToken?.Cancel();
             m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS * 3));
             
-            m_updatePlayersTask.Dispose();
+            if (m_updatePlayersTask.IsCompleted)
+                m_updatePlayersTask.Dispose();
+            
             m_updatePlayersTask = null;
         }
 
@@ -88,37 +91,57 @@ namespace clientAPI.Game
         }
 
         //TO DO, ask getPlayers every 1 second
+       
         private IList<string> getPlayers()
         {
-
-
-            MainProgram.appClient.sender("", Requests.GET_PLAYERS_IN_ROOM_REQUEST_CODE);    //ask for rooms
+            MainProgram.appClient.sender("", Requests.GET_ROOM_STATE_REQUEST_CODE);    //ask for rooms
 
             byte[] returnMsg = MainProgram.appClient.receiver();
 
 
-            GetPlayersInRoomResponse getPlayersResponse = JsonHelpers.JsonFormatDeserializer.GetPlayersInRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
+            GetRoomStateResponse getRoomStateResponse = JsonHeElpers.JsonFormatDeserializer.GetRoomStateResponseDeserializer(returnMsg.Skip(5).ToArray());
 
-
-            if (getPlayersResponse == null)
+            if (getRoomStateResponse == null)
             {
+                Console.WriteLine("Received empty or wrong answer from server");
                 return new List<string>();
             }
 
-            //login failed
-            if (getPlayersResponse.Status == GetPlayersInRoomResponse.roomNotFoundStatus)
+            Console.WriteLine(getRoomStateResponse._players);
+
+            Console.WriteLine(getRoomStateResponse.Status);
+            switch (getRoomStateResponse.Status)
             {
-                MessageBox.Show("Closed Room");
-                leaveRoom();
+                
+                //if room wasnt found, it is closed
+                //so go to menu
+                case GetRoomStateResponse.statusRoomNotFound:
+
+                    menu menu = new menu(MainProgram.MainUsername);
+                    menu.Show();
+                    
+                    Close();
+                    break;
+
+                case GetRoomStateResponse.status_ok:    //if room found
+                    if (getRoomStateResponse._hasGameBegun)
+                    {
+                        //next, go to game room, not for this version
+                    }
+                    
+                    break;
+
+                case GetRoomStateResponse.status_error: //some error
+                    MessageBox.Show("error");
+                    Close();
+                    break;
             }
-            Console.WriteLine(getPlayersResponse.Players);
+            
 
-            Console.WriteLine(getPlayersResponse.Status);
-
-            return getPlayersResponse.Players;
+            return getRoomStateResponse._players;
         }
 
-        private void leaveRoom()
+        private void leaveRoom(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Left Room");
 
@@ -141,6 +164,7 @@ namespace clientAPI.Game
             }
         }
 
+        
     }
 
 

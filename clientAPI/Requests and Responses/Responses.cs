@@ -135,7 +135,7 @@ namespace clientAPI.Requests_and_Responses
     }
     internal class GetRoomStateResponse : Response
     {
-        const int statusRoomNotFound = 7;
+        public const int statusRoomNotFound = 7;
         public GetRoomStateResponse(byte status,bool hasGameBegun, List<string> players, uint answerCount, uint answerTimeOut) : base(status)
         {
             _hasGameBegun = hasGameBegun;

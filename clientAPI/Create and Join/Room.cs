@@ -9,6 +9,15 @@ namespace clientAPI.Create_and_Join
 {
 	public class RoomData
 	{
+		public RoomData(uint id,string name,uint maxPlayers, uint numOfQuestions, uint timePerQuestion, bool isActive)
+        {
+			Id = id;
+			Name = name;
+			MaxPlayers = maxPlayers;
+			NumOfQuestionsInGame = numOfQuestions;
+			TimePerQuestion=timePerQuestion;
+			IsActive = isActive;
+        }
 
 		public uint Id { get; set; }
 		public string Name { get; set; } = string.Empty;
@@ -16,6 +25,8 @@ namespace clientAPI.Create_and_Join
 		public uint NumOfQuestionsInGame { get; set; }
 		public uint TimePerQuestion { get; set; }
 		public bool IsActive { get; set; }
+
+
 
 	};
 
