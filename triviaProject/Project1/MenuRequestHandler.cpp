@@ -177,13 +177,13 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
 	roomData.timePerQuestion = createRoomRequest.answerTimeout;
 	roomData.numOfQuestionsInGame = createRoomRequest.questionCount;
 	roomData.isActive = false;
-	//maybe we should add id next
 	
-	m_roomManager.createRoom(this->m_user, roomData);
+	
+	unsigned int roomId = m_roomManager.createRoom(this->m_user, roomData);
 	createRoomResponse.status = createRoomResponse.status_ok;
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeCreateRoomResponse(createRoomResponse);
-	requestResult.newHandler = this->m_handlerFactory.createRoomAdminRequestHandler(m_user, Room(roomData, m_user));
+	requestResult.newHandler = this->m_handlerFactory.createRoomAdminRequestHandler(m_user, m_roomManager.getSingleRoom(roomId));
 
 	return requestResult;
 }
