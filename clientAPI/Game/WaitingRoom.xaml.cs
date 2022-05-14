@@ -109,7 +109,7 @@ namespace clientAPI.Game
             if (getPlayersResponse.Status == GetPlayersInRoomResponse.roomNotFoundStatus)
             {
                 MessageBox.Show("Closed Room");
-                leaveRoom();
+                this.Close();
             }
             Console.WriteLine(getPlayersResponse.Players);
 
@@ -118,7 +118,7 @@ namespace clientAPI.Game
             return getPlayersResponse.Players;
         }
 
-        private void leaveRoom()
+        private void leaveRoom(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Left Room");
 
@@ -141,6 +141,7 @@ namespace clientAPI.Game
             }
         }
 
+        
     }
 
 

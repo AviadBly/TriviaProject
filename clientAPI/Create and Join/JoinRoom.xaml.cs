@@ -104,12 +104,14 @@ namespace clientAPI
                 }
                 else
                 {
+                    //TODO: MAKE THIS GO TO THE WAITING ROOM
                     sendJoinRoomRequest(id);
                 }
                
             }
             else
             {
+                
                 MessageBox.Show("Selection Empty!");
             }
               
