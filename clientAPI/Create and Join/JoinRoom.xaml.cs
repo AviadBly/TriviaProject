@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using clientAPI.Create_and_Join;
+using clientAPI.Game;
 
 namespace clientAPI
 {
@@ -107,9 +108,10 @@ namespace clientAPI
                 {
                     if (sendJoinRoomRequest(id))
                     {
-                        Waiting menu = new menu(MainProgram.MainUsername);
-                        menu.Show();
-                        leaveRoom();
+                        RoomData metaData = getRoomData(id);
+
+                        WaitingRoom waitingRoom = new WaitingRoom(metaData, false);
+                        waitingRoom.Show();
                         Close();
                     }
                 }
@@ -122,6 +124,19 @@ namespace clientAPI
             }
               
                     
+        }
+
+        private RoomData? getRoomData(uint id)
+        {
+            foreach (Room room in this.rooms)
+            {
+                if (room.Metadata.Id == id)
+                {
+                    return room.Metadata;
+                }
+            }
+
+            return null;
         }
 
         private bool sendJoinRoomRequest(uint roomId)

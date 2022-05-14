@@ -31,10 +31,10 @@ namespace clientAPI.Game
         private Task m_updatePlayersTask;
         private bool isAdmin;
         
-        public WaitingRoom(RoomData metaData)
+        public WaitingRoom(RoomData metaData, bool isUserAdmin)
         {
             InitializeComponent();
-
+            isAdmin = isUserAdmin;
             m_room = new Room(metaData, new List<string>());
             m_room.PlayersUpdated += RoomPlayersUpdated;
 
@@ -111,7 +111,7 @@ namespace clientAPI.Game
 
                     menu menu = new menu(MainProgram.MainUsername);
                     menu.Show();
-                    leaveRoom();
+                    
                     Close();
                     break;
 
@@ -125,7 +125,7 @@ namespace clientAPI.Game
 
                 case GetRoomStateResponse.status_error: //some error
                     MessageBox.Show("error");
-                    leaveRoom();
+                    Close();
                     break;
             }
             
