@@ -138,18 +138,18 @@ namespace clientAPI.Requests_and_Responses
         public const int statusRoomNotFound = 7;
         public GetRoomStateResponse(byte status,bool hasGameBegun, List<string> players, uint answerCount, uint answerTimeOut) : base(status)
         {
-            _hasGameBegun = hasGameBegun;
-            _players = players;
-            _answerCount = answerCount;
-            _answerTimeOut = answerTimeOut;
+            HasGameBegun = hasGameBegun;
+            Players = players;
+            AnswerCount = answerCount;
+            AnswerTimeOut = answerTimeOut;
 
         }
-       public  bool _hasGameBegun { get; set; }
+        public bool HasGameBegun { get; set; }
 
-        public List<string> _players { get; set; }
-        public  uint _answerCount { get; set; }
+        public List<string> Players { get; set; }
+        public  uint AnswerCount { get; set; }
 
-        public uint _answerTimeOut { get; set; }
+        public uint AnswerTimeOut { get; set; }
     }
 
 

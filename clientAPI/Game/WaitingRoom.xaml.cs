@@ -99,7 +99,7 @@ namespace clientAPI.Game
             byte[] returnMsg = MainProgram.appClient.receiver();
 
 
-            GetRoomStateResponse getRoomStateResponse = JsonHeElpers.JsonFormatDeserializer.GetRoomStateResponseDeserializer(returnMsg.Skip(5).ToArray());
+            GetRoomStateResponse getRoomStateResponse = JsonHelpers.JsonFormatDeserializer.GetRoomStateResponseDeserializer(returnMsg.Skip(5).ToArray());
 
             if (getRoomStateResponse == null)
             {
@@ -107,7 +107,7 @@ namespace clientAPI.Game
                 return new List<string>();
             }
 
-            Console.WriteLine(getRoomStateResponse._players);
+            Console.WriteLine(getRoomStateResponse.Players);
 
             Console.WriteLine(getRoomStateResponse.Status);
             switch (getRoomStateResponse.Status)
@@ -124,7 +124,7 @@ namespace clientAPI.Game
                     break;
 
                 case GetRoomStateResponse.status_ok:    //if room found
-                    if (getRoomStateResponse._hasGameBegun)
+                    if (getRoomStateResponse.HasGameBegun)
                     {
                         //next, go to game room, not for this version
                     }
@@ -138,7 +138,7 @@ namespace clientAPI.Game
             }
             
 
-            return getRoomStateResponse._players;
+            return getRoomStateResponse.Players;
         }
 
         private void leaveRoom(object sender, RoutedEventArgs e)

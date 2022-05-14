@@ -67,9 +67,16 @@ namespace clientAPI
             {
                 finalMsg[i] = (byte)(msg[i - 5]);
             }
+
+            try
+            {
+                //write the msg with the format: code + length of data + data
+                this.m_socket.Write(finalMsg);
+            } catch(Exception ex)
+            {
+                Console.WriteLine("Error with server");
+            }
             
-            //write the msg with the format: code + length of data + data
-            this.m_socket.Write(finalMsg);
         }
 
 
@@ -84,7 +91,7 @@ namespace clientAPI
             String responseData = String.Empty;
             try
             {
-                m_socket.ReadTimeout = 15000;
+                m_socket.ReadTimeout = 60000;   //we should lower this later, but for now we are just testing
 
                 // Read the first batch of the TcpServer response bytes.
                 Int32 bytes = this.m_socket.Read(serverBytes, 0, serverBytes.Length);
