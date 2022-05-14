@@ -61,7 +61,9 @@ namespace clientAPI.Game
             m_updatePlayersCancellationToken?.Cancel();
             m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS * 3));
             
-            m_updatePlayersTask.Dispose();
+            if (m_updatePlayersTask.IsCompleted)
+                m_updatePlayersTask.Dispose();
+            
             m_updatePlayersTask = null;
         }
 
@@ -97,7 +99,13 @@ namespace clientAPI.Game
             byte[] returnMsg = MainProgram.appClient.receiver();
 
 
-            GetRoomStateResponse getRoomStateResponse = JsonHelpers.JsonFormatDeserializer.GetRoomStateResponseDeserializer(returnMsg.Skip(5).ToArray());
+            GetRoomStateResponse getRoomStateResponse = JsonHeElpers.JsonFormatDeserializer.GetRoomStateResponseDeserializer(returnMsg.Skip(5).ToArray());
+
+            if (getRoomStateResponse == null)
+            {
+                Console.WriteLine("Received empty or wrong answer from server");
+                return new List<string>();
+            }
 
             Console.WriteLine(getRoomStateResponse._players);
 

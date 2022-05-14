@@ -84,6 +84,8 @@ namespace clientAPI
             String responseData = String.Empty;
             try
             {
+                m_socket.ReadTimeout = 15000;
+
                 // Read the first batch of the TcpServer response bytes.
                 Int32 bytes = this.m_socket.Read(serverBytes, 0, serverBytes.Length);
             }
