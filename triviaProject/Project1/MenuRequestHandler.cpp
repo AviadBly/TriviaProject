@@ -111,6 +111,7 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo requestInfo)
 
 	getPlayersInRoomRequest = JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(requestInfo.buffer);
 
+
 	auto rooms = m_roomManager.getRooms();
 
 	for (auto i = rooms.begin(); i != rooms.end(); i++) {
