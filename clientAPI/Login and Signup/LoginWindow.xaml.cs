@@ -45,7 +45,7 @@ namespace clientAPI
 
             //string j = JsonSerializer.Serialize(g);
             //Console.WriteLine();
- 
+
             //Console.WriteLine(j);
             //Console.WriteLine();
 

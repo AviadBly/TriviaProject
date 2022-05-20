@@ -47,6 +47,8 @@ namespace clientAPI
         }
         private void clickExit(object sender, RoutedEventArgs e)
         {
+
+            
             this.Close();
             menu menu = new menu(MainProgram.MainUsername);
             menu.Show();
@@ -80,7 +82,7 @@ namespace clientAPI
             MainProgram.appClient.sender("", Requests.GET_ROOM_REQUEST);    //ask for rooms
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
-            Console.Write(returnMsg);
+            Console.WriteLine(returnMsg);
 
             if (returnMsg.IsErrorMsg)
             {

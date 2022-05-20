@@ -145,6 +145,24 @@ namespace clientAPI.Game
         private void leaveRoom(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Left Room");
+            MainProgram.appClient.sender("", Requests.CLOSE_ROOM_REQUEST_CODE);    //ask for rooms
+
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+            Console.WriteLine(returnMsg);
+
+            if (returnMsg.IsErrorMsg)
+            {
+                //Signup failed
+
+                //MessageBox.Show("Error: Username already exists");
+                MessageBox.Show(returnMsg.Message.ToString());
+                return;
+
+            }
+
+            CloseRoomResponse closeRoomResponse = JsonHelpers.JsonFormatDeserializer.CloseRoomResponseDeserializer(returnMsg.Message);
+
+
 
             menu menuWindow = new menu(MainProgram.MainUsername);      //go to menu
             menuWindow.Show();
