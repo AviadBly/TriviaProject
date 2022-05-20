@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using clientAPI.Create_and_Join;
 using clientAPI.Game;
+using System.Windows.Threading;
 
 namespace clientAPI
 {
@@ -26,15 +27,24 @@ namespace clientAPI
         
         public JoinRoom()
         {
-            
+
             InitializeComponent();
-            this.rooms = getRooms();
-            //maybe check here if rooms isnt empty
+
+            //  DispatcherTimer setup
+            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+            dispatcherTimer.Start();
+
             
-            showActiveRooms();
         }
 
-        
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            rooms = getRooms();
+            showActiveRooms();
+            rooms.Clear();
+        }
         private void clickExit(object sender, RoutedEventArgs e)
         {
             this.Close();

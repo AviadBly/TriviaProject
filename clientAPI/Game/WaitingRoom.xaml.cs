@@ -73,6 +73,7 @@ namespace clientAPI.Game
             m_room.UpdatePlayers(players);
         }
 
+       
         private void TimelyUpdatePlayers()
         {
             while (!m_updatePlayersCancellationToken.IsCancellationRequested)
