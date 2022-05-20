@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using clientAPI.Game;
-using clientAPI.Create_and_Join;
 
 static class constants
 {
@@ -57,10 +56,10 @@ namespace clientAPI
 
             MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.CREATE_ROOM_CODE);
 
-            byte[] returnMsg = MainProgram.appClient.receiver();
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
 
-            CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
+            CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
             Console.Write(createRoomResponse);
             //login failed
             if (createRoomResponse.Status == Response.status_error)

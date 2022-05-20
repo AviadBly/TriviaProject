@@ -89,7 +89,8 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeGetRoomResponse(const G
 	//init json
 	json jsonResponse;
 	std::string roomStr = "Room";
-	
+	jsonResponse["Status"] = getRoomsResponse.status;
+
 	for (auto i = getRoomsResponse.rooms.begin(); i != getRoomsResponse.rooms.end(); i++) {
 		
 		RoomData data = i->getData();
@@ -97,12 +98,11 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeGetRoomResponse(const G
 		
 		jsonResponse["Rooms"] += {  {METADATA_TEXT, {
 			   
-			{IS_ACTIVE_TEXT, data.isActive},
-			{ MAX_PLAYERS_TEXT, data.maxPlayers },
-			{ NAME_TEXT, data.name },
-			{ NUM_OF_QUESTIONS_IN_GAME_TEXT, data.numOfQuestionsInGame },
 			{ TIME_PER_QUESTION_TEXT, data.timePerQuestion },
-			{ NAME_TEXT,data.name },
+			{ NUM_OF_QUESTIONS_IN_GAME_TEXT, data.numOfQuestionsInGame },
+			{  NAME_TEXT,data.name},
+			{ MAX_PLAYERS_TEXT, data.maxPlayers},
+			{  IS_ACTIVE_TEXT, data.isActive},
 			{ ID_TEXT, data.id }
 			}  }, //add the players list in the room
 			{ PLAYERS_TEXT, i->getAllUsers() }    };

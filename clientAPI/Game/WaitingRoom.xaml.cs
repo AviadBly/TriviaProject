@@ -96,10 +96,10 @@ namespace clientAPI.Game
         {
             MainProgram.appClient.sender("", Requests.GET_ROOM_STATE_REQUEST_CODE);    //ask for rooms
 
-            byte[] returnMsg = MainProgram.appClient.receiver();
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
 
 
-            GetRoomStateResponse getRoomStateResponse = JsonHelpers.JsonFormatDeserializer.GetRoomStateResponseDeserializer(returnMsg.Skip(5).ToArray());
+            GetRoomStateResponse getRoomStateResponse = JsonHelpers.JsonFormatDeserializer.GetRoomStateResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
 
             if (getRoomStateResponse == null)
             {

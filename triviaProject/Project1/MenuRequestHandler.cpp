@@ -95,7 +95,8 @@ RequestResult MenuRequestHandler::getRooms(RequestInfo requestInfo)
 	this->m_roomManager.createRoom(LoggedUser("gal", "568"), d);
 
 	getRoomsResponse.rooms = this->m_roomManager.getRooms();
-	
+	getRoomsResponse.status = getRoomsResponse.status_ok;
+
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetRoomResponse(getRoomsResponse);
 	
 

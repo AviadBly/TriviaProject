@@ -34,16 +34,13 @@ namespace clientAPI
     }
     public partial class menu : Window
     {
-        private Client client;
+        
         public menu()
         {
             
             
             InitializeComponent();
             username.Text = "Hey ;)";
-
-           
-
 
         } 
         public menu(string username)
@@ -123,10 +120,10 @@ namespace clientAPI
                
                 MainProgram.appClient.sender("", Requests.LOGOUT_REQUEST_CODE);
 
-                byte[] returnMsg = MainProgram.appClient.receiver();
+                ReceivedMessage returnMsg = MainProgram.appClient.receiver();
                 
 
-                LogOutResponse logOutResponse = JsonHelpers.JsonFormatDeserializer.LogOutResponseDeserializer(returnMsg.Skip(5).ToArray());
+                LogOutResponse logOutResponse = JsonHelpers.JsonFormatDeserializer.LogOutResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
 
                 //login failed
                 if (logOutResponse.Status == Response.status_error)
