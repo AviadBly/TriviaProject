@@ -1,9 +1,23 @@
 #include "Room.h"
 #include <iostream>
 using namespace std;
+
+Room::Room(RoomData metadata, LoggedUser user)
+{
+	this->m_metadata = metadata;
+	this->m_users.push_back(user);
+}
+
+Room::Room()
+{
+}
+
 void Room::addUser(LoggedUser user)
 {
-	this->m_users.push_back(user);
+	if (canNewUserJoin()) {
+		this->m_users.push_back(user);
+	}
+	
 }
 
 void Room::removeUser(LoggedUser user)
@@ -20,17 +34,25 @@ void Room::removeUser(LoggedUser user)
 	
 }
 
-list<string> Room::getAllUsers()
+vector<string> Room::getAllUsers() const
 {
-	list<string> newList;
-	for (auto it = begin(m_users); it != std::end(m_users); ++it) {
-		newList.push_back(it->getName());
+	vector<string> usersNames(0);
+	for (auto iter = m_users.begin(); iter != m_users.end(); iter++)
+	{
+		usersNames.push_back(iter->getName());
 	}
-	return newList;
+
+	return usersNames;
 
 }
 
-RoomData Room::getData()
+//returns true if the room isnt full and is active
+bool Room::canNewUserJoin()
+{
+	return this->m_users.size() < this->m_metadata.maxPlayers && this->m_metadata.isActive;
+}
+
+RoomData Room::getData() const
 {
 	return this->m_metadata;
 }

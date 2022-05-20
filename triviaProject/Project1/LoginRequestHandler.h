@@ -13,8 +13,9 @@ class LoginRequestHandler : public IRequestHandler {
 public:
 	
 	LoginRequestHandler(LoginManager& loginManager, RequestHandlerFactory& handleFactory);
+	//LoginRequestHandler(LoginManager& loginManager);
 
-	virtual bool isRequestRelevant(RequestInfo requestInfo);
+	virtual bool isRequestRelevant(RequestInfo requestInfo) const;
 	virtual RequestResult handleRequest(RequestInfo requestInfo);
 
 private:
@@ -22,6 +23,9 @@ private:
 	RequestResult signUp(RequestInfo requestInfo);
 
 	void loadErrorMsg(RequestResult& requestResult, std::string msg);
+
+	static bool isUsernameValid(string& username);
+	static bool isPasswordValid(string& password);
 
 	LoginManager& m_loginManager;
 	RequestHandlerFactory& m_handleFactory;

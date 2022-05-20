@@ -1,9 +1,18 @@
 #include "RoomManager.h"
 #include "MyException.h"
 
+RoomManager::RoomManager()
+{
+	nextRoomId = 1;
+}
+
 void RoomManager::createRoom(LoggedUser user, RoomData data)
 {
 	
+	Room newRoom(data, user); //create the room
+	
+	m_rooms.insert(std::pair<unsigned int, Room>(nextRoomId, newRoom));
+	nextRoomId++;
 }
 
 void RoomManager::deleteRoom(int ID)
@@ -30,13 +39,15 @@ unsigned int RoomManager::getRoomState(int ID)
 	throw MyException("Error!: No such ID! ");
 }
 
-vector<RoomData> RoomManager::getRooms()
+vector<Room> RoomManager::getRooms()
 {
-	vector<RoomData> newVector;
+	vector<Room> newVector(0);
 	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
 	{
-		RoomData currData=it->second.getData();
-		newVector.push_back(currData);
+		Room currRoom = it->second;
+		newVector.push_back(currRoom);
 	}
+
 	return newVector;
 }
+

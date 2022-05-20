@@ -1,0 +1,39 @@
+﻿<Window x:Class="clientAPI.CreateRoom"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:clientAPI"
+        mc:Ignorable="d"
+         Title="Create Room"  Height="754" Width="589" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
+    <Grid Margin="20">
+        <Label Content="Create Room" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Left" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="505" Margin="0,67,0,10">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="0"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="0"/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Separator Margin="0,77,49,0"></Separator>
+        <Border Background="#85C1E9" Margin="10,188,10,10" CornerRadius="40"  >
+            <StackPanel Margin="20,20,0,10" HorizontalAlignment="Left" Width="489">
+                <Label Content="Room Name:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
+                <TextBox Name="roomName" Background="#545d6a" Height="41" Foreground="White" MaxLength="6"/>
+                <Label Content="Time Per Question: (s)" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
+                <TextBox Name="Time" Background="#545d6a" Height="41" Foreground="White" PreviewTextInput="previewTextInput" MaxLength="2"/>
+                <Label Content="Amount of Players:" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74" PreviewTextInput="previewTextInput" />
+                <TextBox Name="Players" Background="#545d6a" Height="41" Foreground="White" MaxLength="1"/>
+
+            </StackPanel>
+
+        </Border>
+        <Button Content="Create Room" FontSize="30" HorizontalAlignment="Left" Margin="60,597,0,0" VerticalAlignment="Top" Height="66" RenderTransformOrigin="0.474,0.602" Width="214" Click="clickCreate"/>
+        <Button Content="Go back" FontSize="20" HorizontalAlignment="Left" Margin="356,597,0,0" VerticalAlignment="Top" Height="66" RenderTransformOrigin="0.474,0.602" Width="120" Click="clickExit"/>
+
+
+
+    </Grid>
+</Window>

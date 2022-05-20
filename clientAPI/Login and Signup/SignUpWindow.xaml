@@ -1,0 +1,29 @@
+﻿<Window x:Class="clientAPI.SignUpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:clientAPI"
+        mc:Ignorable="d"
+        Title="SignUp" Height="475" Width="525" FontSize="15" Background="#3b82f5">
+    
+    <Border Background="#2e3137" CornerRadius="50" Margin="40,29,29,14">
+        <StackPanel Margin="40,40,40,0">
+
+            <Label Content="SignUp" Foreground="White" FontSize="25" HorizontalAlignment="Center"/>
+            <Separator></Separator>
+            
+            <Label Content="Username" Foreground="white"/>
+            <TextBox Name="UsernameText" Background="#545d6a" Foreground="White" FontSize="18" ></TextBox>
+
+            <Label Content="Email" Foreground="white"/>
+            <TextBox Name="EmailText" Background="#545d6a" Foreground="White" FontSize="18" ></TextBox>
+
+            <Label Content="Password" Foreground="white" />
+            <PasswordBox Name="PasswordText" Background="#545d6a" Foreground="White" FontSize="18" KeyDown="PasswordBox_KeyDown"/>
+            <Button x:Name="SignUpSubmitButton" Foreground="Black" Click="clickSignUp" Content="SignUp" Margin="20" Background="SkyBlue" Height="30" Width="100"  />
+            <Button Content="Have an existing account? Login here" Foreground="Black" FontSize="16" Height="45" Width="320" Background="SkyBlue" Click="click_Login"/>
+
+        </StackPanel>
+    </Border>
+</Window>
