@@ -9,12 +9,12 @@ namespace clientAPI.Create_and_Join
 {
 	public class RoomData
 	{
-		public RoomData(uint id,string name,uint maxPlayers, uint numOfQuestions, uint timePerQuestion, bool isActive)
+		public RoomData(uint id,string name,uint maxPlayers, uint numOfQuestionsInGame, uint timePerQuestion, bool isActive)
         {
 			Id = id;
 			Name = name;
 			MaxPlayers = maxPlayers;
-			NumOfQuestionsInGame = numOfQuestions;
+			NumOfQuestionsInGame = numOfQuestionsInGame;
 			TimePerQuestion=timePerQuestion;
 			IsActive = isActive;
         }
@@ -43,21 +43,21 @@ namespace clientAPI.Create_and_Join
 		public RoomData Metadata { get; set; }
 		public IList<string> Players { get; set; }
 
-		public event Action<IList<string>> PlayersUpdated;
+        public event Action<IList<string>> PlayersUpdated;
 
-		public void UpdatePlayers(IList<string> players)
+        public void UpdatePlayers(IList<string> players)
         {
-			if (Players == null)
-				Players = new List<string>();
+            if (Players == null)
+                Players = new List<string>();
 
-			Players.Clear();
-			
-			foreach (var player in players)
+            Players.Clear();
+
+            foreach (var player in players)
             {
-				Players.Add(player);
+                Players.Add(player);
             }
 
-			PlayersUpdated?.Invoke(Players);
+            PlayersUpdated?.Invoke(Players);
         }
-	}
+    }
 }

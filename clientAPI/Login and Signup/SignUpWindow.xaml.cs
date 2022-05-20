@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using clientAPI.Requests_and_Responses;
 using clientAPI;
 using System.Threading;
 using System.Globalization;
@@ -70,17 +69,21 @@ namespace clientAPI
                 Console.WriteLine(data);
                 MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.SIGN_UP_REQUEST_CODE);
 
-                byte[] returnMsg = MainProgram.appClient.receiver();
+                ReceivedMessage returnMsg = MainProgram.appClient.receiver();
                 Console.Write(returnMsg);
 
-                SignUpResponse signUpResponse = JsonHelpers.JsonFormatDeserializer.signUpResponseDeserializer(returnMsg.Skip(5).ToArray());
-
-                //login failed
-                if (signUpResponse.Status == Response.status_error)
+                if (returnMsg.IsErrorMsg)
                 {
-                    MessageBox.Show("Error: Username already exists");
+                    //Signup failed
+
+                    //MessageBox.Show("Error: Username already exists");
+                    MessageBox.Show(returnMsg.Message.ToString());
                     return;
+                    
                 }
+                SignUpResponse signUpResponse = JsonHelpers.JsonFormatDeserializer.signUpResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+
+                
 
 
                 MessageBox.Show("Username Created successfully!");

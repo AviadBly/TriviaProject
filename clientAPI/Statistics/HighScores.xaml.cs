@@ -39,10 +39,10 @@ namespace clientAPI
         {
             MainProgram.appClient.sender("", Requests_and_Responses.Requests.GET_HIGH_SCORES_REQUEST_CODE);
 
-            byte[] returnMsg = MainProgram.appClient.receiver();
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
 
-            Requests_and_Responses.GetHighScoreResponse highScoreResponse = JsonHelpers.JsonFormatDeserializer.GetHighScoreResponseDeserializer(returnMsg.Skip(5).ToArray());
+            Requests_and_Responses.GetHighScoreResponse highScoreResponse = JsonHelpers.JsonFormatDeserializer.GetHighScoreResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
 
             //login failed
             if (highScoreResponse.Status == Requests_and_Responses.Response.status_error)

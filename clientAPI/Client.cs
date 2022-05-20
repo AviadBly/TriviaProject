@@ -11,6 +11,16 @@ using clientAPI.Requests_and_Responses;
 
 namespace clientAPI
 {
+    public class ReceivedMessage
+    {
+        public ReceivedMessage(byte[] message, bool isErrorMsg)
+        {
+            Message = message;
+            IsErrorMsg = isErrorMsg;
+        }
+        public byte[] Message { get; set; }
+        public bool IsErrorMsg { get; set; }
+    }
     public class Client
     {
         private NetworkStream m_socket;
@@ -74,14 +84,14 @@ namespace clientAPI
                 this.m_socket.Write(finalMsg);
             } catch(Exception ex)
             {
-                Console.WriteLine("Error with server");
+                Console.WriteLine("Error with server: " + ex.Message);
             }
             
         }
 
 
-        //returns a byte array
-        public byte[] receiver()
+        //returns a byte array and a boolean indicating if its an error msg
+        public ReceivedMessage receiver()
         {
 
             // Buffer to store the response bytes.
@@ -100,8 +110,9 @@ namespace clientAPI
             {
                 if (e.Source != null)
                     Console.WriteLine("IOException source: {0}", e.Source);
-                return new byte[0];
+                return new ReceivedMessage(new byte[0], true);
             }
+            
             
 
             byte[] lenBytes = serverBytes.Skip(1).Take(4).ToArray();
@@ -116,9 +127,14 @@ namespace clientAPI
             byte[] trimedMsg = serverBytes.Take(1 + 4 + msgLength).ToArray();
             responseData = System.Text.Encoding.UTF8.GetString(trimedMsg);
             Console.WriteLine("Received: {0}", responseData);
-            
 
-            return trimedMsg;
+            //if its an error msg, return true
+            if (serverBytes[0] == ErrorResponse.errorMsgCode)
+            {
+                return new ReceivedMessage(trimedMsg, true); 
+            }
+
+            return new ReceivedMessage(trimedMsg, false);  //if no error
         }
 
     }

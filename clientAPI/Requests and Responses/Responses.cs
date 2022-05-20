@@ -38,13 +38,13 @@ namespace clientAPI.Requests_and_Responses
 
 	};
 
-	internal class  ErrorResponse
+	internal class  ErrorResponse : Response
 	{
-		string message;
-
-        public ErrorResponse(string message)
+		
+        public const uint errorMsgCode = 15;
+        public ErrorResponse(string message, byte status) : base(status)
         {
-            this.message = message;
+            Message = message;
         }
 		public string Message { get; set; } = default!;
     };

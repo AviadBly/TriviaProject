@@ -79,18 +79,23 @@ namespace clientAPI
 
             MainProgram.appClient.sender("", Requests.GET_ROOM_REQUEST);    //ask for rooms
 
-            byte[] returnMsg = MainProgram.appClient.receiver();
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+            Console.Write(returnMsg);
 
-            
-            GetRoomsResponse getRoomsResponse = JsonHelpers.JsonFormatDeserializer.GetRoomsResponseDeserializer(returnMsg.Skip(5).ToArray());
-
-            Console.Write(getRoomsResponse.ToString());
-            //login failed
-            if (getRoomsResponse.Status == Response.status_error)
+            if (returnMsg.IsErrorMsg)
             {
-                return new List<Room>();
+                //Signup failed
+
+                //MessageBox.Show("Error: Username already exists");
+                MessageBox.Show(returnMsg.Message.ToString());
+                return new List<Room>(); ;
+
             }
 
+            GetRoomsResponse getRoomsResponse = JsonHelpers.JsonFormatDeserializer.GetRoomsResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+
+            Console.Write(getRoomsResponse.ToString());
+            
             return getRoomsResponse.Rooms;
         }
 
@@ -157,16 +162,22 @@ namespace clientAPI
 
             MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.JOIN_ROOM_REQUEST_CODE);
 
-            byte[] returnMsg = MainProgram.appClient.receiver();
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
 
-            JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
-
-            //login failed
-            if (joinRoomResponse.Status == Response.status_error)
+            if (returnMsg.IsErrorMsg)
             {
+                //Signup failed
+
+                //MessageBox.Show("Error: Username already exists");
+                MessageBox.Show(returnMsg.Message.ToString());
                 return false;
+
             }
+
+            JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+
+            
             
             return true;
         }
