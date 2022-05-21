@@ -13,13 +13,18 @@ namespace clientAPI
 {
     public class ReceivedMessage
     {
-        public ReceivedMessage(byte[] message, bool isErrorMsg)
+        public ReceivedMessage(byte[] message, bool isErrorMsg, uint length, byte code)
         {
             Message = message;
             IsErrorMsg = isErrorMsg;
+            Length = length;
+            Code = code;
         }
         public byte[] Message { get; set; }
         public bool IsErrorMsg { get; set; }
+        public uint Length { get; set; }    
+        public byte Code { get; set; }
+
     }
     public class Client
     {
@@ -93,9 +98,9 @@ namespace clientAPI
         //returns a byte array and a boolean indicating if its an error msg
         public ReceivedMessage receiver()
         {
-
+            const uint BUFFER_SIZE = 1024;
             // Buffer to store the response bytes.
-            byte[] serverBytes = new Byte[1024];
+            byte[] serverBytes = new Byte[BUFFER_SIZE];
 
             // String to store the response ASCII representation.
             String responseData = String.Empty;

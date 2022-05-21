@@ -59,22 +59,19 @@ namespace clientAPI
         {
             foreach(Room room in this.rooms)
             {
-                if(room.Metadata.IsActive==true)
+                
+                string fullRoom = room.Metadata.Name;
+                if (roomsList.Items.Contains(fullRoom)==false)
                 {
-                    string fullRoom = room.Metadata.Name;
-                    if (roomsList.Items.Contains(fullRoom)==false)
-                    {
                         
-                        roomsList.Items.Add(fullRoom);
-                    }
-                    
+                    roomsList.Items.Add(fullRoom);
                 }
+                    
+                
                 
             }
         }
-
-        
-
+       
         private List<Room> getRooms()
         {
             

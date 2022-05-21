@@ -145,7 +145,13 @@ namespace clientAPI.Game
         private void leaveRoom(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Left Room");
-            MainProgram.appClient.sender("", Requests.CLOSE_ROOM_REQUEST_CODE);    //ask for rooms
+            if (isAdmin)
+            {
+                MainProgram.appClient.sender("", Requests.CLOSE_ROOM_REQUEST_CODE);    //ask for rooms
+            } else
+            {
+                MainProgram.appClient.sender("", Requests.LEAVE_ROOM_REQUEST_CODE);
+            }
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
             Console.WriteLine(returnMsg);
@@ -160,7 +166,14 @@ namespace clientAPI.Game
 
             }
 
-            CloseRoomResponse closeRoomResponse = JsonHelpers.JsonFormatDeserializer.CloseRoomResponseDeserializer(returnMsg.Message);
+            if (isAdmin)
+            {
+                CloseRoomResponse closeRoomResponse = JsonHelpers.JsonFormatDeserializer.CloseRoomResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+            }
+            else
+            {
+                LeaveRoomResponse leaveRoomResponse = JsonHelpers.JsonFormatDeserializer.LeaveRoomResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+            }
 
 
 
