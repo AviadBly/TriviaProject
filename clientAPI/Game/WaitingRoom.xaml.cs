@@ -39,7 +39,7 @@ namespace clientAPI.Game
             m_room.PlayersUpdated += RoomPlayersUpdated;
 
             this.Loaded += WaitingRoom_Loaded;
-            this.Closed += WaitingRoom_Closed;
+            //this.Closed += WaitingRoom_Closed;
 
             // Task.Run(TimelyUpdatePlayers);
         }
@@ -58,12 +58,12 @@ namespace clientAPI.Game
 
         private void WaitingRoom_Closed(object? sender, EventArgs e)
         {
-            m_updatePlayersCancellationToken?.Cancel();
+            m_updatePlayersCancellationToken?.Cancel();            
             m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS * 3));
             
             if (m_updatePlayersTask.IsCompleted)
                 m_updatePlayersTask.Dispose();
-            
+            leaveRoom();
             m_updatePlayersTask = null;
         }
 
@@ -142,7 +142,7 @@ namespace clientAPI.Game
             return getRoomStateResponse.Players;
         }
 
-        private void leaveRoom(object sender, RoutedEventArgs e)
+        private void leaveRoom()
         {
             MessageBox.Show("Left Room");
             if (isAdmin)

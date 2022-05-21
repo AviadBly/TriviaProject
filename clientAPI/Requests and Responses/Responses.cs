@@ -119,6 +119,7 @@ namespace clientAPI.Requests_and_Responses
     {
         public CloseRoomResponse(byte status) : base(status)
         {
+
         }
     }
     internal class LeaveRoomResponse : Response

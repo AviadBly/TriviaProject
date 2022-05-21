@@ -24,21 +24,20 @@ namespace clientAPI
     public partial class JoinRoom : Window
     {
         private List<Room> rooms;
-        DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        private DispatcherTimer dispatcherTimer;
+
         public JoinRoom()
         {
 
             InitializeComponent();
 
             //  DispatcherTimer setup
-            
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
             dispatcherTimer.Start();
-            //if (this.IsLoaded == false)
-            //{
-            //    dispatcherTimer.Stop();
-            //}
+            
+
 
         }
 
@@ -53,8 +52,8 @@ namespace clientAPI
         private void clickExit(object sender, RoutedEventArgs e)
         {
 
-            
-            this.Close();
+            dispatcherTimer.Stop();
+            Close();
             menu menu = new menu(MainProgram.MainUsername);
             menu.Show();
             dispatcherTimer.Stop();
