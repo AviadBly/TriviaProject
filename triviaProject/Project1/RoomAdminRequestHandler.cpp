@@ -61,13 +61,13 @@ RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo requestInfo)
 	RequestResult requestResult;
 	CloseRoomResponse closeRoomResponse;
 	
+
 	this->m_roomManager.deleteRoom(m_room.getData().id);
-	//leaveRoom(requestInfo);		//maybe add this later to leave the room
+	requestResult = leaveRoom(requestInfo);		//maybe add this later to leave the room
 	
 	closeRoomResponse.status = closeRoomResponse.status_ok;
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeCloseGameResponse(closeRoomResponse);
-	requestResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(m_user);
-
+	
 	return requestResult;
 }

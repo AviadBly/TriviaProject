@@ -37,6 +37,7 @@ void RoomManager::deleteRoom(int ID)
 		if (it->first == ID)
 		{
 			m_rooms.erase(it);
+			break;
 		}
 	}
 }

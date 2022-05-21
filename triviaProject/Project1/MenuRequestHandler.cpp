@@ -96,6 +96,11 @@ RequestResult MenuRequestHandler::getRooms(RequestInfo requestInfo)
 	
 	
 	getRoomsResponse.rooms = this->m_roomManager.getRooms();
+	std::cout << "Rooms:\n";
+	for (auto i = getRoomsResponse.rooms.begin(); i != getRoomsResponse.rooms.end(); i++) {
+		std::cout << i->getData().name << ", ";
+	}
+	std::cout << "\n\n";
 	getRoomsResponse.status = getRoomsResponse.status_ok;
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetRoomResponse(getRoomsResponse);

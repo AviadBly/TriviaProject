@@ -69,6 +69,7 @@ void Communicator::acceptClient()
 
 }
 
+//turns 4 bytes to an integer
 int bytesToInt(BYTE bytes[]) {
 
 	int num = int((unsigned char)(bytes[0]) << 24 |
