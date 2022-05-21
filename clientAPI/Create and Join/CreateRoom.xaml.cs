@@ -59,7 +59,7 @@ namespace clientAPI
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
 
-            CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+            CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Message);
             Console.Write(createRoomResponse);
             //login failed
             if (createRoomResponse.Status == Response.status_error)

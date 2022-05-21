@@ -38,7 +38,7 @@ namespace clientAPI
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
 
 
-            GetPersonalStatsResponse getPersonalStatsResponse = JsonHelpers.JsonFormatDeserializer.GetPersonalStatsResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+            GetPersonalStatsResponse getPersonalStatsResponse = JsonHelpers.JsonFormatDeserializer.GetPersonalStatsResponseDeserializer(returnMsg.Message);
 
             Console.Write(getPersonalStatsResponse);
             //login failed

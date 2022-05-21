@@ -100,7 +100,7 @@ namespace clientAPI.Game
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
 
 
-            GetRoomStateResponse getRoomStateResponse = JsonHelpers.JsonFormatDeserializer.GetRoomStateResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+            GetRoomStateResponse getRoomStateResponse = JsonHelpers.JsonFormatDeserializer.GetRoomStateResponseDeserializer(returnMsg.Message);
 
             if (getRoomStateResponse == null)
             {
@@ -168,11 +168,11 @@ namespace clientAPI.Game
 
             if (isAdmin)
             {
-                CloseRoomResponse closeRoomResponse = JsonHelpers.JsonFormatDeserializer.CloseRoomResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+                CloseRoomResponse closeRoomResponse = JsonHelpers.JsonFormatDeserializer.CloseRoomResponseDeserializer(returnMsg.Message);
             }
             else
             {
-                LeaveRoomResponse leaveRoomResponse = JsonHelpers.JsonFormatDeserializer.LeaveRoomResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+                LeaveRoomResponse leaveRoomResponse = JsonHelpers.JsonFormatDeserializer.LeaveRoomResponseDeserializer(returnMsg.Message);
             }
 
 

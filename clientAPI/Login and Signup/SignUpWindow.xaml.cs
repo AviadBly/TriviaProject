@@ -81,7 +81,7 @@ namespace clientAPI
                     return;
                     
                 }
-                SignUpResponse signUpResponse = JsonHelpers.JsonFormatDeserializer.signUpResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+                SignUpResponse signUpResponse = JsonHelpers.JsonFormatDeserializer.signUpResponseDeserializer(returnMsg.Message);
 
                 
 

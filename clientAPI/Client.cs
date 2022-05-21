@@ -20,6 +20,13 @@ namespace clientAPI
             Length = length;
             Code = code;
         }
+        public ReceivedMessage()
+        {
+            Message = new byte[0];
+            IsErrorMsg = true;
+            Length = 0;
+            Code = 0;
+        }
         public byte[] Message { get; set; }
         public bool IsErrorMsg { get; set; }
         public uint Length { get; set; }    
@@ -98,9 +105,9 @@ namespace clientAPI
         //returns a byte array and a boolean indicating if its an error msg
         public ReceivedMessage receiver()
         {
-            const uint BUFFER_SIZE = 1024;
-            // Buffer to store the response bytes.
-            byte[] serverBytes = new Byte[BUFFER_SIZE];
+            
+            ReceivedMessage serverMsg = new ReceivedMessage();
+            byte[] metaDataBytes = new byte[5];
 
             // String to store the response ASCII representation.
             String responseData = String.Empty;
@@ -108,38 +115,58 @@ namespace clientAPI
             {
                 m_socket.ReadTimeout = 60000;   //we should lower this later, but for now we are just testing
 
-                // Read the first batch of the TcpServer response bytes.
-                Int32 bytes = this.m_socket.Read(serverBytes, 0, serverBytes.Length);
+                // First, read the msg length
+                Int32 bytes = this.m_socket.Read(metaDataBytes, 0, 5);        // 1 - code + 4 - len = 5
             }
             catch (System.IO.IOException e)
             {
                 if (e.Source != null)
                     Console.WriteLine("IOException source: {0}", e.Source);
-                return new ReceivedMessage(new byte[0], true);
+                return new ReceivedMessage();
             }
-            
-            
 
-            byte[] lenBytes = serverBytes.Skip(1).Take(4).ToArray();
+            serverMsg.Code = metaDataBytes[0];
+            metaDataBytes = metaDataBytes.Skip(1).ToArray();
 
             // If the system architecture is little-endian (that is, little end first),
             // reverse the byte array.
             if (BitConverter.IsLittleEndian)
-                Array.Reverse(lenBytes);
+                Array.Reverse(metaDataBytes);
+           
+            serverMsg.Length = (uint)BitConverter.ToInt32(metaDataBytes, 0);
+            uint len = serverMsg.Length;
 
-            int msgLength = BitConverter.ToInt32(lenBytes, 0);
-                                    //code + len + data
-            byte[] trimedMsg = serverBytes.Take(1 + 4 + msgLength).ToArray();
-            responseData = System.Text.Encoding.UTF8.GetString(trimedMsg);
-            Console.WriteLine("Received: {0}", responseData);
+            const uint BUFFER_SIZE = 1024;
 
-            //if its an error msg, return true
-            if (serverBytes[0] == ErrorResponse.errorMsgCode)
+            byte[] messageDataBytes = new Byte[serverMsg.Length];   //stores the entire message
+            //byte[] buffer = new byte[BUFFER_SIZE];  //read from the socket in parts
+
+            
+            try
             {
-                return new ReceivedMessage(trimedMsg, true); 
+                m_socket.ReadTimeout = 60000;   //we should lower this later, but for now we are just testing
+
+                // First, read the msg length
+                Int32 bytes = this.m_socket.Read(messageDataBytes, 0, messageDataBytes.Length);        // 1 - code + 4 - len = 5
+            }
+            catch (System.IO.IOException e)
+            {
+                if (e.Source != null)
+                    Console.WriteLine("IOException source: {0}", e.Source);
+                return new ReceivedMessage();
             }
 
-            return new ReceivedMessage(trimedMsg, false);  //if no error
+            serverMsg.Message = messageDataBytes;
+
+            //code + len + data
+            //byte[] trimedMsg = serverBytes.Take(1 + 4 + msgLength).ToArray();
+            //responseData = System.Text.Encoding.UTF8.GetString(trimedMsg);
+            //Console.WriteLine("Received: {0}", responseData);
+
+            //if its an error msg
+            serverMsg.IsErrorMsg = serverMsg.Code == ErrorResponse.errorMsgCode;
+            
+            return serverMsg;  //if no error
         }
 
     }

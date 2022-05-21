@@ -91,7 +91,7 @@ namespace clientAPI
 
             }
 
-            GetRoomsResponse getRoomsResponse = JsonHelpers.JsonFormatDeserializer.GetRoomsResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+            GetRoomsResponse getRoomsResponse = JsonHelpers.JsonFormatDeserializer.GetRoomsResponseDeserializer(returnMsg.Message);
 
             Console.Write(getRoomsResponse.ToString());
             
@@ -174,7 +174,7 @@ namespace clientAPI
 
             }
 
-            JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+            JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Message);
 
             
             

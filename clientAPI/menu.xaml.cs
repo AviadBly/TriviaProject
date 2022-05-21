@@ -123,7 +123,7 @@ namespace clientAPI
                 ReceivedMessage returnMsg = MainProgram.appClient.receiver();
                 
 
-                LogOutResponse logOutResponse = JsonHelpers.JsonFormatDeserializer.LogOutResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+                LogOutResponse logOutResponse = JsonHelpers.JsonFormatDeserializer.LogOutResponseDeserializer(returnMsg.Message);
 
                 //login failed
                 if (logOutResponse.Status == Response.status_error)

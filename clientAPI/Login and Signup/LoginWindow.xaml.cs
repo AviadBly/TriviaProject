@@ -90,7 +90,7 @@ namespace clientAPI
 
                 Console.Write(returnMsg);
 
-                LoginResponse loginResponse = JsonHelpers.JsonFormatDeserializer.loginResponseDeserializer(returnMsg.Message.Skip(5).ToArray());
+                LoginResponse loginResponse = JsonHelpers.JsonFormatDeserializer.loginResponseDeserializer(returnMsg.Message);
 
                 //login failed
                 if (loginResponse.Status == Response.status_error)
