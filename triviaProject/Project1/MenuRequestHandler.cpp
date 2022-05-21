@@ -3,7 +3,23 @@
 
 MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& handlerFactory, LoggedUser newUser) : m_handlerFactory(handlerFactory), m_statisticsManager(handlerFactory.getStatisticsManager()), m_roomManager(handlerFactory.getRoomManager())
 {
+	
 	this->m_user = newUser;
+	//just for testing
+	RoomData d;
+	d.id = 1;
+	d.maxPlayers = 5;
+	d.name = "firstR";
+	d.numOfQuestionsInGame = 6;
+	d.timePerQuestion = 12;
+
+	this->m_roomManager.createRoom(LoggedUser("sha", "123"), d);
+	d.id = 2;
+	d.name = "secondRoom";
+	d.numOfQuestionsInGame = 11;
+	d.timePerQuestion = 20;
+	this->m_roomManager.createRoom(LoggedUser("gal", "568"), d);
+
 }
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
@@ -17,6 +33,7 @@ bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
 RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 {
 	RequestResult requestResult;
+	
 	
 	try {
 		switch (requestInfo.code) {
@@ -77,23 +94,7 @@ RequestResult MenuRequestHandler::getRooms(RequestInfo requestInfo)
 	GetRoomsResponse getRoomsResponse;
 	RequestResult requestResult;
 	
-	RoomData d;
-	d.id = 1;
-	d.maxPlayers = 5;
-	d.name = "firstR";
-	d.numOfQuestionsInGame = 6;
-	d.timePerQuestion = 12;
 	
-
-	this->m_roomManager.createRoom(LoggedUser("sha", "123"), d);
-
-	d.id = 2;
-	d.name = "secondRoom";
-	d.numOfQuestionsInGame = 11;
-	d.timePerQuestion = 20;
-	
-	this->m_roomManager.createRoom(LoggedUser("gal", "568"), d);
-
 	getRoomsResponse.rooms = this->m_roomManager.getRooms();
 	getRoomsResponse.status = getRoomsResponse.status_ok;
 
