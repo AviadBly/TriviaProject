@@ -33,7 +33,7 @@ namespace clientAPI
             //  DispatcherTimer setup
             
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
             dispatcherTimer.Start();
             //if (this.IsLoaded == false)
             //{
@@ -107,6 +107,7 @@ namespace clientAPI
         private void clickJoin(object sender, RoutedEventArgs e)
         {
             uint id = 0;
+            rooms = getRooms();
             if (roomsList.SelectedItem != null)
             {
 
