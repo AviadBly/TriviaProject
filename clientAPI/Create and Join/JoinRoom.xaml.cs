@@ -34,7 +34,7 @@ namespace clientAPI
             //  DispatcherTimer setup
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
             dispatcherTimer.Start();
             
 
@@ -46,6 +46,8 @@ namespace clientAPI
             rooms = getRooms();
             showActiveRooms();
             rooms.Clear();
+            
+            
         }
         private void clickExit(object sender, RoutedEventArgs e)
         {
@@ -54,6 +56,7 @@ namespace clientAPI
             Close();
             menu menu = new menu(MainProgram.MainUsername);
             menu.Show();
+            dispatcherTimer.Stop();
         }
 
         
@@ -103,6 +106,7 @@ namespace clientAPI
         private void clickJoin(object sender, RoutedEventArgs e)
         {
             uint id = 0;
+            rooms = getRooms();
             if (roomsList.SelectedItem != null)
             {
 
