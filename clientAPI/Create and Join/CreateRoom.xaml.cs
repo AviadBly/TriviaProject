@@ -57,10 +57,9 @@ namespace clientAPI
             MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.CREATE_ROOM_CODE);
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
-            Console.Write(returnMsg);
-
+            
             CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Message);
-            Console.Write(createRoomResponse);
+           
             //login failed
             if (createRoomResponse.Status == Response.status_error)
             {
