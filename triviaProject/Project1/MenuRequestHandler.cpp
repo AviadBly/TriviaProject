@@ -152,19 +152,22 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo requestInfo)
 	joinRoomResponse.status = joinRoomResponse.status_error;
 	Room wantedRoom;
 	auto rooms = m_roomManager.getRooms();
+
 	for (auto i = rooms.begin(); i != rooms.end(); i++) {
 
 		//finds the room with the given id
-		if (i->getData().id && i->canNewUserJoin()) {
+		if (i->getData().id == joinRoomRequest.roomId && i->canNewUserJoin()) {
 
 			joinRoomResponse.status = joinRoomResponse.status_ok;
 			wantedRoom = *i;
 			
+			m_roomManager.addUserToRoom(i->getData().id, m_user);
+
 			break;
 		}
 
 	}
-	
+
 	requestResult.buffer = JsonResponsePacketSerializer::serializeJoinRoomResponse(joinRoomResponse);
 	requestResult.newHandler = this->m_handlerFactory.createRoomMemberRequestHandler(m_user, wantedRoom);
 
@@ -189,7 +192,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
 	
 	unsigned int roomId = m_roomManager.createRoom(this->m_user, roomData);
 	createRoomResponse.status = createRoomResponse.status_ok;
-
+	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeCreateRoomResponse(createRoomResponse);
 	requestResult.newHandler = this->m_handlerFactory.createRoomAdminRequestHandler(m_user, m_roomManager.getSingleRoom(roomId));
 
