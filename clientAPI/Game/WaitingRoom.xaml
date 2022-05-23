@@ -20,7 +20,7 @@
         <Border Background="#85C1E9" Margin="41,170,41,43" CornerRadius="40" RenderTransformOrigin="0.5,0.5">
             <StackPanel>
                 <Label Content="Current Room: " VerticalContentAlignment="Center" FontSize="30" Foreground="Purple" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="425" Height="57" />
-                <Label Name="Current" FontSize="30" Height="39" Foreground="Purple"/>
+                <Label Name="Current" FontSize="30" Height="53" Foreground="Purple"/>
                 <Label Content="Max Players:" VerticalContentAlignment="Center" FontSize="30" Foreground="Purple" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="425" Height="49" />
                 <Label Name="MaxPlayers" FontSize="30" Height="53" Foreground="Purple"/>
                 <Label Content="Player List:" VerticalContentAlignment="Center" FontSize="30" Foreground="Purple" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="425" Height="53" />
