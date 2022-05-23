@@ -52,9 +52,19 @@ namespace clientAPI
             }
 
             string[] place = new string[3];
-            place[0] = highScoreResponse.HighScorePlayers[0];
-            place[1] = highScoreResponse.HighScorePlayers[1];
-            place[2] = highScoreResponse.HighScorePlayers[2];
+            if(highScoreResponse.HighScorePlayers.Count<3)
+            {
+                place[0] = "Please";
+                place[1] = "Make";
+                place[2] = "Scores :D";
+            }
+            else
+            {
+                place[0] = highScoreResponse.HighScorePlayers[0];
+                place[1] = highScoreResponse.HighScorePlayers[1];
+                place[2] = highScoreResponse.HighScorePlayers[2];
+            }
+
 
             return place;
         }
