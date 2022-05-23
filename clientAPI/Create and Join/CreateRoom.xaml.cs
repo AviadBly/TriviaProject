@@ -40,6 +40,8 @@ namespace clientAPI
         {
             this.Close();
             menu menu = new menu(MainProgram.MainUsername);
+            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             menu.Show();
         }
 
@@ -73,6 +75,8 @@ namespace clientAPI
             RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
 
             WaitingRoom waitingRoom = new WaitingRoom(metaData, true);
+            waitingRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             waitingRoom.Show();
             Close();
 

@@ -102,6 +102,7 @@ namespace clientAPI
 
                 MainProgram.MainUsername = username;
                 menu menuWindow = new menu(username);
+                menuWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 menuWindow.Show();
                 Close();
             }
@@ -112,7 +113,8 @@ namespace clientAPI
         private void signClick(object sender, RoutedEventArgs e)
         {
             
-            SignUpWindow window = new SignUpWindow();          
+            SignUpWindow window = new SignUpWindow();
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             window.Show();
             Close();
         }

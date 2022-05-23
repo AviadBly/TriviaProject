@@ -119,6 +119,7 @@ namespace clientAPI.Game
                 case GetRoomStateResponse.statusRoomNotFound:
 
                     menu menu = new menu(MainProgram.MainUsername);
+                    menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                     menu.Show();
                     
                     Close();
@@ -176,8 +177,9 @@ namespace clientAPI.Game
             }
 
 
-
-            menu menuWindow = new menu(MainProgram.MainUsername);      //go to menu
+            //go to menu
+            menu menuWindow = new menu(MainProgram.MainUsername);
+            menuWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             menuWindow.Show();
             Close();
         }

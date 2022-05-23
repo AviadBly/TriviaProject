@@ -90,6 +90,8 @@ namespace clientAPI
 
                 MainProgram.MainUsername = username; 
                 menu menuWindow = new menu(username);
+                menuWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
                 menuWindow.Show();
                 this.Close();
             }
@@ -98,6 +100,8 @@ namespace clientAPI
         private void click_Login(object sender, RoutedEventArgs e)
         {
             LoginWindow window = new LoginWindow();
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             window.Show();
             this.Close();
         }

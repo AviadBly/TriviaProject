@@ -55,6 +55,7 @@ namespace clientAPI
             dispatcherTimer.Stop();
             Close();
             menu menu = new menu(MainProgram.MainUsername);
+            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             menu.Show();
             dispatcherTimer.Stop();
         }
@@ -131,6 +132,7 @@ namespace clientAPI
                         RoomData metaData = getRoomData(id);
 
                         WaitingRoom waitingRoom = new WaitingRoom(metaData, false);
+                        waitingRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                         waitingRoom.Show();
                         Close();
                     }

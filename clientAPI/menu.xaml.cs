@@ -60,6 +60,8 @@ namespace clientAPI
         private void JoinClick(object sender, RoutedEventArgs e)
         {
             JoinRoom joinRoom = new JoinRoom();
+            joinRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             joinRoom.Show();
             this.Close();
         }
@@ -69,6 +71,8 @@ namespace clientAPI
             
 
             CreateRoom createRoom = new CreateRoom();
+            createRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             createRoom.Show();
             this.Close();
         }
@@ -81,6 +85,8 @@ namespace clientAPI
         private void clickSign(object sender, RoutedEventArgs e)
         {
             SignUpWindow signWindow = new SignUpWindow();
+            signWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             signWindow.Show();
             this.Close();
         }
@@ -88,6 +94,8 @@ namespace clientAPI
         private void clickStats(object sender, RoutedEventArgs e)
         {
             Statistics statsWindow = new Statistics();
+            statsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             statsWindow.Show();
             this.Close();
         }
@@ -135,6 +143,8 @@ namespace clientAPI
 
                 this.Close();
                 LoginWindow loginWindow = new LoginWindow();
+                loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
                 loginWindow.Show();
             }
 
