@@ -202,6 +202,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveRoomResponse(const
 	return jsonBits;
 
 }
+
 std::vector<BYTE> JsonResponsePacketSerializer::serializeGetGameResultsResponse(const GetGameResultsResponse& getGameResultsResponse) {
 
 	//init json
@@ -214,6 +215,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeGetGameResultsResponse(
 	return jsonBits;
 
 }
+
 std::vector<BYTE> JsonResponsePacketSerializer::serializeSubmitAnswerResponse(const SubmitAnswerResponse& submitAnswerResponse) {
 
 	//init json
