@@ -73,3 +73,8 @@ void RoomManager::setRoomActive(int ID)
 	m_rooms[ID].setIsActive(true);
 }
 
+void RoomManager::addUserToRoom(int ID, LoggedUser user)
+{
+	m_rooms[ID].addUser(user);
+}
+

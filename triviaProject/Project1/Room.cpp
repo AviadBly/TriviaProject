@@ -55,7 +55,7 @@ vector<string> Room::getAllUsers() const
 //returns true if the room isnt full and is active
 bool Room::canNewUserJoin()
 {
-	return this->m_users.size() < this->m_metadata.maxPlayers && this->m_metadata.isActive;
+	return this->m_users.size() < this->m_metadata.maxPlayers; //&& !this->m_metadata.isActive;  maybe add this later
 }
 
 void Room::setIsActive(bool isActive)
