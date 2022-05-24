@@ -19,6 +19,11 @@
 #define LEAVE_ROOM_REQUEST_CODE 43
 #define GET_ROOM_STATE_REQUEST_CODE 45
 
+	#define LEAVE_GAME_REQUEST_CODE 46
+	#define GET_QUESTION_REQUEST_CODE 47
+	#define SUBMIT_ANSWER_REQUEST_CODE 48
+	#define GET_GAME_RESULT_REQUEST_CODE 49
+
 
 
 
@@ -45,4 +50,9 @@ struct CreateRoomRequest {
 	unsigned int maxUsers;
 	unsigned int questionCount;
 	unsigned int answerTimeout;
+};
+
+struct SubmitAnswerRequest
+{
+	unsigned int answerId;
 };

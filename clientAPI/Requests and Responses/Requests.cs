@@ -27,6 +27,11 @@ namespace clientAPI.Requests_and_Responses
         public const byte LEAVE_ROOM_REQUEST_CODE = 43;
         public const byte GET_ROOM_STATE_REQUEST_CODE = 45;
 
+        public const byte LEAVE_GAME_REQUEST_CODE = 46;
+        public const byte GET_QUESTION_REQUEST_CODE = 47;
+        public const byte SUBMIT_ANSWER_REQUEST_CODE = 48;
+        public const byte GET_GAME_RESULT_REQUEST_CODE = 49;
+
     }
 
     internal class LoginRequest
@@ -94,4 +99,17 @@ namespace clientAPI.Requests_and_Responses
         public uint RoomId { get; set; }
 
     }
+
+    internal class SubmitAnswerRequest
+    {
+
+
+        public SubmitAnswerRequest(uint answerId)
+        {
+            AnswerId = answerId;
+        }
+        public uint AnswerId { get; set; }
+
+    }
+
 }

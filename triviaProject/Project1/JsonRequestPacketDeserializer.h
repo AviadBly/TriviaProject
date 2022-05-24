@@ -31,6 +31,8 @@ public:
 	static CreateRoomRequest deserializeCreateRoomRequest(std::vector<BYTE> jsonRequestBits);
 	static JoinRoomRequest deserializeJoinRoomRequest(std::vector<BYTE> jsonRequestBits);
 	static GetPlayersInRoomRequest deserializeGetPlayersInRoomRequest(std::vector<BYTE> jsonRequestBits);
+
+	static SubmitAnswerRequest deserializeSubmitAnswerRequest(std::vector<BYTE> jsonRequestBits);
 	
 private:
 	static json getJsonFromBits(std::vector<BYTE> jsonRequestBits);

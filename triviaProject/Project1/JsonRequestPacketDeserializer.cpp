@@ -88,6 +88,19 @@ GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRo
 	return getPlayersInRoomRequest;
 }
 
+SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(std::vector<BYTE> jsonRequestBits)
+{
+	SubmitAnswerRequest submitAnswerRequest;
+	//get json format from bits
+	json jsonData = getJsonFromBits(jsonRequestBits);
+
+
+	submitAnswerRequest.answerId = jsonData.at(ROOM_ID_TEXT);
+
+	return submitAnswerRequest;
+}
+
+
 //ErrorResponse JsonRequestPacketDeserializer::deserializeErrorResponse(std::vector<BYTE> jsonResponseBits)
 //{
 //	ErrorResponse errorRequest;

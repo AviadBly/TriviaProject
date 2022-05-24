@@ -47,7 +47,13 @@ namespace clientAPI.JsonHelpers
             return Encoding.UTF8.GetBytes(resultStringJson.ToString());
         }
 
-        
+        public static byte[] SubmitAnswerSerializer(SubmitAnswerRequest submitAnswerRequest)
+        {
+            string resultStringJson = JsonSerializer.Serialize(submitAnswerRequest);
+            Console.WriteLine(resultStringJson);
+            return Encoding.UTF8.GetBytes(resultStringJson.ToString());
+        }
+
     }
 
 }
