@@ -189,6 +189,58 @@ namespace clientAPI.JsonHelpers
             return response;
         }
 
+        public static LeaveGameResponse? LeaveGameResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            LeaveGameResponse? response = JsonSerializer.Deserialize<LeaveGameResponse>(jsonString);
+
+            return response;
+        }
+
+        public static GetQuestionResponse? GetQuestionResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            GetQuestionResponse? response = JsonSerializer.Deserialize<GetQuestionResponse>(jsonString);
+
+            return response;
+        }
+
+        public static SubmitAnswerResponse? SubmitAnswerResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            SubmitAnswerResponse? response = JsonSerializer.Deserialize<SubmitAnswerResponse>(jsonString);
+
+            return response;
+        }
+
+        public static GetGameResultsResponse? GetGameResultsResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            GetGameResultsResponse? response = JsonSerializer.Deserialize<GetGameResultsResponse>(jsonString);
+
+            return response;
+        }
+
 
 
 

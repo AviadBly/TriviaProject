@@ -67,7 +67,7 @@ RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo requestInfo)
 	
 	closeRoomResponse.status = closeRoomResponse.status_ok;
 
-	requestResult.buffer = JsonResponsePacketSerializer::serializeCloseGameResponse(closeRoomResponse);
+	requestResult.buffer = JsonResponsePacketSerializer::serializeCloseRoomResponse(closeRoomResponse);
 	
 	return requestResult;
 }

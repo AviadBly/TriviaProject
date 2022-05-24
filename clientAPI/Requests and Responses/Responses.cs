@@ -153,5 +153,43 @@ namespace clientAPI.Requests_and_Responses
         public uint AnswerTimeOut { get; set; }
     }
 
+    internal class LeaveGameResponse : Response
+    {
+        public LeaveGameResponse(byte status) : base(status)
+        {
+        }
+    }
+
+    internal class GetQuestionResponse : Response
+    {
+        public GetQuestionResponse(byte status, string question, Dictionary<uint, string> answers) : base(status)
+        {
+            Question= question;
+            Answers= answers;
+        }
+        public string Question { get; set; }
+        public Dictionary<uint,string> Answers { get; set; }
+
+    }
+
+    internal class SubmitAnswerResponse : Response
+    {
+        public SubmitAnswerResponse(byte status,uint correctAnswerId) : base(status)
+        {
+            CorrectAnswerId= correctAnswerId;
+        }
+        public uint CorrectAnswerId { get; set; }
+    }
+    //TODO
+    /*************************************************/
+    internal class GetGameResultsResponse : Response
+    {
+        public GetGameResultsResponse(byte status) : base(status)
+        {
+
+        }
+    }
+
+    /****************************************************/
 
 }

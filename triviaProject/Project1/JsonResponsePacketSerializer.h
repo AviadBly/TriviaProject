@@ -24,6 +24,12 @@
 #define METADATA_TEXT "Metadata"
 #define GAME_BEGUN_TEXT "HasGameBegun"
 #define ANSWER_COUNT_TEXT "AnswerCount"
+#define RESULTS_TEXT "Results"
+#define ANSWERS_TEXT "Answers"
+#define CORRECT_ANSWER_ID_TEXT "CorrectAnswerId"
+#define CORRECT_ANSWER_COUNT_TEXT "CorrectAnswerCount"
+#define WRONG_ANSWER_COUNT_TEXT "WrongAnswerCount"
+#define AVERAGE_ANSWER_COUNT_TEXT "AverageAnswerCount"
 
 
 
@@ -52,9 +58,21 @@ public:
 
 	static std::vector<BYTE> serializeStartGameResponse(const StartRoomResponse& startRoomResponse);
 
-	static std::vector<BYTE> serializeCloseGameResponse(const CloseRoomResponse& closeRoomResponse);
+	std::vector<BYTE> serializeCloseRoomResponse(const CloseRoomResponse& closeRoomResponse);
 
-	static std::vector<BYTE> serializeLeaveGameResponse(const LeaveRoomResponse& leaveRoomResponse);
+	
+
+	
+
+	std::vector<BYTE> serializeLeaveRoomResponse(const LeaveRoomResponse& leaveRoomResponse);
+
+	std::vector<BYTE> serializeGetGameResultsResponse(const GetGameResultsResponse& getGameResultsResponse);
+
+	std::vector<BYTE> serializeSubmitAnswerResponse(const SubmitAnswerResponse& submitAnswerResponse);
+
+	std::vector<BYTE> serializeGetQuestionResponse(const GetQuestionResponse& getQuestionResponse);
+
+	std::vector<BYTE> serializeLeaveGameResponse(const LeaveGameResponse& leaveGameResponse);
 
 
 private:

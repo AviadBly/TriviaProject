@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-
+#include <map>
 #include "Room.h"
 
 #define BYTE unsigned char
@@ -76,4 +76,33 @@ struct StartRoomResponse :public Response
 struct LeaveRoomResponse :public Response
 {
 
+};
+
+struct LeaveGameResponse : public Response
+{
+
+};
+
+struct GetQuestionResponse : public Response
+{
+	string question;
+	map<unsigned int, string> answers;
+};
+
+struct SubmitAnswerResponse : public Response
+{
+	unsigned int correctAnswerID;
+};
+
+struct GetGameResultsResponse : public Response
+{
+	vector<PlayerResults> results;
+};
+
+struct	PlayerResults : public Response
+{
+	string username;
+	unsigned int correctAnswerCount;
+	unsigned int wrongAnswerCount;
+	unsigned int averageAnswerCount;
 };

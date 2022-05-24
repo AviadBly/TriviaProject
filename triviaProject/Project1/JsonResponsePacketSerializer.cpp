@@ -179,7 +179,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeStartGameResponse(const
 	return jsonBits;
 
 }
-std::vector<BYTE> JsonResponsePacketSerializer::serializeCloseGameResponse(const CloseRoomResponse& closeRoomResponse) {
+std::vector<BYTE> JsonResponsePacketSerializer::serializeCloseRoomResponse(const CloseRoomResponse& closeRoomResponse) {
 
 	//init json
 	json jsonResponse;
@@ -191,11 +191,58 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeCloseGameResponse(const
 
 }
 
-std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveGameResponse(const LeaveRoomResponse& leaveRoomResponse) {
+std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveRoomResponse(const LeaveRoomResponse& leaveRoomResponse) {
 
 	//init json
 	json jsonResponse;
 	jsonResponse[STATUS_TEXT] = leaveRoomResponse.status;
+
+	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
+
+	return jsonBits;
+
+}
+std::vector<BYTE> JsonResponsePacketSerializer::serializeGetGameResultsResponse(const GetGameResultsResponse& getGameResultsResponse) {
+
+	//init json
+	json jsonResponse;
+	jsonResponse[STATUS_TEXT] = getGameResultsResponse.status;
+	//HELP HERE
+
+	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
+
+	return jsonBits;
+
+}
+std::vector<BYTE> JsonResponsePacketSerializer::serializeSubmitAnswerResponse(const SubmitAnswerResponse& submitAnswerResponse) {
+
+	//init json
+	json jsonResponse;
+	jsonResponse[STATUS_TEXT] = submitAnswerResponse.status;
+	jsonResponse[CORRECT_ANSWER_ID_TEXT] = submitAnswerResponse.correctAnswerID;
+
+	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
+
+	return jsonBits;
+
+}
+std::vector<BYTE> JsonResponsePacketSerializer::serializeGetQuestionResponse(const GetQuestionResponse& getQuestionResponse) {
+
+	//init json
+	json jsonResponse;
+	jsonResponse[STATUS_TEXT] = getQuestionResponse.status;
+	jsonResponse[ANSWERS_TEXT] = getQuestionResponse.answers;
+
+	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
+
+	return jsonBits;
+
+}
+std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveGameResponse(const LeaveGameResponse& leaveGameResponse) {
+
+	//init json
+	json jsonResponse;
+	jsonResponse[STATUS_TEXT] = leaveGameResponse.status;
 
 	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
 

@@ -57,7 +57,7 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)
 
 	leaveRoomResponse.status = leaveRoomResponse.status_ok;
 
-	requestResult.buffer = JsonResponsePacketSerializer::serializeLeaveGameResponse(leaveRoomResponse);
+	requestResult.buffer = JsonResponsePacketSerializer::serializeLeaveRoomResponse(leaveRoomResponse);
 
 		//change back to menu handler
 	requestResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(m_user);
