@@ -58,21 +58,21 @@ public:
 
 	static std::vector<BYTE> serializeStartGameResponse(const StartRoomResponse& startRoomResponse);
 
-	std::vector<BYTE> serializeCloseRoomResponse(const CloseRoomResponse& closeRoomResponse);
+	static std::vector<BYTE> serializeCloseRoomResponse(const CloseRoomResponse& closeRoomResponse);
 
 	
 
 	
 
-	std::vector<BYTE> serializeLeaveRoomResponse(const LeaveRoomResponse& leaveRoomResponse);
+	static std::vector<BYTE> serializeLeaveRoomResponse(const LeaveRoomResponse& leaveRoomResponse);
 
-	std::vector<BYTE> serializeGetGameResultsResponse(const GetGameResultsResponse& getGameResultsResponse);
+	static std::vector<BYTE> serializeGetGameResultsResponse(const GetGameResultsResponse& getGameResultsResponse);
 
-	std::vector<BYTE> serializeSubmitAnswerResponse(const SubmitAnswerResponse& submitAnswerResponse);
+	static std::vector<BYTE> serializeSubmitAnswerResponse(const SubmitAnswerResponse& submitAnswerResponse);
 
-	std::vector<BYTE> serializeGetQuestionResponse(const GetQuestionResponse& getQuestionResponse);
+	static std::vector<BYTE> serializeGetQuestionResponse(const GetQuestionResponse& getQuestionResponse);
 
-	std::vector<BYTE> serializeLeaveGameResponse(const LeaveGameResponse& leaveGameResponse);
+	static std::vector<BYTE> serializeLeaveGameResponse(const LeaveGameResponse& leaveGameResponse);
 
 
 private:
