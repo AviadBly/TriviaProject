@@ -208,7 +208,16 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeGetGameResultsResponse(
 	//init json
 	json jsonResponse;
 	jsonResponse[STATUS_TEXT] = getGameResultsResponse.status;
-	//HELP HERE
+
+
+	for (auto i = getGameResultsResponse.results.begin(); i != getGameResultsResponse.results.end(); i++) {
+
+		
+		jsonResponse[RESULTS_TEXT] += { i->username, i->correctAnswerCount, i->wrongAnswerCount, i->averageAnswerCount};
+
+		std::cout << jsonResponse;
+	}
+	
 
 	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
 
