@@ -105,6 +105,15 @@
     <ClCompile Include="RoomMemberRequestHandler.cpp">
       <Filter>Source Files\Requests and Responses</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Question.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelperFunctions.h">
@@ -184,6 +193,15 @@
     </ClInclude>
     <ClInclude Include="ICryptoAlgorithm.h">
       <Filter>Header Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Question.h">
+      <Filter>Header Files\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

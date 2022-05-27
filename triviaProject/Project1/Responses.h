@@ -106,4 +106,3 @@ struct GetGameResultsResponse : public Response
 {
 	vector<PlayerResults> results;
 };
-
