@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:clientAPI.Game"
         mc:Ignorable="d"
-         Title="Create Room" Height="754" Width="589" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
+         Title="Waiting Room" Height="754" Width="589" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
     <Grid>
         <Label Content="Waiting Room"  VerticalContentAlignment="Center" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Center" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="425" Margin="0,10,0,596">
             <Label.RenderTransform>
