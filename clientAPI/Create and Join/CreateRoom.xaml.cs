@@ -38,11 +38,12 @@ namespace clientAPI
 
         private void clickExit(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            
             menu menu = new menu(MainProgram.MainUsername);
             menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             menu.Show();
+            this.Close();
         }
 
         private void clickCreate(object sender, RoutedEventArgs e)

@@ -180,14 +180,31 @@ namespace clientAPI.Requests_and_Responses
         }
         public uint CorrectAnswerId { get; set; }
     }
+
+    internal class PlayerResults
+    {
+        public PlayerResults(string username, uint correctAnswerCount, uint wrongAnswerCount, uint averageAnswerCount)
+        {
+            Username = username;
+            CorrectAnswerCount = correctAnswerCount;
+            WrongAnswerCount = wrongAnswerCount;
+            AverageAnswerCount = averageAnswerCount;
+        }
+
+        public string Username { get; set; }
+        public uint CorrectAnswerCount { get; set; }
+        public uint WrongAnswerCount { get; set; }
+        public uint AverageAnswerCount { get; set; }
+    }
     //TODO
     /*************************************************/
     internal class GetGameResultsResponse : Response
     {
-        public GetGameResultsResponse(byte status) : base(status)
+        public GetGameResultsResponse(PlayerResults results, byte status) : base(status)
         {
-
+            Results = results;
         }
+        public PlayerResults Results { get; set; }
     }
 
     /****************************************************/
