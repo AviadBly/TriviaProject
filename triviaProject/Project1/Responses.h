@@ -8,7 +8,7 @@
 using namespace std;
 
 struct Response {
-	int status;
+	unsigned int status;
 	const int status_ok = 2;
 	const int status_error = 5;
 };
@@ -94,11 +94,6 @@ struct SubmitAnswerResponse : public Response
 	unsigned int correctAnswerID;
 };
 
-struct GetGameResultsResponse : public Response
-{
-	vector<PlayerResults> results;
-};
-
 struct	PlayerResults : public Response
 {
 	string username;
@@ -106,3 +101,9 @@ struct	PlayerResults : public Response
 	unsigned int wrongAnswerCount;
 	unsigned int averageAnswerCount;
 };
+
+struct GetGameResultsResponse : public Response
+{
+	vector<PlayerResults> results;
+};
+
