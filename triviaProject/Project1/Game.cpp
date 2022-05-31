@@ -1,8 +1,8 @@
 #include "Game.h"
 
-void Game::getQuestionForUser(string user)
+map<unsigned int, string> Game::getQuestionForUser(string user)
 {
-
+	//TO DO
 }
 
 void Game::submitAnswer(string user, string answer)

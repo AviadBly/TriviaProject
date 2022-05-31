@@ -16,12 +16,15 @@ struct GameData
 
 class Game
 {
-	private:
-		vector<Question> m_questions;
-		map<LoggedUser, GameData> m_players;
+
 public:
-	void getQuestionForUser(string user);
+	
+	//not sure what these function should return
+	Question getQuestionForUser(string user); //to do
 	void submitAnswer(string user, string answer);
 	void removePlayer(string user);
 
+private:
+	vector<Question> m_questions;
+	map<LoggedUser, GameData> m_players;
 };

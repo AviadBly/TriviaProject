@@ -21,8 +21,8 @@ public:
 
 protected:
 
-	RequestResult leaveRoom(RequestInfo requestInfo);
-	RequestResult getRoomState(RequestInfo requestInfo);
+	RequestResult leaveRoom();
+	RequestResult getRoomState();
 
 	Room m_room;
 	LoggedUser m_user;
@@ -42,7 +42,7 @@ public:
 
 private:
 
-	RequestResult closeRoom(RequestInfo requestInfo);
-	RequestResult startGame(RequestInfo requestInfo);
+	RequestResult closeRoom();
+	RequestResult startGame();
 
 };

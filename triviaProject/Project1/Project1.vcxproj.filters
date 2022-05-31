@@ -114,6 +114,9 @@
     <ClCompile Include="Question.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="GameRequestHandler.cpp">
+      <Filter>Source Files\Requests and Responses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelperFunctions.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="Question.h">
       <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameRequestHandler.h">
+      <Filter>Header Files\Requests and Responses</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
