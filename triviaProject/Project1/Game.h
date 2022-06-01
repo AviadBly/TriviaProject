@@ -18,6 +18,7 @@ class Game
 {
 
 public:
+	Game() = default;
 	Game(vector<Question> questions);
 	void getQuestionForUser(string user);
 	void submitAnswer(string user, string answer);

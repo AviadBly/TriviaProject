@@ -7,7 +7,7 @@ GameManager::GameManager(IDatabase* database) : m_database(database)
 
 Game GameManager::createGame(string Room)
 {
-	
+    return Game();
 }
 
 void GameManager::deleteGame()
