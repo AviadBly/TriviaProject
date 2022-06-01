@@ -20,6 +20,7 @@ class Game
 		vector<Question> m_questions;
 		map<LoggedUser, GameData> m_players;
 public:
+	Game(vector<Question> questions);
 	void getQuestionForUser(string user);
 	void submitAnswer(string user, string answer);
 	void removePlayer(string user);

@@ -3,6 +3,15 @@
 #include <algorithm>    // std::replace
 #include <vector>       // std::vector
 
+Question::Question(string question, string answer1, string answer2, string answer3, string answer4)
+{
+    this->m_question = question;
+    this->m_possibleAnswers.push_back(answer1);
+    this->m_possibleAnswers.push_back(answer2);
+    this->m_possibleAnswers.push_back(answer3);
+    this->m_possibleAnswers.push_back(answer4);
+}
+
 string Question::getQuestion()
 {
     return this->m_question;
@@ -36,4 +45,14 @@ string Question::getCorrectAnswer()
         }
     }
     return("Error");
+}
+
+void Question::setQuestion(string question)
+{
+    this->m_question = question;
+}
+
+void Question::addPossibleAnswers(string answer)
+{
+    this->m_possibleAnswers.push_back(answer);
 }
