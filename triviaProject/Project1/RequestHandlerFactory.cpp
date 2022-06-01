@@ -1,7 +1,7 @@
 #include "RequestHandlerFactory.h"
 
 
-RequestHandlerFactory::RequestHandlerFactory(IDatabase* database) : m_loginManager(database), m_statisticsManager(database) {
+RequestHandlerFactory::RequestHandlerFactory(IDatabase* database) : m_loginManager(database), m_statisticsManager(database) ,m_gameManager(database) {
 
 	this->m_database = database;
 	this->m_loginRequestHandler = new LoginRequestHandler(m_loginManager, *this);
@@ -18,10 +18,7 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 	return (this->m_loginRequestHandler);
 }
 
-LoginManager& RequestHandlerFactory::getLoginManger()
-{
-	return this->m_loginManager;
-}
+
 
 MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(LoggedUser loggeduser)
 {
@@ -38,3 +35,28 @@ RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(Lo
 	return new RoomAdminRequestHandler(room, loggedUser, m_roomManager, *this);
 }
 
+GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(Game game, LoggedUser user)
+{
+	return new GameRequestHandler(game, user, m_gameManager, *this);
+}
+
+//getters
+LoginManager& RequestHandlerFactory::getLoginManger()
+{
+	return this->m_loginManager;
+}
+
+RoomManager& RequestHandlerFactory::getRoomManager()
+{
+	return this->m_roomManager;
+}
+
+StatisticsManager& RequestHandlerFactory::getStatisticsManager()
+{
+	return this->m_statisticsManager;
+}
+
+GameManager& RequestHandlerFactory::getGameManager()
+{
+	return this->m_gameManager;
+}

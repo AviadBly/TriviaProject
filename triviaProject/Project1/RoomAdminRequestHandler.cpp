@@ -19,13 +19,13 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo requestInfo)
 	try {
 		switch (requestInfo.code) {
 		case CLOSE_ROOM_REQUEST_CODE:
-			requestResult = closeRoom(requestInfo);
+			requestResult = closeRoom();
 			break;
 		case START_GAME_REQUEST_CODE:
-			requestResult = startGame(requestInfo);;
+			requestResult = startGame();;
 			break;
 		case GET_ROOM_STATE_REQUEST_CODE:
-			requestResult = getRoomState(requestInfo);
+			requestResult = getRoomState();
 			break;
 		}
 
@@ -42,7 +42,7 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo requestInfo)
 }
 
 
-RequestResult RoomAdminRequestHandler::startGame(RequestInfo requestInfo)
+RequestResult RoomAdminRequestHandler::startGame()
 {
 
 	RequestResult requestResult;
@@ -56,14 +56,14 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo requestInfo)
 	return requestResult;
 }
 
-RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo requestInfo)
+RequestResult RoomAdminRequestHandler::closeRoom()
 {
 	RequestResult requestResult;
 	CloseRoomResponse closeRoomResponse;
 	
 
 	this->m_roomManager.deleteRoom(m_room.getData().id);
-	requestResult = leaveRoom(requestInfo);		//maybe add this later to leave the room
+	requestResult = leaveRoom();		//maybe add this later to leave the room
 	
 	closeRoomResponse.status = closeRoomResponse.status_ok;
 
