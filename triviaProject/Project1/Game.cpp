@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "LoggedUser.h"
 
-Game::Game(vector<Question> questions)
+Game::Game(vector<Question> questions,unsigned int id)
 {
 	this->m_players;
 	this->m_questions = questions;
@@ -35,4 +35,9 @@ bool Game::removePlayer(LoggedUser user)
 {
 	return m_players.erase(user);
 	
+}
+
+unsigned int Game::getId()
+{
+	return this->getId();
 }
