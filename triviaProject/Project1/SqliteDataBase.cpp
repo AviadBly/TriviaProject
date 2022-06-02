@@ -256,7 +256,7 @@ bool SqliteDataBase::doesPasswordMatch(string username, string password)
 const vector<Question> SqliteDataBase::getQuestions()
 {
 	vector<Question>* newList = new vector<Question>;
-	string sqlStatement = "SELECT * FROM QUESTIONS\";";
+	string sqlStatement = "SELECT * FROM QUESTIONS;";
 	const char* newStatement = sqlStatement.c_str();
 	sendCallBackQuestions(db, newStatement, newList);
 	return *newList;

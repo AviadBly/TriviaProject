@@ -6,19 +6,33 @@ Game::Game(vector<Question> questions)
 	this->m_players;
 	this->m_questions = questions;
 }
-void Game::getQuestionForUser(string user)
+void Game::getQuestionForUser(LoggedUser user)
 {
 	int random = rand() % m_questions.size();
 	Question sel_elem = m_questions[random];
-	
-	
-}
-
-void Game::submitAnswer(string user, string answer)
-{
+	m_players[user].currentQuestion = sel_elem;
 	
 }
 
-void Game::removePlayer(string user)
+bool Game::submitAnswer(LoggedUser user, string answer)
 {
+	string correctAnswer = m_players[user].currentQuestion.getCorrectAnswer();
+	if (correctAnswer.compare(answer) == 0)
+	{
+		m_players[user].correctAnswerCount++;
+		//m_players[user].
+		return true;
+	}
+	else
+	{
+		m_players[user].wrongAnswerCount++;
+		//m_players[user].
+		return false;
+	}
+}
+
+bool Game::removePlayer(LoggedUser user)
+{
+	return m_players.erase(user);
+	
 }

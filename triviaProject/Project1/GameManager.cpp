@@ -7,7 +7,8 @@ GameManager::GameManager(IDatabase* database) : m_database(database)
 
 Game GameManager::createGame(string Room)
 {
-    return Game();
+    vector<Question> questions = m_database->getQuestions();
+    //new game
 }
 
 void GameManager::deleteGame()

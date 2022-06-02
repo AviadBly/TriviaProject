@@ -20,11 +20,12 @@ class Game
 public:
 	Game() = default;
 	Game(vector<Question> questions);
-	void getQuestionForUser(string user);
-	void submitAnswer(string user, string answer);
-	void removePlayer(string user);
+	void getQuestionForUser(LoggedUser user);
+	bool submitAnswer(LoggedUser user, string answer);
+	bool removePlayer(LoggedUser user);
 
 private:
 	vector<Question> m_questions;
 	map<LoggedUser, GameData> m_players;
+	unsigned int timePerQuestion;
 };
