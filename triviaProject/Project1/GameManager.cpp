@@ -29,12 +29,12 @@ void GameManager::deleteGame(Game game)
 
 }
 
-void GameManager::removeUser(LoggedUser user, Game game)
-{
-    //TO DO, remove the user from the game the matched the given game
-
-
-}
+//void GameManager::removeUser(LoggedUser user, Game game)
+//{
+//    //TO DO, remove the user from the game the matched the given game
+//    
+//
+//}
 
 //bool operator==(const Game& lhs, const Game& rhs)
 //{
