@@ -70,7 +70,21 @@ namespace clientAPI.Game
         private void UpdatePlayers()
         {
             var players = getPlayers();
-            m_room.UpdatePlayers(players);
+
+            
+            if (players.Item1 == GetRoomStateResponse.statusRoomNotFound)    //go back to menu
+            {
+                Application.Current.Dispatcher.Invoke((Action)delegate {
+                    menu menu = new menu(MainProgram.MainUsername);
+                    menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    menu.Show();
+
+                    Close();
+                });
+                
+            }
+            
+            m_room.UpdatePlayers(players.Item2);
         }
 
        
@@ -93,7 +107,7 @@ namespace clientAPI.Game
 
         //TO DO, ask getPlayers every 1 second
        
-        private IList<string> getPlayers()
+        private (byte, IList<string>) getPlayers()
         {
             MainProgram.appClient.sender("", Requests.GET_ROOM_STATE_REQUEST_CODE);    //ask for rooms
 
@@ -105,7 +119,7 @@ namespace clientAPI.Game
             if (getRoomStateResponse == null)
             {
                 Console.WriteLine("Received empty or wrong answer from server");
-                return new List<string>();
+                return (0, new List<string>());
             }
 
             Console.WriteLine(getRoomStateResponse.Players);
@@ -118,13 +132,8 @@ namespace clientAPI.Game
                 //so go to menu
                 case GetRoomStateResponse.statusRoomNotFound:
 
-                    menu menu = new menu(MainProgram.MainUsername);
-                    menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                    menu.Show();
+                    return (GetRoomStateResponse.statusRoomNotFound, new List<string>());
                     
-                    Close();
-                    break;
-
                 case GetRoomStateResponse.status_ok:    //if room found
                     if (getRoomStateResponse.HasGameBegun)
                     {
@@ -140,7 +149,7 @@ namespace clientAPI.Game
             }
             
 
-            return getRoomStateResponse.Players;
+            return (1, getRoomStateResponse.Players);
         }
 
         private void leaveRoom()
