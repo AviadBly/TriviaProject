@@ -1,15 +1,16 @@
 #include "GameManager.h"
 #include "MyException.h"
+
 GameManager::GameManager(IDatabase* database) : m_database(database)
 {
     gameId = 1;
 }
 
-Game GameManager::createGame(string Room)
+Game GameManager::createGame(vector<LoggedUser> users)
 {
     vector<Question> questions = m_database->getQuestions();
     //new game
-    Game newGame(questions, gameId);
+    Game newGame(questions, users, gameId);
     gameId++;
     return newGame;
 }
@@ -22,25 +23,22 @@ void GameManager::deleteGame(Game game)
         {
             m_games.erase(iter);
             cout << "Game Deleted" << endl;
-            break;
+            return;
         }
     }
     throw MyException("Error: no such Game ID");
 
 }
 
-//void GameManager::removeUser(LoggedUser user, Game game)
-//{
-//    //TO DO, remove the user from the game the matched the given game
-//    
-//
-//}
+void GameManager::removeUser(LoggedUser user, Game game)
+{
+    //TO DO, remove the user from the game the matched the given game
+    
 
+}
+
+//compares the games based on their id
 //bool operator==(const Game& lhs, const Game& rhs)
 //{
-//    if (lhs == rhs)
-//    {
-//        return true;
-//    }
-//    return false;
+//    return lhs.getId() == rhs.getId();
 //}
