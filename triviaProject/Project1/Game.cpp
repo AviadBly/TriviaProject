@@ -1,6 +1,6 @@
 #include "Game.h"
 
-map<unsigned int, string> Game::getQuestionForUser(string user)
+Question Game::getQuestionForUser(string user)
 {
 	//TO DO
 }
