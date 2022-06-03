@@ -18,13 +18,16 @@ class Game
 {
 
 public:
-	
-	//not sure what these function should return
-	Question getQuestionForUser(string user); //to do
-	void submitAnswer(string user, string answer);
-	void removePlayer(string user);
+	Game() = default;
+	Game(vector<Question> questions,unsigned int id);
+	void getQuestionForUser(LoggedUser user);
+	bool submitAnswer(LoggedUser user, string answer);
+	bool removePlayer(LoggedUser user);
+	unsigned int getId();
 
 private:
+	unsigned int id;
 	vector<Question> m_questions;
 	map<LoggedUser, GameData> m_players;
+	unsigned int timePerQuestion;
 };

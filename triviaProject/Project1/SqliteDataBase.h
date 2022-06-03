@@ -23,6 +23,9 @@ public:
 	virtual int getNumOfTotalAnswers(string username) ;
 	virtual int getNumOfPlayerGames(string username) ;
 
+	/******************************************************/
+	virtual const vector<Question> getQuestions();
+
 	bool open();
 private:
 	sqlite3* db;
@@ -31,5 +34,6 @@ private:
 	static int callbackUsers(void* data, int argc, char** argv, char** azColName);
 	static int callbackStats(void* data, int argc, char** argv, char** azColName);
 	void sendCallBackStats(sqlite3* db, const char* sqlStatement, list<StatsUser>* albums);
-	
+	static int callbackQuestions(void* data, int argc, char** argv, char** azColName);
+	void sendCallBackQuestions(sqlite3* db, const char* sqlStatement, vector<Question>* questions);
  };
