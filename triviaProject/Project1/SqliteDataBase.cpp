@@ -9,6 +9,8 @@
 using namespace std;
 
 
+
+
 bool SqliteDataBase::open()
 {
 
@@ -69,6 +71,45 @@ void SqliteDataBase::sendCallBackStats(sqlite3* db, const char* sqlStatement, li
 
 
 
+}
+
+int SqliteDataBase::callbackQuestions(void* data, int argc, char** argv, char** azColName)
+{
+	vector<Question>* questions = (vector<Question>*)data;
+	Question question;
+
+	for (int i = 0; i < argc; i++) {
+		if (string(azColName[i]) == "QUESTION") {
+			question.setQuestion((argv[i]));
+		}
+		else if (string(azColName[i]) == "ANSWER1") {
+			question.addPossibleAnswers((argv[i]));
+		}
+		else if (string(azColName[i]) == "ANSWER2")
+		{
+			question.addPossibleAnswers((argv[i]));
+		}
+		else if (string(azColName[i]) == "ANSWER3") {
+			question.addPossibleAnswers((argv[i]));
+		}
+		else if (string(azColName[i]) == "ANSWER4")
+		{
+			question.addPossibleAnswers((argv[i]));
+		}
+
+	}
+	questions->push_back(question);
+	return 0;
+}
+
+void SqliteDataBase::sendCallBackQuestions(sqlite3* db, const char* sqlStatement, vector<Question>* questions)
+{
+	char** errMessage = nullptr;
+	int res = sqlite3_exec(db, sqlStatement, callbackQuestions, questions, errMessage);
+	if (res != SQLITE_OK) {
+		std::cout << res << std::endl;
+		cout << "Error!" << endl;
+	}
 }
 
 int SqliteDataBase::callbackUsers(void* data, int argc, char** argv, char** azColName)
@@ -210,6 +251,15 @@ bool SqliteDataBase::doesPasswordMatch(string username, string password)
 		}
 	}
 	return false;
+}
+
+const vector<Question> SqliteDataBase::getQuestions()
+{
+	vector<Question>* newList = new vector<Question>;
+	string sqlStatement = "SELECT * FROM QUESTIONS;";
+	const char* newStatement = sqlStatement.c_str();
+	sendCallBackQuestions(db, newStatement, newList);
+	return *newList;
 }
 
 const std::list<StatsUser> SqliteDataBase::getStats(string username)

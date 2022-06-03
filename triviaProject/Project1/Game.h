@@ -16,12 +16,18 @@ struct GameData
 
 class Game
 {
-	private:
-		vector<Question> m_questions;
-		map<LoggedUser, GameData> m_players;
-public:
-	void getQuestionForUser(string user);
-	void submitAnswer(string user, string answer);
-	void removePlayer(string user);
 
+public:
+	Game() = default;
+	Game(vector<Question> questions,unsigned int id);
+	void getQuestionForUser(LoggedUser user);
+	bool submitAnswer(LoggedUser user, string answer);
+	bool removePlayer(LoggedUser user);
+	unsigned int getId();
+
+private:
+	unsigned int id;
+	vector<Question> m_questions;
+	map<LoggedUser, GameData> m_players;
+	unsigned int timePerQuestion;
 };

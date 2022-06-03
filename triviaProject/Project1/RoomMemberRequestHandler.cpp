@@ -29,10 +29,10 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo requestInfo)
 	try {
 		switch (requestInfo.code) {
 		case LEAVE_ROOM_REQUEST_CODE:
-			requestResult = leaveRoom(requestInfo);
+			requestResult = leaveRoom();
 			break;
 		case GET_ROOM_STATE_REQUEST_CODE:
-			requestResult = getRoomState(requestInfo);
+			requestResult = getRoomState();
 			break;
 		
 		}
@@ -49,7 +49,7 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo requestInfo)
 	return requestResult;
 }
 
-RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)
+RequestResult RoomMemberRequestHandler::leaveRoom()
 {
 	LeaveRoomResponse leaveRoomResponse;
 
@@ -67,7 +67,7 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)
 }
 
 
-RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo requestInfo)
+RequestResult RoomMemberRequestHandler::getRoomState()
 {
 	GetRoomStateResponse getRoomStateResponse;
 	

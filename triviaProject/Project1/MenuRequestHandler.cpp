@@ -25,7 +25,7 @@ MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& handlerFactory, Lo
 bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
 {
 	unsigned int code = requestInfo.code;
-	return code == CREATE_ROOM_CODE || code == GET_ROOM_REQUEST || code == GET_PLAYERS_IN_ROOM_REQUEST_CODE
+	return code == CREATE_ROOM_CODE || code == GET_ROOMS_REQUEST || code == GET_PLAYERS_IN_ROOM_REQUEST_CODE
 		|| code == JOIN_ROOM_REQUEST_CODE || code == GET_PERSONAL_STATISTICS_REQUEST_CODE || code == LOGOUT_REQUEST_CODE
 		|| code == GET_HIGH_SCORES_REQUEST_CODE;
 }
@@ -40,7 +40,7 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 		case CREATE_ROOM_CODE:
 			requestResult =  createRoom(requestInfo);
 			break;
-		case GET_ROOM_REQUEST:
+		case GET_ROOMS_REQUEST:
 			requestResult =  getRooms(requestInfo);
 			break;
 		case GET_PLAYERS_IN_ROOM_REQUEST_CODE:
@@ -225,12 +225,3 @@ RequestResult MenuRequestHandler::getPersonalStatistics(RequestInfo requestInfo)
 	return requestResult;
 }
 
-RoomManager& RequestHandlerFactory::getRoomManager()
-{
-	return this->m_roomManager;
-}
-
-StatisticsManager& RequestHandlerFactory::getStatisticsManager()
-{
-	return this->m_statisticsManager;
-}

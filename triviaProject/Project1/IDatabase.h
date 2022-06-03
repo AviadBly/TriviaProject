@@ -2,6 +2,7 @@
 #define DATA_BASE_FILE_NAME "triviaDB.sqlite"
 #include <iostream>
 #include "LoggedUser.h"
+#include "Question.h"
 using namespace std;
 #include <list>
 class IDatabase
@@ -17,5 +18,6 @@ public:
 	virtual int getNumOfTotalAnswers(string username)=0;
 	virtual int getNumOfPlayerGames(string username)=0;
 	virtual const list<StatsUser> getStatsGeneral()=0;
+	virtual const vector<Question> getQuestions() = 0;
 
 };
