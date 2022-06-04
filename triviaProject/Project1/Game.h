@@ -30,11 +30,12 @@ public:
 	Question getQuestionForUser(const User& user);
 	
 	unsigned int submitAnswer(const User& user, unsigned int answerId, double answerTime);
-
-	bool removePlayer(const User& user);
 	vector<PlayerResults> getGameResults();
+	bool removePlayer(const User& user);
+	
 	unsigned int getId() const;
-
+	bool hasEnded() const;
+	void setHasEnded(bool isEnded);
 	bool operator ==(const Game& otherGame);	//compare based on id
 
 private:

@@ -75,12 +75,17 @@ RequestResult GameRequestHandler::getQuestion()
 	RequestResult requestResult;
 	GetQuestionResponse getQuestionResponse;
 
-	getQuestionResponse.status = getQuestionResponse.status_ok;
 	
-	Question userQuestion = m_game.getQuestionForUser(m_user);
-	getQuestionResponse.question = userQuestion.getQuestionString();
+	if (m_game.hasEnded()) {
+		getQuestionResponse.status = getQuestionResponse.noMoreQuestionStatus;
+	}
+	else {
+		Question userQuestion = m_game.getQuestionForUser(m_user);
+		getQuestionResponse.status = getQuestionResponse.status_ok;
+		getQuestionResponse.question = userQuestion.getQuestionString();
+		getQuestionResponse.answers = userQuestion.getPossibleAnswers();
+	}
 	
-	getQuestionResponse.answers = userQuestion.getPossibleAnswers();
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetQuestionResponse(getQuestionResponse);
 	
@@ -103,10 +108,7 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 	submitAnswerResponse.status = submitAnswerResponse.status_ok;
 	submitAnswerResponse.correctAnswerID = m_game.submitAnswer(m_user, submitAnswerRequest.answerId, answerTime);
 	
-	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeSubmitAnswerResponse(submitAnswerResponse);
-
-	
 
 	return requestResult;
 }
@@ -117,10 +119,14 @@ RequestResult GameRequestHandler::getGameResults()
 	RequestResult requestResult;
 	GetGameResultsResponse getGameResultsResponse;
 	
+	if (m_game.hasEnded()) {
+		getGameResultsResponse.status = getGameResultsResponse.status_ok;
+		getGameResultsResponse.results = m_game.getGameResults();
+	}
+	else {//if game has not ended yet
+		getGameResultsResponse.status = getGameResultsResponse.noResultsStatus;		
+	}
 	
-	getGameResultsResponse.status = getGameResultsResponse.status_ok;
-	getGameResultsResponse.results = m_game.getGameResults();
-
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetGameResultsResponse(getGameResultsResponse);
 
 

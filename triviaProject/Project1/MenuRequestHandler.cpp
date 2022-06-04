@@ -163,7 +163,7 @@ RequestResult MenuRequestHandler::joinRoom(const RequestInfo& requestInfo)
 	joinRoomResponse.status = joinRoomResponse.status_error;
 	Room wantedRoom;
 	auto rooms = m_roomManager.getRooms();
-
+	
 	for (auto& i : rooms) {
 
 		//finds the room with the given id, and checks if a new user can join

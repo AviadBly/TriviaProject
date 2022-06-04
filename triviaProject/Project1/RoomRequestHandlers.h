@@ -11,7 +11,7 @@ class RoomMemberRequestHandler : public IRequestHandler {
 
 public:
 
-	RoomMemberRequestHandler(const Room& room, const LoggedUser& user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
+	RoomMemberRequestHandler(const LoggedUser& user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
 	virtual bool isRequestRelevant(const RequestInfo& requestInfo) const;
 	virtual RequestResult handleRequest(const RequestInfo& requestInfo);
 
@@ -24,8 +24,9 @@ protected:
 	RequestResult leaveRoom();
 	RequestResult getRoomState();
 
-	Room m_room;
+	
 	LoggedUser m_user;
+	Room& m_room;
 	RoomManager& m_roomManager;
 	RequestHandlerFactory& m_handlerFactory;
 
@@ -36,7 +37,7 @@ class RoomAdminRequestHandler : public RoomMemberRequestHandler {
 
 public:
 
-	RoomAdminRequestHandler(Room room, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
+	RoomAdminRequestHandler(const LoggedUser& user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
 	virtual bool isRequestRelevant(RequestInfo requestInfo) const;
 	virtual RequestResult handleRequest(RequestInfo requestInfo);
 

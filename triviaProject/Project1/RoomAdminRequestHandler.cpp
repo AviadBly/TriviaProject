@@ -1,7 +1,7 @@
 #include "RoomRequestHandlers.h"
 
 //this might not work
-RoomAdminRequestHandler::RoomAdminRequestHandler(Room room, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : RoomMemberRequestHandler(room, user, roomManager, handlerFactory)
+RoomAdminRequestHandler::RoomAdminRequestHandler(const LoggedUser& user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : RoomMemberRequestHandler(user, room, roomManager, handlerFactory)
 {
 	
 }
@@ -48,7 +48,7 @@ RequestResult RoomAdminRequestHandler::startGame()
 	RequestResult requestResult;
 	StartRoomResponse StartRoomResponse;
 	m_room.setIsActive(true); 
-	this->m_roomManager.setRoomActive(m_room.getData().id);
+	//this->m_roomManager.setRoomActive(m_room.getData().id);
 	StartRoomResponse.status = StartRoomResponse.status_ok;
 
 

@@ -8,7 +8,7 @@
 using namespace std;
 
 struct Response {
-	unsigned int status;
+	unsigned int status = 0;
 	const int status_ok = 2;
 	const int status_error = 5;
 };
@@ -85,6 +85,7 @@ struct LeaveGameResponse : public Response
 
 struct GetQuestionResponse : public Response
 {
+	const unsigned int noMoreQuestionStatus = 9;
 	string question;
 	map<unsigned int, string> answers;
 };
@@ -97,12 +98,13 @@ struct SubmitAnswerResponse : public Response
 struct PlayerResults
 {
 	string username;
-	unsigned int correctAnswerCount;
-	unsigned int wrongAnswerCount;
-	double averageAnswerCount;
+	unsigned int correctAnswerCount = 0;
+	unsigned int wrongAnswerCount = 0;
+	double averageAnswerCount = 0;
 };
 
 struct GetGameResultsResponse : public Response
 {
+	const unsigned int noResultsStatus = 0;
 	vector<PlayerResults> results;
 };

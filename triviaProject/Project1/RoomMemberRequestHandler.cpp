@@ -1,8 +1,7 @@
 #include "RoomRequestHandlers.h"
 
-RoomMemberRequestHandler::RoomMemberRequestHandler(const Room& room, const LoggedUser& user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_roomManager(roomManager), m_handlerFactory(handlerFactory)
+RoomMemberRequestHandler::RoomMemberRequestHandler(const LoggedUser& user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
 {
-	m_room = room;
 	m_user = user;
 }
 
@@ -58,7 +57,8 @@ RequestResult RoomMemberRequestHandler::leaveRoom()
 	leaveRoomResponse.status = leaveRoomResponse.status_ok;
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeLeaveRoomResponse(leaveRoomResponse);
-
+	//m_roomManager.removeUser(m_user, m_room.getData());
+	m_room.removeUser(m_user);
 		//change back to menu handler
 	requestResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(m_user);
 	delete this;
@@ -73,7 +73,7 @@ RequestResult RoomMemberRequestHandler::getRoomState()
 	
 	RequestResult requestResult;
 
-	m_room = m_roomManager.getSingleRoom(m_room.getData().id);
+	//m_room = m_roomManager.getSingleRoom(m_room.getData().id);
 
 	//checks if room still exist, because the default return of getSingleRoom is a room with id=0
 	if (m_room.getData().id != 0) {
