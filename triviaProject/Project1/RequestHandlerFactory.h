@@ -29,7 +29,7 @@ public:
 
 	RoomMemberRequestHandler* createRoomMemberRequestHandler(LoggedUser loggedUser, Room room);
 	RoomAdminRequestHandler* createRoomAdminRequestHandler(LoggedUser loggedUser, Room room);
-	GameRequestHandler* createGameRequestHandler(Game game, LoggedUser user);
+	GameRequestHandler* createGameRequestHandler(const vector<User>& users, const LoggedUser& user);
 
 	//getters
 	LoginManager& getLoginManger();

@@ -80,10 +80,10 @@ RequestResult MenuRequestHandler::logOut(RequestInfo requestInfo)
 	RequestResult requestResult;
 
 	logoutResponse.status = logoutResponse.status_ok;
-	requestResult.buffer = JsonResponsePacketSerializer::serializeLogoutResponse(logoutResponse);
-
+	
 	this->m_user = LoggedUser();
 
+	requestResult.buffer = JsonResponsePacketSerializer::serializeLogoutResponse(logoutResponse);
 	requestResult.newHandler = this->m_handlerFactory.createLoginRequestHandler();
 	
 	return requestResult;
@@ -126,7 +126,7 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo requestInfo)
 		//finds the room with the given id
 		if (i->getData().id == getPlayersInRoomRequest.roomId) {
 
-			auto allPlayers = i->getAllUsers();
+			auto allPlayers = i->getAllUsersNames();
 			for (auto m = allPlayers.begin(); m != allPlayers.end(); m++){
 				getPlayersInRoomResponse.players.push_back(*m);
 			}

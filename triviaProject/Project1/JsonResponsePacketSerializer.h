@@ -11,7 +11,7 @@
 #define STATUS_TEXT "Status"
 #define MESSAGE_TEXT "Message"
 #define PLAYERS_TEXT "Players"
-
+#define ROOMS_TEXT "Rooms"
 #define IS_ACTIVE_TEXT "IsActive"
 
 #define MAX_PLAYERS_TEXT "MaxPlayers"
@@ -63,7 +63,7 @@ public:
 	
 
 	
-
+	//game
 	static std::vector<BYTE> serializeLeaveRoomResponse(const LeaveRoomResponse& leaveRoomResponse);
 
 	static std::vector<BYTE> serializeGetGameResultsResponse(const GetGameResultsResponse& getGameResultsResponse);

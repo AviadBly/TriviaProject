@@ -10,9 +10,9 @@ class GameManager
 
 public:
 	GameManager(IDatabase* database);
-	Game createGame(vector<LoggedUser> users);
+	Game createGame(vector<User> users);
 	void deleteGame(Game game);
-	void removeUser(LoggedUser user, Game game);	
+	void removeUser(User user, Game game);
 	//friend bool operator==(const Game& lhs, const Game& rhs);
 	
 private:

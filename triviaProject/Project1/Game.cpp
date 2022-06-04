@@ -1,13 +1,13 @@
 #include "Game.h"
 #include "LoggedUser.h"
 
-Game::Game(vector<Question> questions, vector<LoggedUser> users, unsigned int id)
+Game::Game(vector<Question> questions, vector<User> users, unsigned int id)
 {
 	
 	
 	GameData initGameData;	//initialize the map with users, and empty game data
 	for(auto i = users.begin(); i != users.end(); i++){
-		m_players.insert(pair<LoggedUser, GameData>(*i, initGameData));
+		m_players.insert(pair<User, GameData>(*i, initGameData));
 	}
 	bool he = users[0] < users[1];
 
@@ -15,7 +15,7 @@ Game::Game(vector<Question> questions, vector<LoggedUser> users, unsigned int id
 	this->id = id;
 }
 
-Question Game::getQuestionForUser(const LoggedUser& user)
+Question Game::getQuestionForUser(const User& user)
 {
 	/*int random = rand() % m_questions.size();
 	Question sel_elem = m_questions[random];*/
@@ -29,7 +29,7 @@ Question Game::getQuestionForUser(const LoggedUser& user)
 	
 }
 
-float Game::calculateNewAverageAnswerTime(float answerTime, const LoggedUser& user) {
+float Game::calculateNewAverageAnswerTime(float answerTime, const User& user) {
 	float newAnswerTime = m_players[user].averageAnswerTime;
 	unsigned int numberOfAnswers = m_players[user].correctAnswerCount + m_players[user].wrongAnswerCount;
 
@@ -43,7 +43,7 @@ float Game::calculateNewAverageAnswerTime(float answerTime, const LoggedUser& us
 
 //returns the correct answer id
 //also increases the count of the correct or wrongs answers
-unsigned int Game::submitAnswer(LoggedUser user, unsigned int answerId, float answerTime)
+unsigned int Game::submitAnswer(User user, unsigned int answerId, float answerTime)
 {
 	m_players[user].averageAnswerTime = calculateNewAverageAnswerTime(answerTime, user);
 
@@ -65,14 +65,12 @@ unsigned int Game::submitAnswer(LoggedUser user, unsigned int answerId, float an
 	
 }
 
-
-
-bool Game::removePlayer(LoggedUser user)
+bool Game::removePlayer(User user)
 {
 	return m_players.erase(user);	//if succesfull returns true
 }
 
-PlayerResults Game::getPlayerResults(const LoggedUser& user)
+PlayerResults Game::getPlayerResults(const User& user)
 {
 	PlayerResults playerResults;
 

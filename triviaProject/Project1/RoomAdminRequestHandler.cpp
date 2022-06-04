@@ -51,7 +51,11 @@ RequestResult RoomAdminRequestHandler::startGame()
 	this->m_roomManager.setRoomActive(m_room.getData().id);
 	StartRoomResponse.status = StartRoomResponse.status_ok;
 
+
 	requestResult.buffer = JsonResponsePacketSerializer::serializeStartGameResponse(StartRoomResponse);
+	/*m_roomManager.getRoomState(m_room.getData().id).*/
+		
+	requestResult.newHandler = m_handlerFactory.createGameRequestHandler(m_room.getAllUsers(), m_user);
 
 	return requestResult;
 }

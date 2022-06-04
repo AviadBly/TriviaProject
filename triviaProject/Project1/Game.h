@@ -26,12 +26,12 @@ class Game
 
 public:
 	Game() = default;
-	Game(vector<Question> questions, vector<LoggedUser> users ,unsigned int id);
-	Question getQuestionForUser(const LoggedUser& user);
+	Game(vector<Question> questions, vector<User> users ,unsigned int id);
+	Question getQuestionForUser(const User& user);
 	
-	unsigned int submitAnswer(LoggedUser user, unsigned int answerId, float answerTime);
+	unsigned int submitAnswer(User user, unsigned int answerId, float answerTime);
 
-	bool removePlayer(LoggedUser user);
+	bool removePlayer(User user);
 	vector<PlayerResults> getGameResults();
 	unsigned int getId() const;
 
@@ -39,8 +39,8 @@ public:
 private:
 	unsigned int id;
 	vector<Question> m_questions;
-	map<LoggedUser, GameData> m_players;
+	map<User, GameData> m_players;
 	unsigned int timePerQuestion;
-	PlayerResults getPlayerResults(const LoggedUser& user);
-	float calculateNewAverageAnswerTime(float answerTime, const LoggedUser& user);
+	PlayerResults getPlayerResults(const User& user);
+	float calculateNewAverageAnswerTime(float answerTime, const User& user);
 };

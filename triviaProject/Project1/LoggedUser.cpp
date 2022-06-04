@@ -1,22 +1,50 @@
 #include "LoggedUser.h"
 #include <iomanip>
 
-
-LoggedUser::LoggedUser(const std::string& name, const std::string& password) :
-	 m_name(name),m_password(password)
+unsigned int User::nextId;
+//user
+User::User(const string& name)
 {
-	// Left empty
+	m_name = name;
+	m_id = nextId;
 }
 
+User::User()
+{
+	m_name = "";
+	m_id = -1;
+}
 
-const std::string& LoggedUser::getName() const
+const unsigned int User::getId() const
+{
+	return 0;
+}
+
+const std::string& User::getName() const
 {
 	return m_name;
 }
 
-void LoggedUser::setName(const std::string& name)
+void User::setName(const std::string& name)
 {
 	m_name = name;
+}
+
+bool User::operator <(const User& otherUser) const
+{
+	return this->getId() < otherUser.getId();	//compares based on id												
+}
+
+bool User::operator ==(const User& otherUser) const
+{
+	return this->getId() == otherUser.getId();	//compares based on id												
+}
+
+//******************************************************
+LoggedUser::LoggedUser(const std::string& name, const std::string& password) :
+	User(name), m_password(password)
+{
+	// Left empty
 }
 
 const std::string& LoggedUser::getMail() const
@@ -44,6 +72,8 @@ void LoggedUser::setPassword(const std::string& password)
 {
 	m_password = password;
 }
+
+//******************************************************
 
 void StatsUser::setName(std::string name)
 {

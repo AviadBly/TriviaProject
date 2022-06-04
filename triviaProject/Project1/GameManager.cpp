@@ -8,7 +8,7 @@ GameManager::GameManager(IDatabase* database) : m_database(database)
     nextGameId = 1;
 }
 
-Game GameManager::createGame(vector<LoggedUser> users)
+Game GameManager::createGame(vector<User> users)
 {
     vector<Question> questions = m_database->getQuestions();
     //new game
@@ -32,7 +32,7 @@ void GameManager::deleteGame(Game game)
 
 }
 
-void GameManager::removeUser(LoggedUser user, Game game)
+void GameManager::removeUser(User user, Game game)
 {
     //TO DO, remove the user from the game the matched the given game
     

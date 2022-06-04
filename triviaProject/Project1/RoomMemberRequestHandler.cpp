@@ -83,7 +83,7 @@ RequestResult RoomMemberRequestHandler::getRoomState()
 		getRoomStateResponse.answerTimeout = roomData.timePerQuestion;	//I am not sure if its true
 		getRoomStateResponse.questionCount = roomData.numOfQuestionsInGame;
 		getRoomStateResponse.hasGameBegun = roomData.isActive;
-		getRoomStateResponse.players = m_room.getAllUsers();
+		getRoomStateResponse.players = m_room.getAllUsersNames();
 
 	}
 	else {//if room doesnt exist
