@@ -1,10 +1,11 @@
 #include "JsonRequestPacketDeserializer.h"
 
 //convert the bits vector to json
-json JsonRequestPacketDeserializer::getJsonFromBits(std::vector<BYTE> jsonBits)
+json JsonRequestPacketDeserializer::getJsonFromBits(const vector<BYTE>& constJsonBits)
 {
 
-	std::string jsonString = "";
+	string jsonString = "";
+	vector<BYTE> jsonBits = constJsonBits;
 	//create a json string, and replace all the \' with \"       because \' is'nt registered well
 	for (unsigned int i = 0; i < jsonBits.size(); i++) {
 		if (jsonBits[i] == '\'') {
@@ -15,15 +16,15 @@ json JsonRequestPacketDeserializer::getJsonFromBits(std::vector<BYTE> jsonBits)
 		}
 	}
 
-	std::cout << "desirizlizer:" << jsonString << "\n";
+	cout << "desirizlizer:" << jsonString << "\n";
 
 	json jsonData = json::parse(jsonString);
-	std::cout << jsonData << "\n";
+	cout << jsonData << "\n";
 
 	return jsonData;
 }
 
-LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<BYTE> jsonRequestBits)
+LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(const vector<BYTE>& jsonRequestBits)
 {
 	LoginRequest loginRequest;
 	//get json format from bits
@@ -35,13 +36,13 @@ LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<
 	return loginRequest;
 }
 
-SignupRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vector<BYTE> jsonRequestBits)
+SignupRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(const vector<BYTE>& jsonRequestBits)
 {
 	SignupRequest signUpRequest;
 	//get json format from bits
 	json jsonData = getJsonFromBits(jsonRequestBits);
 
-	std::cout << jsonData << "\n";
+	cout << jsonData << "\n";
 	signUpRequest.username = jsonData.at(USERNAME_TEXT);
 	signUpRequest.password = jsonData.at(PASSWORD_TEXT);
 	signUpRequest.email = jsonData.at(EMAIL_TEXT);
@@ -50,7 +51,7 @@ SignupRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vecto
 	return signUpRequest;
 }
 
-CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(std::vector<BYTE> jsonRequestBits)
+CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(const vector<BYTE>& jsonRequestBits)
 {
 	CreateRoomRequest createRoomRequest;
 	//get json format from bits
@@ -64,7 +65,7 @@ CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(st
 	return createRoomRequest;
 }
 
-JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(std::vector<BYTE> jsonRequestBits)
+JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(const vector<BYTE>& jsonRequestBits)
 {
 	JoinRoomRequest joinRoomRequest;
 	//get json format from bits
@@ -76,7 +77,7 @@ JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(std::v
 	return joinRoomRequest;
 }
 
-GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(std::vector<BYTE> jsonRequestBits)
+GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(const vector<BYTE>& jsonRequestBits)
 {
 	GetPlayersInRoomRequest getPlayersInRoomRequest;
 	//get json format from bits
@@ -88,20 +89,20 @@ GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRo
 	return getPlayersInRoomRequest;
 }
 
-SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(std::vector<BYTE> jsonRequestBits)
+SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(const vector<BYTE>& jsonRequestBits)
 {
 	SubmitAnswerRequest submitAnswerRequest;
 	//get json format from bits
 	json jsonData = getJsonFromBits(jsonRequestBits);
 
 
-	submitAnswerRequest.answerId = jsonData.at(ROOM_ID_TEXT);
+	submitAnswerRequest.answerId = jsonData.at(ANSWER_ID_TEXT);
 
 	return submitAnswerRequest;
 }
 
 
-//ErrorResponse JsonRequestPacketDeserializer::deserializeErrorResponse(std::vector<BYTE> jsonResponseBits)
+//ErrorResponse JsonRequestPacketDeserializer::deserializeErrorResponse(vector<BYTE> jsonResponseBits)
 //{
 //	ErrorResponse errorRequest;
 //	//get json format from bits
@@ -110,8 +111,8 @@ SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerReques
 //	try {
 //		errorRequest.message = jsonData.at("message");
 //	}
-//	catch (const std::exception& e) {
-//		throw std::exception(e.what());
+//	catch (const exception& e) {
+//		throw exception(e.what());
 //	}
 //	
 //	return errorRequest;

@@ -1,18 +1,20 @@
 #include "Game.h"
 #include "LoggedUser.h"
 
-Game::Game(vector<Question> questions, vector<User> users, unsigned int id)
+unsigned int Game::nextGameId;
+
+Game::Game(const vector<Question>& questions, const vector<User>& users, unsigned int timePerQuestion)
 {
-	
-	
+	nextGameId++;
+
 	GameData initGameData;	//initialize the map with users, and empty game data
 	for(auto i = users.begin(); i != users.end(); i++){
 		m_players.insert(pair<User, GameData>(*i, initGameData));
 	}
-	bool he = users[0] < users[1];
-
+	
+	this->timePerQuestion = timePerQuestion;
 	this->m_questions = questions;
-	this->id = id;
+	this->m_id = nextGameId;
 }
 
 Question Game::getQuestionForUser(const User& user)
@@ -29,7 +31,7 @@ Question Game::getQuestionForUser(const User& user)
 	
 }
 
-float Game::calculateNewAverageAnswerTime(float answerTime, const User& user) {
+float Game::calculateNewAverageAnswerTime(float answerTime, const User& user){
 	float newAnswerTime = m_players[user].averageAnswerTime;
 	unsigned int numberOfAnswers = m_players[user].correctAnswerCount + m_players[user].wrongAnswerCount;
 
@@ -38,12 +40,11 @@ float Game::calculateNewAverageAnswerTime(float answerTime, const User& user) {
 
 	newAnswerTime = newAnswerTime / (numberOfAnswers + 1);
 	return newAnswerTime;
-	return 1;
 }
 
 //returns the correct answer id
 //also increases the count of the correct or wrongs answers
-unsigned int Game::submitAnswer(User user, unsigned int answerId, float answerTime)
+unsigned int Game::submitAnswer(const User& user, unsigned int answerId, float answerTime)
 {
 	m_players[user].averageAnswerTime = calculateNewAverageAnswerTime(answerTime, user);
 
@@ -65,7 +66,7 @@ unsigned int Game::submitAnswer(User user, unsigned int answerId, float answerTi
 	
 }
 
-bool Game::removePlayer(User user)
+bool Game::removePlayer(const User& user)
 {
 	return m_players.erase(user);	//if succesfull returns true
 }
@@ -95,5 +96,10 @@ vector<PlayerResults> Game::getGameResults()
 
 unsigned int Game::getId() const
 {
-	return this->id;
+	return this->m_id;
+}
+
+bool Game::operator==(const Game& otherGame)
+{
+	return this->m_id == otherGame.getId();
 }

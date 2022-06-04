@@ -54,9 +54,6 @@
     <ClCompile Include="Communicator.cpp">
       <Filter>Source Files\Server</Filter>
     </ClCompile>
-    <ClCompile Include="IRequestHandler.cpp">
-      <Filter>Source Files\Requests and Responses</Filter>
-    </ClCompile>
     <ClCompile Include="JsonRequestPacketDeserializer.cpp">
       <Filter>Source Files\Json</Filter>
     </ClCompile>

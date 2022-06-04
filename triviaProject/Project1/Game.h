@@ -26,21 +26,26 @@ class Game
 
 public:
 	Game() = default;
-	Game(vector<Question> questions, vector<User> users ,unsigned int id);
+	Game(const vector<Question>& questions, const vector<User>& users, unsigned int timePerQuestion);
 	Question getQuestionForUser(const User& user);
 	
-	unsigned int submitAnswer(User user, unsigned int answerId, float answerTime);
+	unsigned int submitAnswer(const User& user, unsigned int answerId, float answerTime);
 
-	bool removePlayer(User user);
+	bool removePlayer(const User& user);
 	vector<PlayerResults> getGameResults();
 	unsigned int getId() const;
 
-	
+	bool operator ==(const Game& otherGame);	//compare based on id
 private:
-	unsigned int id;
+	static unsigned int nextGameId;
+
+	unsigned int m_id;
 	vector<Question> m_questions;
 	map<User, GameData> m_players;
 	unsigned int timePerQuestion;
+
+	bool hasGameEnded;
+
 	PlayerResults getPlayerResults(const User& user);
 	float calculateNewAverageAnswerTime(float answerTime, const User& user);
 };

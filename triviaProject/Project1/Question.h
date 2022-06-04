@@ -11,7 +11,7 @@ class Question
 
 public:
 	Question() = default;
-	Question(string question,string answer1, string answer2, string answer3, string answer4 );
+	Question(string question,string answer1, string answer2, string answer3, string answer4);
 	string getQuestionString();
 	map<unsigned int, string> getPossibleAnswers();
 	string getCorrectAnswer();	//the correct answer start with '*'

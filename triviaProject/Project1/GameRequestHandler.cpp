@@ -34,7 +34,7 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo requestInfo)
 			requestResult = submitAnswer(requestInfo);
 			break;
 		case GET_GAME_RESULT_REQUEST_CODE:
-
+			requestResult = getGameResults();
 			break;
 		
 		}
@@ -119,10 +119,7 @@ RequestResult GameRequestHandler::getGameResults()
 	
 	
 	getGameResultsResponse.status = getGameResultsResponse.status_ok;
-
 	getGameResultsResponse.results = m_game.getGameResults();
-	//should later add here the:  player results
-
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetGameResultsResponse(getGameResultsResponse);
 
