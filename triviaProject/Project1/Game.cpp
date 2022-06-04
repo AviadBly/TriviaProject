@@ -1,7 +1,14 @@
 #include "Game.h"
-#include "LoggedUser.h"
+
 
 unsigned int Game::nextGameId;
+
+Game::Game()
+{
+	this->timePerQuestion = 0;
+	this->hasGameEnded = false;
+	this->m_id = -1;
+}
 
 Game::Game(const vector<Question>& questions, const vector<User>& users, unsigned int timePerQuestion)
 {
@@ -15,6 +22,7 @@ Game::Game(const vector<Question>& questions, const vector<User>& users, unsigne
 	this->timePerQuestion = timePerQuestion;
 	this->m_questions = questions;
 	this->m_id = nextGameId;
+	this->hasGameEnded = false;
 }
 
 Question Game::getQuestionForUser(const User& user)
@@ -26,7 +34,7 @@ Question Game::getQuestionForUser(const User& user)
 	//the new question is given from the question vector based on the number of question answered
 	Question newQuestion = m_questions[m_players[user].correctAnswerCount + m_players[user].wrongAnswerCount];
 	m_players[user].currentQuestion = newQuestion;
-
+	
 	return newQuestion;
 	
 }

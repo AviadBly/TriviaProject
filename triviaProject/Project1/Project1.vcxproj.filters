@@ -60,7 +60,7 @@
     <ClCompile Include="JsonResponsePacketSerializer.cpp">
       <Filter>Source Files\Json</Filter>
     </ClCompile>
-    <ClCompile Include="LoggedUser.cpp">
+    <ClCompile Include="Users.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="LoginManager.cpp">
@@ -182,7 +182,7 @@
     <ClInclude Include="Room.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="LoggedUser.h">
+    <ClInclude Include="Users.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="LoginRequestHandler.h">

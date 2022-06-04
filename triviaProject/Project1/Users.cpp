@@ -1,7 +1,8 @@
-#include "LoggedUser.h"
+#include "Users.h"
 #include <iomanip>
 
 unsigned int User::nextId;
+
 //user
 User::User(const string& name)
 {

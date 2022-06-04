@@ -5,7 +5,7 @@
 #include<time.h>
 #include <map>
 
-Question::Question(string question, string answer1, string answer2, string answer3, string answer4)
+Question::Question(const string& question, const string& answer1, const string& answer2, const string& answer3, const string& answer4)
 {
     this->m_question = question;
     this->m_possibleAnswers.insert(pair<unsigned int, string>(0, answer1));
@@ -15,7 +15,7 @@ Question::Question(string question, string answer1, string answer2, string answe
     mixAnswers();
 }
 
-string Question::getQuestionString()
+const string& Question::getQuestionString() const
 {
     return this->m_question;
 }
@@ -35,7 +35,7 @@ map<unsigned int, string> Question::getPossibleAnswers()
     return m_possibleAnswers;
 }
 
-string Question::getCorrectAnswer()
+string Question::getCorrectAnswer() const
 {
     for (auto iter = m_possibleAnswers.begin(); iter != m_possibleAnswers.end(); iter++)
     {
@@ -49,25 +49,26 @@ string Question::getCorrectAnswer()
     return("Error");
 }
 
-int Question::getIdOfAnswer(string answer)
+//finds the answer by the text, and returns its id
+int Question::getIdOfAnswer(const string& answer) const
 {
-    for (auto i = m_possibleAnswers.begin(); i != m_possibleAnswers.end(); i++) {
-        if (answer == i->second) {
-            return i->first;
+    for (auto& i : m_possibleAnswers) {
+        if (answer == i.second) {
+            return i.first;
         }
     }
 
     return -1;
 }
 
-void Question::setQuestion(string question)
+void Question::setQuestion(const string& question)
 {
     this->m_question = question;
 }
 
-void Question::addPossibleAnswers(string answer)
+void Question::addPossibleAnswers(const string& answer)
 {
-    this->m_possibleAnswers.insert(  pair<unsigned int, string> (m_possibleAnswers.size(), answer)   );
+    this->m_possibleAnswers.insert(  pair<unsigned int, string>(m_possibleAnswers.size(), answer)  );
 }
 
 //changes the order of the answers

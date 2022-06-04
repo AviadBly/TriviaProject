@@ -4,7 +4,7 @@
 #include <algorithm>
 #include "sqlite3.h"
 #include <list>
-#include "LoggedUser.h"
+#include "Users.h"
 #include <io.h>
 using namespace std;
 
@@ -78,7 +78,7 @@ int SqliteDataBase::callbackQuestions(void* data, int argc, char** argv, char** 
 	vector<Question>* questions = (vector<Question>*)data;
 	Question question;
 
-	for (int i = 0; i < argc; i++) {
+	for (int i = 0; i < argc; i++) {	//only one question is changed
 		if (string(azColName[i]) == "QUESTION") {
 			question.setQuestion((argv[i]));
 		}
@@ -106,7 +106,7 @@ void SqliteDataBase::sendCallBackQuestions(sqlite3* db, const char* sqlStatement
 {
 	char** errMessage = nullptr;
 	int res = sqlite3_exec(db, sqlStatement, callbackQuestions, questions, errMessage);
-	if (res != SQLITE_OK) {
+	if (res != SQLITE_OK) {	//TO DO, fix the callback, because right now only one question gets changed
 		std::cout << res << std::endl;
 		cout << "Error!" << endl;
 	}

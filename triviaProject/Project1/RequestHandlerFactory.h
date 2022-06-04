@@ -2,7 +2,7 @@
 #include <vector>
 #include "IDatabase.h"
 #include "LoginManager.h"
-#include "LoggedUser.h"
+#include "Users.h"
 #include "LoginRequestHandler.h"
 #include "MenuRequestHandler.h"
 #include "StatisticsManager.h"
@@ -22,13 +22,15 @@ class RequestHandlerFactory {
 public:
 	RequestHandlerFactory(IDatabase* database);
 	~RequestHandlerFactory();
-	//handlers
-	LoginRequestHandler* createLoginRequestHandler();
-	
-	MenuRequestHandler* createMenuRequestHandler(LoggedUser newUser);
 
-	RoomMemberRequestHandler* createRoomMemberRequestHandler(LoggedUser loggedUser, Room room);
-	RoomAdminRequestHandler* createRoomAdminRequestHandler(LoggedUser loggedUser, Room room);
+	//create handlers
+	LoginRequestHandler* createLoginRequestHandler();
+
+	MenuRequestHandler* createMenuRequestHandler(const LoggedUser& newUser);
+
+	RoomMemberRequestHandler* createRoomMemberRequestHandler(const LoggedUser& newUser, const Room& room);
+	RoomAdminRequestHandler* createRoomAdminRequestHandler(const LoggedUser& newUser, const Room& room);
+
 	GameRequestHandler* createGameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion);
 
 	//getters

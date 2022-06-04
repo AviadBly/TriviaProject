@@ -159,7 +159,7 @@
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SqliteDataBase.cpp" />
-    <ClCompile Include="LoggedUser.cpp" />
+    <ClCompile Include="Users.cpp" />
     <ClCompile Include="StatisticsManager.cpp" />
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
@@ -191,7 +191,7 @@
     <ClInclude Include="Server.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SqliteDataBase.h" />
-    <ClInclude Include="LoggedUser.h" />
+    <ClInclude Include="Users.h" />
     <ClInclude Include="StatisticsManager.h" />
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>

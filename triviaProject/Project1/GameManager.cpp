@@ -7,9 +7,13 @@ GameManager::GameManager(IDatabase* database) : m_database(database)
     
 }
 
-Game GameManager::createGame(vector<User> users, unsigned int timePerQuestion)
+Game GameManager::createGame(const vector<User>& users, unsigned int timePerQuestion)
 {
     vector<Question> questions = m_database->getQuestions();
+    for (auto& q : questions) {
+        q.mixAnswers();
+    }
+
     //new game
     Game newGame(questions, users, timePerQuestion);
 
@@ -44,8 +48,4 @@ vector<Game>::iterator GameManager::getGame(const Game& game)
    // return m_games.end();
 }
 
-//compares the games based on their id
-//bool operator==(const Game& lhs, const Game& rhs)
-//{
-//    return lhs.getId() == rhs.getId();
-//}
+

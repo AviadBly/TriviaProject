@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "LoggedUser.h"
+#include "Users.h"
 #include <list>
 using namespace std;
 

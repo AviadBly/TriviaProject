@@ -11,15 +11,16 @@ class Question
 
 public:
 	Question() = default;
-	Question(string question,string answer1, string answer2, string answer3, string answer4);
-	string getQuestionString();
+	Question(const string& question,const string& answer1, const string& answer2, const string& answer3, const string& answer4);
+	const string& getQuestionString() const;
+
 	map<unsigned int, string> getPossibleAnswers();
-	string getCorrectAnswer();	//the correct answer start with '*'
+	string getCorrectAnswer() const;	//the correct answer start with '*'
 
-	int getIdOfAnswer(string answer);
+	int getIdOfAnswer(const string& answer) const;
 
-	void setQuestion(string question);
-	void addPossibleAnswers(string answer);
+	void setQuestion(const string& question);
+	void addPossibleAnswers(const string& answer);
 	void mixAnswers();
 
 private:

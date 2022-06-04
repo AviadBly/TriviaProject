@@ -19,8 +19,8 @@ public:
 	GameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion, GameManager& gameManager, RequestHandlerFactory& handleFactory);
 
 
-	virtual bool isRequestRelevant(RequestInfo requestInfo) const;
-	virtual RequestResult handleRequest(RequestInfo requestInfo);
+	virtual bool isRequestRelevant(const RequestInfo& requestInfo) const;
+	virtual RequestResult handleRequest(const RequestInfo& requestInfo);
 
 	
 private:

@@ -1,7 +1,7 @@
 #pragma once
 #include "Question.h"
 #include <map>
-#include "LoggedUser.h"
+#include "Users.h"
 #include "Responses.h"
 
 
@@ -17,7 +17,7 @@ struct GameData
 	Question currentQuestion;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
-	float averageAnswerTime;
+	double averageAnswerTime;
 };
 
 
@@ -25,7 +25,7 @@ class Game
 {
 
 public:
-	Game() = default;
+	Game();
 	Game(const vector<Question>& questions, const vector<User>& users, unsigned int timePerQuestion);
 	Question getQuestionForUser(const User& user);
 	

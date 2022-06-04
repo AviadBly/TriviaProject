@@ -22,7 +22,7 @@ MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& handlerFactory, Lo
 
 }
 
-bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
+bool MenuRequestHandler::isRequestRelevant(const RequestInfo& requestInfo) const
 {
 	unsigned int code = requestInfo.code;
 	return code == CREATE_ROOM_CODE || code == GET_ROOMS_REQUEST || code == GET_PLAYERS_IN_ROOM_REQUEST_CODE
@@ -30,7 +30,7 @@ bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
 		|| code == GET_HIGH_SCORES_REQUEST_CODE;
 }
 
-RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
+RequestResult MenuRequestHandler::handleRequest(const RequestInfo& requestInfo)
 {
 	RequestResult requestResult;
 	

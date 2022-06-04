@@ -7,7 +7,7 @@ GameRequestHandler::GameRequestHandler(const vector<User>& users, const LoggedUs
 }
 
 
-bool GameRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
+bool GameRequestHandler::isRequestRelevant(const RequestInfo& requestInfo) const
 {
 	unsigned int code = requestInfo.code;
 
@@ -16,7 +16,7 @@ bool GameRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
 }
 
 
-RequestResult GameRequestHandler::handleRequest(RequestInfo requestInfo)
+RequestResult GameRequestHandler::handleRequest(const RequestInfo& requestInfo)
 {
 	RequestResult requestResult;
 
@@ -91,7 +91,7 @@ RequestResult GameRequestHandler::getQuestion()
 
 RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 {
-	float answerTime = difftime(sendingTime, requestInfo.receivalTime);
+	double answerTime = difftime(sendingTime, requestInfo.receivalTime);
 	std::cout << "Answer time:" << answerTime << "\n";
 
 	RequestResult requestResult;
