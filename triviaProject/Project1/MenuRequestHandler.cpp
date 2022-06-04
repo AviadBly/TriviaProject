@@ -132,20 +132,15 @@ RequestResult MenuRequestHandler::getPlayersInRoom(const RequestInfo& requestInf
 	getPlayersInRoomRequest = JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(requestInfo.buffer);
 
 
-	auto rooms = m_roomManager.getRooms();
-
-	for (auto& i : rooms) {
+	Room room = m_roomManager.getSingleRoom(getPlayersInRoomRequest.roomId);
 	
-		//finds the room with the given id
-		if (i.getData().id == getPlayersInRoomRequest.roomId) {
-
-			//add all the players
-			auto allPlayers = i.getAllUsersNames();
-			for (auto& p : allPlayers){
-				getPlayersInRoomResponse.players.push_back(p);
-			}		
-		} 	
+	//add all the players
+	auto allPlayers = room.getAllUsersNames();
+	for (auto& p : allPlayers) {
+		getPlayersInRoomResponse.players.push_back(p);
 	}
+		
+	
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(getPlayersInRoomResponse);
 	
@@ -161,22 +156,19 @@ RequestResult MenuRequestHandler::joinRoom(const RequestInfo& requestInfo)
 	JoinRoomResponse joinRoomResponse;
 	
 	joinRoomResponse.status = joinRoomResponse.status_error;
-	Room wantedRoom;
-	auto rooms = m_roomManager.getRooms();
+	Room& wantedRoom = m_roomManager.getSingleRoom(joinRoomRequest.roomId);
+	
+	
+	//checks if a new user can join
+	if (wantedRoom.canNewUserJoin()) {
 
-	for (auto& i : rooms) {
-
-		//finds the room with the given id, and checks if a new user can join
-		if (i.getData().id == joinRoomRequest.roomId && i.canNewUserJoin()) {
-
-			joinRoomResponse.status = joinRoomResponse.status_ok;
-			wantedRoom = i;
-			
-			m_roomManager.addUserToRoom(i.getData().id, m_user);
-			requestResult.newHandler = m_handlerFactory.createRoomMemberRequestHandler(m_user, wantedRoom);
-			break;
-		}
+		joinRoomResponse.status = joinRoomResponse.status_ok;
+		
+		wantedRoom.addUser(m_user);		
+		
+		requestResult.newHandler = m_handlerFactory.createRoomMemberRequestHandler(m_user, wantedRoom);	
 	}
+	
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeJoinRoomResponse(joinRoomResponse);
 	

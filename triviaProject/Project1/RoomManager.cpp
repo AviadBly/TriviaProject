@@ -17,7 +17,7 @@ unsigned int RoomManager::createRoom(LoggedUser user, RoomData data)
 	return data.id;
 }
 
-Room RoomManager::getSingleRoom(int ID)
+Room& RoomManager::getSingleRoom(int ID)
 {
 	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
 	{
@@ -27,7 +27,20 @@ Room RoomManager::getSingleRoom(int ID)
 		}
 	}
 	
-	return Room();
+	throw ("No room with the given id");
+
+}
+
+bool RoomManager::doesRoomExist(unsigned int ID) {
+
+	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
+	{
+		if (it->first == ID)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void RoomManager::deleteRoom(int ID)
@@ -76,5 +89,16 @@ void RoomManager::setRoomActive(int ID)
 void RoomManager::addUserToRoom(int ID, LoggedUser user)
 {
 	m_rooms[ID].addUser(user);
+}
+
+void RoomManager::removeUser(User user, RoomData data)
+{
+	for (auto r = m_rooms.begin(); r != m_rooms.end(); r++) {
+		if (r->second.getData().id == data.id) {
+			r->second.removeUser(user);
+			return;
+		}
+		
+	}
 }
 

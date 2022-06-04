@@ -15,10 +15,11 @@ public:
 	vector<Room> getRooms();
 
 	
-	Room getSingleRoom(int ID);
+	Room& getSingleRoom(int ID);
+	bool doesRoomExist(unsigned int ID);
 	void setRoomActive(int ID);
 	void addUserToRoom(int ID, LoggedUser user);
-
+	void removeUser(User user, RoomData data);
 private:
 	int nextRoomId;
 	map<unsigned int, Room> m_rooms;

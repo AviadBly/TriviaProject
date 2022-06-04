@@ -62,9 +62,14 @@ unsigned int Game::submitAnswer(const User& user, unsigned int answerId, double 
 
 	if (userAnswer == correctAnswer) {
 		m_players[user].correctAnswerCount++;
+		
 	}
 	else {
 		m_players[user].wrongAnswerCount++;
+	}
+
+	if (m_players[user].wrongAnswerCount + m_players[user].correctAnswerCount == m_questions.size()) {
+		this->setHasEnded(true);
 	}
 	
 	int correctAnswerId = m_players[user].currentQuestion.getIdOfAnswer(correctAnswer);
@@ -106,6 +111,16 @@ vector<PlayerResults> Game::getGameResults()
 unsigned int Game::getId() const
 {
 	return this->m_id;
+}
+
+bool Game::hasEnded() const
+{
+	return this->hasGameEnded;
+}
+
+void Game::setHasEnded(bool isEnded)
+{
+	hasGameEnded = isEnded;
 }
 
 bool Game::operator==(const Game& otherGame)
