@@ -1,17 +1,19 @@
 #include "GameManager.h"
 #include "MyException.h"
 
+unsigned int GameManager::nextGameId;
+
 GameManager::GameManager(IDatabase* database) : m_database(database)
 {
-    gameId = 1;
+    nextGameId = 1;
 }
 
 Game GameManager::createGame(vector<LoggedUser> users)
 {
     vector<Question> questions = m_database->getQuestions();
     //new game
-    Game newGame(questions, users, gameId);
-    gameId++;
+    Game newGame(questions, users, nextGameId);
+    nextGameId++;
     return newGame;
 }
 

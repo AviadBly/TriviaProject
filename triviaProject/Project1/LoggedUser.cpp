@@ -29,6 +29,12 @@ void LoggedUser::setMail(const std::string& mail)
 	m_mail = mail;
 }
 
+bool LoggedUser::operator <(const LoggedUser& otherUser) const
+{
+	return this->getName().compare(otherUser.getName()) < 0;	//compares based on alphabetical order
+														//returns true if this.name < otherUser.name
+}
+
 const std::string& LoggedUser::getPassword() const
 {
 	return m_password;

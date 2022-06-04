@@ -91,7 +91,7 @@ RequestResult GameRequestHandler::getQuestion()
 
 RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 {
-	double answerTime = difftime(sendingTime, requestInfo.receivalTime);
+	float answerTime = difftime(sendingTime, requestInfo.receivalTime);
 	std::cout << "Answer time:" << answerTime << "\n";
 
 	RequestResult requestResult;
@@ -106,6 +106,7 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeSubmitAnswerResponse(submitAnswerResponse);
 
+	
 
 	return requestResult;
 }

@@ -19,7 +19,7 @@ public:
 	const std::string& getMail() const;
 	void setMail(const std::string& mail);
 
-
+	bool operator <(const LoggedUser& otherUser) const;
 
 private:
 	std::string m_password;

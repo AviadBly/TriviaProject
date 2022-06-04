@@ -14,9 +14,9 @@ public:
 	void deleteGame(Game game);
 	void removeUser(LoggedUser user, Game game);	
 	//friend bool operator==(const Game& lhs, const Game& rhs);
-
+	
 private:
-	static unsigned int gameId;
+	static unsigned int nextGameId;
 	IDatabase* m_database;
 	vector<Game> m_games;
 

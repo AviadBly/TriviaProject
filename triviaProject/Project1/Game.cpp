@@ -9,12 +9,13 @@ Game::Game(vector<Question> questions, vector<LoggedUser> users, unsigned int id
 	for(auto i = users.begin(); i != users.end(); i++){
 		m_players.insert(pair<LoggedUser, GameData>(*i, initGameData));
 	}
+	bool he = users[0] < users[1];
 
 	this->m_questions = questions;
 	this->id = id;
 }
 
-Question Game::getQuestionForUser(LoggedUser user)
+Question Game::getQuestionForUser(const LoggedUser& user)
 {
 	/*int random = rand() % m_questions.size();
 	Question sel_elem = m_questions[random];*/
@@ -28,7 +29,7 @@ Question Game::getQuestionForUser(LoggedUser user)
 	
 }
 
-float Game::calculateNewAverageAnswerTime(float answerTime, LoggedUser user) {
+float Game::calculateNewAverageAnswerTime(float answerTime, const LoggedUser& user) {
 	float newAnswerTime = m_players[user].averageAnswerTime;
 	unsigned int numberOfAnswers = m_players[user].correctAnswerCount + m_players[user].wrongAnswerCount;
 
@@ -36,6 +37,8 @@ float Game::calculateNewAverageAnswerTime(float answerTime, LoggedUser user) {
 	newAnswerTime += answerTime;
 
 	newAnswerTime = newAnswerTime / (numberOfAnswers + 1);
+	return newAnswerTime;
+	return 1;
 }
 
 //returns the correct answer id
@@ -59,6 +62,7 @@ unsigned int Game::submitAnswer(LoggedUser user, unsigned int answerId, float an
 		throw ("Error");
 	}
 	return correctAnswerId;
+	
 }
 
 
@@ -68,6 +72,19 @@ bool Game::removePlayer(LoggedUser user)
 	return m_players.erase(user);	//if succesfull returns true
 }
 
+PlayerResults Game::getPlayerResults(const LoggedUser& user)
+{
+	PlayerResults playerResults;
+
+	GameData userGameData = m_players[user];
+	playerResults.averageAnswerCount = userGameData.averageAnswerTime;
+	playerResults.correctAnswerCount = userGameData.correctAnswerCount;
+	playerResults.wrongAnswerCount = userGameData.wrongAnswerCount;
+	playerResults.username = user.getName();
+
+	return playerResults;
+}
+
 vector<PlayerResults> Game::getGameResults()
 {
 	vector<PlayerResults> results;
@@ -75,19 +92,7 @@ vector<PlayerResults> Game::getGameResults()
 	for (auto i = m_players.begin(); i != m_players.end(); i++) {
 		results.push_back(getPlayerResults(i->first));
 	}
-
 	return results;
-}
-
-PlayerResults Game::getPlayerResults(LoggedUser user)
-{
-	PlayerResults playerResults;
-	GameData userGameData = m_players[user];
-	playerResults.averageAnswerCount = userGameData.averageAnswerTime;
-	playerResults.correctAnswerCount = userGameData.correctAnswerCount;
-	playerResults.wrongAnswerCount = userGameData.wrongAnswerCount;
-	playerResults.username = user.getName();
-	return playerResults;
 }
 
 unsigned int Game::getId() const
