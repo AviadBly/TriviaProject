@@ -29,6 +29,7 @@ RequestResult RoomMemberRequestHandler::handleRequest(const RequestInfo& request
 		switch (requestInfo.code) {
 		case LEAVE_ROOM_REQUEST_CODE:
 			requestResult = leaveRoom();
+			delete this;
 			break;
 		case GET_ROOM_STATE_REQUEST_CODE:
 			requestResult = getRoomState();
@@ -57,11 +58,11 @@ RequestResult RoomMemberRequestHandler::leaveRoom()
 	leaveRoomResponse.status = leaveRoomResponse.status_ok;
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeLeaveRoomResponse(leaveRoomResponse);
-	//m_roomManager.removeUser(m_user, m_room.getData());
-	m_room.removeUser(m_user);
+	m_roomManager.removeUser(m_user, m_room.getData());
+	//m_room.removeUser(m_user);
 		//change back to menu handler
 	requestResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(m_user);
-	delete this;
+	
 
 	return requestResult;
 }
@@ -76,7 +77,7 @@ RequestResult RoomMemberRequestHandler::getRoomState()
 	//m_room = m_roomManager.getSingleRoom(m_room.getData().id);
 
 	//checks if room still exist, because the default return of getSingleRoom is a room with id=0
-	if (m_room.getData().id != 0) {
+	if (m_roomManager.doesRoomExist(m_room.getData().id)) {
 		getRoomStateResponse.status = getRoomStateResponse.status_ok;
 		RoomData roomData = this->m_room.getData();
 
@@ -86,10 +87,9 @@ RequestResult RoomMemberRequestHandler::getRoomState()
 		getRoomStateResponse.players = m_room.getAllUsersNames();
 
 	}
-	else {//if room doesnt exist
+	else {//if room doesnt exist, send the required status
 		getRoomStateResponse.status = getRoomStateResponse.statusRoomNotFound;
-
-		delete this;
+		
 	}
 
 	

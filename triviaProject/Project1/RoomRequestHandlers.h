@@ -38,8 +38,8 @@ class RoomAdminRequestHandler : public RoomMemberRequestHandler {
 public:
 
 	RoomAdminRequestHandler(const LoggedUser& user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
-	virtual bool isRequestRelevant(RequestInfo requestInfo) const;
-	virtual RequestResult handleRequest(RequestInfo requestInfo);
+	virtual bool isRequestRelevant(const RequestInfo& requestInfo) const;
+	virtual RequestResult handleRequest(const RequestInfo& requestInfo);
 
 private:
 

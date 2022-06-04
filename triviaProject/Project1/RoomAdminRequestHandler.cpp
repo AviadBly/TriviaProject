@@ -6,13 +6,13 @@ RoomAdminRequestHandler::RoomAdminRequestHandler(const LoggedUser& user, Room& r
 	
 }
 
-bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
+bool RoomAdminRequestHandler::isRequestRelevant(const RequestInfo& requestInfo) const
 {
 	BYTE code = requestInfo.code;
 	return code == CLOSE_ROOM_REQUEST_CODE || code == START_GAME_REQUEST_CODE || code == GET_ROOM_STATE_REQUEST_CODE;
 }
 
-RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo requestInfo)
+RequestResult RoomAdminRequestHandler::handleRequest(const RequestInfo& requestInfo)
 {
 	RequestResult requestResult;
 
@@ -20,6 +20,7 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo requestInfo)
 		switch (requestInfo.code) {
 		case CLOSE_ROOM_REQUEST_CODE:
 			requestResult = closeRoom();
+			delete this;
 			break;
 		case START_GAME_REQUEST_CODE:
 			requestResult = startGame();;
@@ -63,11 +64,10 @@ RequestResult RoomAdminRequestHandler::closeRoom()
 {
 	RequestResult requestResult;
 	CloseRoomResponse closeRoomResponse;
-	
-
-	this->m_roomManager.deleteRoom(m_room.getData().id);
+		
 	requestResult = leaveRoom();		//maybe add this later to leave the room
-	
+	this->m_roomManager.deleteRoom(m_room.getData().id);
+
 	closeRoomResponse.status = closeRoomResponse.status_ok;
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeCloseRoomResponse(closeRoomResponse);
