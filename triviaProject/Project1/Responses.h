@@ -94,12 +94,12 @@ struct SubmitAnswerResponse : public Response
 	unsigned int correctAnswerID;
 };
 
-struct	PlayerResults : public Response
+struct PlayerResults
 {
 	string username;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
-	unsigned int averageAnswerCount;
+	double averageAnswerCount;
 };
 
 struct GetGameResultsResponse : public Response

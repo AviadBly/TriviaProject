@@ -10,13 +10,16 @@ class GameManager
 
 public:
 	GameManager(IDatabase* database);
-	Game createGame(string Room);
-	void deleteGame(Game game);
-	void removeUser(LoggedUser user, Game game);	//TO do
+	Game createGame(const vector<User>& users, unsigned int timePerQuestion);
+	void deleteGame(const Game& game);
+	void removeUser(const User& user, const Game& game);
 	//friend bool operator==(const Game& lhs, const Game& rhs);
+	
+	
 private:
-	static unsigned int gameId;
+
 	IDatabase* m_database;
 	vector<Game> m_games;
 
+	vector<Game>::iterator getGame(const Game& game);
 };

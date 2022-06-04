@@ -1,7 +1,7 @@
 #pragma once
 #include "IDatabase.h"
 #include <list>
-#include "LoggedUser.h"
+#include "Users.h"
 #include "sqlite3.h"
 #include <iostream>
 using namespace std;
@@ -27,6 +27,7 @@ public:
 	virtual const vector<Question> getQuestions();
 
 	bool open();
+
 private:
 	sqlite3* db;
 	static bool sendToServer(sqlite3* db, const char* sqlStatement);

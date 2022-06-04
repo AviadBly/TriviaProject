@@ -7,26 +7,29 @@ LoginRequestHandler::LoginRequestHandler(LoginManager& loginManager, RequestHand
 {
 }
 
-bool LoginRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
+bool LoginRequestHandler::isRequestRelevant(const RequestInfo& requestInfo) const
 {
 	return requestInfo.code == SIGN_UP_REQUEST_CODE || requestInfo.code == LOGIN_REQUEST_CODE;
 }
 
-RequestResult LoginRequestHandler::handleRequest(RequestInfo requestInfo)
+RequestResult LoginRequestHandler::handleRequest(const RequestInfo& requestInfo)
 {
 	RequestResult requestResult;
 	try {
-		if (requestInfo.code == SIGN_UP_REQUEST_CODE) {	//signUp
-			requestResult = signUp(requestInfo);
-		}
-		else if (requestInfo.code == LOGIN_REQUEST_CODE) {	//login
-			requestResult = login(requestInfo);
-		}
+		switch (requestInfo.code) {
+
+			case SIGN_UP_REQUEST_CODE: 	//signUp
+				requestResult = signUp(requestInfo);
+				break;
+			case LOGIN_REQUEST_CODE:
+				requestResult = login(requestInfo);	//login
+				break;
+		
+		}		
 	}
 	catch (const std::exception& e) {	//if there was any error, return error msg
 		loadErrorMsg(requestResult, e.what());
 	}
-	
 	
 	return requestResult;
 }
@@ -43,7 +46,7 @@ void LoginRequestHandler::loadErrorMsg(RequestResult& requestResult, std::string
 }
 	
 
-bool LoginRequestHandler::isUsernameValid(string& username) {
+bool LoginRequestHandler::isUsernameValid(const string& username) {
 
 	const unsigned int MIN_SIZE = 2;
 	if (username.size() < MIN_SIZE) {	//sets min size for the username
@@ -59,7 +62,7 @@ bool LoginRequestHandler::isUsernameValid(string& username) {
 	return true;
 }
 
-bool LoginRequestHandler::isPasswordValid(string& password) {
+bool LoginRequestHandler::isPasswordValid(const string& password) {
 	const unsigned int MIN_SIZE = 4;
 	if (password.size() < MIN_SIZE) {	//sets min size for the passoword
 		return false;
@@ -76,19 +79,14 @@ bool LoginRequestHandler::isPasswordValid(string& password) {
 
 
 //login and signup need some SOLID
-RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
+RequestResult LoginRequestHandler::login(const RequestInfo& requestInfo)
 {
 	RequestResult requestResult;
-	
-	LoginRequest loginRequest;
-
-	
-	
-	loginRequest = JsonRequestPacketDeserializer::deserializeLoginRequest(requestInfo.buffer);
-	
-	
-
 	LoginResponse loginResponse;
+
+	LoginRequest loginRequest = JsonRequestPacketDeserializer::deserializeLoginRequest(requestInfo.buffer);
+	
+	
 
 	this->m_loginManager.login(loginRequest.username, loginRequest.password);	//this throws an error if login failed
 		
@@ -103,29 +101,25 @@ RequestResult LoginRequestHandler::login(RequestInfo requestInfo)
 	return requestResult;
 }
 
-RequestResult LoginRequestHandler::signUp(RequestInfo requestInfo)
+RequestResult LoginRequestHandler::signUp(const RequestInfo& requestInfo)
 {
 	RequestResult requestResult;
-	
-	SignupRequest signUp;
-
-	signUp = JsonRequestPacketDeserializer::deserializeSignUpRequest(requestInfo.buffer);
-	
-	
 	SignUpResponse signUpResponse;
+	SignupRequest signUpRequest = JsonRequestPacketDeserializer::deserializeSignUpRequest(requestInfo.buffer);
 	
-	if (!isUsernameValid(signUp.username)) {
+	
+	if (!isUsernameValid(signUpRequest.username)) {
 		throw("Username is not valid");
 	}
-	if (!isPasswordValid(signUp.password)) {
+	if (!isPasswordValid(signUpRequest.password)) {
 		throw("Pasword is not valid");
 	}
 
-	this->m_loginManager.signup(signUp.username, signUp.password, signUp.email);	//successfull signUp
+	m_loginManager.signup(signUpRequest.username, signUpRequest.password, signUpRequest.email);	//successfull signUp
 		
-	LoggedUser loggeduser(signUp.username, signUp.password);
+	LoggedUser loggedUser(signUpRequest.username, signUpRequest.password);
 
-	requestResult.newHandler = this->m_handleFactory.createMenuRequestHandler(loggeduser);
+	requestResult.newHandler = m_handleFactory.createMenuRequestHandler(loggedUser);	//go to menu
 		
 	signUpResponse.status = signUpResponse.status_ok;
 	requestResult.buffer = JsonResponsePacketSerializer::serializeSignupRequest(signUpResponse);

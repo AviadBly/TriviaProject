@@ -1,21 +1,30 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <map>
 using namespace std;
 
 
 class Question
 {
-private:
-	string m_question;
-	vector<string> m_possibleAnswers;
+
+
 public:
 	Question() = default;
-	Question(string question,string answer1, string answer2, string answer3, string answer4 );
-	string getQuestion();
-	vector<string> getPossibleAnswers();
-	string getCorrectAnswer();
-	void setQuestion(string question);
-	void addPossibleAnswers(string answer);
+	Question(const string& question,const string& answer1, const string& answer2, const string& answer3, const string& answer4);
+	const string& getQuestionString() const;
+
+	map<unsigned int, string> getPossibleAnswers();
+	string getCorrectAnswer() const;	//the correct answer start with '*'
+
+	int getIdOfAnswer(const string& answer) const;
+
+	void setQuestion(const string& question);
+	void addPossibleAnswers(const string& answer);
+	void mixAnswers();
+
+private:
+	string m_question;
+	map<unsigned int, string> m_possibleAnswers;
 	
 };

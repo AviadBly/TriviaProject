@@ -7,6 +7,7 @@
 #include "RequestHandlerFactory.h"
 #include "MenuRequestHandler.h"
 #include "Game.h"
+#include <time.h> 
 
 
 class RequestHandlerFactory;
@@ -15,27 +16,21 @@ class GameRequestHandler : public IRequestHandler {
 
 public:
 
-	GameRequestHandler(Game game, LoggedUser user, GameManager& gameManager, RequestHandlerFactory& handleFactory);
+	GameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion, GameManager& gameManager, RequestHandlerFactory& handleFactory);
 
 
-	virtual bool isRequestRelevant(RequestInfo requestInfo) const;
-	virtual RequestResult handleRequest(RequestInfo requestInfo);
+	virtual bool isRequestRelevant(const RequestInfo& requestInfo) const;
+	virtual RequestResult handleRequest(const RequestInfo& requestInfo);
 
 	
-
-
 private:
 
 	RequestResult leaveGame();
-
 	RequestResult getQuestion();
-
 	RequestResult submitAnswer(RequestInfo requestInfo);
-
 	RequestResult getGameResults();
 
-
-
+	time_t sendingTime;
 	Game m_game;
 	LoggedUser m_user;
 	GameManager& m_gameManager;

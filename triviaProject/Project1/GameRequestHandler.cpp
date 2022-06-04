@@ -1,13 +1,13 @@
 #include "GameRequestHandler.h"
 
-GameRequestHandler::GameRequestHandler(Game game, LoggedUser user, GameManager& gameManager, RequestHandlerFactory& handleFactory) : m_gameManager(gameManager), m_handlerFactory(handleFactory)
+GameRequestHandler::GameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion, GameManager& gameManager, RequestHandlerFactory& handleFactory) : m_gameManager(gameManager), m_handlerFactory(handleFactory)
 {
-	this->m_game = game;
+	this->m_game = gameManager.createGame(users, timePerQuestion);
 	this->m_user = user;
 }
 
 
-bool GameRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
+bool GameRequestHandler::isRequestRelevant(const RequestInfo& requestInfo) const
 {
 	unsigned int code = requestInfo.code;
 
@@ -16,7 +16,7 @@ bool GameRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
 }
 
 
-RequestResult GameRequestHandler::handleRequest(RequestInfo requestInfo)
+RequestResult GameRequestHandler::handleRequest(const RequestInfo& requestInfo)
 {
 	RequestResult requestResult;
 
@@ -34,7 +34,7 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo requestInfo)
 			requestResult = submitAnswer(requestInfo);
 			break;
 		case GET_GAME_RESULT_REQUEST_CODE:
-
+			requestResult = getGameResults();
 			break;
 		
 		}
@@ -64,7 +64,7 @@ RequestResult GameRequestHandler::leaveGame()
 	leaveGameResponse.status = leaveGameResponse.status_ok;
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeLeaveGameResponse(leaveGameResponse);
-	requestResult.newHandler = m_handlerFactory.createMenuRequestHandler(m_user);//go back to menu
+	requestResult.newHandler = m_handlerFactory.createMenuRequestHandler(m_user);  //go back to menu
 
 	return requestResult;
 }
@@ -75,21 +75,24 @@ RequestResult GameRequestHandler::getQuestion()
 	RequestResult requestResult;
 	GetQuestionResponse getQuestionResponse;
 
-	
-	
 	getQuestionResponse.status = getQuestionResponse.status_ok;
 	
-	//should later add here the:  answers and the question
+	Question userQuestion = m_game.getQuestionForUser(m_user);
+	getQuestionResponse.question = userQuestion.getQuestionString();
 	
+	getQuestionResponse.answers = userQuestion.getPossibleAnswers();
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetQuestionResponse(getQuestionResponse);
 	
+	time(&sendingTime);		//get the current time to sendingTime
 
 	return requestResult;
 }
 
 RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 {
+	double answerTime = difftime(sendingTime, requestInfo.receivalTime);
+	std::cout << "Answer time:" << answerTime << "\n";
 
 	RequestResult requestResult;
 	SubmitAnswerResponse submitAnswerResponse;
@@ -98,12 +101,12 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 	submitAnswerRequest = JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(requestInfo.buffer);
 	
 	submitAnswerResponse.status = submitAnswerResponse.status_ok;
-
-	//should later add here the:  answer id
-
-
+	submitAnswerResponse.correctAnswerID = m_game.submitAnswer(m_user, submitAnswerRequest.answerId, answerTime);
+	
+	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeSubmitAnswerResponse(submitAnswerResponse);
 
+	
 
 	return requestResult;
 }
@@ -116,9 +119,7 @@ RequestResult GameRequestHandler::getGameResults()
 	
 	
 	getGameResultsResponse.status = getGameResultsResponse.status_ok;
-
-	//should later add here the:  player results
-
+	getGameResultsResponse.results = m_game.getGameResults();
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetGameResultsResponse(getGameResultsResponse);
 

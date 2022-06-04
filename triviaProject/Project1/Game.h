@@ -1,16 +1,23 @@
 #pragma once
 #include "Question.h"
 #include <map>
-#include "LoggedUser.h"
+#include "Users.h"
+#include "Responses.h"
 
 
 
 struct GameData
 {
+	GameData() {
+		currentQuestion = Question();
+		correctAnswerCount = 0;
+		wrongAnswerCount = 0;
+		averageAnswerTime = 0;
+	}
 	Question currentQuestion;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
-	unsigned int AvarageAnswerTime;
+	double averageAnswerTime;
 };
 
 
@@ -18,16 +25,28 @@ class Game
 {
 
 public:
-	Game() = default;
-	Game(vector<Question> questions,unsigned int id);
-	void getQuestionForUser(LoggedUser user);
-	bool submitAnswer(LoggedUser user, string answer);
-	bool removePlayer(LoggedUser user);
-	unsigned int getId();
+	Game();
+	Game(const vector<Question>& questions, const vector<User>& users, unsigned int timePerQuestion);
+	Question getQuestionForUser(const User& user);
+	
+	unsigned int submitAnswer(const User& user, unsigned int answerId, double answerTime);
+
+	bool removePlayer(const User& user);
+	vector<PlayerResults> getGameResults();
+	unsigned int getId() const;
+
+	bool operator ==(const Game& otherGame);	//compare based on id
 
 private:
-	unsigned int id;
+	static unsigned int nextGameId;
+
+	unsigned int m_id;
 	vector<Question> m_questions;
-	map<LoggedUser, GameData> m_players;
+	map<User, GameData> m_players;
 	unsigned int timePerQuestion;
+
+	bool hasGameEnded;
+
+	PlayerResults getPlayerResults(const User& user);
+	double calculateNewAverageAnswerTime(double answerTime, const User& user);
 };

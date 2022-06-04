@@ -2,8 +2,7 @@
 #include <string>
 #include <vector>
 #include "IDatabase.h"
-#include "LoggedUser.h"
-#include "LoggedUser.h"
+#include "Users.h"
 
 class LoginManager {
 
@@ -12,11 +11,11 @@ public:
 	LoginManager(IDatabase* database);
 
 	//to do
-	void signup(const std::string username, const std::string password, const std::string email);
-	void login(const std::string username, const std::string password);
-	void logout(const std::string username);
+	void signup(const string& username, const string& password, const string& email);
+	void login(const string& username, const string& password);
+	void logout(const string& username);
 
 private:
-	std::vector<LoggedUser> m_loggedUsers;
+	vector<LoggedUser> m_loggedUsers;
 	IDatabase* m_database;
 };

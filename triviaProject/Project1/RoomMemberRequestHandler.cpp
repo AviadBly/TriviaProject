@@ -1,9 +1,9 @@
 #include "RoomRequestHandlers.h"
 
-RoomMemberRequestHandler::RoomMemberRequestHandler(Room room, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_roomManager(roomManager), m_handlerFactory(handlerFactory)
+RoomMemberRequestHandler::RoomMemberRequestHandler(const Room& room, const LoggedUser& user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_roomManager(roomManager), m_handlerFactory(handlerFactory)
 {
-	this->m_room = room;
-	this->m_user = user;
+	m_room = room;
+	m_user = user;
 }
 
 LoginManager& RoomMemberRequestHandler::getLoginManger()
@@ -16,13 +16,13 @@ RoomManager& RoomMemberRequestHandler::getRoomManager()
 	return this->m_roomManager;
 }
 
-bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
+bool RoomMemberRequestHandler::isRequestRelevant(const RequestInfo& requestInfo) const
 {
 	BYTE code = requestInfo.code;
 	return code == LEAVE_ROOM_REQUEST_CODE || code == GET_ROOM_STATE_REQUEST_CODE;
 }
 
-RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo requestInfo)
+RequestResult RoomMemberRequestHandler::handleRequest(const RequestInfo& requestInfo)
 {
 	RequestResult requestResult;
 
@@ -83,7 +83,7 @@ RequestResult RoomMemberRequestHandler::getRoomState()
 		getRoomStateResponse.answerTimeout = roomData.timePerQuestion;	//I am not sure if its true
 		getRoomStateResponse.questionCount = roomData.numOfQuestionsInGame;
 		getRoomStateResponse.hasGameBegun = roomData.isActive;
-		getRoomStateResponse.players = m_room.getAllUsers();
+		getRoomStateResponse.players = m_room.getAllUsersNames();
 
 	}
 	else {//if room doesnt exist

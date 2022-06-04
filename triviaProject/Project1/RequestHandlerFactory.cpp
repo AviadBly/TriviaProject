@@ -13,32 +13,32 @@ RequestHandlerFactory::~RequestHandlerFactory()
 	delete this->m_loginRequestHandler;
 }
 
+
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {
 	return (this->m_loginRequestHandler);
 }
 
-
-
-MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(LoggedUser loggeduser)
+MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(const LoggedUser& newUser)
 {
-	return new MenuRequestHandler(*this, loggeduser);
+	return new MenuRequestHandler(*this, newUser);
 }
 
-RoomMemberRequestHandler* RequestHandlerFactory::createRoomMemberRequestHandler(LoggedUser loggedUser, Room room)
+RoomMemberRequestHandler* RequestHandlerFactory::createRoomMemberRequestHandler(const LoggedUser& newUser, const Room& room)
 {
-	return new RoomMemberRequestHandler(room, loggedUser, m_roomManager, *this);
+	return new RoomMemberRequestHandler(room, newUser, m_roomManager, *this);
 }
 
-RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(LoggedUser loggedUser, Room room)
+RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(const LoggedUser& newUser, const Room& room)
 {
-	return new RoomAdminRequestHandler(room, loggedUser, m_roomManager, *this);
+	return new RoomAdminRequestHandler(room, newUser, m_roomManager, *this);
 }
 
-GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(Game game, LoggedUser user)
+GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion)
 {
-	return new GameRequestHandler(game, user, m_gameManager, *this);
+	return new GameRequestHandler(users, user, timePerQuestion, m_gameManager, *this);
 }
+
 
 //getters
 LoginManager& RequestHandlerFactory::getLoginManger()

@@ -1,7 +1,7 @@
 #pragma once
 #define DATA_BASE_FILE_NAME "triviaDB.sqlite"
 #include <iostream>
-#include "LoggedUser.h"
+#include "Users.h"
 #include "Question.h"
 using namespace std;
 #include <list>

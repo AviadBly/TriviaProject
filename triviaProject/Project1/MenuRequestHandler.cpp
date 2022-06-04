@@ -22,7 +22,7 @@ MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& handlerFactory, Lo
 
 }
 
-bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
+bool MenuRequestHandler::isRequestRelevant(const RequestInfo& requestInfo) const
 {
 	unsigned int code = requestInfo.code;
 	return code == CREATE_ROOM_CODE || code == GET_ROOMS_REQUEST || code == GET_PLAYERS_IN_ROOM_REQUEST_CODE
@@ -30,7 +30,7 @@ bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo) const
 		|| code == GET_HIGH_SCORES_REQUEST_CODE;
 }
 
-RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
+RequestResult MenuRequestHandler::handleRequest(const RequestInfo& requestInfo)
 {
 	RequestResult requestResult;
 	
@@ -41,7 +41,7 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 			requestResult =  createRoom(requestInfo);
 			break;
 		case GET_ROOMS_REQUEST:
-			requestResult =  getRooms(requestInfo);
+			requestResult =  getRooms();
 			break;
 		case GET_PLAYERS_IN_ROOM_REQUEST_CODE:
 			requestResult =  getPlayersInRoom(requestInfo);
@@ -50,13 +50,13 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 			requestResult = joinRoom(requestInfo);
 			break;
 		case GET_PERSONAL_STATISTICS_REQUEST_CODE:
-			requestResult = getPersonalStatistics(requestInfo);
+			requestResult = getPersonalStatistics();
 			break;
 		case GET_HIGH_SCORES_REQUEST_CODE:
-			requestResult = getHighScore(requestInfo);
+			requestResult = getHighScore();
 			break;		
 		case LOGOUT_REQUEST_CODE:
-			requestResult = logOut(requestInfo);
+			requestResult = logOut();
 			delete this;
 			return requestResult;
 		}
@@ -72,109 +72,7 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 	return requestResult;
 }
 
-RequestResult MenuRequestHandler::logOut(RequestInfo requestInfo)
-{
-
-	LogoutResponse logoutResponse;
-	
-	RequestResult requestResult;
-
-	logoutResponse.status = logoutResponse.status_ok;
-	requestResult.buffer = JsonResponsePacketSerializer::serializeLogoutResponse(logoutResponse);
-
-	this->m_user = LoggedUser();
-
-	requestResult.newHandler = this->m_handlerFactory.createLoginRequestHandler();
-	
-	return requestResult;
-}
-
-RequestResult MenuRequestHandler::getRooms(RequestInfo requestInfo)
-{
-	GetRoomsResponse getRoomsResponse;
-	RequestResult requestResult;
-	
-	
-	getRoomsResponse.rooms = this->m_roomManager.getRooms();
-	std::cout << "Rooms:\n";
-	for (auto i = getRoomsResponse.rooms.begin(); i != getRoomsResponse.rooms.end(); i++) {
-		std::cout << i->getData().name << ", ";
-	}
-	std::cout << "\n\n";
-	getRoomsResponse.status = getRoomsResponse.status_ok;
-
-	requestResult.buffer = JsonResponsePacketSerializer::serializeGetRoomResponse(getRoomsResponse);
-	
-
-	return requestResult;
-}
-
-RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo requestInfo)
-{
-
-	GetPlayersInRoomResponse getPlayersInRoomResponse;
-	GetPlayersInRoomRequest getPlayersInRoomRequest;
-	RequestResult requestResult;
-
-	getPlayersInRoomRequest = JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(requestInfo.buffer);
-
-
-	auto rooms = m_roomManager.getRooms();
-
-	for (auto i = rooms.begin(); i != rooms.end(); i++) {
-	
-		//finds the room with the given id
-		if (i->getData().id == getPlayersInRoomRequest.roomId) {
-
-			auto allPlayers = i->getAllUsers();
-			for (auto m = allPlayers.begin(); m != allPlayers.end(); m++){
-				getPlayersInRoomResponse.players.push_back(*m);
-			}
-			
-		} 
-	
-	}
-
-	requestResult.buffer = JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(getPlayersInRoomResponse);
-	
-
-	return requestResult;
-}
-
-RequestResult MenuRequestHandler::joinRoom(RequestInfo requestInfo)
-{
-	JoinRoomRequest joinRoomRequest;
-	joinRoomRequest = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(requestInfo.buffer);
-	
-	RequestResult requestResult;
-	JoinRoomResponse joinRoomResponse;
-	
-	joinRoomResponse.status = joinRoomResponse.status_error;
-	Room wantedRoom;
-	auto rooms = m_roomManager.getRooms();
-
-	for (auto i = rooms.begin(); i != rooms.end(); i++) {
-
-		//finds the room with the given id
-		if (i->getData().id == joinRoomRequest.roomId && i->canNewUserJoin()) {
-
-			joinRoomResponse.status = joinRoomResponse.status_ok;
-			wantedRoom = *i;
-			
-			m_roomManager.addUserToRoom(i->getData().id, m_user);
-
-			break;
-		}
-
-	}
-
-	requestResult.buffer = JsonResponsePacketSerializer::serializeJoinRoomResponse(joinRoomResponse);
-	requestResult.newHandler = this->m_handlerFactory.createRoomMemberRequestHandler(m_user, wantedRoom);
-
-	return requestResult;
-}
-
-RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
+RequestResult MenuRequestHandler::createRoom(const RequestInfo& requestInfo)
 {
 	CreateRoomRequest createRoomRequest;
 	createRoomRequest = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(requestInfo.buffer);
@@ -188,18 +86,106 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
 	roomData.timePerQuestion = createRoomRequest.answerTimeout;
 	roomData.numOfQuestionsInGame = createRoomRequest.questionCount;
 	roomData.isActive = false;
-	
-	
-	unsigned int roomId = m_roomManager.createRoom(this->m_user, roomData);
+
+
+	unsigned int roomId = m_roomManager.createRoom(m_user, roomData);
 	createRoomResponse.status = createRoomResponse.status_ok;
-	
+
 	requestResult.buffer = JsonResponsePacketSerializer::serializeCreateRoomResponse(createRoomResponse);
-	requestResult.newHandler = this->m_handlerFactory.createRoomAdminRequestHandler(m_user, m_roomManager.getSingleRoom(roomId));
+	requestResult.newHandler = m_handlerFactory.createRoomAdminRequestHandler(m_user, m_roomManager.getSingleRoom(roomId));
 
 	return requestResult;
 }
 
-RequestResult MenuRequestHandler::getHighScore(RequestInfo requestInfo)
+
+
+RequestResult MenuRequestHandler::getRooms()
+{
+	GetRoomsResponse getRoomsResponse;
+	RequestResult requestResult;
+	
+	getRoomsResponse.rooms = this->m_roomManager.getRooms();
+
+	//***remove this later, its for tests***
+	std::cout << "Rooms:\n";
+	for (auto i = getRoomsResponse.rooms.begin(); i != getRoomsResponse.rooms.end(); i++) {
+		std::cout << i->getData().name << ", ";
+	}
+	std::cout << "\n\n";
+	
+
+	getRoomsResponse.status = getRoomsResponse.status_ok;
+
+	requestResult.buffer = JsonResponsePacketSerializer::serializeGetRoomResponse(getRoomsResponse);
+	
+
+	return requestResult;
+}
+
+RequestResult MenuRequestHandler::getPlayersInRoom(const RequestInfo& requestInfo)
+{
+
+	GetPlayersInRoomResponse getPlayersInRoomResponse;
+	GetPlayersInRoomRequest getPlayersInRoomRequest;
+	RequestResult requestResult;
+
+	getPlayersInRoomRequest = JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(requestInfo.buffer);
+
+
+	auto rooms = m_roomManager.getRooms();
+
+	for (auto& i : rooms) {
+	
+		//finds the room with the given id
+		if (i.getData().id == getPlayersInRoomRequest.roomId) {
+
+			//add all the players
+			auto allPlayers = i.getAllUsersNames();
+			for (auto& p : allPlayers){
+				getPlayersInRoomResponse.players.push_back(p);
+			}		
+		} 	
+	}
+	
+	requestResult.buffer = JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(getPlayersInRoomResponse);
+	
+	return requestResult;
+}
+
+RequestResult MenuRequestHandler::joinRoom(const RequestInfo& requestInfo)
+{
+	JoinRoomRequest joinRoomRequest;
+	joinRoomRequest = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(requestInfo.buffer);
+	
+	RequestResult requestResult;
+	JoinRoomResponse joinRoomResponse;
+	
+	joinRoomResponse.status = joinRoomResponse.status_error;
+	Room wantedRoom;
+	auto rooms = m_roomManager.getRooms();
+
+	for (auto& i : rooms) {
+
+		//finds the room with the given id, and checks if a new user can join
+		if (i.getData().id == joinRoomRequest.roomId && i.canNewUserJoin()) {
+
+			joinRoomResponse.status = joinRoomResponse.status_ok;
+			wantedRoom = i;
+			
+			m_roomManager.addUserToRoom(i.getData().id, m_user);
+			requestResult.newHandler = m_handlerFactory.createRoomMemberRequestHandler(m_user, wantedRoom);
+			break;
+		}
+	}
+
+	requestResult.buffer = JsonResponsePacketSerializer::serializeJoinRoomResponse(joinRoomResponse);
+	
+	return requestResult;
+}
+
+
+
+RequestResult MenuRequestHandler::getHighScore() const
 {
 	GetHighScoreResponse getHighScoreResponse;
 	RequestResult requestResult;
@@ -212,16 +198,29 @@ RequestResult MenuRequestHandler::getHighScore(RequestInfo requestInfo)
 	return requestResult;
 }
 
-RequestResult MenuRequestHandler::getPersonalStatistics(RequestInfo requestInfo)
+RequestResult MenuRequestHandler::getPersonalStatistics() const
 {
 	GetPersonalStatsResponse getPersonalStatsResponse;
 	RequestResult requestResult;
 
 	getPersonalStatsResponse.status = getPersonalStatsResponse.status_ok;
-	getPersonalStatsResponse.statistics = m_statisticsManager.getUserStatistics(this->m_user.getName());
+	getPersonalStatsResponse.statistics = m_statisticsManager.getUserStatistics(m_user.getName());
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializePersonalStatisticsResponse(getPersonalStatsResponse);
 
 	return requestResult;
 }
 
+RequestResult MenuRequestHandler::logOut()
+{
+	LogoutResponse logoutResponse;
+
+	RequestResult requestResult;
+
+	logoutResponse.status = logoutResponse.status_ok;
+
+	requestResult.buffer = JsonResponsePacketSerializer::serializeLogoutResponse(logoutResponse);
+	requestResult.newHandler = m_handlerFactory.createLoginRequestHandler();
+
+	return requestResult;
+}

@@ -1,9 +1,10 @@
 #include "StatisticsManager.h"
 #include <string>
-#include "LoggedUser.h"
 #include <list>
 #include <iostream>
 #include <algorithm>
+
+
 using namespace std;
 StatisticsManager::StatisticsManager(IDatabase* database)
 {

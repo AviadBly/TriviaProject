@@ -54,16 +54,13 @@
     <ClCompile Include="Communicator.cpp">
       <Filter>Source Files\Server</Filter>
     </ClCompile>
-    <ClCompile Include="IRequestHandler.cpp">
-      <Filter>Source Files\Requests and Responses</Filter>
-    </ClCompile>
     <ClCompile Include="JsonRequestPacketDeserializer.cpp">
       <Filter>Source Files\Json</Filter>
     </ClCompile>
     <ClCompile Include="JsonResponsePacketSerializer.cpp">
       <Filter>Source Files\Json</Filter>
     </ClCompile>
-    <ClCompile Include="LoggedUser.cpp">
+    <ClCompile Include="Users.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="LoginManager.cpp">
@@ -185,7 +182,7 @@
     <ClInclude Include="Room.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="LoggedUser.h">
+    <ClInclude Include="Users.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="LoginRequestHandler.h">

@@ -11,9 +11,9 @@ class RoomMemberRequestHandler : public IRequestHandler {
 
 public:
 
-	RoomMemberRequestHandler(Room room, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
-	virtual bool isRequestRelevant(RequestInfo requestInfo) const;
-	virtual RequestResult handleRequest(RequestInfo requestInfo);
+	RoomMemberRequestHandler(const Room& room, const LoggedUser& user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
+	virtual bool isRequestRelevant(const RequestInfo& requestInfo) const;
+	virtual RequestResult handleRequest(const RequestInfo& requestInfo);
 
 
 	LoginManager& getLoginManger();
