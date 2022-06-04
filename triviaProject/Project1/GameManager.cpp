@@ -31,7 +31,7 @@ void GameManager::removeUser(const User& user, const Game& game)
 }
 
 //returns an iter to the wanted game
-auto GameManager::getGame(const Game& game)
+vector<Game>::iterator GameManager::getGame(const Game& game)
 {
     for (auto iter = m_games.begin(); iter != m_games.end(); iter++)
     {

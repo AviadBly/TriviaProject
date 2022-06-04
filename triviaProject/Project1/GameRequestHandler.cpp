@@ -1,8 +1,8 @@
 #include "GameRequestHandler.h"
 
-GameRequestHandler::GameRequestHandler(const vector<User>& users, const LoggedUser& user, GameManager& gameManager, RequestHandlerFactory& handleFactory) : m_gameManager(gameManager), m_handlerFactory(handleFactory)
+GameRequestHandler::GameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion, GameManager& gameManager, RequestHandlerFactory& handleFactory) : m_gameManager(gameManager), m_handlerFactory(handleFactory)
 {
-	this->m_game = gameManager.createGame(users);
+	this->m_game = gameManager.createGame(users, timePerQuestion);
 	this->m_user = user;
 }
 

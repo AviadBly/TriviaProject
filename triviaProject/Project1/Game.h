@@ -29,13 +29,14 @@ public:
 	Game(const vector<Question>& questions, const vector<User>& users, unsigned int timePerQuestion);
 	Question getQuestionForUser(const User& user);
 	
-	unsigned int submitAnswer(const User& user, unsigned int answerId, float answerTime);
+	unsigned int submitAnswer(const User& user, unsigned int answerId, double answerTime);
 
 	bool removePlayer(const User& user);
 	vector<PlayerResults> getGameResults();
 	unsigned int getId() const;
 
 	bool operator ==(const Game& otherGame);	//compare based on id
+
 private:
 	static unsigned int nextGameId;
 
@@ -47,5 +48,5 @@ private:
 	bool hasGameEnded;
 
 	PlayerResults getPlayerResults(const User& user);
-	float calculateNewAverageAnswerTime(float answerTime, const User& user);
+	double calculateNewAverageAnswerTime(double answerTime, const User& user);
 };

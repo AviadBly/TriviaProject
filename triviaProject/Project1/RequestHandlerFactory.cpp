@@ -35,9 +35,9 @@ RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(Lo
 	return new RoomAdminRequestHandler(room, loggedUser, m_roomManager, *this);
 }
 
-GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(const vector<User>& users, const LoggedUser& user)
+GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion)
 {
-	return new GameRequestHandler(users, user, m_gameManager, *this);
+	return new GameRequestHandler(users, user, timePerQuestion, m_gameManager, *this);
 }
 
 //getters

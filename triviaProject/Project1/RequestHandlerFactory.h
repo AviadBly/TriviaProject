@@ -29,7 +29,7 @@ public:
 
 	RoomMemberRequestHandler* createRoomMemberRequestHandler(LoggedUser loggedUser, Room room);
 	RoomAdminRequestHandler* createRoomAdminRequestHandler(LoggedUser loggedUser, Room room);
-	GameRequestHandler* createGameRequestHandler(const vector<User>& users, const LoggedUser& user);
+	GameRequestHandler* createGameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion);
 
 	//getters
 	LoginManager& getLoginManger();
@@ -39,7 +39,7 @@ public:
 
 private:
 	//pointer to handler, so you dont have to create new ones all the time
-	LoginRequestHandler* m_loginRequestHandler; //this is against the uml but its way better
+	LoginRequestHandler* m_loginRequestHandler; 
 	
 	GameManager m_gameManager;
 	RoomManager m_roomManager;

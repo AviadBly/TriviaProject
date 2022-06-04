@@ -31,8 +31,9 @@ Question Game::getQuestionForUser(const User& user)
 	
 }
 
-float Game::calculateNewAverageAnswerTime(float answerTime, const User& user){
-	float newAnswerTime = m_players[user].averageAnswerTime;
+double Game::calculateNewAverageAnswerTime(double answerTime, const User& user){
+	double newAnswerTime = m_players[user].averageAnswerTime;
+
 	unsigned int numberOfAnswers = m_players[user].correctAnswerCount + m_players[user].wrongAnswerCount;
 
 	newAnswerTime = newAnswerTime * numberOfAnswers;
@@ -44,10 +45,10 @@ float Game::calculateNewAverageAnswerTime(float answerTime, const User& user){
 
 //returns the correct answer id
 //also increases the count of the correct or wrongs answers
-unsigned int Game::submitAnswer(const User& user, unsigned int answerId, float answerTime)
+unsigned int Game::submitAnswer(const User& user, unsigned int answerId, double answerTime)
 {
 	m_players[user].averageAnswerTime = calculateNewAverageAnswerTime(answerTime, user);
-
+	
 	string correctAnswer = m_players[user].currentQuestion.getCorrectAnswer();
 	string userAnswer = m_players[user].currentQuestion.getPossibleAnswers()[answerId];
 

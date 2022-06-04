@@ -72,7 +72,7 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 	return requestResult;
 }
 
-RequestResult& MenuRequestHandler::createRoom(const RequestInfo& requestInfo)
+RequestResult MenuRequestHandler::createRoom(const RequestInfo& requestInfo)
 {
 	CreateRoomRequest createRoomRequest;
 	createRoomRequest = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(requestInfo.buffer);
@@ -99,7 +99,7 @@ RequestResult& MenuRequestHandler::createRoom(const RequestInfo& requestInfo)
 
 
 
-RequestResult& MenuRequestHandler::getRooms()
+RequestResult MenuRequestHandler::getRooms()
 {
 	GetRoomsResponse getRoomsResponse;
 	RequestResult requestResult;
@@ -122,7 +122,7 @@ RequestResult& MenuRequestHandler::getRooms()
 	return requestResult;
 }
 
-RequestResult& MenuRequestHandler::getPlayersInRoom(const RequestInfo& requestInfo)
+RequestResult MenuRequestHandler::getPlayersInRoom(const RequestInfo& requestInfo)
 {
 
 	GetPlayersInRoomResponse getPlayersInRoomResponse;
@@ -152,7 +152,7 @@ RequestResult& MenuRequestHandler::getPlayersInRoom(const RequestInfo& requestIn
 	return requestResult;
 }
 
-RequestResult& MenuRequestHandler::joinRoom(const RequestInfo& requestInfo)
+RequestResult MenuRequestHandler::joinRoom(const RequestInfo& requestInfo)
 {
 	JoinRoomRequest joinRoomRequest;
 	joinRoomRequest = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(requestInfo.buffer);
@@ -185,7 +185,7 @@ RequestResult& MenuRequestHandler::joinRoom(const RequestInfo& requestInfo)
 
 
 
-RequestResult& MenuRequestHandler::getHighScore() const
+RequestResult MenuRequestHandler::getHighScore() const
 {
 	GetHighScoreResponse getHighScoreResponse;
 	RequestResult requestResult;
@@ -198,7 +198,7 @@ RequestResult& MenuRequestHandler::getHighScore() const
 	return requestResult;
 }
 
-RequestResult& MenuRequestHandler::getPersonalStatistics() const
+RequestResult MenuRequestHandler::getPersonalStatistics() const
 {
 	GetPersonalStatsResponse getPersonalStatsResponse;
 	RequestResult requestResult;
@@ -211,7 +211,7 @@ RequestResult& MenuRequestHandler::getPersonalStatistics() const
 	return requestResult;
 }
 
-RequestResult& MenuRequestHandler::logOut()
+RequestResult MenuRequestHandler::logOut()
 {
 	LogoutResponse logoutResponse;
 

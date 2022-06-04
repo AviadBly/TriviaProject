@@ -19,16 +19,16 @@ public:
 
 private:
 
-	RequestResult& createRoom(const RequestInfo& requestInfo);
+	RequestResult createRoom(const RequestInfo& requestInfo);
 	
-	RequestResult& getRooms();
-	RequestResult& getPlayersInRoom(const RequestInfo& requestInfo);
-	RequestResult& joinRoom(const RequestInfo& requestInfo);
+	RequestResult getRooms();
+	RequestResult getPlayersInRoom(const RequestInfo& requestInfo);
+	RequestResult joinRoom(const RequestInfo& requestInfo);
 	
-	RequestResult& getHighScore() const;
-	RequestResult& getPersonalStatistics() const;
+	RequestResult getHighScore() const;
+	RequestResult getPersonalStatistics() const;
 
-	RequestResult& logOut();
+	RequestResult logOut();
 
 	LoggedUser m_user;
 	RoomManager& m_roomManager;

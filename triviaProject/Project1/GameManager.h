@@ -22,5 +22,5 @@ private:
 	IDatabase* m_database;
 	vector<Game> m_games;
 
-	auto getGame(const Game& game);
+	vector<Game>::iterator getGame(const Game& game);
 };
