@@ -44,9 +44,9 @@ namespace clientAPI.GameFolder
                 Console.WriteLine("Received empty or wrong answer from server");
                 
             }
+            Question question = new Question(getQuestionResponse.QuestionText, getQuestionResponse.Answers);
 
-
-            return getQuestionResponse.Question;
+            return question;
 
 
         }

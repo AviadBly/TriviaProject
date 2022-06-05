@@ -36,25 +36,12 @@ namespace clientAPI
             
             
             InitializeComponent();
+
+            
             //List<Room> list = new List<Room>();
             //IList<string> list2 = new List<string>();
             //list2.Add("first");
-
-            //list.Add(new Room(new RoomData(1, "shahar", 3, 4, 5, true), list2));
-            //GetRoomsResponse g = new GetRoomsResponse(list, 4);
-
-            //string j = JsonSerializer.Serialize(g);
-            //Console.WriteLine();
-
-            //Console.WriteLine(j);
-            //Console.WriteLine();
-
-            //string jsonString = j;//"{\"Rooms\":[{\"Metadata\":{\"Id\":1,\"IsActive\":true,\"MaxPlayers\":5,\"Name\":\"firstR\",\"NumOfQuestionsInGame\":6,\"TimePerQuestion\":12},\"Players\":[\"sha\"]}],\"Status\":2}";
-            //Console.WriteLine(jsonString);
-            //Console.WriteLine();
-            //GetRoomsResponse? response = JsonSerializer.Deserialize<GetRoomsResponse>(jsonString);
-
-            //Console.WriteLine(response.Rooms.ToString());
+          
         }
 
 
