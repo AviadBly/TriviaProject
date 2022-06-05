@@ -1,7 +1,7 @@
 #include "Game.h"
 
 
-unsigned int Game::nextGameId;
+//unsigned int Game::nextGameId;
 
 Game::Game()
 {
@@ -10,9 +10,9 @@ Game::Game()
 	this->m_id = -1;
 }
 
-Game::Game(const vector<Question>& questions, const vector<User>& users, unsigned int timePerQuestion)
+Game::Game(const vector<Question>& questions, const vector<User>& users, unsigned int timePerQuestion, unsigned int id)
 {
-	nextGameId++;
+	//nextGameId++;
 
 	GameData initGameData;	//initialize the map with users, and empty game data
 	for(auto i = users.begin(); i != users.end(); i++) {
@@ -21,7 +21,7 @@ Game::Game(const vector<Question>& questions, const vector<User>& users, unsigne
 	
 	this->timePerQuestion = timePerQuestion;
 	this->m_questions = questions;
-	this->m_id = nextGameId;
+	this->m_id = id;
 	this->hasGameEnded = false;
 }
 

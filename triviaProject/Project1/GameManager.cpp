@@ -7,7 +7,7 @@ GameManager::GameManager(IDatabase* database) : m_database(database)
     
 }
 
-Game GameManager::createGame(const vector<User>& users, unsigned int timePerQuestion)
+Game GameManager::createGame(const vector<User>& users, unsigned int timePerQuestion, unsigned int id)
 {
     vector<Question> questions = m_database->getQuestions();
     for (auto& q : questions) {
@@ -15,7 +15,8 @@ Game GameManager::createGame(const vector<User>& users, unsigned int timePerQues
     }
 
     //new game
-    Game newGame(questions, users, timePerQuestion);
+    Game newGame(questions, users, timePerQuestion, id);
+    m_games.push_back(newGame);
 
     return newGame;
 }
@@ -32,6 +33,19 @@ void GameManager::removeUser(const User& user, const Game& game)
 {  
     auto wantedGame = getGame(game);
     wantedGame->removePlayer(user);
+}
+
+Game GameManager::joinGame(unsigned int id)
+{
+    for (auto iter = m_games.begin(); iter != m_games.end(); iter++)
+    {
+        if (iter->getId() == id)  //if ID is identical
+        {          
+            return *iter;
+        }
+    }
+    throw MyException("Error: no such Game ID");
+    return Game();
 }
 
 //returns an iter to the wanted game

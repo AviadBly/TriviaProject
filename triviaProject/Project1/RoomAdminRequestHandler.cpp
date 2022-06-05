@@ -1,7 +1,7 @@
 #include "RoomRequestHandlers.h"
 
 //this might not work
-RoomAdminRequestHandler::RoomAdminRequestHandler(const LoggedUser& user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : RoomMemberRequestHandler(user, room, roomManager, handlerFactory)
+RoomAdminRequestHandler::RoomAdminRequestHandler(const LoggedUser& user, const Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : RoomMemberRequestHandler(user, room, roomManager, handlerFactory)
 {
 	
 }
@@ -23,7 +23,8 @@ RequestResult RoomAdminRequestHandler::handleRequest(const RequestInfo& requestI
 			delete this;
 			break;
 		case START_GAME_REQUEST_CODE:
-			requestResult = startGame();;
+			requestResult = startGame();
+			delete this;
 			break;
 		case GET_ROOM_STATE_REQUEST_CODE:
 			requestResult = getRoomState();
@@ -49,13 +50,13 @@ RequestResult RoomAdminRequestHandler::startGame()
 	RequestResult requestResult;
 	StartRoomResponse StartRoomResponse;
 	m_room.setIsActive(true); 
-	//this->m_roomManager.setRoomActive(m_room.getData().id);
+	m_roomManager.setRoomActive(m_room.getData().id);
 	StartRoomResponse.status = StartRoomResponse.status_ok;
 
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeStartGameResponse(StartRoomResponse);
 		
-	requestResult.newHandler = m_handlerFactory.createGameRequestHandler(m_room.getAllUsers(), m_user, m_room.getData().timePerQuestion);
+	requestResult.newHandler = m_handlerFactory.createGameRequestHandler(m_room, m_user, true);
 
 	return requestResult;
 }

@@ -28,10 +28,10 @@ public:
 
 	MenuRequestHandler* createMenuRequestHandler(const LoggedUser& newUser);
 
-	RoomMemberRequestHandler* createRoomMemberRequestHandler(const LoggedUser& newUser, Room& room);
-	RoomAdminRequestHandler* createRoomAdminRequestHandler(const LoggedUser& newUser, Room& room);
+	RoomMemberRequestHandler* createRoomMemberRequestHandler(const LoggedUser& newUser, const Room& room);
+	RoomAdminRequestHandler* createRoomAdminRequestHandler(const LoggedUser& newUser, const Room& room);
 
-	GameRequestHandler* createGameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion);
+	GameRequestHandler* createGameRequestHandler(const Room& room, const LoggedUser& user, bool isAdmin);
 
 	//getters
 	LoginManager& getLoginManger();

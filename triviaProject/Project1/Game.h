@@ -28,7 +28,7 @@ class Game
 
 public:
 	Game();
-	Game(const vector<Question>& questions, const vector<User>& users, unsigned int timePerQuestion);
+	Game(const vector<Question>& questions, const vector<User>& users, unsigned int timePerQuestion, unsigned int id);
 	Question getQuestionForUser(const User& user);
 	
 	unsigned int submitAnswer(const User& user, unsigned int answerId, double answerTime);
@@ -41,7 +41,7 @@ public:
 	bool operator ==(const Game& otherGame);	//compare based on id
 
 private:
-	static unsigned int nextGameId;
+	//static unsigned int nextGameId;
 
 	unsigned int m_id;
 	vector<Question> m_questions;

@@ -1,11 +1,16 @@
 #include "GameRequestHandler.h"
 
-GameRequestHandler::GameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion, GameManager& gameManager, RequestHandlerFactory& handleFactory) : m_gameManager(gameManager), m_handlerFactory(handleFactory)
+GameRequestHandler::GameRequestHandler(const Room room, const LoggedUser user, bool isAdmin, GameManager& gameManager, RequestHandlerFactory& handleFactory) : m_gameManager(gameManager), m_handlerFactory(handleFactory)
 {
-	this->m_game = gameManager.createGame(users, timePerQuestion);
-	this->m_user = user;
+	if (isAdmin) {
+		m_game = gameManager.createGame(room.getAllUsers(), room.getData().timePerQuestion, room.getData().id);
+	}
+	else {
+		m_game = gameManager.joinGame(room.getData().id);
+	}
+	
+	m_user = user;
 
-	RequestResult requestResult = getQuestion();
 }
 
 

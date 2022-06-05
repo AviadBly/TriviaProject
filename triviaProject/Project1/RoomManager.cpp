@@ -17,7 +17,7 @@ unsigned int RoomManager::createRoom(LoggedUser user, RoomData data)
 	return data.id;
 }
 
-Room& RoomManager::getSingleRoom(int ID)
+Room& RoomManager::getSingleRoom(unsigned int ID)
 {
 	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
 	{

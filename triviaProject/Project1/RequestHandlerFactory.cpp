@@ -24,19 +24,19 @@ MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(const Logged
 	return new MenuRequestHandler(*this, newUser);
 }
 
-RoomMemberRequestHandler* RequestHandlerFactory::createRoomMemberRequestHandler(const LoggedUser& newUser, Room& room)
+RoomMemberRequestHandler* RequestHandlerFactory::createRoomMemberRequestHandler(const LoggedUser& newUser, const Room& room)
 {
 	return new RoomMemberRequestHandler(newUser, room , m_roomManager, *this);
 }
 
-RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(const LoggedUser& newUser, Room& room)
+RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(const LoggedUser& newUser, const Room& room)
 {
 	return new RoomAdminRequestHandler(newUser, room, m_roomManager, *this);
 }
 
-GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion)
+GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(const Room& room, const LoggedUser& user, bool isAdmin)
 {
-	return new GameRequestHandler(users, user, timePerQuestion, m_gameManager, *this);
+	return new GameRequestHandler(room, user, isAdmin, m_gameManager, *this);
 }
 
 

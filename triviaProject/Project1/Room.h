@@ -41,5 +41,5 @@ private:
 	
 	RoomData m_metadata;
 	vector<User> m_users;
-
+	unsigned int gameID;
 };

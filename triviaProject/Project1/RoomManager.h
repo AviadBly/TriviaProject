@@ -18,7 +18,7 @@ public:
 	vector<Room> getRooms();
 
 	
-	Room& getSingleRoom(int ID);
+	Room& getSingleRoom(unsigned int ID);
 	bool doesRoomExist(unsigned int ID);
 	void setRoomActive(int ID);
 	void addUserToRoom(int ID, LoggedUser user);

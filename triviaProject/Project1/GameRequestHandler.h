@@ -16,7 +16,7 @@ class GameRequestHandler : public IRequestHandler {
 
 public:
 
-	GameRequestHandler(const vector<User>& users, const LoggedUser& user, unsigned int timePerQuestion, GameManager& gameManager, RequestHandlerFactory& handleFactory);
+	GameRequestHandler(const Room room, const LoggedUser user, bool isAdmin, GameManager& gameManager, RequestHandlerFactory& handleFactory);
 
 
 	virtual bool isRequestRelevant(const RequestInfo& requestInfo) const;
@@ -31,8 +31,9 @@ private:
 	RequestResult getGameResults();
 
 	time_t sendingTime;
-	Game m_game;
+	
 	LoggedUser m_user;
+	Game m_game;
 	GameManager& m_gameManager;
 	RequestHandlerFactory& m_handlerFactory;
 

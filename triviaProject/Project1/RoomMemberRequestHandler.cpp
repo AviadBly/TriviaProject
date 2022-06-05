@@ -1,6 +1,6 @@
 #include "RoomRequestHandlers.h"
 
-RoomMemberRequestHandler::RoomMemberRequestHandler(const LoggedUser& user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
+RoomMemberRequestHandler::RoomMemberRequestHandler(const LoggedUser& user, const Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
 {
 	m_user = user;
 	recentRoomId = room.getData().id;
@@ -19,7 +19,7 @@ RoomManager& RoomMemberRequestHandler::getRoomManager()
 bool RoomMemberRequestHandler::isRequestRelevant(const RequestInfo& requestInfo) const
 {
 	BYTE code = requestInfo.code;
-	return code == LEAVE_ROOM_REQUEST_CODE || code == GET_ROOM_STATE_REQUEST_CODE;
+	return code == LEAVE_ROOM_REQUEST_CODE || code == GET_ROOM_STATE_REQUEST_CODE || code == START_GAME_REQUEST_CODE;
 }
 
 RequestResult RoomMemberRequestHandler::handleRequest(const RequestInfo& requestInfo)
@@ -35,7 +35,10 @@ RequestResult RoomMemberRequestHandler::handleRequest(const RequestInfo& request
 		case GET_ROOM_STATE_REQUEST_CODE:
 			requestResult = getRoomState();
 			break;
-		
+		case START_GAME_REQUEST_CODE:
+			requestResult = startGame();
+			delete this;
+			break;
 		}
 
 	}
@@ -43,7 +46,7 @@ RequestResult RoomMemberRequestHandler::handleRequest(const RequestInfo& request
 		std::cout << e.what() << "\n";
 	}
 
-	if (requestResult.newHandler == nullptr) {
+	if (requestResult.newHandler == nullptr && this != nullptr) {
 		requestResult.newHandler = this;
 	}
 
@@ -62,7 +65,7 @@ RequestResult RoomMemberRequestHandler::leaveRoom()
 	m_roomManager.removeUser(m_user, recentRoomId);	//no error is thrown if the room is already deleted
 	
 		//change back to menu handler
-	requestResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(m_user);
+	requestResult.newHandler = m_handlerFactory.createMenuRequestHandler(m_user);
 	
 
 	return requestResult;
@@ -78,7 +81,8 @@ RequestResult RoomMemberRequestHandler::getRoomState()
 	//checks if room still exist
 	if (m_roomManager.doesRoomExist(recentRoomId)) {
 		getRoomStateResponse.status = getRoomStateResponse.status_ok;
-		RoomData roomData = this->m_room.getData();
+		m_room = m_roomManager.getSingleRoom(recentRoomId);
+		RoomData roomData = m_room.getData();
 
 		getRoomStateResponse.answerTimeout = roomData.timePerQuestion;	//I am not sure if its true
 		getRoomStateResponse.questionCount = roomData.numOfQuestionsInGame;
@@ -93,6 +97,21 @@ RequestResult RoomMemberRequestHandler::getRoomState()
 
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetRoomStateResponse(getRoomStateResponse);
+
+	return requestResult;
+}
+
+RequestResult RoomMemberRequestHandler::startGame()
+{
+
+	RequestResult requestResult;
+	StartRoomResponse StartRoomResponse;
+	
+	
+	StartRoomResponse.status = StartRoomResponse.status_ok;
+
+	requestResult.buffer = JsonResponsePacketSerializer::serializeStartGameResponse(StartRoomResponse);
+	requestResult.newHandler = m_handlerFactory.createGameRequestHandler(m_roomManager.getSingleRoom(recentRoomId), m_user, false);
 
 	return requestResult;
 }
