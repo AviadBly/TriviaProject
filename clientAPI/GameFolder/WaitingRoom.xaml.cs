@@ -59,7 +59,7 @@ namespace clientAPI.GameFolder
         private void WaitingRoom_Closed(object? sender, EventArgs e)
         {
             m_updatePlayersCancellationToken?.Cancel();            
-            m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS * 3));
+            m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS * 0.1));
             
             if (m_updatePlayersTask.IsCompleted)
                 m_updatePlayersTask.Dispose();
@@ -80,7 +80,7 @@ namespace clientAPI.GameFolder
                     menu.Show();
 
                     m_updatePlayersCancellationToken?.Cancel();
-                    m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS));
+                    m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS*0.1));
 
                     byte status = sendLeaveRoom();
                     if (status == Response.status_error) {
