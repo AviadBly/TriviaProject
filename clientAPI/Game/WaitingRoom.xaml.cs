@@ -14,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using clientAPI.Game;
 
 namespace clientAPI.Game
 {
@@ -144,6 +144,10 @@ namespace clientAPI.Game
                 case GetRoomStateResponse.status_ok:    //if room found
                     if (getRoomStateResponse.HasGameBegun)
                     {
+                        
+                        GameWindow gameWindow = new GameWindow();
+                        gameWindow.Show();
+                        Close();
                         //next, go to game room, not for this version
                     }
                     
