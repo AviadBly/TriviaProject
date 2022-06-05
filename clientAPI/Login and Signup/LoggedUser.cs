@@ -6,21 +6,26 @@ using System.Threading.Tasks;
 
 namespace clientAPI.Login_and_Signup
 {
-    internal class LoggedUser
+    public class User
     {
-     
-        private string m_password;
-        private string m_name;
-        private string m_mail;
-
-        public LoggedUser(string password, string name, string mail)
+        public User(string name, uint id)
         {
-            m_password = password;
-            m_name = name;
-            m_mail = mail;
+            Name = name;
+            Id = id;
+        }
+        public string Name { get; set; }
+        public uint Id { get; set; }
+    }
+    internal class LoggedUser : User
+    {
+            
+
+        public LoggedUser(string password, string name, string mail, uint id) : base(name, id)
+        {
+            Password = password;
+            Mail = mail;
         }
         public string Password { get; set; }
-        public string Name { get; set; }
         public string Mail { get; set; }
     }
 }

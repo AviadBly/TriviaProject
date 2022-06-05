@@ -14,9 +14,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using clientAPI.GameFolder;
 
-
-namespace clientAPI.Game
+namespace clientAPI.GameFolder
 {
     /// <summary>
     /// Interaction logic for WaitingRoom.xaml
@@ -35,6 +35,10 @@ namespace clientAPI.Game
         {
             InitializeComponent();
             isAdmin = isUserAdmin;
+            if(isAdmin)
+            {
+                StartButton.Visibility = Visibility.Visible;
+            }
             m_room = new Room(metaData, new List<string>());
             m_room.PlayersUpdated += RoomPlayersUpdated;
 
@@ -59,7 +63,7 @@ namespace clientAPI.Game
         private void WaitingRoom_Closed(object? sender, EventArgs e)
         {
             m_updatePlayersCancellationToken?.Cancel();            
-            m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS * 3));
+            m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS * 0.1));
             
             if (m_updatePlayersTask.IsCompleted)
                 m_updatePlayersTask.Dispose();
@@ -79,8 +83,7 @@ namespace clientAPI.Game
                     menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                     menu.Show();
 
-                    m_updatePlayersCancellationToken?.Cancel();
-                    m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS));
+                    stopTask();
 
                     byte status = sendLeaveRoom();
                     if (status == Response.status_error) {
@@ -111,7 +114,12 @@ namespace clientAPI.Game
             else
                 showPlayers(players);
         }
-
+        
+        private void stopTask()
+        {
+            m_updatePlayersCancellationToken?.Cancel();
+            m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS * 0.1));
+        }
         //TO DO, ask getPlayers every 1 second
        
         private (byte, IList<string>) getPlayers()
@@ -144,6 +152,10 @@ namespace clientAPI.Game
                 case GetRoomStateResponse.status_ok:    //if room found
                     if (getRoomStateResponse.HasGameBegun)
                     {
+                        
+                        GameWindow gameWindow = new GameWindow();
+                        gameWindow.Show();
+                        Close();
                         //next, go to game room, not for this version
                     }
                     
@@ -162,7 +174,7 @@ namespace clientAPI.Game
         private void leaveRoom()
         {
             MessageBox.Show("Left Room");
-
+           
             byte status = sendLeaveRoom();
 
             if(status == Response.status_error) {
@@ -181,7 +193,7 @@ namespace clientAPI.Game
         {
             if (isAdmin)
             {
-                MainProgram.appClient.sender("", Requests.CLOSE_ROOM_REQUEST_CODE);    //ask for rooms
+                MainProgram.appClient.sender("", Requests.CLOSE_ROOM_REQUEST_CODE);    
             }
             else
             {
@@ -227,12 +239,52 @@ namespace clientAPI.Game
                     PlayerList.Items.Add(player);
                 }              
             }
+            foreach(string item in PlayerList.Items)
+            {
+                bool check = false;
+                foreach(string player in players)
+                {
+                    if(player==item)
+                    {
+                        check = true;
+                    }
+                }
+                if(!check)
+                {
+                    PlayerList.Items.Remove(item);
+                    break;
+                }
+            }
+            
             
 
 
         }
 
-        
+        private void StartClick(object sender, RoutedEventArgs e)
+        {
+            stopTask();
+            MainProgram.appClient.sender("", Requests.START_GAME_REQUEST_CODE);
+
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+
+            if (returnMsg.IsErrorMsg)
+            {
+                //Signup failed
+                MessageBox.Show("Error");
+                           
+            }
+
+            StartGameResponse startGameResponse = JsonHelpers.JsonFormatDeserializer.StartGameResponseDeserializer(returnMsg.Message);
+
+            if(startGameResponse != null && startGameResponse.Status == StartGameResponse.status_ok)
+            {
+                GameWindow gameWindow = new GameWindow();
+                gameWindow.Show();
+                Close();
+            }
+
+        }
     }
 
 

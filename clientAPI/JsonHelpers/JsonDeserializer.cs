@@ -164,7 +164,7 @@ namespace clientAPI.JsonHelpers
 
             return response;
         }
-        public static StartRoomResponse? StartRoomResponseDeserializer(byte[] buffer)
+        public static StartGameResponse? StartGameResponseDeserializer(byte[] buffer)
         {
             if (buffer == null || buffer.Length == 0)
                 return null;
@@ -172,7 +172,7 @@ namespace clientAPI.JsonHelpers
             string jsonString = Encoding.Default.GetString(buffer);
 
 
-            StartRoomResponse? response = JsonSerializer.Deserialize<StartRoomResponse>(jsonString);
+            StartGameResponse? response = JsonSerializer.Deserialize<StartGameResponse>(jsonString);
 
             return response;
         }
