@@ -98,7 +98,8 @@ namespace clientAPI.GameFolder
             {
                 (sender as Button).Background = Brushes.Red;
             }
-
+            displayQuestionOnScreen();
+            
             //TODO
 
         }
