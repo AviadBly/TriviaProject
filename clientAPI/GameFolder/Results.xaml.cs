@@ -20,9 +20,12 @@ namespace clientAPI.GameFolder
     /// </summary>
     public partial class Results : Window
     {
+        private static GetGameResultsResponse data;
         public Results()
         {
             InitializeComponent();
+            data= ShowPlayers();
+
         }
 
         private void ClickExit(object sender, RoutedEventArgs e)
@@ -33,7 +36,7 @@ namespace clientAPI.GameFolder
             menu.Show();
         }
 
-        private void ShowResults(object sender, RoutedEventArgs e)
+        private GetGameResultsResponse ShowPlayers()
         {
             MainProgram.appClient.sender("", Requests.GET_GAME_RESULT_REQUEST_CODE);    //ask for rooms
 
@@ -47,13 +50,27 @@ namespace clientAPI.GameFolder
                 Console.WriteLine("Received empty or wrong answer from server");
 
             }
-
             
+            foreach(PlayerResults playerResults in getGameResultsResponse.Results)
+            {
+                PlayerList.Items.Add(playerResults.Username);
+            }
+            return getGameResultsResponse;
         }
 
-        private void roomsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PlayerList_SelectionChanged(object sender, SelectionChangedEventArgs e,)
         {
-
+            string username = PlayerList.SelectedItem.ToString();
+            foreach(PlayerResults playerResult in data.Results)
+            {
+                if(playerResult.Username == username)
+                {
+                    Correct.Content = playerResult.CorrectAnswerCount;
+                    Wrong.Content = playerResult.WrongAnswerCount;
+                    Average.Content = playerResult.AverageAnswerCount;
+                    break;
+                }
+            }
         }
     }
 

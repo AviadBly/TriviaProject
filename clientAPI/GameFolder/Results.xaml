@@ -22,7 +22,7 @@
                 <Label Content="Players:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
                 <ListBox
                     Name="PlayerList" FontSize="14" FontWeight="bold"
-                  IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Height="112">
+                  IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Height="112" SelectionChanged="PlayerList_SelectionChanged">
 
                 </ListBox>
                 <Label Content="Correct Answers: " VerticalContentAlignment="Center" FontSize="30" Foreground="Purple" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="485" Height="57" />
