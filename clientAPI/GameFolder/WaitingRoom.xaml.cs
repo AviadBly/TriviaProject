@@ -166,7 +166,7 @@ namespace clientAPI.GameFolder
         private void leaveRoom()
         {
             MessageBox.Show("Left Room");
-
+           
             byte status = sendLeaveRoom();
 
             if(status == Response.status_error) {
@@ -231,6 +231,23 @@ namespace clientAPI.GameFolder
                     PlayerList.Items.Add(player);
                 }              
             }
+            foreach(string item in PlayerList.Items)
+            {
+                bool check = false;
+                foreach(string player in players)
+                {
+                    if(player==item)
+                    {
+                        check = true;
+                    }
+                }
+                if(!check)
+                {
+                    PlayerList.Items.Remove(item);
+                    break;
+                }
+            }
+            
             
 
 
