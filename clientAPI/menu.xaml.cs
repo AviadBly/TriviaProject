@@ -40,8 +40,8 @@ namespace clientAPI
             
             
             InitializeComponent();
-            username.Text = "Hey ;)";
-
+            
+            updateUsername("Hey ;)");
         } 
         public menu(string username)
         {

@@ -35,7 +35,7 @@
 
             </StackPanel>
         </Border>
-        <Button Content="Exit" HorizontalAlignment="Left" Margin="393,681,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,-0.061" Height="50" Width="109" Click="WaitingRoom_Closed" />
+        <Button Content="Exit" HorizontalAlignment="Left" Margin="393,681,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,-0.061" Height="50" Width="109" />
 
 
 

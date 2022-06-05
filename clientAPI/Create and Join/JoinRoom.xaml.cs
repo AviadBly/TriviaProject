@@ -108,6 +108,7 @@ namespace clientAPI
         {
             uint id = 0;
             rooms = getRooms();
+            dispatcherTimer.Stop();
             if (roomsList.SelectedItem != null)
             {
 

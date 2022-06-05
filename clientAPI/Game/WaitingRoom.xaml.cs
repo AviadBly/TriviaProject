@@ -23,7 +23,7 @@ namespace clientAPI.Game
     /// </summary>
     public partial class WaitingRoom : Window
     {
-        private const int PLAYERS_UPDATE_INTERVAL_SECONDS = 1;
+        private const int PLAYERS_UPDATE_INTERVAL_SECONDS = 3;
 
         private Room m_room;
 
@@ -70,7 +70,28 @@ namespace clientAPI.Game
         private void UpdatePlayers()
         {
             var players = getPlayers();
-            m_room.UpdatePlayers(players);
+
+            
+            if (players.Item1 == GetRoomStateResponse.statusRoomNotFound)    //go back to menu
+            {
+                Application.Current.Dispatcher.Invoke((Action)delegate {
+                    menu menu = new menu(MainProgram.MainUsername);
+                    menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    menu.Show();
+
+                    m_updatePlayersCancellationToken?.Cancel();
+                    m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS));
+
+                    byte status = sendLeaveRoom();
+                    if (status == Response.status_error) {
+                        return;
+                    }
+                    Close();
+                });
+                
+            }
+            
+            m_room.UpdatePlayers(players.Item2);
         }
 
        
@@ -93,7 +114,7 @@ namespace clientAPI.Game
 
         //TO DO, ask getPlayers every 1 second
        
-        private IList<string> getPlayers()
+        private (byte, IList<string>) getPlayers()
         {
             MainProgram.appClient.sender("", Requests.GET_ROOM_STATE_REQUEST_CODE);    //ask for rooms
 
@@ -105,7 +126,7 @@ namespace clientAPI.Game
             if (getRoomStateResponse == null)
             {
                 Console.WriteLine("Received empty or wrong answer from server");
-                return new List<string>();
+                return (0, new List<string>());
             }
 
             Console.WriteLine(getRoomStateResponse.Players);
@@ -118,13 +139,8 @@ namespace clientAPI.Game
                 //so go to menu
                 case GetRoomStateResponse.statusRoomNotFound:
 
-                    menu menu = new menu(MainProgram.MainUsername);
-                    menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                    menu.Show();
+                    return (GetRoomStateResponse.statusRoomNotFound, new List<string>());
                     
-                    Close();
-                    break;
-
                 case GetRoomStateResponse.status_ok:    //if room found
                     if (getRoomStateResponse.HasGameBegun)
                     {
@@ -140,16 +156,34 @@ namespace clientAPI.Game
             }
             
 
-            return getRoomStateResponse.Players;
+            return (1, getRoomStateResponse.Players);
         }
 
         private void leaveRoom()
         {
             MessageBox.Show("Left Room");
+
+            byte status = sendLeaveRoom();
+
+            if(status == Response.status_error) {
+                return;
+            }
+
+
+            //go to menu
+            menu menuWindow = new menu(MainProgram.MainUsername);
+            menuWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            menuWindow.Show();
+            Close();
+        }
+
+        private byte sendLeaveRoom()
+        {
             if (isAdmin)
             {
                 MainProgram.appClient.sender("", Requests.CLOSE_ROOM_REQUEST_CODE);    //ask for rooms
-            } else
+            }
+            else
             {
                 MainProgram.appClient.sender("", Requests.LEAVE_ROOM_REQUEST_CODE);
             }
@@ -163,25 +197,22 @@ namespace clientAPI.Game
 
                 //MessageBox.Show("Error: Username already exists");
                 MessageBox.Show(returnMsg.Message.ToString());
-                return;
-
+                
+                return Response.status_error;
             }
 
             if (isAdmin)
             {
                 CloseRoomResponse closeRoomResponse = JsonHelpers.JsonFormatDeserializer.CloseRoomResponseDeserializer(returnMsg.Message);
+                return closeRoomResponse.Status;
             }
             else
             {
                 LeaveRoomResponse leaveRoomResponse = JsonHelpers.JsonFormatDeserializer.LeaveRoomResponseDeserializer(returnMsg.Message);
+                return leaveRoomResponse.Status;
             }
 
-
-            //go to menu
-            menu menuWindow = new menu(MainProgram.MainUsername);
-            menuWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            menuWindow.Show();
-            Close();
+            
         }
 
         private void showPlayers(IList<string> players)
@@ -194,8 +225,11 @@ namespace clientAPI.Game
                 if (!PlayerList.Items.Contains(player))
                 {
                     PlayerList.Items.Add(player);
-                }
+                }              
             }
+            
+
+
         }
 
         
