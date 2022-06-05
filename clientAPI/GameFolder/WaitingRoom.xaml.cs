@@ -35,6 +35,10 @@ namespace clientAPI.GameFolder
         {
             InitializeComponent();
             isAdmin = isUserAdmin;
+            if(isAdmin)
+            {
+                StartButton.Visibility=Visibility.Visible;
+            }
             m_room = new Room(metaData, new List<string>());
             m_room.PlayersUpdated += RoomPlayersUpdated;
 
@@ -253,7 +257,10 @@ namespace clientAPI.GameFolder
 
         }
 
-        
+        private void StartClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 
 

@@ -21,7 +21,7 @@
             <StackPanel>
                 <Separator Margin="10"></Separator>
 
-                <Label  VerticalContentAlignment="Center" FontSize="30" Foreground="Purple" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="447" Height="69" />
+                <Label Name="questionLabel"  VerticalContentAlignment="Center" FontSize="30" Foreground="Purple" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="447" Height="69" />
                 <Separator Margin="10"></Separator>
                 <Button Name="Answer1"  Height="90" Width="485" FontSize="35"/>
                 <Separator Margin="10"></Separator>
