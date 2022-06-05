@@ -200,11 +200,11 @@ namespace clientAPI.Requests_and_Responses
     /*************************************************/
     internal class GetGameResultsResponse : Response
     {
-        public GetGameResultsResponse(PlayerResults results, byte status) : base(status)
+        public GetGameResultsResponse(List<PlayerResults> results, byte status) : base(status)
         {
             Results = results;
         }
-        public PlayerResults Results { get; set; }
+        public List<PlayerResults> Results { get; set; }
     }
 
     /****************************************************/

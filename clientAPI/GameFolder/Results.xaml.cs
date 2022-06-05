@@ -48,7 +48,12 @@ namespace clientAPI.GameFolder
 
             }
 
-            getGameResultsResponse.
+            
+        }
+
+        private void roomsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 
