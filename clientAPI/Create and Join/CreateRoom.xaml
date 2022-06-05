@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:clientAPI"
+        xmlns:local="clr-namespace:clientAPI.Create_and_Join"
         mc:Ignorable="d"
          Title="Create Room"  Height="754" Width="589" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
     <Grid Margin="20">
