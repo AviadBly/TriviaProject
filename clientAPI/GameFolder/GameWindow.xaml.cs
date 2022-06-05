@@ -28,6 +28,7 @@ namespace clientAPI.GameFolder
         public GameWindow()
         {
             InitializeComponent();
+            displayQuestionOnScreen();
         }
 
         public Question GetNextQuestion()
@@ -53,13 +54,77 @@ namespace clientAPI.GameFolder
 
         public void displayQuestionOnScreen()
         {
-           Question question= GetNextQuestion();
-           questionLabel.Content = question.QuestionText.ToString();
+            // Question question= GetNextQuestion();
+            Dictionary<uint, string> dict = new Dictionary<uint, string>();
+            dict.Add(1, "Fine");
+            dict.Add(2, "okay");
+            dict.Add(3, "brara");
+            dict.Add(4, "kill me");
+            Question question = new Question("How are you today??", dict);
+            questionLabel.Content = question.QuestionText.ToString();
            Answer1.Content = question.Answers[1].ToString();
-           Answer2.Content = question.Answers[1].ToString();
-           Answer3.Content = question.Answers[1].ToString();
-           Answer4.Content = question.Answers[1].ToString();
+           Answer2.Content = question.Answers[2].ToString();
+           Answer3.Content = question.Answers[3].ToString();
+           Answer4.Content = question.Answers[4].ToString();
 
+        }
+
+        private void SubmitAnswer(object sender, RoutedEventArgs e)
+        {
+            string buttonId = (sender as Button).Name.ToString();
+            char charId = buttonId[buttonId.Length - 1];
+            uint id = Convert.ToUInt32(charId.ToString());
+
+            SubmitAnswerRequest submitAnswerRequest = new SubmitAnswerRequest(id);
+            byte[] data = JsonHelpers.JsonFormatSerializer.SubmitAnswerSerializer(submitAnswerRequest);
+            Console.WriteLine(data);
+            MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.SUBMIT_ANSWER_REQUEST_CODE);
+
+
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+
+            SubmitAnswerResponse submitAnswerResponse = JsonHelpers.JsonFormatDeserializer.SubmitAnswerResponseDeserializer(returnMsg.Message);
+
+            if (submitAnswerResponse == null)
+            {
+                Console.WriteLine("Received empty or wrong answer from server");
+
+            }
+            if (submitAnswerResponse.CorrectAnswerId == id)
+            {
+                (sender as Button).Background = Brushes.Green;
+            }
+            else
+            {
+                (sender as Button).Background = Brushes.Red;
+            }
+            displayQuestionOnScreen();
+            
+            //TODO
+
+        }
+
+
+        private void ClickExit(object sender, RoutedEventArgs e)
+        {
+            MainProgram.appClient.sender("", Requests.LEAVE_GAME_REQUEST_CODE);    //ask for rooms
+
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+
+
+            LeaveGameResponse leaveGameResponse = JsonHelpers.JsonFormatDeserializer.LeaveGameResponseDeserializer(returnMsg.Message);
+
+            if (leaveGameResponse == null)
+            {
+                Console.WriteLine("Received empty or wrong answer from server");
+
+            }
+            
+
+            Close();
+            menu menu = new menu(MainProgram.MainUsername);
+            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            menu.Show();
         }
     }
 }
