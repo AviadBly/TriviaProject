@@ -28,6 +28,7 @@ namespace clientAPI.GameFolder
         public GameWindow()
         {
             InitializeComponent();
+            displayQuestionOnScreen();
         }
 
         public Question GetNextQuestion()
@@ -54,13 +55,28 @@ namespace clientAPI.GameFolder
 
         public void displayQuestionOnScreen()
         {
-           Question question= GetNextQuestion();
+            //Question question= GetNextQuestion();
+            Dictionary<uint, string> dict = new Dictionary<uint, string>();
+            dict.Add(1, "Fine");
+            dict.Add(2, "okay");
+            dict.Add(3, "brara");
+            dict.Add(4, "kill me");
+            Question question = new Question("How are you today??", dict);
            questionLabel.Content = question.QuestionText.ToString();
            Answer1.Content = question.Answers[1].ToString();
-           Answer2.Content = question.Answers[1].ToString();
-           Answer3.Content = question.Answers[1].ToString();
-           Answer4.Content = question.Answers[1].ToString();
+           Answer2.Content = question.Answers[2].ToString();
+           Answer3.Content = question.Answers[3].ToString();
+           Answer4.Content = question.Answers[4].ToString();
 
+        }
+
+        private void ClickExit(object sender, RoutedEventArgs e)
+        {
+            
+            Close();
+            menu menu = new menu(MainProgram.MainUsername);
+            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            menu.Show();
         }
     }
 }

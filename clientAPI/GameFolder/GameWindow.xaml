@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:clientAPI.GameFolder"
         mc:Ignorable="d"
-         Title="Game Room" Height="820" Width="589" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
-    <Grid Margin="0,0,10,50">
-        <Label Content="Game Room"  VerticalContentAlignment="Center" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Center" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="424" Margin="0,0,0,606">
+         Title="Game Room" Height="768" Width="567" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
+    <Grid Margin="0,0,10,24">
+        <Label Content="Game Room"  VerticalContentAlignment="Center" FontSize="60" Foreground="#85C1E9" HorizontalAlignment="Left" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="424" Margin="96,0,0,606">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -23,19 +23,19 @@
 
                 <Label Name="questionLabel"  VerticalContentAlignment="Center" FontSize="30" Foreground="Purple" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="447" Height="69" />
                 <Separator Margin="10"></Separator>
-                <Button Name="Answer1"  Height="90" Width="485" FontSize="35"/>
+                <Button Name="Answer1"  Height="70" Width="484" FontSize="35"/>
                 <Separator Margin="10"></Separator>
-                <Button Name="Answer2"  Height="90" Width="485" FontSize="35"/>
+                <Button Name="Answer2"  Height="70" Width="485" FontSize="35"/>
                 <Separator Margin="10"></Separator>
-                <Button Name="Answer3"  Height="90" Width="485" FontSize="35"/>
+                <Button Name="Answer3"  Height="70" Width="485" FontSize="35"/>
                 <Separator Margin="10"></Separator>
-                <Button Name="Answer4"  Height="90" Width="485" FontSize="35"/>
+                <Button Name="Answer4"  Height="70" Width="485" FontSize="35"/>
 
 
 
             </StackPanel>
         </Border>
-        <Button Content="Exit" HorizontalAlignment="Left" Margin="393,681,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,-0.061" Height="50" Width="109" />
+        <Button Content="Exit" FontSize="30" HorizontalAlignment="Left" Margin="378,623,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,-0.061" Height="60" Width="120" Click="ClickExit" />
 
 
 
