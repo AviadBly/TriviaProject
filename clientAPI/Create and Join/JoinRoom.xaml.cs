@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using clientAPI.Create_and_Join;
-using clientAPI.Game;
+using clientAPI.GameFolder;
 using System.Windows.Threading;
 
 namespace clientAPI

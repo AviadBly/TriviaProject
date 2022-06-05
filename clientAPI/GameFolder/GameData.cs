@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using clientAPI.Login_and_Signup;
 
 
-namespace clientAPI.Game
+namespace clientAPI.GameFolder
 {
     public class Question
     {

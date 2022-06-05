@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using clientAPI.Create_and_Join;
+using clientAPI.GameFolder;
+
 
 namespace clientAPI.Requests_and_Responses
 {
@@ -162,13 +164,12 @@ namespace clientAPI.Requests_and_Responses
 
     internal class GetQuestionResponse : Response
     {
-        public GetQuestionResponse(byte status, string question, Dictionary<uint, string> answers) : base(status)
+        public GetQuestionResponse(byte status, Question question) : base(status)
         {
-            Question= question;
-            Answers= answers;
+            Question = question;
+            
         }
-        public string Question { get; set; }
-        public Dictionary<uint,string> Answers { get; set; }
+        public Question Question { get; set; }
 
     }
 
