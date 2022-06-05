@@ -128,9 +128,9 @@ namespace clientAPI.Requests_and_Responses
         {
         }
     }
-    internal class StartRoomResponse : Response
+    internal class StartGameResponse : Response
     {
-        public StartRoomResponse(byte status) : base(status)
+        public StartGameResponse(byte status) : base(status)
         {
         }
     }
