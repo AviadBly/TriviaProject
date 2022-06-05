@@ -3,6 +3,9 @@
 #include <iostream>
 #include "Room.h"
 #include <vector>
+         
+
+
 using namespace std;
 
 class RoomManager
@@ -19,7 +22,7 @@ public:
 	bool doesRoomExist(unsigned int ID);
 	void setRoomActive(int ID);
 	void addUserToRoom(int ID, LoggedUser user);
-	void removeUser(User user, RoomData data);
+	void removeUser(User user, unsigned int roomId);
 private:
 	int nextRoomId;
 	map<unsigned int, Room> m_rooms;
