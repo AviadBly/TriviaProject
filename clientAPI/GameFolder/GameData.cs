@@ -53,4 +53,5 @@ namespace clientAPI.GameFolder
             HasGameEnded = hasGameEnded;
         }
     }
+
 }

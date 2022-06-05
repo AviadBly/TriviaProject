@@ -54,19 +54,45 @@ namespace clientAPI.GameFolder
 
         public void displayQuestionOnScreen()
         {
-            //Question question= GetNextQuestion();
-            Dictionary<uint, string> dict = new Dictionary<uint, string>();
-            dict.Add(1, "Fine");
-            dict.Add(2, "okay");
-            dict.Add(3, "brara");
-            dict.Add(4, "kill me");
-            Question question = new Question("How are you today??", dict);
+            Question question= GetNextQuestion();
+            //Dictionary<uint, string> dict = new Dictionary<uint, string>();
+            //dict.Add(1, "Fine");
+            //dict.Add(2, "okay");
+            //dict.Add(3, "brara");
+            //dict.Add(4, "kill me");
+            //Question question = new Question("How are you today??", dict);
            questionLabel.Content = question.QuestionText.ToString();
            Answer1.Content = question.Answers[1].ToString();
            Answer2.Content = question.Answers[2].ToString();
            Answer3.Content = question.Answers[3].ToString();
            Answer4.Content = question.Answers[4].ToString();
 
+        }
+
+        private void SubmitAnswer(object sender, RoutedEventArgs e)
+        {
+            string buttonId= (sender as Button).Content.ToString();
+            uint id = Convert.ToUInt32(buttonId);
+            SubmitAnswerRequest submitAnswerRequest = new SubmitAnswerRequest(id);
+            byte[] data = JsonHelpers.JsonFormatSerializer.SubmitAnswerSerializer(submitAnswerRequest);
+            Console.WriteLine(data);
+            MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.SUBMIT_ANSWER_REQUEST_CODE);
+  
+
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+
+            SubmitAnswerResponse submitAnswerResponse = JsonHelpers.JsonFormatDeserializer.SubmitAnswerResponseDeserializer(returnMsg.Message);
+
+            if (submitAnswerResponse == null)
+            {
+                Console.WriteLine("Received empty or wrong answer from server");
+
+            }
+            if(submitAnswerResponse.CorrectAnswerId==id)
+            {
+
+            }
+           
         }
 
         private void ClickExit(object sender, RoutedEventArgs e)
