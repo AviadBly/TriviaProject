@@ -24,7 +24,7 @@ protected:
 	RequestResult leaveRoom();
 	RequestResult getRoomState();
 
-	
+	unsigned int recentRoomId;
 	LoggedUser m_user;
 	Room& m_room;
 	RoomManager& m_roomManager;

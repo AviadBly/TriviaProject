@@ -33,6 +33,7 @@ Room& RoomManager::getSingleRoom(int ID)
 
 bool RoomManager::doesRoomExist(unsigned int ID) {
 
+	
 	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
 	{
 		if (it->first == ID)
@@ -45,10 +46,12 @@ bool RoomManager::doesRoomExist(unsigned int ID) {
 
 void RoomManager::deleteRoom(int ID)
 {
+	
 	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
 	{
 		if (it->first == ID)
 		{
+
 			m_rooms.erase(it);
 			break;
 		}
@@ -57,6 +60,7 @@ void RoomManager::deleteRoom(int ID)
 
 unsigned int RoomManager::getRoomState(int ID)
 {
+	
 	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
 	{
 		if (it->first == ID)
@@ -91,10 +95,10 @@ void RoomManager::addUserToRoom(int ID, LoggedUser user)
 	m_rooms[ID].addUser(user);
 }
 
-void RoomManager::removeUser(User user, RoomData data)
+void RoomManager::removeUser(User user, unsigned int roomId)
 {
 	for (auto r = m_rooms.begin(); r != m_rooms.end(); r++) {
-		if (r->second.getData().id == data.id) {
+		if (r->second.getData().id == roomId) {
 			r->second.removeUser(user);
 			return;
 		}
