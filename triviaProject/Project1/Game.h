@@ -13,11 +13,13 @@ struct GameData
 		correctAnswerCount = 0;
 		wrongAnswerCount = 0;
 		averageAnswerTime = 0;
+		hasPlayerFinished = false;
 	}
 	Question currentQuestion;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
 	double averageAnswerTime;
+	bool hasPlayerFinished;
 };
 
 
@@ -45,8 +47,8 @@ private:
 	vector<Question> m_questions;
 	map<User, GameData> m_players;
 	unsigned int timePerQuestion;
-
 	bool hasGameEnded;
+
 
 	PlayerResults getPlayerResults(const User& user);
 	double calculateNewAverageAnswerTime(double answerTime, const User& user);

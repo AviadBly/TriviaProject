@@ -30,7 +30,7 @@
 #define CORRECT_ANSWER_COUNT_TEXT "CorrectAnswerCount"
 #define WRONG_ANSWER_COUNT_TEXT "WrongAnswerCount"
 #define AVERAGE_ANSWER_COUNT_TEXT "AverageAnswerCount"
-
+#define QUESTION_TEXT "Question"
 
 
 using json = nlohmann::json;

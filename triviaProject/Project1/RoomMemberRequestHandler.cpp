@@ -60,7 +60,7 @@ RequestResult RoomMemberRequestHandler::leaveRoom()
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeLeaveRoomResponse(leaveRoomResponse);
 	m_roomManager.removeUser(m_user, recentRoomId);	//no error is thrown if the room is already deleted
-	//m_room.removeUser(m_user);
+	
 		//change back to menu handler
 	requestResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(m_user);
 	
@@ -75,9 +75,7 @@ RequestResult RoomMemberRequestHandler::getRoomState()
 	
 	RequestResult requestResult;
 
-	//m_room = m_roomManager.getSingleRoom(m_room.getData().id);
-	
-	//checks if room still exist, because the default return of getSingleRoom is a room with id=0
+	//checks if room still exist
 	if (m_roomManager.doesRoomExist(recentRoomId)) {
 		getRoomStateResponse.status = getRoomStateResponse.status_ok;
 		RoomData roomData = this->m_room.getData();

@@ -4,6 +4,8 @@ GameRequestHandler::GameRequestHandler(const vector<User>& users, const LoggedUs
 {
 	this->m_game = gameManager.createGame(users, timePerQuestion);
 	this->m_user = user;
+
+	RequestResult requestResult = getQuestion();
 }
 
 

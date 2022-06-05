@@ -243,6 +243,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeGetQuestionResponse(con
 	json jsonResponse;
 	jsonResponse[STATUS_TEXT] = getQuestionResponse.status;
 	jsonResponse[ANSWERS_TEXT] = getQuestionResponse.answers;
+	jsonResponse[QUESTION_TEXT] = getQuestionResponse.question;
 
 	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
 
