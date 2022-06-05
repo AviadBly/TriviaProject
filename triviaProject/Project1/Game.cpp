@@ -15,7 +15,7 @@ Game::Game(const vector<Question>& questions, const vector<User>& users, unsigne
 	nextGameId++;
 
 	GameData initGameData;	//initialize the map with users, and empty game data
-	for(auto i = users.begin(); i != users.end(); i++){
+	for(auto i = users.begin(); i != users.end(); i++) {
 		m_players.insert(pair<User, GameData>(*i, initGameData));
 	}
 	

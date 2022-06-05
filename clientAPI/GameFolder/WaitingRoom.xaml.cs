@@ -37,7 +37,7 @@ namespace clientAPI.GameFolder
             isAdmin = isUserAdmin;
             if(isAdmin)
             {
-                StartButton.Visibility=Visibility.Visible;
+                StartButton.Visibility = Visibility.Visible;
             }
             m_room = new Room(metaData, new List<string>());
             m_room.PlayersUpdated += RoomPlayersUpdated;
@@ -83,8 +83,7 @@ namespace clientAPI.GameFolder
                     menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                     menu.Show();
 
-                    m_updatePlayersCancellationToken?.Cancel();
-                    m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS*0.1));
+                    stopTask();
 
                     byte status = sendLeaveRoom();
                     if (status == Response.status_error) {
@@ -115,7 +114,12 @@ namespace clientAPI.GameFolder
             else
                 showPlayers(players);
         }
-
+        
+        private void stopTask()
+        {
+            m_updatePlayersCancellationToken?.Cancel();
+            m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS * 0.1));
+        }
         //TO DO, ask getPlayers every 1 second
        
         private (byte, IList<string>) getPlayers()
@@ -189,7 +193,7 @@ namespace clientAPI.GameFolder
         {
             if (isAdmin)
             {
-                MainProgram.appClient.sender("", Requests.CLOSE_ROOM_REQUEST_CODE);    //ask for rooms
+                MainProgram.appClient.sender("", Requests.CLOSE_ROOM_REQUEST_CODE);    
             }
             else
             {
@@ -259,7 +263,27 @@ namespace clientAPI.GameFolder
 
         private void StartClick(object sender, RoutedEventArgs e)
         {
-            
+            stopTask();
+            MainProgram.appClient.sender("", Requests.START_GAME_REQUEST_CODE);
+
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+
+            if (returnMsg.IsErrorMsg)
+            {
+                //Signup failed
+                MessageBox.Show("Error");
+                           
+            }
+
+            StartGameResponse startGameResponse = JsonHelpers.JsonFormatDeserializer.StartGameResponseDeserializer(returnMsg.Message);
+
+            if(startGameResponse != null && startGameResponse.Status == StartGameResponse.status_ok)
+            {
+                GameWindow gameWindow = new GameWindow();
+                gameWindow.Show();
+                Close();
+            }
+
         }
     }
 
