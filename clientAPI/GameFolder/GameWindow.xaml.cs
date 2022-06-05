@@ -50,5 +50,17 @@ namespace clientAPI.GameFolder
 
 
         }
+
+
+        public void displayQuestionOnScreen()
+        {
+           Question question= GetNextQuestion();
+           questionLabel.Content = question.QuestionText.ToString();
+           Answer1.Content = question.Answers[1].ToString();
+           Answer2.Content = question.Answers[1].ToString();
+           Answer3.Content = question.Answers[1].ToString();
+           Answer4.Content = question.Answers[1].ToString();
+
+        }
     }
 }
