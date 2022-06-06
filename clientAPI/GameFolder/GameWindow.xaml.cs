@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Threading;
-
+using System.Threading.Tasks;
 
 namespace clientAPI.GameFolder
 {
@@ -16,18 +16,27 @@ namespace clientAPI.GameFolder
     {
         Game m_game;
         uint m_id;
+        int _count;
+
         public GameWindow()
         {
             InitializeComponent();
-            for(int i = 0; i < 10; i++)
+
+            startGame();
+        }
+
+        public async void startGame()
+        {
+            for (int i = 0; i < 10; i++)
             {
                 m_id = 999;
-                Thread.Sleep(5000);
-                SubmitAnswer(m_id);
+
                 
-                displayQuestionOnScreen();
+                await displayQuestionOnScreen();
+                
+                await SubmitAnswer(m_id);
+                
             }
-            
         }
 
         public Question GetNextQuestion()
@@ -50,22 +59,19 @@ namespace clientAPI.GameFolder
 
         }
 
-
-        public void displayQuestionOnScreen()
+        
+        public async Task displayQuestionOnScreen()
         {
             Question question = GetNextQuestion();
-            //SortedDictionary<uint, string> dict = new SortedDictionary<uint, string>();
-            //dict.Add(1, "Fine");
-            //dict.Add(2, "okay");
-            //dict.Add(3, "brara");
-            //dict.Add(4, "kill me");
-            //Question question = new Question("How are you today??", dict);
+            
             questionLabel.Content = question.QuestionText.ToString();
             Answer1.Content = question.Answers[0].ToString();
             Answer2.Content = question.Answers[1].ToString();
             Answer3.Content = question.Answers[2].ToString();
             Answer4.Content = question.Answers[3].ToString();
 
+            await Task.Delay(10000);
+            
         }
 
         private void AnswerClicked(object sender, RoutedEventArgs e)
@@ -79,7 +85,7 @@ namespace clientAPI.GameFolder
             
         }
 
-        private void SubmitAnswer(uint id)
+        private async Task SubmitAnswer(uint id)
         {
             
             SubmitAnswerRequest submitAnswerRequest = new SubmitAnswerRequest(id);
@@ -98,8 +104,10 @@ namespace clientAPI.GameFolder
                 Console.WriteLine("Received empty or wrong answer from server");
                 return;
             }
-            
-             
+
+            switchColors(m_id, submitAnswerResponse.CorrectAnswerId == id);
+
+            await Task.Delay(2000);
             //TODO
         }
 
@@ -109,15 +117,7 @@ namespace clientAPI.GameFolder
             {
 
             }
-            //if (submitAnswerResponse.CorrectAnswerId == id)
-            //{
-            //    (sender as Button).Background = Brushes.Green;
-            //}
-            //else
-            //{
-            //    (sender as Button).Background = Brushes.Red;
-
-            //}
+            
         }
 
         private void ResetColors()
