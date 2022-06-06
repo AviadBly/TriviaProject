@@ -52,4 +52,5 @@ private:
 
 	PlayerResults getPlayerResults(const User& user);
 	double calculateNewAverageAnswerTime(double answerTime, const User& user);
+	void CheckIfGameFinished();
 };
