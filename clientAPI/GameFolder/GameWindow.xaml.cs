@@ -62,6 +62,7 @@ namespace clientAPI.GameFolder
         
         public async Task displayQuestionOnScreen()
         {
+            ResetColors();
             Question question = GetNextQuestion();
             
             questionLabel.Content = question.QuestionText.ToString();
@@ -70,7 +71,7 @@ namespace clientAPI.GameFolder
             Answer3.Content = question.Answers[2].ToString();
             Answer4.Content = question.Answers[3].ToString();
 
-            await Task.Delay(10000);
+            await Task.Delay(3000);
             
         }
 
@@ -108,13 +109,44 @@ namespace clientAPI.GameFolder
             switchColors(m_id, submitAnswerResponse.CorrectAnswerId == id);
 
             await Task.Delay(2000);
+           
             //TODO
         }
 
         private void switchColors(uint id, bool isCorrect)
         {
-            switch (id)
+            if(isCorrect)
             {
+                switchId(id, Brushes.Green);
+            }
+            else
+            {
+                switchId(id, Brushes.Red);
+            }
+
+        }
+
+        private void switchId(uint id,SolidColorBrush solidColorBrush)
+        {
+            switch(id)
+            {
+                case 1:
+                    Answer1.Background = solidColorBrush;
+                    break;
+
+                case 2:
+                    Answer2.Background = solidColorBrush;
+                    break;
+
+                case 3:
+                    Answer3.Background = solidColorBrush;
+                    break;
+
+                case 4:
+                    Answer4.Background = solidColorBrush;
+
+                    break;
+
 
             }
             
@@ -122,7 +154,10 @@ namespace clientAPI.GameFolder
 
         private void ResetColors()
         {
-
+            Answer1.Background= new SolidColorBrush(Color.FromArgb(100, 103, 58, 183));
+            Answer2.Background = new SolidColorBrush(Color.FromArgb(100, 103, 58, 183));
+            Answer3.Background = new SolidColorBrush(Color.FromArgb(100, 103, 58, 183));
+            Answer4.Background = new SolidColorBrush(Color.FromArgb(100, 103, 58, 183));
         }
 
         private void ClickExit(object sender, RoutedEventArgs e)
