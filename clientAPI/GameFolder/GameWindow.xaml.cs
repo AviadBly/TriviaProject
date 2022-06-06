@@ -63,7 +63,7 @@ namespace clientAPI.GameFolder
         public async Task displayQuestionOnScreen()
         {
             Question question = GetNextQuestion();
-            
+            ResetColors();
             questionLabel.Content = question.QuestionText.ToString();
             Answer1.Content = question.Answers[0].ToString();
             Answer2.Content = question.Answers[1].ToString();
@@ -81,8 +81,7 @@ namespace clientAPI.GameFolder
             uint id = Convert.ToUInt32(charId.ToString()) - 1;  //id start with 0
 
             m_id = id;
-
-            
+          
         }
 
         private async Task SubmitAnswer(uint id)
@@ -113,10 +112,12 @@ namespace clientAPI.GameFolder
 
         private void switchColors(uint id, bool isCorrect)
         {
+            
             switch (id)
             {
-
+                
             }
+
             
         }
 
