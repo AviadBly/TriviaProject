@@ -20,6 +20,7 @@ using clientAPI.JsonHelpers;
 using clientAPI;
 using clientAPI.Create_and_Join;
 using System.Collections.Generic;
+using clientAPI.GameFolder;
 using System;
 
 namespace clientAPI
@@ -37,11 +38,32 @@ namespace clientAPI
             
             InitializeComponent();
 
+
+            //SortedDictionary<uint, string> dict = new SortedDictionary<uint, string>();
+            //dict.Add(0, "Golda Meir ");
+            //dict.Add(1, "*David Ben Gurion ");
+            //dict.Add(2, "Benyamin Netanyhau ");
+            //dict.Add(3, "Ariel Sharon ");
+            //Question question = new Question("Who was the first prime minisiter of Israel? ", dict);
+            //string jj = "{\"QuestionText\":\"How are you today??\",\"Answers\":{\"1\":\"Fine\",\"2\":\"okay\",\"3\":\"brara\",\"4\":\"kill me\"},\"Status\":4}";
+            //GetQuestionResponse qq = JsonHelpers.JsonFormatDeserializer.GetQuestionResponseDeserializer(System.Text.Encoding.UTF8.GetBytes(jj));
+
+            //GetQuestionResponse getQuestionResponse = new GetQuestionResponse(4, question.QuestionText, dict);
+            //string resultStringJson = JsonSerializer.Serialize(getQuestionResponse);
+            //Console.WriteLine(resultStringJson);
+            ////            "{\"Answers\":{\"0\":\"Golda Meir \",\"1\":\"*David Ben Gurion \",\"2\":\"Benyamin Netanyhau \",\"3\":\"Ariel Sharon \"},\"QuestionText\":\"Who was the first prime minisiter of Israel? \",\"Status\":4}"
+            //string test = "{\"Answers\":[[0,\"Golda Meir \"],[1,\"*David Ben Gurion \"],[2,\"Benyamin Netanyhau \"],[3,\"Ariel Sharon \"]],\"QuestionText\":\"Who was the first prime minisiter of Israel? \",\"Status\":2}";
             
+            //GetQuestionResponse? response = JsonSerializer.Deserialize<GetQuestionResponse>(test);
+
+            //GameWindow g = new GameWindow();
+
+            //Question q = g.GetNextQuestion();
+            //Console.WriteLine(q);
             //List<Room> list = new List<Room>();
             //IList<string> list2 = new List<string>();
             //list2.Add("first");
-          
+
         }
 
 

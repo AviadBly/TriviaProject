@@ -209,10 +209,21 @@ namespace clientAPI.JsonHelpers
 
             string jsonString = Encoding.Default.GetString(buffer);
 
+            
+            TemporaryGetQuestionResponse? response = JsonSerializer.Deserialize<TemporaryGetQuestionResponse>(jsonString);
 
-            GetQuestionResponse? response = JsonSerializer.Deserialize<GetQuestionResponse>(jsonString);
-
-            return response;
+            
+            SortedDictionary<uint, string> dict = new SortedDictionary<uint, string>();
+                                  
+            uint i = 0;
+            foreach (string item in response.Answers)
+            {
+                dict.Add(i, item);
+                i++;
+            }
+            GetQuestionResponse getQuestionResponse = new GetQuestionResponse(response.Status, response.QuestionText, dict);
+            
+            return getQuestionResponse;
         }
 
         public static SubmitAnswerResponse? SubmitAnswerResponseDeserializer(byte[] buffer)

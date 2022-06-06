@@ -10,13 +10,13 @@ namespace clientAPI.GameFolder
 {
     public class Question
     {
-        public Question(string questionText, Dictionary<uint, string> answers)
+        public Question(string questionText, SortedDictionary<uint, string> answers)
         {
             QuestionText = questionText;
             Answers = answers;
         }
         public string QuestionText { get; set; } = default(string);
-        public Dictionary<uint, string> Answers { get; set; }
+        public SortedDictionary<uint, string> Answers { get; set; }
     }
     public class GameData
     {
