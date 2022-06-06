@@ -27,7 +27,7 @@
                 <Separator Margin="10"></Separator>
                 <Button Name="Answer2"  Height="70" Width="485" FontSize="35" Click="AnswerClicked"/>
                 <Separator Margin="10"></Separator>
-                <Button Name="Answer3"  Height="70" Width="485" FontSize="35" Click="AnswerClicked"/>
+                <Button Name="Answer3"  Height="70" Width="485" FontSize="35" Click="AnswerClicked" Background="#FF673AB7"/>
                 <Separator Margin="10"></Separator>
                 <Button Name="Answer4"  Height="70" Width="485" FontSize="35" Click="AnswerClicked"/>
 
