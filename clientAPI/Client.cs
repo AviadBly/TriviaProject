@@ -145,7 +145,7 @@ namespace clientAPI
             
             try
             {
-                m_socket.ReadTimeout = 60000;   //we should lower this later, but for now we are just testing
+                m_socket.ReadTimeout = 600000;   //we should lower this later, but for now we are just testing
                 Int32 bytes = 0;
                 int offset = 0;
                 do

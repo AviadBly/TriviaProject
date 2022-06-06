@@ -15,10 +15,19 @@ namespace clientAPI.GameFolder
     public partial class GameWindow : Window
     {
         Game m_game;
+        uint m_id;
         public GameWindow()
         {
             InitializeComponent();
-            displayQuestionOnScreen();
+            for(int i = 0; i < 10; i++)
+            {
+                m_id = 999;
+                Thread.Sleep(5000);
+                SubmitAnswer(m_id);
+                
+                displayQuestionOnScreen();
+            }
+            
         }
 
         public Question GetNextQuestion()
@@ -59,12 +68,20 @@ namespace clientAPI.GameFolder
 
         }
 
-        private void SubmitAnswer(object sender, RoutedEventArgs e)
+        private void AnswerClicked(object sender, RoutedEventArgs e)
         {
             string buttonId = (sender as Button).Name.ToString();
             char charId = buttonId[buttonId.Length - 1];
             uint id = Convert.ToUInt32(charId.ToString()) - 1;  //id start with 0
 
+            m_id = id;
+
+            
+        }
+
+        private void SubmitAnswer(uint id)
+        {
+            
             SubmitAnswerRequest submitAnswerRequest = new SubmitAnswerRequest(id);
             byte[] data = JsonHelpers.JsonFormatSerializer.SubmitAnswerSerializer(submitAnswerRequest);
             Console.WriteLine(data);
@@ -81,22 +98,32 @@ namespace clientAPI.GameFolder
                 Console.WriteLine("Received empty or wrong answer from server");
                 return;
             }
-            if (submitAnswerResponse.CorrectAnswerId == id)
-            {
-                (sender as Button).Background = Brushes.Green;
-            }
-            else {
-                (sender as Button).Background = Brushes.Red;
-                
-            }
-
-            Thread.Sleep(3000);
-            displayQuestionOnScreen();
-
+            
+             
             //TODO
-
         }
 
+        private void switchColors(uint id, bool isCorrect)
+        {
+            switch (id)
+            {
+
+            }
+            //if (submitAnswerResponse.CorrectAnswerId == id)
+            //{
+            //    (sender as Button).Background = Brushes.Green;
+            //}
+            //else
+            //{
+            //    (sender as Button).Background = Brushes.Red;
+
+            //}
+        }
+
+        private void ResetColors()
+        {
+
+        }
 
         private void ClickExit(object sender, RoutedEventArgs e)
         {
