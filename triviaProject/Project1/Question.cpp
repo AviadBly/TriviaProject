@@ -5,6 +5,10 @@
 #include<time.h>
 #include <map>
 
+Question::Question()
+{
+}
+
 Question::Question(const string& question, const string& answer1, const string& answer2, const string& answer3, const string& answer4)
 {
     this->m_question = question;
@@ -12,8 +16,11 @@ Question::Question(const string& question, const string& answer1, const string& 
     this->m_possibleAnswers.insert(pair<unsigned int, string>(1, answer2));
     this->m_possibleAnswers.insert(pair<unsigned int, string>(2, answer3));
     this->m_possibleAnswers.insert(pair<unsigned int, string>(3, answer4));
+    setCorrectAnswer();
     mixAnswers();
 }
+
+
 
 const string& Question::getQuestionString() const
 {
@@ -37,16 +44,7 @@ map<unsigned int, string> Question::getPossibleAnswers()
 
 string Question::getCorrectAnswer() const
 {
-    for (auto iter = m_possibleAnswers.begin(); iter != m_possibleAnswers.end(); iter++)
-    {
-        string currentString = iter->second;
-        if (currentString[0] == '*')    //remove the '*' from the start of the correct answer
-        {
-            string newStr = currentString.substr(1);
-            return newStr;
-        }
-    }
-    return("Error");
+    return m_correctAnswer;
 }
 
 //finds the answer by the text, and returns its id
@@ -69,6 +67,16 @@ void Question::setQuestion(const string& question)
 void Question::addPossibleAnswers(const string& answer)
 {
     this->m_possibleAnswers.insert(  pair<unsigned int, string>(m_possibleAnswers.size(), answer)  );
+    setCorrectAnswer();
+}
+
+void Question::setCorrectAnswer() {
+    for (auto& p : m_possibleAnswers) {
+        if (p.second[0] == '*'){
+            this->m_correctAnswer = p.second.substr(1);
+            m_possibleAnswers[p.first] = p.second.substr(1);
+        }
+    }
 }
 
 //changes the order of the answers
