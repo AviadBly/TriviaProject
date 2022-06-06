@@ -71,7 +71,7 @@ namespace clientAPI.GameFolder
             Answer3.Content = question.Answers[2].ToString();
             Answer4.Content = question.Answers[3].ToString();
 
-            await Task.Delay(3000);
+            await Task.Delay(8000);
             
         }
 
@@ -107,8 +107,8 @@ namespace clientAPI.GameFolder
 
             switchColors(m_id, submitAnswerResponse.CorrectAnswerId == id);
 
-            await Task.Delay(2000);
-           
+            await Task.Delay(3000);
+            
             //TODO
         }
 
@@ -130,24 +130,18 @@ namespace clientAPI.GameFolder
         {
             switch(id)
             {
-                case 1:
+                case 0:
                     Answer1.Background = solidColorBrush;
                     break;
-
-                case 2:
+                case 1:
                     Answer2.Background = solidColorBrush;
                     break;
-
-                case 3:
+                case 2:
                     Answer3.Background = solidColorBrush;
                     break;
-
-                case 4:
+                case 3:
                     Answer4.Background = solidColorBrush;
-
                     break;
-
-
             }
             
         }
