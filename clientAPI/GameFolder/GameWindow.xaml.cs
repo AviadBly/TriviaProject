@@ -1,19 +1,9 @@
-﻿using clientAPI.Create_and_Join;
-using clientAPI.Requests_and_Responses;
+﻿using clientAPI.Requests_and_Responses;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using clientAPI.GameFolder;
+using System.Threading;
 
 
 namespace clientAPI.GameFolder
@@ -21,7 +11,7 @@ namespace clientAPI.GameFolder
     /// <summary>
     /// Interaction logic for GameWindow.xaml
     /// </summary>
-    
+
     public partial class GameWindow : Window
     {
         Game m_game;
@@ -43,7 +33,7 @@ namespace clientAPI.GameFolder
             if (getQuestionResponse == null)
             {
                 Console.WriteLine("Received empty or wrong answer from server");
-                
+
             }
             Question question = new Question(getQuestionResponse.QuestionText, getQuestionResponse.Answers);
 
@@ -54,18 +44,18 @@ namespace clientAPI.GameFolder
 
         public void displayQuestionOnScreen()
         {
-            Question question= GetNextQuestion();
+            Question question = GetNextQuestion();
             //SortedDictionary<uint, string> dict = new SortedDictionary<uint, string>();
             //dict.Add(1, "Fine");
             //dict.Add(2, "okay");
             //dict.Add(3, "brara");
             //dict.Add(4, "kill me");
             //Question question = new Question("How are you today??", dict);
-           questionLabel.Content = question.QuestionText.ToString();
-           Answer1.Content = question.Answers[0].ToString();
-           Answer2.Content = question.Answers[1].ToString();
-           Answer3.Content = question.Answers[2].ToString();
-           Answer4.Content = question.Answers[3].ToString();
+            questionLabel.Content = question.QuestionText.ToString();
+            Answer1.Content = question.Answers[0].ToString();
+            Answer2.Content = question.Answers[1].ToString();
+            Answer3.Content = question.Answers[2].ToString();
+            Answer4.Content = question.Answers[3].ToString();
 
         }
 
@@ -92,13 +82,15 @@ namespace clientAPI.GameFolder
             if (submitAnswerResponse.CorrectAnswerId == id)
             {
                 (sender as Button).Background = Brushes.Green;
+                Thread.Sleep(3000);
             }
             else
             {
                 (sender as Button).Background = Brushes.Red;
+                Thread.Sleep(3000);
             }
             displayQuestionOnScreen();
-            
+
             //TODO
 
         }
@@ -118,7 +110,7 @@ namespace clientAPI.GameFolder
                 Console.WriteLine("Received empty or wrong answer from server");
 
             }
-            
+
 
             Close();
             menu menu = new menu(MainProgram.MainUsername);

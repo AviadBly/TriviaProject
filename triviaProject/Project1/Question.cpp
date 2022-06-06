@@ -32,7 +32,7 @@ map<unsigned int, string> Question::getPossibleAnswers()
             temp[iter->first] = iter->second.substr(1);
         }
     }
-    return m_possibleAnswers;
+    return temp;
 }
 
 string Question::getCorrectAnswer() const
