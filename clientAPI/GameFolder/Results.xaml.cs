@@ -58,7 +58,7 @@ namespace clientAPI.GameFolder
             return getGameResultsResponse;
         }
 
-        private void PlayerList_SelectionChanged(object sender, SelectionChangedEventArgs e,)
+        private void PlayerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string username = PlayerList.SelectedItem.ToString();
             foreach(PlayerResults playerResult in data.Results)

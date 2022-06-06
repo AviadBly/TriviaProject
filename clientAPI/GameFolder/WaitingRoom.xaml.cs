@@ -128,7 +128,6 @@ namespace clientAPI.GameFolder
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
 
-
             GetRoomStateResponse getRoomStateResponse = JsonHelpers.JsonFormatDeserializer.GetRoomStateResponseDeserializer(returnMsg.Message);
 
             if (getRoomStateResponse == null)
@@ -149,16 +148,21 @@ namespace clientAPI.GameFolder
 
                     return (GetRoomStateResponse.statusRoomNotFound, new List<string>());
                     
-                case GetRoomStateResponse.status_ok:    //if room found
+                case Response.status_ok:    //if room found
                     if (getRoomStateResponse.HasGameBegun)
                     {
-                        
-                        GameWindow gameWindow = new GameWindow();
-                        gameWindow.Show();
-                        Close();
-                        //next, go to game room, not for this version
-                    }
-                    
+                        byte status = sendStartGame();
+                        if(status != Response.status_ok)
+                        {
+                            break;
+                        }
+                        Application.Current.Dispatcher.Invoke((Action)delegate {
+                            stopTask();
+                            GameWindow gameWindow = new GameWindow();
+                            gameWindow.Show();
+                            Close();
+                        });                                               
+                    }                   
                     break;
 
                 case GetRoomStateResponse.status_error: //some error
@@ -263,6 +267,19 @@ namespace clientAPI.GameFolder
 
         private void StartClick(object sender, RoutedEventArgs e)
         {
+            byte status = sendStartGame();
+
+            if (status == Response.status_ok)
+            {
+                GameWindow gameWindow = new GameWindow();
+                gameWindow.Show();
+                Close();
+            }
+
+        }
+
+        public byte sendStartGame()
+        {
             stopTask();
             MainProgram.appClient.sender("", Requests.START_GAME_REQUEST_CODE);
 
@@ -272,18 +289,13 @@ namespace clientAPI.GameFolder
             {
                 //Signup failed
                 MessageBox.Show("Error");
-                           
+
             }
 
             StartGameResponse startGameResponse = JsonHelpers.JsonFormatDeserializer.StartGameResponseDeserializer(returnMsg.Message);
 
-            if(startGameResponse != null && startGameResponse.Status == StartGameResponse.status_ok)
-            {
-                GameWindow gameWindow = new GameWindow();
-                gameWindow.Show();
-                Close();
-            }
 
+            return startGameResponse.Status;
         }
     }
 
