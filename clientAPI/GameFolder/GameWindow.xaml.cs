@@ -126,6 +126,7 @@ namespace clientAPI.GameFolder
 
         }
 
+
         private void switchId(uint id,SolidColorBrush solidColorBrush)
         {
             switch(id)
