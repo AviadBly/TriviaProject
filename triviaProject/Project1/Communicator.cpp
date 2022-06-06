@@ -10,6 +10,8 @@ Communicator::Communicator(RequestHandlerFactory& handlerFactory) : m_handlerFac
 
 	if (m_serverSocket == INVALID_SOCKET)
 		throw std::exception(__FUNCTION__ " - socket");
+	
+	
 }
 
 Communicator::~Communicator()
@@ -41,6 +43,20 @@ void Communicator::serve(int port)
 	if (listen(m_serverSocket, SOMAXCONN) == SOCKET_ERROR)
 		throw std::exception(__FUNCTION__ " - listen");
 	std::cout << "Listening on port " << port << std::endl;
+
+	RoomData d;
+	d.id = 1;
+	d.maxPlayers = 5;
+	d.name = "firstR";
+	d.numOfQuestionsInGame = 6;
+	d.timePerQuestion = 12;
+
+	this->m_handlerFactory.getRoomManager().createRoom(LoggedUser("sha", "123"), d);
+	d.id = 2;
+	d.name = "secondRoom";
+	d.numOfQuestionsInGame = 11;
+	d.timePerQuestion = 20;
+	this->m_handlerFactory.getRoomManager().createRoom(LoggedUser("gal", "568"), d);
 
 	while (true)
 	{
@@ -148,7 +164,11 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 
 	//first create the login requestHandler
 	request.newHandler = this->m_handlerFactory.createLoginRequestHandler();
-
+	
+	//request.newHandler = m_handlerFactory.createGameRequestHandler(m_handlerFactory.getRoomManager().getSingleRoom(1), LoggedUser("shajj", "1426"), true);
+	
+	
+	
 	try {
 		while (true) {
 

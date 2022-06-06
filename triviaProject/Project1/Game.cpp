@@ -51,6 +51,21 @@ double Game::calculateNewAverageAnswerTime(double answerTime, const User& user){
 	return newAnswerTime;
 }
 
+void Game::CheckIfGameFinished()
+{
+	
+	for (auto player : m_players)
+	{
+		if (player.second.hasPlayerFinished == false)
+		{
+			hasGameEnded = false;
+			return;
+		}
+	}
+	hasGameEnded = true;
+	
+}
+
 //returns the correct answer id
 //also increases the count of the correct or wrongs answers
 unsigned int Game::submitAnswer(const User& user, unsigned int answerId, double answerTime)

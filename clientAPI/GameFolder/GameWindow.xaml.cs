@@ -88,7 +88,6 @@ namespace clientAPI.GameFolder
             if (submitAnswerResponse == null)
             {
                 Console.WriteLine("Received empty or wrong answer from server");
-
             }
             if (submitAnswerResponse.CorrectAnswerId == id)
             {

@@ -6,19 +6,7 @@ MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& handlerFactory, Lo
 	
 	this->m_user = newUser;
 	//just for testing
-	RoomData d;
-	d.id = 1;
-	d.maxPlayers = 5;
-	d.name = "firstR";
-	d.numOfQuestionsInGame = 6;
-	d.timePerQuestion = 12;
-
-	this->m_roomManager.createRoom(LoggedUser("sha", "123"), d);
-	d.id = 2;
-	d.name = "secondRoom";
-	d.numOfQuestionsInGame = 11;
-	d.timePerQuestion = 20;
-	this->m_roomManager.createRoom(LoggedUser("gal", "568"), d);
+	
 
 }
 
