@@ -63,11 +63,12 @@ namespace clientAPI.GameFolder
         {
             string buttonId = (sender as Button).Name.ToString();
             char charId = buttonId[buttonId.Length - 1];
-            uint id = Convert.ToUInt32(charId.ToString());
+            uint id = Convert.ToUInt32(charId.ToString()) - 1;  //id start with 0
 
             SubmitAnswerRequest submitAnswerRequest = new SubmitAnswerRequest(id);
             byte[] data = JsonHelpers.JsonFormatSerializer.SubmitAnswerSerializer(submitAnswerRequest);
             Console.WriteLine(data);
+
             MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.SUBMIT_ANSWER_REQUEST_CODE);
 
 
@@ -78,17 +79,18 @@ namespace clientAPI.GameFolder
             if (submitAnswerResponse == null)
             {
                 Console.WriteLine("Received empty or wrong answer from server");
+                return;
             }
             if (submitAnswerResponse.CorrectAnswerId == id)
             {
                 (sender as Button).Background = Brushes.Green;
-                Thread.Sleep(3000);
             }
-            else
-            {
+            else {
                 (sender as Button).Background = Brushes.Red;
-                Thread.Sleep(3000);
+                
             }
+
+            Thread.Sleep(3000);
             displayQuestionOnScreen();
 
             //TODO
