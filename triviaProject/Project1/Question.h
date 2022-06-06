@@ -10,8 +10,9 @@ class Question
 
 
 public:
-	Question() = default;
+	Question();
 	Question(const string& question,const string& answer1, const string& answer2, const string& answer3, const string& answer4);
+	
 	const string& getQuestionString() const;
 
 	map<unsigned int, string> getPossibleAnswers();
@@ -25,6 +26,8 @@ public:
 
 private:
 	string m_question;
+	string m_correctAnswer;
 	map<unsigned int, string> m_possibleAnswers;
 	
+	void setCorrectAnswer();
 };

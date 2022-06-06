@@ -35,8 +35,7 @@ Question Game::getQuestionForUser(const User& user)
 	Question newQuestion = m_questions[m_players[user].correctAnswerCount + m_players[user].wrongAnswerCount];
 	m_players[user].currentQuestion = newQuestion;
 	
-	return newQuestion;
-	
+	return newQuestion;	
 }
 
 double Game::calculateNewAverageAnswerTime(double answerTime, const User& user){
@@ -76,8 +75,7 @@ unsigned int Game::submitAnswer(const User& user, unsigned int answerId, double 
 	string userAnswer = m_players[user].currentQuestion.getPossibleAnswers()[answerId];
 
 	if (userAnswer == correctAnswer) {
-		m_players[user].correctAnswerCount++;
-		
+		m_players[user].correctAnswerCount++;		
 	}
 	else {
 		m_players[user].wrongAnswerCount++;

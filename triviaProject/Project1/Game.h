@@ -15,6 +15,7 @@ struct GameData
 		averageAnswerTime = 0;
 		hasPlayerFinished = false;
 	}
+
 	Question currentQuestion;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
