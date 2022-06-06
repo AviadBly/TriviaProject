@@ -160,15 +160,27 @@ namespace clientAPI.Requests_and_Responses
         }
     }
 
-    internal class GetQuestionResponse : Response
+    internal class TemporaryGetQuestionResponse : Response
     {
-        public GetQuestionResponse(byte status, string questionText, Dictionary<uint, string> answers) : base(status)
+        public TemporaryGetQuestionResponse(byte status, string questionText, List<string> answers) : base(status)
         {
             QuestionText = questionText;
             Answers = answers;
         }
         public string QuestionText { get; set; }
-        public Dictionary<uint,string> Answers { get; set; }
+        public List<string> Answers { get; set; }
+
+    }
+
+    internal class GetQuestionResponse : Response
+    {
+        public GetQuestionResponse(byte status, string questionText, SortedDictionary<uint, string> answers) : base(status)
+        {
+            QuestionText = questionText;
+            Answers = answers;
+        }
+        public string QuestionText { get; set; }
+        public SortedDictionary<uint,string> Answers { get; set; }
 
     }
 

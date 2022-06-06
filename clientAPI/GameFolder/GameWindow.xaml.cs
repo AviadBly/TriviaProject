@@ -54,18 +54,18 @@ namespace clientAPI.GameFolder
 
         public void displayQuestionOnScreen()
         {
-            // Question question= GetNextQuestion();
-            Dictionary<uint, string> dict = new Dictionary<uint, string>();
-            dict.Add(1, "Fine");
-            dict.Add(2, "okay");
-            dict.Add(3, "brara");
-            dict.Add(4, "kill me");
-            Question question = new Question("How are you today??", dict);
-            questionLabel.Content = question.QuestionText.ToString();
-           Answer1.Content = question.Answers[1].ToString();
-           Answer2.Content = question.Answers[2].ToString();
-           Answer3.Content = question.Answers[3].ToString();
-           Answer4.Content = question.Answers[4].ToString();
+            Question question= GetNextQuestion();
+            //SortedDictionary<uint, string> dict = new SortedDictionary<uint, string>();
+            //dict.Add(1, "Fine");
+            //dict.Add(2, "okay");
+            //dict.Add(3, "brara");
+            //dict.Add(4, "kill me");
+            //Question question = new Question("How are you today??", dict);
+           questionLabel.Content = question.QuestionText.ToString();
+           Answer1.Content = question.Answers[0].ToString();
+           Answer2.Content = question.Answers[1].ToString();
+           Answer3.Content = question.Answers[2].ToString();
+           Answer4.Content = question.Answers[3].ToString();
 
         }
 
