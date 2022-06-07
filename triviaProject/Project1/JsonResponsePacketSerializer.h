@@ -29,7 +29,7 @@
 #define CORRECT_ANSWER_ID_TEXT "CorrectAnswerId"
 #define CORRECT_ANSWER_COUNT_TEXT "CorrectAnswerCount"
 #define WRONG_ANSWER_COUNT_TEXT "WrongAnswerCount"
-#define AVERAGE_ANSWER_COUNT_TEXT "AverageAnswerCount"
+#define AVERAGE_ANSWER_TIME_TEXT "AverageAnswerTime"
 #define QUESTION_STRING_TEXT "QuestionText"
 
 

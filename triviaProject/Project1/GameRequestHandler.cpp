@@ -103,7 +103,7 @@ RequestResult GameRequestHandler::getQuestion()
 
 RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 {
-	double answerTime = difftime(sendingTime, requestInfo.receivalTime);
+	double answerTime = difftime(requestInfo.receivalTime, sendingTime);
 	std::cout << "Answer time:" << answerTime << "\n";
 
 	RequestResult requestResult;
