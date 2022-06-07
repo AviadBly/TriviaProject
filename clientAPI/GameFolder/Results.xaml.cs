@@ -24,7 +24,7 @@ namespace clientAPI.GameFolder
         public Results()
         {
             InitializeComponent();
-            data= ShowPlayers();
+            data = ShowPlayers();
 
         }
 
@@ -67,7 +67,7 @@ namespace clientAPI.GameFolder
                 {
                     Correct.Content = playerResult.CorrectAnswerCount;
                     Wrong.Content = playerResult.WrongAnswerCount;
-                    Average.Content = playerResult.AverageAnswerCount;
+                    Average.Content = playerResult.AverageAnswerTime;
                     break;
                 }
             }

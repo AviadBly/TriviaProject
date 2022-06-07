@@ -53,11 +53,14 @@ namespace clientAPI.GameFolder
                              
             }
 
-            await Task.Delay((int)totalWaitingTime);     //
+            //await Task.Delay((int)totalWaitingTime);     //
 
+            Results resultsWindow = new Results();
+            resultsWindow.Show();
+            Close();
         }
 
-        public async Task QuestionWaiter()  //5000           5, 100
+        public async Task QuestionWaiter()  
         {
             for(int i = 0; i < timePerQuestion * 1000 / REFRESH_TIME; i++)
             {

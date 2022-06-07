@@ -194,24 +194,24 @@ namespace clientAPI.Requests_and_Responses
     }
 
     internal class PlayerResults
-    {
-        public PlayerResults(string username, uint correctAnswerCount, uint wrongAnswerCount, uint averageAnswerCount)
+    {//"{\"Results\":[[\"shahar\",3,7,1.0]],\"Status\":2}"
+        public PlayerResults(string username, uint correctAnswerCount, uint wrongAnswerCount, double averageAnswerTime)
         {
             Username = username;
             CorrectAnswerCount = correctAnswerCount;
             WrongAnswerCount = wrongAnswerCount;
-            AverageAnswerCount = averageAnswerCount;
+            AverageAnswerTime = averageAnswerTime;
         }
 
         public string Username { get; set; }
         public uint CorrectAnswerCount { get; set; }
         public uint WrongAnswerCount { get; set; }
-        public uint AverageAnswerCount { get; set; }
+        public double AverageAnswerTime { get; set; }
     }
     //TODO
     /*************************************************/
     internal class GetGameResultsResponse : Response
-    {
+    {    //"{\"Results\":[[\"shahar\",3,7,1.0]],\"Status\":2}"
         public GetGameResultsResponse(List<PlayerResults> results, byte status) : base(status)
         {
             Results = results;

@@ -246,7 +246,7 @@ namespace clientAPI.JsonHelpers
 
             string jsonString = Encoding.Default.GetString(buffer);
 
-
+            //"{\"Results\":[[\"shahar\",3,7,1.0]],\"Status\":2}"
             GetGameResultsResponse? response = JsonSerializer.Deserialize<GetGameResultsResponse>(jsonString);
 
             return response;
