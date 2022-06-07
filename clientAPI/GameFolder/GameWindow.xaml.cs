@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Threading;
-
+using System.Threading.Tasks;
 
 namespace clientAPI.GameFolder
 {
@@ -15,10 +15,28 @@ namespace clientAPI.GameFolder
     public partial class GameWindow : Window
     {
         Game m_game;
+        uint m_id;
+        int _count;
+
         public GameWindow()
         {
             InitializeComponent();
-            displayQuestionOnScreen();
+
+            startGame();
+        }
+
+        public async void startGame()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                m_id = 999;
+
+                
+                await displayQuestionOnScreen();
+                
+                await SubmitAnswer(m_id);
+                
+            }
         }
 
         public Question GetNextQuestion()
@@ -41,33 +59,39 @@ namespace clientAPI.GameFolder
 
         }
 
-
-        public void displayQuestionOnScreen()
+        
+        public async Task displayQuestionOnScreen()
         {
+            ResetColors();
             Question question = GetNextQuestion();
-            //SortedDictionary<uint, string> dict = new SortedDictionary<uint, string>();
-            //dict.Add(1, "Fine");
-            //dict.Add(2, "okay");
-            //dict.Add(3, "brara");
-            //dict.Add(4, "kill me");
-            //Question question = new Question("How are you today??", dict);
+            ResetColors();
             questionLabel.Content = question.QuestionText.ToString();
             Answer1.Content = question.Answers[0].ToString();
             Answer2.Content = question.Answers[1].ToString();
             Answer3.Content = question.Answers[2].ToString();
             Answer4.Content = question.Answers[3].ToString();
 
+            await Task.Delay(8000);
+            
         }
 
-        private void SubmitAnswer(object sender, RoutedEventArgs e)
+        private void AnswerClicked(object sender, RoutedEventArgs e)
         {
             string buttonId = (sender as Button).Name.ToString();
             char charId = buttonId[buttonId.Length - 1];
-            uint id = Convert.ToUInt32(charId.ToString());
+            uint id = Convert.ToUInt32(charId.ToString()) - 1;  //id start with 0
 
+            m_id = id;
+          
+        }
+
+        private async Task SubmitAnswer(uint id)
+        {
+            
             SubmitAnswerRequest submitAnswerRequest = new SubmitAnswerRequest(id);
             byte[] data = JsonHelpers.JsonFormatSerializer.SubmitAnswerSerializer(submitAnswerRequest);
             Console.WriteLine(data);
+
             MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.SUBMIT_ANSWER_REQUEST_CODE);
 
 
@@ -78,23 +102,57 @@ namespace clientAPI.GameFolder
             if (submitAnswerResponse == null)
             {
                 Console.WriteLine("Received empty or wrong answer from server");
+                return;
             }
-            if (submitAnswerResponse.CorrectAnswerId == id)
+
+            switchColors(m_id, submitAnswerResponse.CorrectAnswerId == id);
+
+            await Task.Delay(3000);
+            
+            //TODO
+        }
+
+        private void switchColors(uint id, bool isCorrect)
+        {
+            if(isCorrect)
             {
-                (sender as Button).Background = Brushes.Green;
-                Thread.Sleep(3000);
+                switchId(id, Brushes.Green);
             }
             else
             {
-                (sender as Button).Background = Brushes.Red;
-                Thread.Sleep(3000);
+                switchId(id, Brushes.Red);
             }
-            displayQuestionOnScreen();
-
-            //TODO
 
         }
 
+
+        private void switchId(uint id,SolidColorBrush solidColorBrush)
+        {
+            switch(id)
+            {
+                case 0:
+                    Answer1.Background = solidColorBrush;
+                    break;
+                case 1:
+                    Answer2.Background = solidColorBrush;
+                    break;
+                case 2:
+                    Answer3.Background = solidColorBrush;
+                    break;
+                case 3:
+                    Answer4.Background = solidColorBrush;
+                    break;
+            }
+            
+        }
+
+        private void ResetColors()
+        {
+            Answer1.Background= new SolidColorBrush(Color.FromArgb(100, 103, 58, 183));
+            Answer2.Background = new SolidColorBrush(Color.FromArgb(100, 103, 58, 183));
+            Answer3.Background = new SolidColorBrush(Color.FromArgb(100, 103, 58, 183));
+            Answer4.Background = new SolidColorBrush(Color.FromArgb(100, 103, 58, 183));
+        }
 
         private void ClickExit(object sender, RoutedEventArgs e)
         {

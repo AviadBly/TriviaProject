@@ -64,6 +64,7 @@ namespace clientAPI
             //IList<string> list2 = new List<string>();
             //list2.Add("first");
 
+           
         }
 
 
@@ -104,7 +105,8 @@ namespace clientAPI
                 //login failed
                 if (loginResponse.Status == Response.status_error)
                 {
-                    
+                    MessageBox.Show("Error ");
+                    return;
                 }
 
 

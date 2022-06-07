@@ -47,7 +47,7 @@
 
             </StackPanel>
         </Border>
-        <Button Content="Go back" FontSize="20" HorizontalAlignment="Left" Margin="391,590,0,0" VerticalAlignment="Top" Height="44" RenderTransformOrigin="0.541,0.51" Width="109" Click="clickExit"/>
+        <Button  Content="Go back" FontSize="20" HorizontalAlignment="Left" Margin="391,590,0,0" VerticalAlignment="Top" Height="44" RenderTransformOrigin="0.541,0.51" Width="109" Click="clickExit"/>
         <Button Content="Join" FontSize="30" HorizontalAlignment="Left" Margin="318,506,0,0" VerticalAlignment="Top" Height="50" RenderTransformOrigin="0.541,0.51" Width="128" Click="clickJoin"/>
 
 
