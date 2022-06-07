@@ -27,6 +27,10 @@ vector<string> StatisticsManager::getHighScore()
 	//get the 3 highest scores
 	for (int i = 0; i < 3; i++)
 	{
+		if (scores.size() < 3)
+		{
+			break;
+		}
 		top3[i]=(*max_element(scores.begin(), scores.end()));
 		int max = *max_element(scores.begin(), scores.end());
 		for (auto iter = scores.begin(); iter != scores.end(); iter++)

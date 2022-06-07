@@ -31,7 +31,8 @@ namespace clientAPI
         private void ClickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu = new menu();
+            menu menu = new menu(MainProgram.MainUsername);
+            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             menu.Show();
         }
 
@@ -39,10 +40,10 @@ namespace clientAPI
         {
             MainProgram.appClient.sender("", Requests_and_Responses.Requests.GET_HIGH_SCORES_REQUEST_CODE);
 
-            byte[] returnMsg = MainProgram.appClient.receiver();
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
 
-            Requests_and_Responses.GetHighScoreResponse highScoreResponse = JsonHelpers.JsonFormatDeserializer.GetHighScoreResponseDeserializer(returnMsg.Skip(5).ToArray());
+            Requests_and_Responses.GetHighScoreResponse highScoreResponse = JsonHelpers.JsonFormatDeserializer.GetHighScoreResponseDeserializer(returnMsg.Message);
 
             //login failed
             if (highScoreResponse.Status == Requests_and_Responses.Response.status_error)
@@ -52,9 +53,19 @@ namespace clientAPI
             }
 
             string[] place = new string[3];
-            place[0] = highScoreResponse.HighScorePlayers[0];
-            place[1] = highScoreResponse.HighScorePlayers[1];
-            place[2] = highScoreResponse.HighScorePlayers[2];
+            if(highScoreResponse.HighScorePlayers.Count<3)
+            {
+                place[0] = "Please";
+                place[1] = "Make";
+                place[2] = "Scores :D";
+            }
+            else
+            {
+                place[0] = highScoreResponse.HighScorePlayers[0];
+                place[1] = highScoreResponse.HighScorePlayers[1];
+                place[2] = highScoreResponse.HighScorePlayers[2];
+            }
+
 
             return place;
         }

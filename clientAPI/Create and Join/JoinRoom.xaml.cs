@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using clientAPI.Create_and_Join;
+using clientAPI.Game;
+using System.Windows.Threading;
 
 namespace clientAPI
 {
@@ -22,22 +24,40 @@ namespace clientAPI
     public partial class JoinRoom : Window
     {
         private List<Room> rooms;
+        private DispatcherTimer dispatcherTimer;
+
         public JoinRoom()
         {
-            
+
             InitializeComponent();
-            this.rooms = getRooms();
-            //maybe check here if rooms isnt empty
+
+            //  DispatcherTimer setup
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Start();
             
-            showActiveRooms();
+
+
         }
 
-        
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            rooms = getRooms();
+            showActiveRooms();
+            rooms.Clear();
+            
+            
+        }
         private void clickExit(object sender, RoutedEventArgs e)
         {
-            this.Close();
-            menu menu = new menu();
+
+            dispatcherTimer.Stop();
+            Close();
+            menu menu = new menu(MainProgram.MainUsername);
+            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             menu.Show();
+            dispatcherTimer.Stop();
         }
 
         
@@ -45,46 +65,49 @@ namespace clientAPI
         {
             foreach(Room room in this.rooms)
             {
-                if(room.Metadata.IsActive==true)
+                
+                string fullRoom = room.Metadata.Name;
+                if (roomsList.Items.Contains(fullRoom)==false)
                 {
-                    string fullRoom = room.Metadata.Name;
-                    if (roomsList.Items.Contains(fullRoom)==false)
-                    {
                         
-                        roomsList.Items.Add(fullRoom);
-                    }
-                    
+                    roomsList.Items.Add(fullRoom);
                 }
+                    
+                
                 
             }
         }
-
-        
-
+       
         private List<Room> getRooms()
         {
             
 
             MainProgram.appClient.sender("", Requests.GET_ROOM_REQUEST);    //ask for rooms
 
-            byte[] returnMsg = MainProgram.appClient.receiver();
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+            Console.WriteLine(returnMsg);
 
-            
-            GetRoomsResponse getRoomsResponse = JsonHelpers.JsonFormatDeserializer.GetRoomsResponseDeserializer(returnMsg.Skip(5).ToArray());
-
-            Console.Write(getRoomsResponse.ToString());
-            //login failed
-            if (getRoomsResponse.Status == Response.status_error)
+            if (returnMsg.IsErrorMsg)
             {
-                return new List<Room>();
+                //Signup failed
+
+                //MessageBox.Show("Error: Username already exists");
+                MessageBox.Show(returnMsg.Message.ToString());
+                return new List<Room>(); ;
+
             }
 
+            GetRoomsResponse getRoomsResponse = JsonHelpers.JsonFormatDeserializer.GetRoomsResponseDeserializer(returnMsg.Message);
+
+            Console.Write(getRoomsResponse.ToString());
+            
             return getRoomsResponse.Rooms;
         }
 
         private void clickJoin(object sender, RoutedEventArgs e)
         {
             uint id = 0;
+            rooms = getRooms();
             if (roomsList.SelectedItem != null)
             {
 
@@ -104,16 +127,38 @@ namespace clientAPI
                 }
                 else
                 {
-                    sendJoinRoomRequest(id);
+                    if (sendJoinRoomRequest(id))
+                    {
+                        RoomData metaData = getRoomData(id);
+
+                        WaitingRoom waitingRoom = new WaitingRoom(metaData, false);
+                        waitingRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                        waitingRoom.Show();
+                        Close();
+                    }
                 }
                
             }
             else
             {
+                
                 MessageBox.Show("Selection Empty!");
             }
               
                     
+        }
+
+        private RoomData? getRoomData(uint id)
+        {
+            foreach (Room room in this.rooms)
+            {
+                if (room.Metadata.Id == id)
+                {
+                    return room.Metadata;
+                }
+            }
+
+            return null;
         }
 
         private bool sendJoinRoomRequest(uint roomId)
@@ -124,36 +169,24 @@ namespace clientAPI
 
             MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.JOIN_ROOM_REQUEST_CODE);
 
-            byte[] returnMsg = MainProgram.appClient.receiver();
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
 
-            JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
-
-            //login failed
-            if (joinRoomResponse.Status == Response.status_error)
+            if (returnMsg.IsErrorMsg)
             {
+                //Signup failed
+
+                //MessageBox.Show("Error: Username already exists");
+                MessageBox.Show(returnMsg.Message.ToString());
                 return false;
+
             }
-            sendGetPlayersInRoom(roomId);
-            return true;
-        }
 
-        private List<string> sendGetPlayersInRoom(uint roomId)
-        {
-            GetPlayersInRoomRequest getPlayersInRoomRequest = new GetPlayersInRoomRequest(roomId);
+            JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Message);
 
-            byte[] data = JsonHelpers.JsonFormatSerializer.getPlayersInRoomSerializer(getPlayersInRoomRequest);
-
-            MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.GET_PLAYERS_IN_ROOM_REQUEST_CODE);    //ask for rooms
-
-            byte[] returnMsg = MainProgram.appClient.receiver();
-
-
-            GetPlayersInRoomResponse getPlayersInRoomResponse = JsonHelpers.JsonFormatDeserializer.GetPlayersInRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
-
-            Console.Write(getPlayersInRoomResponse.ToString());
             
-            return getPlayersInRoomResponse.Players;
+            
+            return true;
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

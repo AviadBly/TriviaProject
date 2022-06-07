@@ -21,8 +21,11 @@ namespace clientAPI.Requests_and_Responses
         public const byte JOIN_ROOM_REQUEST_CODE = 33;
         public const byte GET_PERSONAL_STATISTICS_REQUEST_CODE = 34;
         public const byte GET_HIGH_SCORES_REQUEST_CODE = 35;
-        
-       
+
+        public const byte CLOSE_ROOM_REQUEST_CODE = 41;
+        public const byte START_GAME_REQUEST_CODE = 42;
+        public const byte LEAVE_ROOM_REQUEST_CODE = 43;
+        public const byte GET_ROOM_STATE_REQUEST_CODE = 45;
 
     }
 

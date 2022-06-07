@@ -10,6 +10,12 @@ Room::Room(RoomData metadata, LoggedUser user)
 
 Room::Room()
 {
+	this->m_metadata.id = 0;
+	this->m_metadata.isActive = 0;
+	this->m_metadata.maxPlayers = 0;
+	this->m_metadata.name = "";
+	this->m_metadata.timePerQuestion = 0;
+	this->m_metadata.numOfQuestionsInGame = 0;
 }
 
 void Room::addUser(LoggedUser user)
@@ -49,7 +55,12 @@ vector<string> Room::getAllUsers() const
 //returns true if the room isnt full and is active
 bool Room::canNewUserJoin()
 {
-	return this->m_users.size() < this->m_metadata.maxPlayers && this->m_metadata.isActive;
+	return this->m_users.size() < this->m_metadata.maxPlayers; //&& !this->m_metadata.isActive;  maybe add this later
+}
+
+void Room::setIsActive(bool isActive)
+{
+	this->m_metadata.isActive = isActive;
 }
 
 RoomData Room::getData() const

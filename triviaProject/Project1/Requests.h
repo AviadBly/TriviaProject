@@ -14,6 +14,13 @@
 #define GET_HIGH_SCORES_REQUEST_CODE 35
 
 
+#define CLOSE_ROOM_REQUEST_CODE 41
+#define START_GAME_REQUEST_CODE 42 
+#define LEAVE_ROOM_REQUEST_CODE 43
+#define GET_ROOM_STATE_REQUEST_CODE 45
+
+
+
 
 struct LoginRequest {
 	std::string username;

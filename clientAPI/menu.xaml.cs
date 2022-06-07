@@ -34,16 +34,13 @@ namespace clientAPI
     }
     public partial class menu : Window
     {
-        private Client client;
+        
         public menu()
         {
             
             
             InitializeComponent();
             username.Text = "Hey ;)";
-
-           
-
 
         } 
         public menu(string username)
@@ -63,6 +60,8 @@ namespace clientAPI
         private void JoinClick(object sender, RoutedEventArgs e)
         {
             JoinRoom joinRoom = new JoinRoom();
+            joinRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             joinRoom.Show();
             this.Close();
         }
@@ -72,6 +71,8 @@ namespace clientAPI
             
 
             CreateRoom createRoom = new CreateRoom();
+            createRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             createRoom.Show();
             this.Close();
         }
@@ -84,6 +85,8 @@ namespace clientAPI
         private void clickSign(object sender, RoutedEventArgs e)
         {
             SignUpWindow signWindow = new SignUpWindow();
+            signWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             signWindow.Show();
             this.Close();
         }
@@ -91,6 +94,8 @@ namespace clientAPI
         private void clickStats(object sender, RoutedEventArgs e)
         {
             Statistics statsWindow = new Statistics();
+            statsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             statsWindow.Show();
             this.Close();
         }
@@ -123,10 +128,10 @@ namespace clientAPI
                
                 MainProgram.appClient.sender("", Requests.LOGOUT_REQUEST_CODE);
 
-                byte[] returnMsg = MainProgram.appClient.receiver();
+                ReceivedMessage returnMsg = MainProgram.appClient.receiver();
                 
 
-                LogOutResponse logOutResponse = JsonHelpers.JsonFormatDeserializer.LogOutResponseDeserializer(returnMsg.Skip(5).ToArray());
+                LogOutResponse logOutResponse = JsonHelpers.JsonFormatDeserializer.LogOutResponseDeserializer(returnMsg.Message);
 
                 //login failed
                 if (logOutResponse.Status == Response.status_error)
@@ -138,6 +143,8 @@ namespace clientAPI
 
                 this.Close();
                 LoginWindow loginWindow = new LoginWindow();
+                loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
                 loginWindow.Show();
             }
 

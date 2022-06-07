@@ -69,6 +69,7 @@ void Communicator::acceptClient()
 
 }
 
+//turns 4 bytes to an integer
 int bytesToInt(BYTE bytes[]) {
 
 	int num = int((unsigned char)(bytes[0]) << 24 |
@@ -158,8 +159,9 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 			info.code = userMsg[0];
 			std::cout << "code: " << info.code << "\n";
 			info.receivalTime = time(NULL);
-
+			
 			info.buffer = Helper::convertStringToBits(userMsg.substr(5));
+
 
 			if (!request.newHandler->isRequestRelevant(info)) {
 				std::cout << "Irrelevent request\n";
@@ -167,9 +169,10 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 			}
 			
 			request = request.newHandler->handleRequest(info);
+			this->m_clients[clientSocket] = request.newHandler;
 			
 			sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
-		
+			
 		}
 	}
 	catch(std::exception e) {

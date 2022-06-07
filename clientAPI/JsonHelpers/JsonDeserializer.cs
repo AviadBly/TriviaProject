@@ -76,7 +76,7 @@ namespace clientAPI.JsonHelpers
             return response;
         }
 
-        public static GetPlayersInRoomResponse? GetPlayersInRoomResponseDeserializer(byte[] buffer)
+        public static GetPlayersInRoomResponse GetPlayersInRoomResponseDeserializer(byte[] buffer)
         {
           
 
@@ -84,7 +84,10 @@ namespace clientAPI.JsonHelpers
            
 
             GetPlayersInRoomResponse? response = JsonSerializer.Deserialize<GetPlayersInRoomResponse>(jsonString);
-
+            if(response == null)
+            {
+                throw new Exception("Jsonn error");
+            }
             return response;
         }
 
@@ -114,9 +117,10 @@ namespace clientAPI.JsonHelpers
 
         public static JoinRoomResponse? JoinRoomResponseDeserializer(byte[] buffer)
         {
+            if (buffer == null || buffer.Length == 0)
+                return null;
 
-
-            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+            string jsonString = Encoding.Default.GetString(buffer);
 
 
             JoinRoomResponse? response = JsonSerializer.Deserialize<JoinRoomResponse>(jsonString);
@@ -126,15 +130,118 @@ namespace clientAPI.JsonHelpers
 
         public static CreateRoomResponse? CreateRoomResponseDeserializer(byte[] buffer)
         {
+            if (buffer == null || buffer.Length == 0)
+                return null;
 
-
-            string jsonString = System.Text.Encoding.Default.GetString(buffer);
+            string jsonString = Encoding.Default.GetString(buffer);
 
 
             CreateRoomResponse? response = JsonSerializer.Deserialize<CreateRoomResponse>(jsonString);
 
             return response;
         }
+        public static LeaveRoomResponse? LeaveRoomResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            LeaveRoomResponse? response = JsonSerializer.Deserialize<LeaveRoomResponse>(jsonString);
+
+            return response;
+        }
+        public static CloseRoomResponse? CloseRoomResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            CloseRoomResponse? response = JsonSerializer.Deserialize<CloseRoomResponse>(jsonString);
+
+            return response;
+        }
+        public static StartRoomResponse? StartRoomResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            StartRoomResponse? response = JsonSerializer.Deserialize<StartRoomResponse>(jsonString);
+
+            return response;
+        }
+        public static GetRoomStateResponse? GetRoomStateResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            GetRoomStateResponse? response = JsonSerializer.Deserialize<GetRoomStateResponse>(jsonString);
+
+            return response;
+        }
+
+        public static LeaveGameResponse? LeaveGameResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            LeaveGameResponse? response = JsonSerializer.Deserialize<LeaveGameResponse>(jsonString);
+
+            return response;
+        }
+
+        public static GetQuestionResponse? GetQuestionResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            GetQuestionResponse? response = JsonSerializer.Deserialize<GetQuestionResponse>(jsonString);
+
+            return response;
+        }
+
+        public static SubmitAnswerResponse? SubmitAnswerResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            SubmitAnswerResponse? response = JsonSerializer.Deserialize<SubmitAnswerResponse>(jsonString);
+
+            return response;
+        }
+
+        public static GetGameResultsResponse? GetGameResultsResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
+
+            string jsonString = Encoding.Default.GetString(buffer);
+
+
+            GetGameResultsResponse? response = JsonSerializer.Deserialize<GetGameResultsResponse>(jsonString);
+
+            return response;
+        }
+
+
 
         public static CloseRoomResponse? CloseRoomResponseDeserializer(byte[] buffer)
         {

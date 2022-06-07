@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using clientAPI.Game;
 
 static class constants
 {
@@ -38,7 +39,9 @@ namespace clientAPI
         private void clickExit(object sender, RoutedEventArgs e)
         {
             this.Close();
-            menu menu = new menu();
+            menu menu = new menu(MainProgram.MainUsername);
+            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             menu.Show();
         }
 
@@ -49,25 +52,33 @@ namespace clientAPI
 
             CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, constants.MAXQUESTIONS, time);
 
-
+            
             Console.Write(createRoomRequest);
             byte[] data = JsonHelpers.JsonFormatSerializer.createSerializer(createRoomRequest);
 
             MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.CREATE_ROOM_CODE);
 
-            byte[] returnMsg = MainProgram.appClient.receiver();
-            Console.Write(returnMsg);
-
-            CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Skip(5).ToArray());
-            Console.Write(createRoomResponse);
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+            
+            CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Message);
+           
             //login failed
             if (createRoomResponse.Status == Response.status_error)
             {
                 Console.Write("NOPE room BAD ROOM");
                 return;
             }
-
+            
             Console.Write("Createed room succesfully");
+           
+
+            RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
+
+            WaitingRoom waitingRoom = new WaitingRoom(metaData, true);
+            waitingRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            waitingRoom.Show();
+            Close();
 
         }
 

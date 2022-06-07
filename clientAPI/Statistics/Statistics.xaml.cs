@@ -30,7 +30,9 @@ namespace clientAPI
 
         private void backClick(object sender, RoutedEventArgs e)
         {
-            menu menu = new menu();
+            menu menu = new menu(MainProgram.MainUsername);
+            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             menu.Show();
             this.Close();
         }
@@ -38,6 +40,8 @@ namespace clientAPI
         private void ClickPersonal(object sender, RoutedEventArgs e)
         {
             Personal personal = new Personal();
+            personal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             personal.Show();
             this.Close();
         }
@@ -45,6 +49,8 @@ namespace clientAPI
         private void ClickScores(object sender, RoutedEventArgs e)
         {
             HighScores scores = new HighScores();
+            scores.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             scores.Show();
             this.Close();
         }

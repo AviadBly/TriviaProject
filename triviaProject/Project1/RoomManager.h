@@ -9,11 +9,15 @@ class RoomManager
 {
 public:
 	RoomManager();
-	void createRoom(LoggedUser user,RoomData data);
+	unsigned int createRoom(LoggedUser user,RoomData data);
 	void deleteRoom(int ID);
 	unsigned int getRoomState(int ID);
 	vector<Room> getRooms();
 
+	
+	Room getSingleRoom(int ID);
+	void setRoomActive(int ID);
+	void addUserToRoom(int ID, LoggedUser user);
 
 private:
 	int nextRoomId;

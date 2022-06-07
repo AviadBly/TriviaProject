@@ -38,13 +38,13 @@ namespace clientAPI.Requests_and_Responses
 
 	};
 
-	internal class  ErrorResponse
+	internal class  ErrorResponse : Response
 	{
-		string message;
-
-        public ErrorResponse(string message)
+		
+        public const uint errorMsgCode = 15;
+        public ErrorResponse(string message, byte status) : base(status)
         {
-            this.message = message;
+            Message = message;
         }
 		public string Message { get; set; } = default!;
     };
@@ -59,7 +59,8 @@ namespace clientAPI.Requests_and_Responses
 
     internal class GetRoomsResponse : Response
     {
-        
+        public const uint roomNotFoundStatus = 7;
+        public const uint startedGameStatus = 10;
         public GetRoomsResponse(List<Room> rooms, byte status) : base(status)
         {
             Rooms = rooms;
@@ -67,12 +68,12 @@ namespace clientAPI.Requests_and_Responses
         public List<Room> Rooms { get; set; }
     };
 
-    internal class  GetPlayersInRoomResponse
+
+    internal class  GetPlayersInRoomResponse : Response
     {
 		
-
-        public GetPlayersInRoomResponse(List<string> players)
-        {
+        public const uint roomNotFoundStatus = 7;
+        public GetPlayersInRoomResponse(List<string> players, byte status) :base(status) {
             Players = players;
         }
 		public List<string> Players { get; set; }
@@ -114,7 +115,6 @@ namespace clientAPI.Requests_and_Responses
         {
         }
     }
-
     internal class CloseRoomResponse : Response
     {
         public CloseRoomResponse(byte status) : base(status)
@@ -122,5 +122,74 @@ namespace clientAPI.Requests_and_Responses
 
         }
     }
+    internal class LeaveRoomResponse : Response
+    {
+        public LeaveRoomResponse(byte status) : base(status)
+        {
+        }
+    }
+    internal class StartRoomResponse : Response
+    {
+        public StartRoomResponse(byte status) : base(status)
+        {
+        }
+    }
+    internal class GetRoomStateResponse : Response
+    {
+        public const int statusRoomNotFound = 7;
+        public GetRoomStateResponse(byte status,bool hasGameBegun, List<string> players, uint answerCount, uint answerTimeOut) : base(status)
+        {
+            HasGameBegun = hasGameBegun;
+            Players = players;
+            AnswerCount = answerCount;
+            AnswerTimeOut = answerTimeOut;
+
+        }
+        public bool HasGameBegun { get; set; }
+
+        public List<string> Players { get; set; }
+        public  uint AnswerCount { get; set; }
+
+        public uint AnswerTimeOut { get; set; }
+    }
+
+    internal class LeaveGameResponse : Response
+    {
+        public LeaveGameResponse(byte status) : base(status)
+        {
+        }
+    }
+
+    internal class GetQuestionResponse : Response
+    {
+        public GetQuestionResponse(byte status, string question, Dictionary<uint, string> answers) : base(status)
+        {
+            Question= question;
+            Answers= answers;
+        }
+        public string Question { get; set; }
+        public Dictionary<uint,string> Answers { get; set; }
+
+    }
+
+    internal class SubmitAnswerResponse : Response
+    {
+        public SubmitAnswerResponse(byte status,uint correctAnswerId) : base(status)
+        {
+            CorrectAnswerId= correctAnswerId;
+        }
+        public uint CorrectAnswerId { get; set; }
+    }
+    //TODO
+    /*************************************************/
+    internal class GetGameResultsResponse : Response
+    {
+        public GetGameResultsResponse(byte status) : base(status)
+        {
+
+        }
+    }
+
+    /****************************************************/
 
 }
