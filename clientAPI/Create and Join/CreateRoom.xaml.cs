@@ -16,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using clientAPI.GameFolder;
+using System.Media;
+
 
 static class constants
 {
@@ -48,6 +50,7 @@ namespace clientAPI
 
         private void clickCreate(object sender, RoutedEventArgs e)
         {
+           
             uint players = Convert.ToUInt32(Players.Text);
             uint time = Convert.ToUInt32(Time.Text);
 

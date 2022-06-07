@@ -213,7 +213,10 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeGetGameResultsResponse(
 	for (auto i = getGameResultsResponse.results.begin(); i != getGameResultsResponse.results.end(); i++) {
 
 		
-		jsonResponse[RESULTS_TEXT] += { i->username, i->correctAnswerCount, i->wrongAnswerCount, i->averageAnswerCount};
+		jsonResponse[RESULTS_TEXT] += { {USERNAME_TEXT, i->username},
+			{ CORRECT_ANSWER_COUNT_TEXT, i->correctAnswerCount },
+			{ WRONG_ANSWER_COUNT_TEXT, i->wrongAnswerCount }, 
+			{ AVERAGE_ANSWER_TIME_TEXT , i->averageAnswerTime }};
 
 		std::cout << jsonResponse;
 	}

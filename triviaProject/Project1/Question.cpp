@@ -73,8 +73,8 @@ void Question::addPossibleAnswers(const string& answer)
 void Question::setCorrectAnswer() {
     for (auto& p : m_possibleAnswers) {
         if (p.second[0] == '*'){
-            this->m_correctAnswer = p.second.substr(1);
-            m_possibleAnswers[p.first] = p.second.substr(1);
+            m_correctAnswer = p.second.substr(1);
+            m_possibleAnswers[p.first] = m_correctAnswer;
         }
     }
 }
@@ -89,9 +89,9 @@ void Question::mixAnswers()
     int number;
     int size = m_possibleAnswers.size();
 
-    number = rand() % size;
     srand(time(NULL));
-
+    number = rand() % size;
+      
     for (int i = 0; i < size; i++) {
         orderedAnswers.insert(  pair<unsigned int, string>(  (number + i) % size, answers[i]));
     }

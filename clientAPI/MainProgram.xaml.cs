@@ -18,6 +18,9 @@ using System.Text.Json;
 using clientAPI.Requests_and_Responses;
 using clientAPI.JsonHelpers;
 using clientAPI;
+using System.Media;
+using System.IO;
+using Microsoft.Win32;
 
 namespace clientAPI
 {
@@ -28,8 +31,7 @@ namespace clientAPI
     {
         public static Client appClient;
         public static string MainUsername;
-        
-        
+   
         public MainProgram()
         {
 
@@ -40,9 +42,12 @@ namespace clientAPI
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
             Hide();
-        }
+            
 
-        private void load(object sender, EventArgs e)
+
+    }
+
+            private void load(object sender, EventArgs e)
         {
             AllocConsole();
         }

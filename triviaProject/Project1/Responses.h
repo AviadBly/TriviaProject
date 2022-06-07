@@ -100,7 +100,7 @@ struct PlayerResults
 	string username;
 	unsigned int correctAnswerCount = 0;
 	unsigned int wrongAnswerCount = 0;
-	double averageAnswerCount = 0;
+	double averageAnswerTime = 0;
 };
 
 struct GetGameResultsResponse : public Response

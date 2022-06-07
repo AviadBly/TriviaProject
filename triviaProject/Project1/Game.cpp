@@ -72,7 +72,15 @@ unsigned int Game::submitAnswer(const User& user, unsigned int answerId, double 
 	m_players[user].averageAnswerTime = calculateNewAverageAnswerTime(answerTime, user);
 	
 	string correctAnswer = m_players[user].currentQuestion.getCorrectAnswer();
-	string userAnswer = m_players[user].currentQuestion.getPossibleAnswers()[answerId];
+	string userAnswer;
+
+	if (answerId < m_players[user].currentQuestion.getPossibleAnswers().size()) {	
+		userAnswer = m_players[user].currentQuestion.getPossibleAnswers()[answerId];
+	}
+	else {
+		string userAnswer = ""; //if the id is out of range
+	}
+	
 
 	if (userAnswer == correctAnswer) {
 		m_players[user].correctAnswerCount++;		
@@ -101,9 +109,9 @@ bool Game::removePlayer(const User& user)
 PlayerResults Game::getPlayerResults(const User& user)
 {
 	PlayerResults playerResults;
-
+	
 	GameData userGameData = m_players[user];
-	playerResults.averageAnswerCount = userGameData.averageAnswerTime;
+	playerResults.averageAnswerTime = userGameData.averageAnswerTime;
 	playerResults.correctAnswerCount = userGameData.correctAnswerCount;
 	playerResults.wrongAnswerCount = userGameData.wrongAnswerCount;
 	playerResults.username = user.getName();

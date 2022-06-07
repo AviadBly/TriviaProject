@@ -106,6 +106,7 @@ namespace clientAPI
 
         private void clickJoin(object sender, RoutedEventArgs e)
         {
+            
             uint id = 0;
             rooms = getRooms();
             dispatcherTimer.Stop();
