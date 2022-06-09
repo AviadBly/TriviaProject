@@ -22,9 +22,10 @@ namespace clientAPI.GameFolder
         bool isUserAnswered;
         uint totalWaitingTime; //in miliseconds
 
-        const int ANSWER_SHOW_TIME = 2000; //in miliseconds
+        const int ANSWER_SHOW_TIME = 1300; //in miliseconds
         const int REFRESH_TIME = 100; //in miliseconds
         const uint FAKE_WRONG_ID = 999;
+
         uint tempTime;
         private DispatcherTimer timer;
 
@@ -68,18 +69,12 @@ namespace clientAPI.GameFolder
             for (int i = 0; i < numberOfQuestions; i++)
             {
                             
-                await displayQuestionOnScreen();
-                
-
-                               
+                await displayQuestionOnScreen();                                             
                 if (!isUserAnswered)
                 {                    
                     await SubmitAnswer(FAKE_WRONG_ID);
-                }
-                             
+                }                            
             }
-
-            //await Task.Delay((int)totalWaitingTime);     //
 
             Results resultsWindow = new Results();
             resultsWindow.Show();
@@ -135,7 +130,7 @@ namespace clientAPI.GameFolder
             Answer2.Content = question.Answers[1].ToString();
             Answer3.Content = question.Answers[2].ToString();
             Answer4.Content = question.Answers[3].ToString();
-
+            //await Task.Delay(ANSWER_SHOW_TIME * 4);
             await QuestionWaiter();
         }
 
@@ -180,8 +175,6 @@ namespace clientAPI.GameFolder
             }
             
             
-            
-            //TODO
         }
 
         private void switchColors(uint id, bool isCorrect)

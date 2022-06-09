@@ -36,12 +36,20 @@ namespace clientAPI
         { 
 
             load(this, null);
+            try
+            {
+                appClient = new Client("127.0.0.1", 8200);
+                //InitializeComponent();
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.Show();
+                Hide();
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
 
-            appClient = new Client("127.0.0.1", 8200);
-            //InitializeComponent();
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.Show();
-            Hide();
+                System.Windows.Application.Current.Shutdown();
+            }
+            
             
 
 

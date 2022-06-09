@@ -38,8 +38,7 @@ namespace clientAPI
         private NetworkStream m_socket;
 
         
-            public Client(String server, Int32 port)
-        {
+            public Client(String server, Int32 port) {
             try
             {
                 
@@ -165,11 +164,16 @@ namespace clientAPI
             }
 
             serverMsg.Message = messageDataBytes;
-           
+
             //code + len + data
             //byte[] trimedMsg = serverBytes.Take(1 + 4 + msgLength).ToArray();
             //responseData = System.Text.Encoding.UTF8.GetString(trimedMsg);
             //Console.WriteLine("Received: {0}", responseData);
+
+            if(serverMsg.Code == ErrorResponse.SERVER_DICONECT_CODE)
+            {
+                throw new Exception(System.Text.Encoding.UTF8.GetString(serverMsg.Message));
+            }
 
             //if its an error msg
             serverMsg.IsErrorMsg = serverMsg.Code == ErrorResponse.errorMsgCode;
