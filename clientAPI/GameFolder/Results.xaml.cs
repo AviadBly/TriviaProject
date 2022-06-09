@@ -30,11 +30,26 @@ namespace clientAPI.GameFolder
 
         private void ClickExit(object sender, RoutedEventArgs e)
         {
+            MainProgram.appClient.sender("", Requests.LEAVE_GAME_REQUEST_CODE);    //ask for rooms
+
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+
+
+            LeaveGameResponse leaveGameResponse = JsonHelpers.JsonFormatDeserializer.LeaveGameResponseDeserializer(returnMsg.Message);
+
+            if (leaveGameResponse == null)
+            {
+                Console.WriteLine("Received empty or wrong answer from server");
+
+            }
+
+
             Close();
             menu menu = new menu(MainProgram.MainUsername);
             menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             menu.Show();
         }
+    
 
         private GetGameResultsResponse ShowPlayers()
         {

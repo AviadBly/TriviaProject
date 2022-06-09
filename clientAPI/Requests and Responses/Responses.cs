@@ -42,6 +42,7 @@ namespace clientAPI.Requests_and_Responses
 	{
 		
         public const uint errorMsgCode = 15;
+        public const uint SERVER_DICONECT_CODE = 66;
         public ErrorResponse(string message, byte status) : base(status)
         {
             Message = message;
