@@ -47,6 +47,7 @@ namespace clientAPI
             {
                 MessageBox.Show(ex.Message);
 
+                System.Windows.Application.Current.Shutdown();
             }
             
             

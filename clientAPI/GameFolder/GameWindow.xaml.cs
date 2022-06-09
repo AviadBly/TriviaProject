@@ -25,6 +25,7 @@ namespace clientAPI.GameFolder
         const int ANSWER_SHOW_TIME = 1300; //in miliseconds
         const int REFRESH_TIME = 100; //in miliseconds
         const uint FAKE_WRONG_ID = 999;
+
         uint tempTime;
         private DispatcherTimer timer;
 
@@ -68,18 +69,12 @@ namespace clientAPI.GameFolder
             for (int i = 0; i < numberOfQuestions; i++)
             {
                             
-                await displayQuestionOnScreen();
-                
-
-                               
+                await displayQuestionOnScreen();                                             
                 if (!isUserAnswered)
                 {                    
                     await SubmitAnswer(FAKE_WRONG_ID);
-                }
-                             
+                }                            
             }
-
-            //await Task.Delay((int)totalWaitingTime);     //
 
             Results resultsWindow = new Results();
             resultsWindow.Show();
