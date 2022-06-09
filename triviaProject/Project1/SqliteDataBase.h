@@ -11,7 +11,7 @@ public:
 	virtual ~SqliteDataBase() = default;
 	virtual void create() ;
 	virtual bool doesUserExist(string username) ;
-	void insertStats(StatsUser user);
+	virtual void insertStats(StatsUser user);
 	virtual bool doesPasswordMatch(string username, string password) ;
 	const std::list<StatsUser> getStats(string username);
 	const std::list<StatsUser> getStatsGeneral();

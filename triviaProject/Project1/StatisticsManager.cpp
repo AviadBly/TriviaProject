@@ -15,7 +15,7 @@ StatisticsManager::StatisticsManager(IDatabase* database)
 
 void StatisticsManager::insertStats(const StatsUser& user)
 {
-	
+	m_database->insertStats(user);
 	
 }
 
