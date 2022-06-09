@@ -33,7 +33,7 @@ namespace clientAPI
         public static string MainUsername;
    
         public MainProgram()
-        {
+        { 
 
             load(this, null);
             try

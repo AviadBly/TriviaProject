@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace clientAPI.GameFolder
 {
@@ -24,6 +25,8 @@ namespace clientAPI.GameFolder
         const int ANSWER_SHOW_TIME = 1300; //in miliseconds
         const int REFRESH_TIME = 100; //in miliseconds
         const uint FAKE_WRONG_ID = 999;
+        uint tempTime;
+        private DispatcherTimer timer;
 
         public GameWindow(uint timePerQuestion, string name, uint numberOfQuestions)
         {
@@ -31,8 +34,30 @@ namespace clientAPI.GameFolder
             this.timePerQuestion = timePerQuestion;
             this.name = name;
             this.numberOfQuestions = numberOfQuestions;
-
+            tempTime = timePerQuestion;
+            TimerLabel.Content = tempTime;
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 0,0, 993);
+            
+            timer.Tick += Timer_Tick;
+        
             startGame();
+        }
+
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            if(tempTime>0)
+            {
+                tempTime--;
+                TimerLabel.Content = tempTime;
+            }
+            else
+            {
+                tempTime = timePerQuestion-1;
+                
+                
+            }
+            
         }
 
         public async void startGame()
@@ -44,6 +69,7 @@ namespace clientAPI.GameFolder
             {
                             
                 await displayQuestionOnScreen();
+                
 
                                
                 if (!isUserAnswered)
@@ -78,6 +104,7 @@ namespace clientAPI.GameFolder
 
         public Question GetNextQuestion()
         {
+            
             MainProgram.appClient.sender("", Requests.GET_QUESTION_REQUEST_CODE);    //ask for rooms
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
@@ -91,7 +118,7 @@ namespace clientAPI.GameFolder
 
             }
             Question question = new Question(getQuestionResponse.QuestionText, getQuestionResponse.Answers);
-
+            
             return question;
 
         }
@@ -99,6 +126,7 @@ namespace clientAPI.GameFolder
         
         public async Task displayQuestionOnScreen()
         {
+            timer.Start();
             ResetColors();
             Question question = GetNextQuestion();
             isUserAnswered = false;
@@ -113,6 +141,7 @@ namespace clientAPI.GameFolder
 
         private async void AnswerClicked(object sender, RoutedEventArgs e)
         {
+            
             string buttonId = (sender as Button).Name.ToString();
             char charId = buttonId[buttonId.Length - 1];
             uint id = Convert.ToUInt32(charId.ToString()) - 1;  //id start with 0
@@ -147,6 +176,7 @@ namespace clientAPI.GameFolder
             if (isUserAnswered)
             {
                 await Task.Delay(ANSWER_SHOW_TIME);
+                tempTime = timePerQuestion-1;
             }
             
             
