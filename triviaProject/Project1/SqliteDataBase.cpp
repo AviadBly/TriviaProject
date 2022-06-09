@@ -48,7 +48,7 @@ int SqliteDataBase::callbackStats(void* data, int argc, char** argv, char** azCo
 			user.setCorrect(stoi(argv[i]));
 		}
 		else if (string(azColName[i]) == "TOTAL") {
-			user.setTotal(stoi(argv[i]));
+			user.setTotalAnswers(stoi(argv[i]));
 		}
 		else if (string(azColName[i]) == "GAMES")
 		{
@@ -304,7 +304,7 @@ int SqliteDataBase::getNumOfTotalAnswers(string username)
 	if (newList.size() == 0) {
 		return 0;
 	}
-	return newList.front().getTotal();
+	return newList.front().getTotalAnswers();
 }
 
 int SqliteDataBase::getNumOfPlayerGames(string username)

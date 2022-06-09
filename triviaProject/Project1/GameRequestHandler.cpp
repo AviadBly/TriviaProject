@@ -143,6 +143,17 @@ RequestResult GameRequestHandler::getGameResults()
 	if (m_game.hasPlayerFinishedGame(m_user)) {
 		getGameResultsResponse.status = getGameResultsResponse.status_ok;
 		getGameResultsResponse.results = m_game.getGameResults();
+
+		StatsUser oldUserStats = m_handlerFactory.getStatisticsManager().getStatsUser(m_user.getName());
+		StatsUser newUserStats = m_game.getCurrectStatisticsOnUser(m_user);
+
+		oldUserStats.setGames(oldUserStats.getGames() + newUserStats.getGames());
+		oldUserStats.setCorrect(oldUserStats.getCorrect() + newUserStats.getCorrect());
+		oldUserStats.setTime(newUserStats.getNewAverage(oldUserStats, newUserStats.getTotalAnswers(), newUserStats.getTime()));
+		oldUserStats.setTotalAnswers(oldUserStats.getTotalAnswers() + newUserStats.getTotalAnswers());
+
+
+		m_handlerFactory.getStatisticsManager().insertStats(oldUserStats);
 	}
 	else { //if game has not ended yet
 		getGameResultsResponse.status = getGameResultsResponse.noResultsStatus;		

@@ -91,7 +91,7 @@ void StatsUser::setCorrect(int correct)
 	m_correct = correct;
 }
 
-void StatsUser::setTotal(int total)
+void StatsUser::setTotalAnswers(int total)
 {
 	m_total = total;
 }
@@ -106,7 +106,7 @@ int StatsUser::getCorrect() const
 	return m_correct;
 }
 
-int StatsUser::getTotal() const
+int StatsUser::getTotalAnswers() const
 {
 	return m_total;
 }
@@ -118,6 +118,17 @@ int StatsUser::getGames() const
 double StatsUser::getTime() const
 {
 	return m_time;
+}
+
+double StatsUser::getNewAverage(const StatsUser& user, int numberOfNewAnswers, double otherAvg)
+{
+	double newAnswerTime = otherAvg;
+
+	newAnswerTime = user.getTime() * user.getTotalAnswers() + otherAvg * numberOfNewAnswers;
+
+	newAnswerTime = newAnswerTime / (numberOfNewAnswers + user.getTotalAnswers());
+
+	return newAnswerTime;
 }
 
 bool StatsUser::operator <(const StatsUser& otherUser) const

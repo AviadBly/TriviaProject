@@ -30,6 +30,17 @@ unsigned int Game::getTimePerQuestion() const
 	return this->timePerQuestion;
 }
 
+StatsUser Game::getCurrectStatisticsOnUser(const User& user)
+{
+	GameData data = m_players[user];
+
+	StatsUser statsUser(user.getName(), data.averageAnswerTime, data.correctAnswerCount,
+		data.correctAnswerCount + data.wrongAnswerCount, 1);
+
+
+	return statsUser;
+}
+
 Question Game::getQuestionForUser(const User& user)
 {
 	/*int random = rand() % m_questions.size();
