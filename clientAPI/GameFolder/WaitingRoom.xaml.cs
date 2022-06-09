@@ -158,7 +158,7 @@ namespace clientAPI.GameFolder
                         }
                         Application.Current.Dispatcher.Invoke((Action)delegate {
                             stopTask();
-                            GameWindow gameWindow = new GameWindow();
+                            GameWindow gameWindow = new GameWindow(m_room.Metadata.TimePerQuestion, m_room.Metadata.Name, m_room.Metadata.NumOfQuestionsInGame);
                             gameWindow.Show();
                             Close();
                         });                                               
@@ -271,7 +271,7 @@ namespace clientAPI.GameFolder
 
             if (status == Response.status_ok)
             {
-                GameWindow gameWindow = new GameWindow();
+                GameWindow gameWindow = new GameWindow(m_room.Metadata.TimePerQuestion, m_room.Metadata.Name, m_room.Metadata.NumOfQuestionsInGame);
                 gameWindow.Show();
                 Close();
             }

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace clientAPI.GameFolder
 {
@@ -14,33 +15,96 @@ namespace clientAPI.GameFolder
 
     public partial class GameWindow : Window
     {
-        Game m_game;
-        uint m_id;
-        int _count;
+        string name;
+        uint numberOfQuestions;
+        uint timePerQuestion; //in seconds
 
-        public GameWindow()
+        bool isUserAnswered;
+        uint totalWaitingTime; //in miliseconds
+
+        const int ANSWER_SHOW_TIME = 2000; //in miliseconds
+        const int REFRESH_TIME = 100; //in miliseconds
+        const uint FAKE_WRONG_ID = 999;
+        uint tempTime;
+        private DispatcherTimer timer;
+
+        public GameWindow(uint timePerQuestion, string name, uint numberOfQuestions)
         {
             InitializeComponent();
-
+            this.timePerQuestion = timePerQuestion;
+            this.name = name;
+            this.numberOfQuestions = numberOfQuestions;
+            tempTime = timePerQuestion;
+            TimerLabel.Content = tempTime;
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 0,0, 993);
+            
+            timer.Tick += Timer_Tick;
+        
             startGame();
+        }
+
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            if(tempTime>0)
+            {
+                tempTime--;
+                TimerLabel.Content = tempTime;
+            }
+            else
+            {
+                tempTime = timePerQuestion-1;
+                
+                
+            }
+            
         }
 
         public async void startGame()
         {
-            for (int i = 0; i < 10; i++)
-            {
-                m_id = 999;
 
-                
+            totalWaitingTime = timePerQuestion * numberOfQuestions * 1000;
+
+            for (int i = 0; i < numberOfQuestions; i++)
+            {
+                            
                 await displayQuestionOnScreen();
                 
-                await SubmitAnswer(m_id);
-                
+
+                               
+                if (!isUserAnswered)
+                {                    
+                    await SubmitAnswer(FAKE_WRONG_ID);
+                }
+                             
+            }
+
+            //await Task.Delay((int)totalWaitingTime);     //
+
+            Results resultsWindow = new Results();
+            resultsWindow.Show();
+            Close();
+        }
+
+        public async Task QuestionWaiter()  
+        {
+            for(int i = 0; i < timePerQuestion * 1000 / REFRESH_TIME; i++)
+            {
+                if (!isUserAnswered) {
+                    totalWaitingTime -= REFRESH_TIME;
+                    await Task.Delay(REFRESH_TIME);
+                }
+                else
+                {
+                    await Task.Delay(ANSWER_SHOW_TIME);
+                    return;
+                }
             }
         }
 
         public Question GetNextQuestion()
         {
+            
             MainProgram.appClient.sender("", Requests.GET_QUESTION_REQUEST_CODE);    //ask for rooms
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
@@ -54,7 +118,7 @@ namespace clientAPI.GameFolder
 
             }
             Question question = new Question(getQuestionResponse.QuestionText, getQuestionResponse.Answers);
-
+            
             return question;
 
         }
@@ -62,27 +126,29 @@ namespace clientAPI.GameFolder
         
         public async Task displayQuestionOnScreen()
         {
+            timer.Start();
             ResetColors();
             Question question = GetNextQuestion();
-            ResetColors();
+            isUserAnswered = false;
             questionLabel.Content = question.QuestionText.ToString();
             Answer1.Content = question.Answers[0].ToString();
             Answer2.Content = question.Answers[1].ToString();
             Answer3.Content = question.Answers[2].ToString();
             Answer4.Content = question.Answers[3].ToString();
 
-            await Task.Delay(8000);
-            
+            await QuestionWaiter();
         }
 
-        private void AnswerClicked(object sender, RoutedEventArgs e)
+        private async void AnswerClicked(object sender, RoutedEventArgs e)
         {
+            
             string buttonId = (sender as Button).Name.ToString();
             char charId = buttonId[buttonId.Length - 1];
             uint id = Convert.ToUInt32(charId.ToString()) - 1;  //id start with 0
 
-            m_id = id;
-          
+            
+            isUserAnswered = true;
+            await SubmitAnswer(id);
         }
 
         private async Task SubmitAnswer(uint id)
@@ -105,9 +171,15 @@ namespace clientAPI.GameFolder
                 return;
             }
 
-            switchColors(m_id, submitAnswerResponse.CorrectAnswerId == id);
-
-            await Task.Delay(3000);
+            switchColors(id, submitAnswerResponse.CorrectAnswerId == id);//switch the user answer to the required color
+            switchColors(submitAnswerResponse.CorrectAnswerId, true); //turn the correct answer to green
+            if (isUserAnswered)
+            {
+                await Task.Delay(ANSWER_SHOW_TIME);
+                tempTime = timePerQuestion-1;
+            }
+            
+            
             
             //TODO
         }
@@ -118,8 +190,7 @@ namespace clientAPI.GameFolder
             {
                 switchId(id, Brushes.Green);
             }
-            else
-            {
+            else {
                 switchId(id, Brushes.Red);
             }
 

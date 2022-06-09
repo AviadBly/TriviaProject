@@ -15,7 +15,7 @@ namespace clientAPI.Create_and_Join
 			Name = name;
 			MaxPlayers = maxPlayers;
 			NumOfQuestionsInGame = numOfQuestionsInGame;
-			TimePerQuestion=timePerQuestion;
+			TimePerQuestion = timePerQuestion;
 			IsActive = isActive;
         }
 
