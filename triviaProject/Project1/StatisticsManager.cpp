@@ -16,6 +16,7 @@ StatisticsManager::StatisticsManager(IDatabase* database)
 void StatisticsManager::insertStats(const StatsUser& user)
 {
 	
+	
 }
 
 
