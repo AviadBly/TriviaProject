@@ -13,6 +13,10 @@ StatisticsManager::StatisticsManager(IDatabase* database)
 	
 }
 
+void StatisticsManager::insertStats(const StatsUser& user)
+{
+	
+}
 
 
 vector<string> StatisticsManager::getHighScore()
@@ -79,7 +83,7 @@ vector<string> StatisticsManager::getHighScore()
 	return top3names;
 }
 
-vector<string> StatisticsManager::getUserStatistics(string username)
+vector<string> StatisticsManager::getUserStatistics(const string& username)
 {
 	vector<string> stats;
 
@@ -90,5 +94,18 @@ vector<string> StatisticsManager::getUserStatistics(string username)
 
 
 	return stats;
+
+}
+
+StatsUser StatisticsManager::getStatsUser(const string& username)
+{
+	StatsUser user(username, 
+		m_database->getPlayerAvarageAnswerTime(username),
+		m_database->getNumOfCorrectAnswers(username),
+		m_database->getNumOfTotalAnswers(username),
+		m_database->getNumOfPlayerGames(username));
+
+
+	return user;
 
 }

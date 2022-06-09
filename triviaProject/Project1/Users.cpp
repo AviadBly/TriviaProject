@@ -101,21 +101,21 @@ void StatsUser::setGames(int games)
 	m_games = games;
 }
 
-const int StatsUser::getCorrect()
+int StatsUser::getCorrect() const
 {
 	return m_correct;
 }
 
-const int StatsUser::getTotal()
+int StatsUser::getTotal() const
 {
 	return m_total;
 }
-const int StatsUser::getGames()
+int StatsUser::getGames() const
 {
 	return m_games;
 }
 
-const double StatsUser::getTime()
+double StatsUser::getTime() const
 {
 	return m_time;
 }

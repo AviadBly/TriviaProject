@@ -12,9 +12,11 @@ public:
 
 	StatisticsManager(IDatabase* database);
 	vector<string> getHighScore();
-	vector<string> getUserStatistics(string username);
+	vector<string> getUserStatistics(const string& username);
 
+	StatsUser getStatsUser(const string& username);
 	
+	void insertStats(const StatsUser& user);
 
 private:
 	//set<StatsUser> users;

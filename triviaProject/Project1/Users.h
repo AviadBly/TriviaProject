@@ -65,11 +65,11 @@ public:
 	void setCorrect(int correct);
 	void setTotal(int total);
 	void setGames(int games);
-	const int getCorrect();
-	const int getTotal();
-	const int getGames();
-	const double getTime();
-
+	int getCorrect() const;
+	int getTotal() const;
+	int getGames() const;
+	double getTime() const;
+	 
 	bool operator <(const StatsUser& otherUser) const;
 
 private:

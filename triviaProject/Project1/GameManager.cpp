@@ -44,6 +44,7 @@ Game GameManager::joinGame(unsigned int id)
             return *iter;
         }
     }
+
     throw ServerException("Error: no such Game ID", 3);
     return Game();
 }
