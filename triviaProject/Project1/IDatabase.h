@@ -10,7 +10,7 @@ class IDatabase
 public:
 	virtual ~IDatabase() = default;
 	virtual void create() = 0;
-	virtual void insertStats(StatsUser user)=0;
+	virtual void insertStats(const StatsUser& user)=0;
 	virtual bool doesUserExist(string username) = 0;
 	virtual bool doesPasswordMatch(string username,string password) = 0;
 	virtual void addUser(string username,string password,string email) = 0;

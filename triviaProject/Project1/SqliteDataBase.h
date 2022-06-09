@@ -11,7 +11,7 @@ public:
 	virtual ~SqliteDataBase() = default;
 	virtual void create() ;
 	virtual bool doesUserExist(string username) ;
-	virtual void insertStats(StatsUser user);
+	virtual void insertStats(const StatsUser& user);
 	virtual bool doesPasswordMatch(string username, string password) ;
 	const std::list<StatsUser> getStats(string username);
 	const std::list<StatsUser> getStatsGeneral();
@@ -31,6 +31,7 @@ public:
 
 private:
 	sqlite3* db;
+
 	static bool sendToServer(sqlite3* db, const char* sqlStatement);
 	void sendCallBackUsers(sqlite3* db, const char* sqlStatement, list<LoggedUser>* albums);
 	static int callbackUsers(void* data, int argc, char** argv, char** azColName);

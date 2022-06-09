@@ -89,9 +89,7 @@ RequestResult GameRequestHandler::getQuestion()
 
 	if (m_game.hasPlayerFinishedGame(m_user)) {
 		getQuestionResponse.status = getQuestionResponse.noMoreQuestionStatus;
-		if (!hasAddedStatsYet) {
-			addStatistics();
-		}
+		
 		
 	}
 	else {
@@ -149,7 +147,11 @@ RequestResult GameRequestHandler::getGameResults()
 		getGameResultsResponse.status = getGameResultsResponse.status_ok;
 		getGameResultsResponse.results = m_game.getGameResults();
 
-		
+		if (!hasAddedStatsYet) {
+			hasAddedStatsYet = true;
+			addStatistics();
+		}
+
 	}
 	else { //if game has not ended yet
 		getGameResultsResponse.status = getGameResultsResponse.noResultsStatus;		
@@ -164,6 +166,7 @@ RequestResult GameRequestHandler::getGameResults()
 void GameRequestHandler::addStatistics()
 {
 	StatsUser oldUserStats = m_handlerFactory.getStatisticsManager().getStatsUser(m_user.getName());
+
 	StatsUser newUserStats = m_game.getCurrectStatisticsOnUser(m_user);
 
 	oldUserStats.setGames(oldUserStats.getGames() + newUserStats.getGames());

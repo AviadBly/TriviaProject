@@ -52,7 +52,7 @@ RequestResult RoomAdminRequestHandler::startGame()
 	m_room.setIsActive(true); 
 	m_roomManager.setRoomActive(m_room.getData().id);
 	StartRoomResponse.status = StartRoomResponse.status_ok;
-
+	this->m_roomManager.deleteRoom(m_room.getData().id);
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeStartGameResponse(StartRoomResponse);
 		

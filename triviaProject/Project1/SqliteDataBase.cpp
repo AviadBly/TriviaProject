@@ -234,25 +234,28 @@ bool SqliteDataBase::doesUserExist(string username)
 	return false;
 }
 
-void SqliteDataBase::insertStats(StatsUser user)
+void SqliteDataBase::insertStats(const StatsUser& user)
 {
 	list<StatsUser>* newList = new list<StatsUser>;
 	string sqlStatement = "SELECT * FROM STATISTICS WHERE USERNAME=\"" + user.getName() + "\";";
 	const char* newStatement = sqlStatement.c_str();
+	
 	sendCallBackStats(db, newStatement, newList);
 	int correct = user.getCorrect();
 	int games = user.getGames();
 	string name = user.getName();
 	double time = user.getTime();
-	int total = user.getTotal();
+	int total = user.getTotalAnswers();
+
 	string stime = to_string(time);
 	string scorrect = to_string(correct);
 	string stotal = to_string(total);
 	string sgames = to_string(games);
 
 	string values = "\"" + name + "\"" + "," + stime + "," + scorrect + "," + stotal + "," + sgames + ");";
-	string sqlStatement = "INSERT INTO STATISTICS(USERNAME, AVGTIME ,CORRECT ,TOTAL ,GAMES) VALUES(" + values;
-	const char* newStatement = sqlStatement.c_str();
+	sqlStatement = "INSERT INTO STATISTICS(USERNAME, AVGTIME ,CORRECT ,TOTAL ,GAMES) VALUES(" + values;
+	
+	newStatement = sqlStatement.c_str();
 	if (newList->empty())
 	{
 		sendToServer(db, newStatement);
