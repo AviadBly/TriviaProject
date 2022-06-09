@@ -34,8 +34,9 @@ private:
 	RequestResult submitAnswer(RequestInfo requestInfo);
 	RequestResult getGameResults();
 
+	void addStatistics();
 	time_t sendingTime;
-		
+	bool hasAddedStatsYet;
 
 	LoggedUser m_user;
 	Game m_game;
