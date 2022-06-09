@@ -43,6 +43,7 @@ public:
 	bool hasPlayerFinishedGame(const User& user);
 
 	unsigned int getTimePerQuestion() const;
+	StatsUser getCurrectStatisticsOnUser(const User& user);
 
 	bool operator ==(const Game& otherGame);	//compare based on id
 
