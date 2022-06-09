@@ -9,7 +9,11 @@ using namespace std;
 StatisticsManager::StatisticsManager(IDatabase* database)
 {
 	this->m_database = database;
+
+	
 }
+
+
 
 vector<string> StatisticsManager::getHighScore()
 {

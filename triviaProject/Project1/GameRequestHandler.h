@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "JsonRequestPacketDeserializer.h"
 #include "JsonResponsePacketSerializer.h"
 #include "IRequestHandler.h"
@@ -8,7 +7,11 @@
 #include "MenuRequestHandler.h"
 #include "Game.h"
 #include <time.h> 
+#include "ServerException.h"
+#include <chrono>
+#include <thread>
 
+#define ERROR_MSG_USER_DELAY "No Response Was Given from user in the specified time"
 
 class RequestHandlerFactory;
 
@@ -27,11 +30,13 @@ private:
 
 	RequestResult leaveGame();
 	RequestResult getQuestion();
+	
 	RequestResult submitAnswer(RequestInfo requestInfo);
 	RequestResult getGameResults();
 
 	time_t sendingTime;
-	
+		
+
 	LoggedUser m_user;
 	Game m_game;
 	GameManager& m_gameManager;

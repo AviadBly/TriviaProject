@@ -10,7 +10,6 @@ GameRequestHandler::GameRequestHandler(const Room room, const LoggedUser user, b
 	}
 	
 	m_user = user;
-
 }
 
 
@@ -46,6 +45,10 @@ RequestResult GameRequestHandler::handleRequest(const RequestInfo& requestInfo)
 		
 		}
 
+	}	
+	catch (const ServerException& serverException) {
+		m_gameManager.removeUser(m_user, m_game); // remove user from game
+		throw serverException;
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what() << "\n";
@@ -82,8 +85,8 @@ RequestResult GameRequestHandler::getQuestion()
 	RequestResult requestResult;
 	GetQuestionResponse getQuestionResponse;
 
-	
-	if (m_game.hasEnded()) {
+
+	if (m_game.hasPlayerFinishedGame(m_user)) {
 		getQuestionResponse.status = getQuestionResponse.noMoreQuestionStatus;
 	}
 	else {
@@ -96,14 +99,25 @@ RequestResult GameRequestHandler::getQuestion()
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetQuestionResponse(getQuestionResponse);
 	
-	time(&sendingTime);		//get the current time to sendingTime
+	time(&sendingTime);		//sendingTime = current time
 
 	return requestResult;
 }
 
+
 RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 {
+	const double ALLOWED_DELAYED_TIME = 1.5; //in seconds
+
 	double answerTime = difftime(requestInfo.receivalTime, sendingTime);
+
+	if (answerTime > ALLOWED_DELAYED_TIME + m_game.getTimePerQuestion()){
+		throw ServerException(ERROR_MSG_USER_DELAY, ServerException::ACTIVELY_DISCONECT_USER_CODE);	//disconnect from user
+	}
+
+	if (answerTime > m_game.getTimePerQuestion()) {
+		answerTime = m_game.getTimePerQuestion();
+	}
 	std::cout << "Answer time:" << answerTime << "\n";
 
 	RequestResult requestResult;
@@ -126,11 +140,11 @@ RequestResult GameRequestHandler::getGameResults()
 	RequestResult requestResult;
 	GetGameResultsResponse getGameResultsResponse;
 	
-	if (m_game.hasEnded()) {
+	if (m_game.hasPlayerFinishedGame(m_user)) {
 		getGameResultsResponse.status = getGameResultsResponse.status_ok;
 		getGameResultsResponse.results = m_game.getGameResults();
 	}
-	else {//if game has not ended yet
+	else { //if game has not ended yet
 		getGameResultsResponse.status = getGameResultsResponse.noResultsStatus;		
 	}
 	

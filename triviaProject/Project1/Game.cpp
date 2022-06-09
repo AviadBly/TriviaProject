@@ -25,6 +25,11 @@ Game::Game(const vector<Question>& questions, const vector<User>& users, unsigne
 	this->hasGameEnded = false;
 }
 
+unsigned int Game::getTimePerQuestion() const
+{
+	return this->timePerQuestion;
+}
+
 Question Game::getQuestionForUser(const User& user)
 {
 	/*int random = rand() % m_questions.size();
@@ -90,7 +95,8 @@ unsigned int Game::submitAnswer(const User& user, unsigned int answerId, double 
 	}
 
 	if (m_players[user].wrongAnswerCount + m_players[user].correctAnswerCount == m_questions.size()) {
-		this->setHasEnded(true);
+		m_players[user].hasPlayerFinished = true;
+		
 	}
 	
 	int correctAnswerId = m_players[user].currentQuestion.getIdOfAnswer(correctAnswer);
@@ -142,6 +148,11 @@ bool Game::hasEnded() const
 void Game::setHasEnded(bool isEnded)
 {
 	hasGameEnded = isEnded;
+}
+
+bool Game::hasPlayerFinishedGame(const User& user)
+{
+	return m_players[user].hasPlayerFinished;
 }
 
 bool Game::operator==(const Game& otherGame)

@@ -1,5 +1,5 @@
 #include "GameManager.h"
-#include "MyException.h"
+#include "ServerException.h"
 
 
 GameManager::GameManager(IDatabase* database) : m_database(database)
@@ -13,7 +13,7 @@ Game GameManager::createGame(const vector<User>& users, unsigned int timePerQues
     for (auto& q : questions) {
         q.mixAnswers();
     }
-
+    
     //new game
     Game newGame(questions, users, timePerQuestion, id);
     m_games.push_back(newGame);
@@ -44,7 +44,7 @@ Game GameManager::joinGame(unsigned int id)
             return *iter;
         }
     }
-    throw MyException("Error: no such Game ID");
+    throw ServerException("Error: no such Game ID", 3);
     return Game();
 }
 
@@ -58,7 +58,7 @@ vector<Game>::iterator GameManager::getGame(const Game& game)
             return iter;
         }
     }
-    throw MyException("Error: no such Game ID");
+    throw ServerException("Error: no such Game ID", 3);
    // return m_games.end();
 }
 

@@ -1,5 +1,13 @@
 #include "JsonResponsePacketSerializer.h"
 
+std::vector<BYTE> JsonResponsePacketSerializer::serializeServerException(const ServerException& leaveGameResponse) {
+
+	
+	std::vector<BYTE> jsonBits;
+
+	return jsonBits;
+
+}
 
 std::vector<BYTE> JsonResponsePacketSerializer::serializeLoginResponse(const LoginResponse& loginResponse)
 {

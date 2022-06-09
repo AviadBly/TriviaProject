@@ -39,6 +39,11 @@ public:
 	unsigned int getId() const;
 	bool hasEnded() const;
 	void setHasEnded(bool isEnded);
+
+	bool hasPlayerFinishedGame(const User& user);
+
+	unsigned int getTimePerQuestion() const;
+
 	bool operator ==(const Game& otherGame);	//compare based on id
 
 private:

@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 #include "IDatabase.h"
-
+#include <set>
 
 class StatisticsManager
 {
@@ -14,6 +14,9 @@ public:
 	vector<string> getHighScore();
 	vector<string> getUserStatistics(string username);
 
+	
+
 private:
+	//set<StatsUser> users;
 	IDatabase* m_database;
 };

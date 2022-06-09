@@ -41,7 +41,7 @@ bool User::operator ==(const User& otherUser) const
 	return this->getId() == otherUser.getId();	//compares based on id												
 }
 
-//******************************************************
+//****************************************************** Logged user
 LoggedUser::LoggedUser(const std::string& name, const std::string& password) :
 	User(name), m_password(password)
 {
@@ -74,9 +74,9 @@ void LoggedUser::setPassword(const std::string& password)
 	m_password = password;
 }
 
-//******************************************************
+//****************************************************** Stats User
 
-void StatsUser::setName(std::string name)
+void StatsUser::setName(const string& name)
 {
 	m_name = name;
 }
@@ -101,10 +101,6 @@ void StatsUser::setGames(int games)
 	m_games = games;
 }
 
-const std::string& StatsUser::getName() const
-{
-	return m_name;
-}
 const int StatsUser::getCorrect()
 {
 	return m_correct;
@@ -122,4 +118,16 @@ const int StatsUser::getGames()
 const double StatsUser::getTime()
 {
 	return m_time;
+}
+
+bool StatsUser::operator <(const StatsUser& otherUser) const
+{
+	if (this->m_correct < otherUser.m_correct) {	
+		return true;
+	}
+	else if (this->m_correct == otherUser.m_correct) {
+		return this->m_time > otherUser.m_time;
+	}
+
+	return false;
 }

@@ -1,6 +1,6 @@
 #include "LoginManager.h"
 #include "SqliteDataBase.h"
-#include "MyException.h"
+#include "ServerException.h"
 
 
 LoginManager::LoginManager()
@@ -24,7 +24,7 @@ void LoginManager::signup(const string& username, const string& password, const 
 		return;
 	}
 	
-	throw MyException("Error: Username already exists!");
+	throw ServerException("Error: Username already exists!", 9);
 	
 
 }
@@ -42,7 +42,7 @@ void LoginManager::login(const string& username, const string& password)
 
 	}
 	
-	throw MyException("Error: Wrong Username or password");
+	throw ServerException("Error: Wrong Username or password", 4);
 	
 }
 
@@ -59,6 +59,6 @@ void LoginManager::logout(const string& username)
 		}
 	}
 	
-	throw MyException("Error: no such username!");
+	throw ServerException("Error: no such username!", 6);
 	
 }

@@ -4,7 +4,7 @@
 #include <fstream>
 #include "Server.h"
 #include "SqliteDataBase.h"
-#include "MyException.h"
+#include "ServerException.h"
 
 int main()
 {
@@ -14,7 +14,7 @@ int main()
 		WSAInitializer wsa;
 		SqliteDataBase sqlDataBase;
 		if (!sqlDataBase.open()) {
-			throw MyException("Error with data base");
+			throw ServerException("Error with data base", 9);
 		}
 
 		Server server(&sqlDataBase);

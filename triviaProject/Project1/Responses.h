@@ -3,7 +3,8 @@
 #include <vector>
 #include <map>
 #include "Room.h"
-
+#include "ServerException.h"
+#include "Requests.h"
 #define BYTE unsigned char
 using namespace std;
 
@@ -22,6 +23,13 @@ struct SignUpResponse : public Response {
 };
 
 struct ErrorResponse : public Response{
+	ErrorResponse(const ServerException& e) {
+		status = e.getStatus();
+		message = e.what();
+	}
+	ErrorResponse() {
+		status = ERROR_RESPONSE_CODE;
+	}
 	string message;
 };
 

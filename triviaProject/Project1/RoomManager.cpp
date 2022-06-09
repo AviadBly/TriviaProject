@@ -1,5 +1,5 @@
 #include "RoomManager.h"
-#include "MyException.h"
+#include "ServerException.h"
 
 RoomManager::RoomManager()
 {
@@ -70,7 +70,7 @@ unsigned int RoomManager::getRoomState(int ID)
 		}
 	}
 	return false;
-	throw MyException("Error!: No such ID! ");
+	throw ServerException("Error!: No such ID! ", 5);
 }
 
 vector<Room> RoomManager::getRooms()
