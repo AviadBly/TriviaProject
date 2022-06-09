@@ -32,7 +32,7 @@ vector<string> StatisticsManager::getHighScore()
 	for (auto iter = allStats.begin(); iter != allStats.end(); iter++)
 	{
 		scores.push_back(iter->getCorrect());
-	}
+	} 
 
 	//get the 3 highest scores
 	for (int i = 0; i < 3; i++)
