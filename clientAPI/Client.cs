@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using clientAPI.Requests_and_Responses;
+using System.Security.Cryptography;
 
 namespace clientAPI
 {
@@ -37,7 +38,9 @@ namespace clientAPI
     {
         private NetworkStream m_socket;
 
-        
+        private byte[] m_key;
+
+
             public Client(String server, Int32 port) {
             try
             {
@@ -47,7 +50,7 @@ namespace clientAPI
                 this.m_socket = client.GetStream();
                 m_socket.ReadTimeout = 60000;   //we should lower this later, but for now we are just testing
 
-
+                getKey();
                 //// Close everything.
                 //stream.Close();
                 //client.Close();
@@ -57,6 +60,32 @@ namespace clientAPI
                 Console.WriteLine(ex.ToString());
             }
 
+            
+        }
+        private void getKey()
+        {
+            string publicClientKey = "";
+            ECCurve curve = ECCurve.CreateFromValue("1.3.36.3.3.2.8.1.1.1");
+            
+            using (ECDiffieHellmanCng alice = new ECDiffieHellmanCng(curve))
+            {
+                
+
+                alice.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
+                alice.HashAlgorithm = CngAlgorithm.Sha256;
+                byte[] alicePublicKey = alice.PublicKey.ToByteArray();
+                Console.WriteLine(alicePublicKey);
+
+                sender(Encoding.UTF8.GetString(alicePublicKey), 100);
+
+                Console.WriteLine("");
+                //CngKey bobKey = CngKey.Import(bob.bobPublicKey, CngKeyBlobFormat.EccPublicBlob);
+                //byte[] aliceKey = alice.DeriveKeyMaterial(bobKey);
+                //byte[] encryptedMessage = null;
+                //byte[] iv = null;
+                //Send(aliceKey, "Secret message", out encryptedMessage, out iv);
+                //bob.Receive(encryptedMessage, iv);
+            }
             
         }
         private byte[] intToBytes(int numInteger)
