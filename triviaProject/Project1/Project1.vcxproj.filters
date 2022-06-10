@@ -43,6 +43,18 @@
     <Filter Include="Source Files\DB">
       <UniqueIdentifier>{eb3fca82-8d35-444e-a30f-18c603dd0db3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Cryptography">
+      <UniqueIdentifier>{76662844-1f49-4fa9-88d2-f4ee9892f76f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Cryptography">
+      <UniqueIdentifier>{49d41305-e324-4a8c-8031-5d9508adefa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Crypto++">
+      <UniqueIdentifier>{7c398889-0655-4848-bfa6-258995d70162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Crypto++">
+      <UniqueIdentifier>{6f9d0d23-cb33-4ea3-8ce9-60839364682a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -113,6 +125,15 @@
     </ClCompile>
     <ClCompile Include="GameRequestHandler.cpp">
       <Filter>Source Files\Requests and Responses</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyExchange.cpp">
+      <Filter>Source Files\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Homework\Magshimim\Crypto\osrng.cpp">
+      <Filter>Source Files\Crypto++</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Homework\Magshimim\Crypto\eccrypto.cpp">
+      <Filter>Source Files\Crypto++</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,9 +212,6 @@
     <ClInclude Include="RoomRequestHandlers.h">
       <Filter>Header Files\Requests and Responses</Filter>
     </ClInclude>
-    <ClInclude Include="ICryptoAlgorithm.h">
-      <Filter>Header Files\Server</Filter>
-    </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
@@ -205,6 +223,12 @@
     </ClInclude>
     <ClInclude Include="GameRequestHandler.h">
       <Filter>Header Files\Requests and Responses</Filter>
+    </ClInclude>
+    <ClInclude Include="ICryptoAlgorithm.h">
+      <Filter>Header Files\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyExchange.h">
+      <Filter>Header Files\Cryptography</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
