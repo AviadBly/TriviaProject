@@ -5,7 +5,7 @@ std::string KeyExchange::getKey(SOCKET socket)
 
 
     OID CURVE = secp256r1();
-    AutoSeededX917RNG<AES> rng;
+    AutoSeededRandomPool rng;
 
     ECDH < ECP >::Domain dhA(CURVE), dhB(CURVE);
 
@@ -14,7 +14,10 @@ std::string KeyExchange::getKey(SOCKET socket)
     // dhA.AccessGroupParameters().SetPointCompression(true);
     // dhB.AccessGroupParameters().SetPointCompression(true);
 
+ 
     SecByteBlock privA(dhA.PrivateKeyLength()), pubA(dhA.PublicKeyLength());
+
+    dhA.GenerateKeyPair(rng, privA, pubA);
 
     return string();
 }

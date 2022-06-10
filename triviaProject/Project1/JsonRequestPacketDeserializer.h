@@ -36,6 +36,9 @@ public:
 	//game
 	static SubmitAnswerRequest deserializeSubmitAnswerRequest(const vector<BYTE>& jsonRequestBits);
 	
+	//game
+	static GetPublicKeyRequest deserializeGetPublicKeyRequest(const vector<BYTE>& jsonRequestBits);
+
 private:
 	static json getJsonFromBits(const std::vector<BYTE>& constJsonBits);
 };

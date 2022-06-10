@@ -1,5 +1,9 @@
 #pragma once
 #include <string>
+#include <vector>
+
+typedef unsigned char BYTE;
+using namespace std;
 
 #define SIGN_UP_REQUEST_CODE 10
 #define LOGIN_REQUEST_CODE 20
@@ -24,7 +28,7 @@
 #define SUBMIT_ANSWER_REQUEST_CODE 48
 #define GET_GAME_RESULT_REQUEST_CODE 49
 
-
+#define SECURE_CONNECTION_REQUEST 100
 
 
 struct LoginRequest {
@@ -52,7 +56,12 @@ struct CreateRoomRequest {
 	unsigned int answerTimeout;
 };
 
+struct GetPublicKeyRequest {
+	vector<BYTE> clientPublicKey;
+};
+
 struct SubmitAnswerRequest
 {
 	unsigned int answerId;
 };
+

@@ -101,6 +101,17 @@ SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerReques
 	return submitAnswerRequest;
 }
 
+GetPublicKeyRequest JsonRequestPacketDeserializer::deserializeGetPublicKeyRequest(const vector<BYTE>& jsonRequestBits)
+{
+	GetPublicKeyRequest getPublicKeyRequest;
+	
+	for (auto& singleByte : jsonRequestBits) {
+		getPublicKeyRequest.clientPublicKey.push_back(singleByte);
+	}
+
+	return getPublicKeyRequest;
+}
+
 
 //ErrorResponse JsonRequestPacketDeserializer::deserializeErrorResponse(vector<BYTE> jsonResponseBits)
 //{

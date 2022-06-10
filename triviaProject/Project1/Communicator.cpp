@@ -152,10 +152,72 @@ void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 	}
 }
 
+
+SecByteBlock Communicator::getKeyForSecureConnection(SOCKET socket)
+{
+
+	OID CURVE = brainpoolP160r1();
+	AutoSeededRandomPool rng;
+
+	ECDH < ECP >::Domain dhA(CURVE);
+	
+	
+	// Don't worry about point compression. Its amazing that Certicom got
+	// a patent for solving an algebraic equation....
+	// dhA.AccessGroupParameters().SetPointCompression(true);
+	// dhB.AccessGroupParameters().SetPointCompression(true);
+	cout << "length:" << dhA.AgreedValueLength() << "\n";
+
+	//generates the public and private keys, which are byte array
+	SecByteBlock privA(dhA.PrivateKeyLength()), pubA(dhA.PublicKeyLength());
+
+	dhA.GenerateKeyPair(rng, privA, pubA);
+	cout << "public: " << pubA.data() << "\nprivate: " << privA.data() << "\b";
+
+	std::string userMsg = recvMsg(socket);
+
+	if (userMsg[0] != SECURE_CONNECTION_REQUEST) {
+		throw ("NO SECURE CONNECTION!");
+	}
+
+	vector<BYTE> byteData = Helper::convertStringToBits(userMsg.substr(5));
+	
+	BYTE* clientPublicKey = new BYTE[byteData.size()];
+
+	int i = 0;
+	for (auto& b : byteData) {
+		clientPublicKey[i] = b;
+	}
+
+	GetPublicKeyRequest getPublicKeyRequest = JsonRequestPacketDeserializer::deserializeGetPublicKeyRequest(byteData);
+	
+	if (byteData.size() != dhA.AgreedValueLength()) {
+		throw ("LENGTH ERROR");
+	}
+
+	SecByteBlock sharedA(dhA.AgreedValueLength()); //this will be the shared key
+
+	const bool wasAgreed = dhA.Agree(sharedA, privA, clientPublicKey);
+
+	StartSecureConnectionResponse startResponse;
+
+	for (int i = 0; i < pubA.size(); i++) {
+		startResponse.serverPublicKey.push_back(pubA[i]);
+	}
+	vector<BYTE> goingMsg = JsonResponsePacketSerializer::serializeStartSecureConnectionResponse(startResponse);
+	
+	sendMsg(socket, Helper::convertBitsToString(goingMsg));
+	
+	return sharedA;
+}
+
+
+
 void Communicator::handleNewClient(SOCKET clientSocket)
 {
 	
-	
+	m_key = getKeyForSecureConnection(clientSocket);
+
 	std::string userMsg = "";
 	
 	

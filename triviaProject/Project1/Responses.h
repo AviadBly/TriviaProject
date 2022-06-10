@@ -5,7 +5,7 @@
 #include "Room.h"
 #include "ServerException.h"
 #include "Requests.h"
-#define BYTE unsigned char
+typedef unsigned char BYTE;
 using namespace std;
 
 struct Response {
@@ -115,4 +115,9 @@ struct GetGameResultsResponse : public Response
 {
 	const unsigned int noResultsStatus = 0;
 	vector<PlayerResults> results;
+};
+
+struct StartSecureConnectionResponse : public Response
+{
+	vector<BYTE> serverPublicKey;
 };
