@@ -23,12 +23,16 @@ namespace clientAPI.GameFolder
     {
         private static GetGameResultsResponse data;
         private DispatcherTimer timer;
+
+        private const int REFRESH_SEND_TIME = 3; //in seconds
+        
+
         public Results()
         {
 
             InitializeComponent();
             timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0,20);
+            timer.Interval = new TimeSpan(0, 0, REFRESH_SEND_TIME);
 
             timer.Tick += Timer_Tick;
 

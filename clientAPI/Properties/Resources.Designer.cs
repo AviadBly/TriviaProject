@@ -63,9 +63,18 @@ namespace clientAPI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Yevarechecha__hebrew______Mashiach____Hassidic_Music___Jewish_Music {
+        internal static System.IO.UnmanagedMemoryStream mixkit_arcade_game_complete_or_approved_mission_205 {
             get {
-                return ResourceManager.GetStream("Yevarechecha__hebrew______Mashiach____Hassidic_Music___Jewish_Music", resourceCulture);
+                return ResourceManager.GetStream("mixkit_arcade_game_complete_or_approved_mission_205", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream mixkit_wrong_answer_fail_notification_946 {
+            get {
+                return ResourceManager.GetStream("mixkit_wrong_answer_fail_notification_946", resourceCulture);
             }
         }
     }
