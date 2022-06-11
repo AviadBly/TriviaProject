@@ -53,8 +53,9 @@ namespace clientAPI
            
             uint players = Convert.ToUInt32(Players.Text);
             uint time = Convert.ToUInt32(Time.Text);
+            uint questions = Convert.ToUInt32(Questions.Text);
 
-            CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, constants.MAXQUESTIONS, time);
+            CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, questions, time);
 
             
             Console.Write(createRoomRequest);
