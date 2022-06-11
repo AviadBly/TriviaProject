@@ -19,6 +19,6 @@ public:
 	virtual int getNumOfTotalAnswers(string username)=0;
 	virtual int getNumOfPlayerGames(string username)=0;
 	virtual const list<StatsUser> getStatsGeneral()=0;
-	virtual const vector<Question> getQuestions() = 0;
+	virtual const vector<Question> getQuestions(unsigned int numberOfQuestion) = 0;
 
 };
