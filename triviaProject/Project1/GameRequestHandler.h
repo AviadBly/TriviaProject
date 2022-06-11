@@ -19,7 +19,7 @@ class GameRequestHandler : public IRequestHandler {
 
 public:
 
-	GameRequestHandler(const Room room, const LoggedUser user, bool isAdmin, GameManager& gameManager, RequestHandlerFactory& handleFactory);
+	GameRequestHandler(Game& game, const LoggedUser user, GameManager& gameManager, RequestHandlerFactory& handleFactory);
 
 
 	virtual bool isRequestRelevant(const RequestInfo& requestInfo) const;
@@ -39,7 +39,7 @@ private:
 	bool hasAddedStatsYet;
 
 	LoggedUser m_user;
-	Game m_game;
+	Game& m_game;
 	GameManager& m_gameManager;
 	RequestHandlerFactory& m_handlerFactory;
 
