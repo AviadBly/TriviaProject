@@ -50,7 +50,7 @@ namespace clientAPI
                 this.m_socket = client.GetStream();
                 m_socket.ReadTimeout = 100000;   //we should lower this later, but for now we are just testing
 
-                getKey();
+                
                 //// Close everything.
                 //stream.Close();
                 //client.Close();
@@ -62,44 +62,8 @@ namespace clientAPI
 
             
         }
-        private void getKey()
-        {
-            string publicClientKey = "";
-            ECCurve curve = ECCurve.CreateFromValue("1.3.36.3.3.2.8.1.1.1");
-            
-            using (ECDiffieHellmanCng alice = new ECDiffieHellmanCng(curve))
-            {
-
-                
-                alice.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
-                alice.HashAlgorithm = CngAlgorithm.Sha256;
-                byte[] alicePublicKey = alice.PublicKey.ToByteArray();
-                byte[] a = alice.ExportSubjectPublicKeyInfo();
-                //ECParameters p =  alice.PublicKey.ExportParameters();
-                ECParameters p = alice.ExportParameters(true);
-                ECParameters sp = alice.ExportExplicitParameters(true);
-
-                printByteArray(a);
-                printByteArray(alicePublicKey);
-                Console.WriteLine(Encoding.UTF8.GetString(alicePublicKey));
-
-                sender(Encoding.UTF8.GetString(alicePublicKey), 100);
-
-                Console.WriteLine("");
-
-                ReceivedMessage msg = receiver();
-
-                byte[] serverPublicKey = msg.Message;
-                CngKey bobKey = CngKey.Import(serverPublicKey, CngKeyBlobFormat.EccPublicBlob);
-                //byte[] aliceKey = alice.DeriveKeyMaterial(bobKey);
-                //byte[] encryptedMessage = null;
-                //byte[] iv = null;
-                //Send(aliceKey, "Secret message", out encryptedMessage, out iv);
-                //bob.Receive(encryptedMessage, iv);
-            }
-            
-        }
-
+         
+                  
         private void printByteArray(byte[] arr)
         {
             for(int i = 0; i < arr.Length; i++)
