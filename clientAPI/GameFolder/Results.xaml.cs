@@ -46,6 +46,7 @@ namespace clientAPI.GameFolder
 
         private void ClickExit(object sender, RoutedEventArgs e)
         {
+            timer.Stop();
             MainProgram.appClient.sender("", Requests.LEAVE_GAME_REQUEST_CODE);    //ask for rooms
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
