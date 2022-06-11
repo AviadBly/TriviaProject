@@ -22,7 +22,7 @@ namespace clientAPI.GameFolder
         bool isUserAnswered;
         uint totalWaitingTime; //in miliseconds
 
-        const int ANSWER_SHOW_TIME = 1300; //in miliseconds
+        const int ANSWER_SHOW_TIME = 1000; //in miliseconds
         const int REFRESH_TIME = 100; //in miliseconds
         const uint FAKE_WRONG_ID = 999;
 

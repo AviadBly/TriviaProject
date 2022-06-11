@@ -76,6 +76,22 @@ namespace clientAPI
                 
                 
             }
+            foreach (string item in roomsList.Items)
+            {
+                bool check = false;
+                foreach (Room room in rooms)
+                {
+                    if (room.Metadata.Name == item)
+                    {
+                        check = true;
+                    }
+                }
+                if (!check)
+                {
+                    roomsList.Items.Remove(item);
+                    break;
+                }
+            }
         }
        
         private List<Room> getRooms()

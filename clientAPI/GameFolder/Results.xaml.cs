@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace clientAPI.GameFolder
 {
@@ -21,11 +22,22 @@ namespace clientAPI.GameFolder
     public partial class Results : Window
     {
         private static GetGameResultsResponse data;
+        private DispatcherTimer timer;
         public Results()
         {
-            InitializeComponent();
-            data = ShowPlayers();
 
+            InitializeComponent();
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0,20);
+
+            timer.Tick += Timer_Tick;
+
+            timer.Start();
+        }
+
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            data = ShowPlayers();
         }
 
         private void ClickExit(object sender, RoutedEventArgs e)
@@ -68,7 +80,8 @@ namespace clientAPI.GameFolder
             
             foreach(PlayerResults playerResults in getGameResultsResponse.Results)
             {
-                PlayerList.Items.Add(playerResults.Username);
+                if (!PlayerList.Items.Contains(playerResults.Username))
+                    PlayerList.Items.Add(playerResults.Username);
             }
             return getGameResultsResponse;
         }
