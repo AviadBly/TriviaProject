@@ -272,6 +272,7 @@ namespace clientAPI.GameFolder
             if (status == Response.status_ok)
             {
                 GameWindow gameWindow = new GameWindow(m_room.Metadata.TimePerQuestion, m_room.Metadata.Name, m_room.Metadata.NumOfQuestionsInGame);
+                gameWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 gameWindow.Show();
                 Close();
             }
