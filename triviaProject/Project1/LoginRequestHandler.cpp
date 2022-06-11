@@ -109,10 +109,10 @@ RequestResult LoginRequestHandler::signUp(const RequestInfo& requestInfo)
 	
 	
 	if (!isUsernameValid(signUpRequest.username)) {
-		throw("Username is not valid");
+		throw ServerException("Username is not valid", ServerException::INVALID_USERNAME);
 	}
 	if (!isPasswordValid(signUpRequest.password)) {
-		throw("Pasword is not valid");
+		throw("Pasword is not valid", ServerException::INVALID_PASSWORD);
 	}
 
 	m_loginManager.signup(signUpRequest.username, signUpRequest.password, signUpRequest.email);	//successfull signUp
