@@ -77,7 +77,7 @@ namespace clientAPI
             Console.Write("Createed room succesfully");
            
 
-            RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
+            RoomData metaData = new RoomData(0, roomName.Text, players, questions, time, false);
 
             WaitingRoom waitingRoom = new WaitingRoom(metaData, true);
             waitingRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
