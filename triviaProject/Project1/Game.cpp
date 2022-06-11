@@ -119,7 +119,7 @@ unsigned int Game::submitAnswer(const User& user, unsigned int answerId, double 
 }
 
 bool Game::removePlayer(const User& user)
-{
+{	
 	return m_players.erase(user);	//if succesfull returns true
 }
 

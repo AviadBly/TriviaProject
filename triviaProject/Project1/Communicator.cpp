@@ -165,7 +165,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	//first create the login requestHandler
 	request.newHandler = this->m_handlerFactory.createLoginRequestHandler();
 	
-	
+	int countOfIreleventRequests = 0;
 	try {
 		while (true) {
 
@@ -182,6 +182,10 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 
 			if (!request.newHandler->isRequestRelevant(info)) {
 				std::cout << "Irrelevent request\n";
+				countOfIreleventRequests++;
+				if (countOfIreleventRequests > 10) {
+					throw ServerException("TOO_MANY IRELEVENT REQUESTS", 7);
+				}
 				continue;
 			}
 			
@@ -202,9 +206,6 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		// Closing the socket (in the level of the TCP protocol)
 		closesocket(clientSocket);
 	}
-	
-	
-	
-	
+		
 
 }

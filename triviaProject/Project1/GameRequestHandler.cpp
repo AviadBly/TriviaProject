@@ -90,7 +90,6 @@ RequestResult GameRequestHandler::getQuestion()
 	if (m_game.hasPlayerFinishedGame(m_user)) {
 		getQuestionResponse.status = getQuestionResponse.noMoreQuestionStatus;
 		
-		
 	}
 	else {
 		Question userQuestion = m_game.getQuestionForUser(m_user);
