@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using clientAPI.Requests_and_Responses;
+using System.Security.Cryptography;
 
 namespace clientAPI
 {
@@ -37,7 +38,9 @@ namespace clientAPI
     {
         private NetworkStream m_socket;
 
-        
+        private byte[] m_key;
+
+
             public Client(String server, Int32 port) {
             try
             {
@@ -45,9 +48,9 @@ namespace clientAPI
                 TcpClient client = new TcpClient(server, port);
               
                 this.m_socket = client.GetStream();
-                m_socket.ReadTimeout = 60000;   //we should lower this later, but for now we are just testing
+                m_socket.ReadTimeout = 100000;   //we should lower this later, but for now we are just testing
 
-
+                
                 //// Close everything.
                 //stream.Close();
                 //client.Close();
@@ -59,6 +62,17 @@ namespace clientAPI
 
             
         }
+         
+                  
+        private void printByteArray(byte[] arr)
+        {
+            for(int i = 0; i < arr.Length; i++)
+            {
+                Console.Write((int)arr[i] + ", ");
+            }
+            Console.WriteLine("\n");
+        }
+
         private byte[] intToBytes(int numInteger)
         {
             byte[] intBytes = BitConverter.GetBytes(numInteger);
