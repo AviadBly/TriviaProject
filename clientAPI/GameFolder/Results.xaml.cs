@@ -31,8 +31,8 @@ namespace clientAPI.GameFolder
             timer.Interval = new TimeSpan(0, 0,20);
 
             timer.Tick += Timer_Tick;
-           
 
+            timer.Start();
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -80,7 +80,8 @@ namespace clientAPI.GameFolder
             
             foreach(PlayerResults playerResults in getGameResultsResponse.Results)
             {
-                PlayerList.Items.Add(playerResults.Username);
+                if (!PlayerList.Items.Contains(playerResults.Username))
+                    PlayerList.Items.Add(playerResults.Username);
             }
             return getGameResultsResponse;
         }
