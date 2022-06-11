@@ -21,11 +21,11 @@
         <Border Background="#85C1E9" Margin="10,188,10,10" CornerRadius="40"  >
             <StackPanel Margin="20,20,0,10" HorizontalAlignment="Left" Width="489">
                 <Label Content="Room Name:" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
-                <TextBox Name="roomName" Background="#545d6a" Height="41" Foreground="White" MaxLength="6"/>
+                <TextBox Name="roomName" Background="#545d6a" Height="41" Foreground="White" MaxLength="10"/>
                 <Label Content="Time Per Question: (s)" FontSize="40" Foreground="Purple" FontWeight="Bold"/>
                 <TextBox Name="Time" Background="#545d6a" Height="41" Foreground="White" PreviewTextInput="previewTextInput" MaxLength="2"/>
                 <Label Content="Amount of Players:" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="74" PreviewTextInput="previewTextInput" />
-                <TextBox Name="Players" Background="#545d6a" Height="41" Foreground="White" MaxLength="1"/>
+                <TextBox Name="Players" Background="#545d6a" Height="41" Foreground="White" MaxLength="1" PreviewTextInput="previewTextInput"/>
 
             </StackPanel>
 
