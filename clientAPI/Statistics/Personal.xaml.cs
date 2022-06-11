@@ -40,11 +40,10 @@ namespace clientAPI
 
             GetPersonalStatsResponse getPersonalStatsResponse = JsonHelpers.JsonFormatDeserializer.GetPersonalStatsResponseDeserializer(returnMsg.Message);
 
-            Console.Write(getPersonalStatsResponse);
-            //login failed
-            if (getPersonalStatsResponse.Status == Response.status_error)
+            if (returnMsg.IsErrorMsg)   //if error
             {
-                return null;
+                MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
+                return new string[4];
             }
 
             List<string> statsList = getPersonalStatsResponse.PersonalStatistics;
@@ -62,11 +61,9 @@ namespace clientAPI
       
         private void ClickExit(object sender, RoutedEventArgs e)
         {
+            
+            menu.goToMenu();
             this.Close();
-            menu menu = new menu(MainProgram.MainUsername);
-            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            menu.Show();
         }
 
         

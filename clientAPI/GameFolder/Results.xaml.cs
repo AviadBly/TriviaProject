@@ -62,9 +62,7 @@ namespace clientAPI.GameFolder
 
 
             Close();
-            menu menu = new menu(MainProgram.MainUsername);
-            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            menu.Show();
+            menu.goToMenu();
         }
     
 

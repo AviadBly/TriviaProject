@@ -72,28 +72,18 @@ namespace clientAPI
                 ReceivedMessage returnMsg = MainProgram.appClient.receiver();
                 Console.Write(returnMsg);
 
-                if (returnMsg.IsErrorMsg)
+                if (returnMsg.IsErrorMsg)   //if error
                 {
-                    //Signup failed
-
-                    //MessageBox.Show("Error: Username already exists");
-                    MessageBox.Show(returnMsg.Message.ToString());
+                    MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
                     return;
-                    
                 }
                 SignUpResponse signUpResponse = JsonHelpers.JsonFormatDeserializer.signUpResponseDeserializer(returnMsg.Message);
 
-                
-
-
                 MessageBox.Show("Username Created successfully!");
 
-                MainProgram.MainUsername = username; 
-                menu menuWindow = new menu(username);
-                menuWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-                menuWindow.Show();
-                this.Close();
+                MainProgram.MainUsername = username;
+                menu.goToMenu();
+                Close();
             }
         }
 

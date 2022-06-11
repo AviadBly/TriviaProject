@@ -30,10 +30,9 @@ namespace clientAPI
 
         private void ClickExit(object sender, RoutedEventArgs e)
         {
+            
+            menu.goToMenu();
             this.Close();
-            menu menu = new menu(MainProgram.MainUsername);
-            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            menu.Show();
         }
 
         private string[] getHighScorePlayers()
@@ -45,11 +44,10 @@ namespace clientAPI
 
             Requests_and_Responses.GetHighScoreResponse highScoreResponse = JsonHelpers.JsonFormatDeserializer.GetHighScoreResponseDeserializer(returnMsg.Message);
 
-            //login failed
-            if (highScoreResponse.Status == Requests_and_Responses.Response.status_error)
+            if (returnMsg.IsErrorMsg)   //if error
             {
-                Console.WriteLine("Error");
-                return null;
+                MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
+                return new string[3];
             }
 
             string[] place = new string[3];

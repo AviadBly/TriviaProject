@@ -30,11 +30,8 @@ namespace clientAPI
 
         private void backClick(object sender, RoutedEventArgs e)
         {
-            menu menu = new menu(MainProgram.MainUsername);
-            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            menu.Show();
-            this.Close();
+            menu.goToMenu();
+            Close();
         }
 
         private void ClickPersonal(object sender, RoutedEventArgs e)

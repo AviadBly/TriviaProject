@@ -54,9 +54,7 @@ namespace clientAPI
 
             dispatcherTimer.Stop();
             Close();
-            menu menu = new menu(MainProgram.MainUsername);
-            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            menu.Show();
+            menu.goToMenu();
             dispatcherTimer.Stop();
         }
 
@@ -190,14 +188,10 @@ namespace clientAPI
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
 
-            if (returnMsg.IsErrorMsg)
+            if (returnMsg.IsErrorMsg)   //if error
             {
-                //Signup failed
-
-                //MessageBox.Show("Error: Username already exists");
-                MessageBox.Show(returnMsg.Message.ToString());
+                MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
                 return false;
-
             }
 
             JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Message);
