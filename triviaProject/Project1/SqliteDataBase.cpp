@@ -41,7 +41,7 @@ int SqliteDataBase::callbackStats(void* data, int argc, char** argv, char** azCo
 			user.setName((argv[i]));
 		}
 		else if (string(azColName[i]) == "AVGTIME") {
-			user.setTime(stoi(argv[i]));
+			user.setTime(stod(argv[i]));
 		}
 		else if (string(azColName[i]) == "CORRECT")
 		{

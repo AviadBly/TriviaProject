@@ -52,12 +52,13 @@ vector<string> Room::getAllUsersNames() const
 }
 vector<User> Room::getAllUsers() const
 {
+
 	vector<User> users(0);
 	for (auto iter = m_users.begin(); iter != m_users.end(); iter++)
 	{
 		users.push_back(*iter);
 	}
-
+	
 	return users;
 }
 
