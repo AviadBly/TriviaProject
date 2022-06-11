@@ -22,6 +22,7 @@ using System.Media;
 static class constants
 {
     public const int MAXQUESTIONS = 10;
+    public const int DEFAULT = 5; 
 }
 
 namespace clientAPI
@@ -36,6 +37,11 @@ namespace clientAPI
         {
 
             InitializeComponent();
+            roomName.Text = MainProgram.MainUsername+ "'s Cool Room :D";
+            Time.Text = constants.DEFAULT.ToString();
+            Players.Text=constants.DEFAULT.ToString(); 
+            Questions.Text=constants.DEFAULT.ToString();
+
         }
 
         private void clickExit(object sender, RoutedEventArgs e)
@@ -54,6 +60,8 @@ namespace clientAPI
             uint players = Convert.ToUInt32(Players.Text);
             uint time = Convert.ToUInt32(Time.Text);
             uint questions = Convert.ToUInt32(Questions.Text);
+
+            
 
             CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, questions, time);
 
