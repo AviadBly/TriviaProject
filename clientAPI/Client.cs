@@ -48,7 +48,7 @@ namespace clientAPI
                 TcpClient client = new TcpClient(server, port);
               
                 this.m_socket = client.GetStream();
-                m_socket.ReadTimeout = 60000;   //we should lower this later, but for now we are just testing
+                m_socket.ReadTimeout = 100000;   //we should lower this later, but for now we are just testing
 
                 getKey();
                 //// Close everything.
@@ -69,17 +69,28 @@ namespace clientAPI
             
             using (ECDiffieHellmanCng alice = new ECDiffieHellmanCng(curve))
             {
-                
 
+                
                 alice.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
                 alice.HashAlgorithm = CngAlgorithm.Sha256;
                 byte[] alicePublicKey = alice.PublicKey.ToByteArray();
-                Console.WriteLine(alicePublicKey);
+                byte[] a = alice.ExportSubjectPublicKeyInfo();
+                //ECParameters p =  alice.PublicKey.ExportParameters();
+                ECParameters p = alice.ExportParameters(true);
+                ECParameters sp = alice.ExportExplicitParameters(true);
+
+                printByteArray(a);
+                printByteArray(alicePublicKey);
+                Console.WriteLine(Encoding.UTF8.GetString(alicePublicKey));
 
                 sender(Encoding.UTF8.GetString(alicePublicKey), 100);
 
                 Console.WriteLine("");
-                //CngKey bobKey = CngKey.Import(bob.bobPublicKey, CngKeyBlobFormat.EccPublicBlob);
+
+                ReceivedMessage msg = receiver();
+
+                byte[] serverPublicKey = msg.Message;
+                CngKey bobKey = CngKey.Import(serverPublicKey, CngKeyBlobFormat.EccPublicBlob);
                 //byte[] aliceKey = alice.DeriveKeyMaterial(bobKey);
                 //byte[] encryptedMessage = null;
                 //byte[] iv = null;
@@ -88,6 +99,16 @@ namespace clientAPI
             }
             
         }
+
+        private void printByteArray(byte[] arr)
+        {
+            for(int i = 0; i < arr.Length; i++)
+            {
+                Console.Write((int)arr[i] + ", ");
+            }
+            Console.WriteLine("\n");
+        }
+
         private byte[] intToBytes(int numInteger)
         {
             byte[] intBytes = BitConverter.GetBytes(numInteger);
