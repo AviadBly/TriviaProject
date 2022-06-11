@@ -32,6 +32,8 @@ namespace clientAPI.Requests_and_Responses
         public const byte SUBMIT_ANSWER_REQUEST_CODE = 48;
         public const byte GET_GAME_RESULT_REQUEST_CODE = 49;
 
+        public const byte CREATE_QUESTION_REQUEST_CODE = 60;
+
     }
 
     internal class LoginRequest
@@ -111,5 +113,7 @@ namespace clientAPI.Requests_and_Responses
         public uint AnswerId { get; set; }
 
     }
+
+   
 
 }
