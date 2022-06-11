@@ -276,6 +276,22 @@ void SqliteDataBase::insertStats(const StatsUser& user)
 
 }
 
+void  SqliteDataBase::insertQuestion(const Question question)
+{
+	string questionText = question.getQuestionString();
+	map<unsigned int,string> questionsMap = question.getPossibleAnswers();
+	string answer1 = questionsMap[1];
+	string answer2= questionsMap[2];
+	string answer3= questionsMap[3];
+	string answer4= questionsMap[4];
+	string correct = question.getCorrectAnswer();
+	correct = "*" + correct;
+	string values = "\"" + questionText + "\",\"" + answer1 + "\,\"" + answer2 + "\",\"" + answer3 + "\"," + answer4 + "\");";
+
+	string sqlStatement = "INSERT INTO QUESTIONS(QUESTION, ANSWER1 ,ANSWER2 ,ANSWER3 ,ANSWER3) VALUES(" + values;
+	const char* newStatement = sqlStatement.c_str();
+	sendToServer(db, newStatement);
+}
 
 
 bool SqliteDataBase::doesPasswordMatch(string username, string password)
