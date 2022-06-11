@@ -25,7 +25,7 @@ public:
 	virtual int getNumOfPlayerGames(string username) ;
 
 	/******************************************************/
-	virtual const vector<Question> getQuestions();
+	virtual const vector<Question> getQuestions(unsigned int numberOfQuestion);
 
 	bool open();
 
