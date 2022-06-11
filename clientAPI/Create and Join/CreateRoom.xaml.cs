@@ -53,8 +53,9 @@ namespace clientAPI
            
             uint players = Convert.ToUInt32(Players.Text);
             uint time = Convert.ToUInt32(Time.Text);
+            uint questions = Convert.ToUInt32(Questions.Text);
 
-            CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, constants.MAXQUESTIONS, time);
+            CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, questions, time);
 
             
             Console.Write(createRoomRequest);
@@ -76,7 +77,7 @@ namespace clientAPI
             Console.Write("Createed room succesfully");
            
 
-            RoomData metaData = new RoomData(0, roomName.Text, players, constants.MAXQUESTIONS, time, false);
+            RoomData metaData = new RoomData(0, roomName.Text, players, questions, time, false);
 
             WaitingRoom waitingRoom = new WaitingRoom(metaData, true);
             waitingRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
