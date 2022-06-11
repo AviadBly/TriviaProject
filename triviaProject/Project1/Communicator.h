@@ -55,6 +55,9 @@ using namespace CryptoPP::ASN1;
 #include "integer.h"
 using CryptoPP::Integer;
 
+
+
+
 class Communicator
 {
 public:

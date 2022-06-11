@@ -1,7 +1,6 @@
 #include "Communicator.h"
 
 
-
 Communicator::Communicator(RequestHandlerFactory& handlerFactory) : m_handlerFactory(handlerFactory)
 {
 
@@ -152,6 +151,12 @@ void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 	}
 }
 
+void printByteArr(BYTE arr[], int len) {
+	for (int i = 0; i < len; i++) {
+		cout << (int)arr[i] << ", ";
+	}
+	cout << "\n\n";
+}
 
 SecByteBlock Communicator::getKeyForSecureConnection(SOCKET socket)
 {
@@ -172,7 +177,17 @@ SecByteBlock Communicator::getKeyForSecureConnection(SOCKET socket)
 	SecByteBlock privA(dhA.PrivateKeyLength()), pubA(dhA.PublicKeyLength());
 
 	dhA.GenerateKeyPair(rng, privA, pubA);
-	cout << "public: " << pubA.data() << "\nprivate: " << privA.data() << "\b";
+
+	//cout << "public: " << pubA.data() << "\nprivate: " << privA.data() << "\b";
+	auto g = dhA.GetGenerator();
+	auto h = dhA.GetGroupParameters();
+	//auto f = dhA.GetMaterial();
+	//CryptoParameters y = dhA.GetCryptoParameters();
+
+	cout << "Private: ";
+	printByteArr(privA, dhA.PrivateKeyLength());
+	cout << "Public: ";
+	printByteArr(pubA, dhA.PublicKeyLength());
 
 	std::string userMsg = recvMsg(socket);
 
@@ -188,6 +203,8 @@ SecByteBlock Communicator::getKeyForSecureConnection(SOCKET socket)
 	for (auto& b : byteData) {
 		clientPublicKey[i] = b;
 	}
+	cout << "Client public: ";
+	printByteArr(clientPublicKey, byteData.size());
 
 	GetPublicKeyRequest getPublicKeyRequest = JsonRequestPacketDeserializer::deserializeGetPublicKeyRequest(byteData);
 	
