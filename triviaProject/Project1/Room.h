@@ -37,9 +37,13 @@ public:
 	bool canNewUserJoin();
 	void setIsActive(bool isActive);
 	
+	int numberOfPlayersActive;
+
 private:
 	
 	RoomData m_metadata;
 	vector<User> m_users;
+
+
 	unsigned int gameID;
 };

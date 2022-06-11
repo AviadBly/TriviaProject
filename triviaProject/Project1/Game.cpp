@@ -127,6 +127,8 @@ PlayerResults Game::getPlayerResults(const User& user)
 {
 	PlayerResults playerResults;
 	
+
+
 	GameData userGameData = m_players[user];
 	playerResults.averageAnswerTime = userGameData.averageAnswerTime;
 	playerResults.correctAnswerCount = userGameData.correctAnswerCount;

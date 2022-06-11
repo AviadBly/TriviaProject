@@ -2,8 +2,10 @@
 
 RoomMemberRequestHandler::RoomMemberRequestHandler(const LoggedUser& user, const Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
 {
+
 	m_user = user;
 	recentRoomId = room.getData().id;
+	m_roomManager.getSingleRoom(recentRoomId).numberOfPlayersActive++;
 }
 
 LoginManager& RoomMemberRequestHandler::getLoginManger()
@@ -63,10 +65,14 @@ RequestResult RoomMemberRequestHandler::leaveRoom()
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeLeaveRoomResponse(leaveRoomResponse);
 	m_roomManager.removeUser(m_user, recentRoomId);	//no error is thrown if the room is already deleted
-	
+		
 		//change back to menu handler
 	requestResult.newHandler = m_handlerFactory.createMenuRequestHandler(m_user);
 	
+	//if you are the only user, delete the room
+	if (--m_roomManager.getSingleRoom(recentRoomId).numberOfPlayersActive == 0) {
+		m_roomManager.deleteRoom(recentRoomId);
+	}
 
 	return requestResult;
 }
@@ -110,8 +116,15 @@ RequestResult RoomMemberRequestHandler::startGame()
 	
 	StartRoomResponse.status = StartRoomResponse.status_ok;
 
+	
+
 	requestResult.buffer = JsonResponsePacketSerializer::serializeStartGameResponse(StartRoomResponse);
 	requestResult.newHandler = m_handlerFactory.createGameRequestHandler(m_roomManager.getSingleRoom(recentRoomId), m_user, false);
+
+	//if you are the only user, delete the room
+	if (--m_roomManager.getSingleRoom(recentRoomId).numberOfPlayersActive == 0) {
+		m_roomManager.deleteRoom(recentRoomId);
+	}
 
 	return requestResult;
 }

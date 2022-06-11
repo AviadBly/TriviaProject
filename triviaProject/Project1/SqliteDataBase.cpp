@@ -276,7 +276,7 @@ void SqliteDataBase::insertStats(const StatsUser& user)
 
 }
 
-void  SqliteDataBase::insertQuestion(const Question question)
+void  SqliteDataBase::insertQuestion(const Question question) const
 {
 	string questionText = question.getQuestionString();
 	map<unsigned int,string> questionsMap = question.getPossibleAnswers();

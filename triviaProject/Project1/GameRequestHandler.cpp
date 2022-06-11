@@ -141,6 +141,7 @@ RequestResult GameRequestHandler::getGameResults()
 		getGameResultsResponse.results = m_game.getGameResults();
 
 		if (!hasAddedStatsYet) {
+			
 			hasAddedStatsYet = true;
 			addStatistics();
 		}
