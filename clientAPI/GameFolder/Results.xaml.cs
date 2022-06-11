@@ -83,7 +83,8 @@ namespace clientAPI.GameFolder
             
             foreach(PlayerResults playerResults in getGameResultsResponse.Results)
             {
-                PlayerList.Items.Add(playerResults.Username);
+                if (!PlayerList.Items.Contains(playerResults.Username))
+                    PlayerList.Items.Add(playerResults.Username);
             }
             return getGameResultsResponse;
         }
