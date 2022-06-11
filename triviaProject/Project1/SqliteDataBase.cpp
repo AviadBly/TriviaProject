@@ -263,7 +263,7 @@ void SqliteDataBase::insertStats(const StatsUser& user)
 	}
 	else
 	{
-		string sqlStatement = "DELETE FROM STATISTICS WHERE NAME=\""+name+"\";";
+		string sqlStatement = "DELETE FROM STATISTICS WHERE USERNAME=\""+name+"\";";
 		const char* newStatement = sqlStatement.c_str();
 		sendToServer(db, newStatement);
 		sqlStatement = "INSERT INTO STATISTICS(USERNAME, AVGTIME ,CORRECT ,TOTAL ,GAMES) VALUES(" + values;
