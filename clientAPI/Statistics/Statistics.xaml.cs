@@ -54,5 +54,10 @@ namespace clientAPI
             scores.Show();
             this.Close();
         }
+
+        private void AddQuestion(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

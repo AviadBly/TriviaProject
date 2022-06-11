@@ -1,9 +1,9 @@
-#include "Question.h"
 #include <iostream>     // std::cout
 #include <algorithm>    // std::replace
 #include <vector>       // std::vector
 #include<time.h>
 #include <map>
+#include "Question.h"
 
 Question::Question()
 {
@@ -27,7 +27,7 @@ const string& Question::getQuestionString() const
     return this->m_question;
 }
 
-map<unsigned int, string> Question::getPossibleAnswers()
+map<unsigned int, string> Question::getPossibleAnswers()  const
 {
     map<unsigned int, string> temp = m_possibleAnswers;
 
