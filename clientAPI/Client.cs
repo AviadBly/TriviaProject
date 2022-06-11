@@ -47,7 +47,7 @@ namespace clientAPI
                 this.m_socket = client.GetStream();
                 m_socket.ReadTimeout = 60000;   //we should lower this later, but for now we are just testing
 
-
+                //getKey();
                 //// Close everything.
                 //stream.Close();
                 //client.Close();
@@ -58,6 +58,16 @@ namespace clientAPI
             }
 
             
+        }
+        
+
+        private void printByteArray(byte[] arr)
+        {
+            for(int i = 0; i < arr.Length; i++)
+            {
+                Console.Write((int)arr[i] + ", ");
+            }
+            Console.WriteLine("\n");
         }
         private byte[] intToBytes(int numInteger)
         {
