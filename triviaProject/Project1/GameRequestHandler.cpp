@@ -3,7 +3,8 @@
 GameRequestHandler::GameRequestHandler(const Room room, const LoggedUser user, bool isAdmin, GameManager& gameManager, RequestHandlerFactory& handleFactory) : m_gameManager(gameManager), m_handlerFactory(handleFactory)
 {
 	if (isAdmin) {
-		m_game = gameManager.createGame(room.getAllUsers(), room.getData().timePerQuestion, room.getData().id);
+		RoomData metaData = room.getData();
+		m_game = gameManager.createGame(room.getAllUsers(), metaData.timePerQuestion, metaData.id, metaData.numOfQuestionsInGame);
 	}
 	else {
 		m_game = gameManager.joinGame(room.getData().id);

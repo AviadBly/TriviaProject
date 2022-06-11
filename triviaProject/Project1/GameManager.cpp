@@ -7,9 +7,9 @@ GameManager::GameManager(IDatabase* database) : m_database(database)
     
 }
 
-Game GameManager::createGame(const vector<User>& users, unsigned int timePerQuestion, unsigned int id)
+Game GameManager::createGame(const vector<User>& users, unsigned int timePerQuestion, unsigned int id, unsigned int numberOfQuestions)
 {
-    vector<Question> questions = m_database->getQuestions();
+    vector<Question> questions = m_database->getQuestions(numberOfQuestions);
     for (auto& q : questions) {
         q.mixAnswers();
     }

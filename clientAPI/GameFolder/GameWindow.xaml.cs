@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Media;
+using clientAPI.Properties;
 
 namespace clientAPI.GameFolder
 {
@@ -168,6 +170,16 @@ namespace clientAPI.GameFolder
             }
 
             switchColors(id, submitAnswerResponse.CorrectAnswerId == id);//switch the user answer to the required color
+            if(submitAnswerResponse.CorrectAnswerId==id)
+            {
+                SoundPlayer s = new SoundPlayer(Properties.Resources.mixkit_arcade_game_complete_or_approved_mission_205);
+                s.Play();
+            }
+            else
+            {
+                SoundPlayer s = new SoundPlayer(Properties.Resources.mixkit_wrong_answer_fail_notification_946);
+                s.Play();
+            }
             switchColors(submitAnswerResponse.CorrectAnswerId, true); //turn the correct answer to green
             if (isUserAnswered)
             {
