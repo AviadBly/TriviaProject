@@ -26,6 +26,7 @@ namespace clientAPI.GameFolder
 
         private const int REFRESH_SEND_TIME = 3; //in seconds
         
+
         public Results()
         {
 
