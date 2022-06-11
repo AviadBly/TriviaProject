@@ -302,7 +302,16 @@ const vector<Question> SqliteDataBase::getQuestions(unsigned int numberOfQuestio
 	string sqlStatement = "SELECT * FROM QUESTIONS;";
 	const char* newStatement = sqlStatement.c_str();
 	sendCallBackQuestions(db, newStatement, newList);
-	return *newList;
+	vector<Question> retList;
+	for (int i = 0; i < numberOfQuestions; i++)
+	{
+		int randomNum= rand() % newList->size() + 0;
+		Question current = (* newList)[randomNum];
+		newList->erase(newList->begin() + randomNum);
+		retList.push_back(current);
+
+	}
+	return retList;
 }
 
 
