@@ -41,7 +41,7 @@ bool User::operator ==(const User& otherUser) const
 	return this->getId() == otherUser.getId();	//compares based on id												
 }
 
-//******************************************************
+//****************************************************** Logged user
 LoggedUser::LoggedUser(const std::string& name, const std::string& password) :
 	User(name), m_password(password)
 {
@@ -74,9 +74,9 @@ void LoggedUser::setPassword(const std::string& password)
 	m_password = password;
 }
 
-//******************************************************
+//****************************************************** Stats User
 
-void StatsUser::setName(std::string name)
+void StatsUser::setName(const string& name)
 {
 	m_name = name;
 }
@@ -91,7 +91,7 @@ void StatsUser::setCorrect(int correct)
 	m_correct = correct;
 }
 
-void StatsUser::setTotal(int total)
+void StatsUser::setTotalAnswers(int total)
 {
 	m_total = total;
 }
@@ -101,25 +101,44 @@ void StatsUser::setGames(int games)
 	m_games = games;
 }
 
-const std::string& StatsUser::getName() const
-{
-	return m_name;
-}
-const int StatsUser::getCorrect()
+int StatsUser::getCorrect() const
 {
 	return m_correct;
 }
 
-const int StatsUser::getTotal()
+int StatsUser::getTotalAnswers() const
 {
 	return m_total;
 }
-const int StatsUser::getGames()
+int StatsUser::getGames() const
 {
 	return m_games;
 }
 
-const double StatsUser::getTime()
+double StatsUser::getTime() const
 {
 	return m_time;
+}
+
+double StatsUser::getNewAverage(const StatsUser& user, int numberOfNewAnswers, double otherAvg)
+{
+	double newAnswerTime = otherAvg;
+
+	newAnswerTime = user.getTime() * user.getTotalAnswers() + otherAvg * numberOfNewAnswers;
+
+	newAnswerTime = newAnswerTime / (numberOfNewAnswers + user.getTotalAnswers());
+
+	return newAnswerTime;
+}
+
+bool StatsUser::operator <(const StatsUser& otherUser) const
+{
+	if (this->m_correct < otherUser.m_correct) {	
+		return true;
+	}
+	else if (this->m_correct == otherUser.m_correct) {
+		return this->m_time > otherUser.m_time;
+	}
+
+	return false;
 }

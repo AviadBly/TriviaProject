@@ -14,6 +14,7 @@
 #include "HelperFunctions.h"
 #include "IRequestHandler.h"
 #include "LoginRequestHandler.h"
+#include "ServerException.h"
 
 class Communicator
 {

@@ -77,6 +77,7 @@ namespace clientAPI.GameFolder
             }
 
             Results resultsWindow = new Results();
+            resultsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             resultsWindow.Show();
             Close();
         }

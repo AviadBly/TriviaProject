@@ -7,6 +7,7 @@
 #include <iostream>
 #include <bitset>
 #include "JsonRequestPacketDeserializer.h"
+#include "ServerException.h"
 
 #define STATUS_TEXT "Status"
 #define MESSAGE_TEXT "Message"
@@ -37,6 +38,10 @@ using json = nlohmann::json;
 
 class JsonResponsePacketSerializer {
 public:
+
+	//exception
+	std::vector<BYTE> serializeServerException(const ServerException& leaveGameResponse);
+
 	//login
 	static std::vector<BYTE> serializeLoginResponse(const LoginResponse& loginResponse);
 	static std::vector<BYTE> serializeSignupRequest(const SignUpResponse& signUpResponse);

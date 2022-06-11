@@ -48,7 +48,7 @@ int SqliteDataBase::callbackStats(void* data, int argc, char** argv, char** azCo
 			user.setCorrect(stoi(argv[i]));
 		}
 		else if (string(azColName[i]) == "TOTAL") {
-			user.setTotal(stoi(argv[i]));
+			user.setTotalAnswers(stoi(argv[i]));
 		}
 		else if (string(azColName[i]) == "GAMES")
 		{
@@ -234,6 +234,49 @@ bool SqliteDataBase::doesUserExist(string username)
 	return false;
 }
 
+void SqliteDataBase::insertStats(const StatsUser& user)
+{
+	list<StatsUser>* newList = new list<StatsUser>;
+	string sqlStatement = "SELECT * FROM STATISTICS WHERE USERNAME=\"" + user.getName() + "\";";
+	const char* newStatement = sqlStatement.c_str();
+	
+	sendCallBackStats(db, newStatement, newList);
+	int correct = user.getCorrect();
+	int games = user.getGames();
+	string name = user.getName();
+	double time = user.getTime();
+	int total = user.getTotalAnswers();
+
+	string stime = to_string(time);
+	string scorrect = to_string(correct);
+	string stotal = to_string(total);
+	string sgames = to_string(games);
+
+	string values = "\"" + name + "\"" + "," + stime + "," + scorrect + "," + stotal + "," + sgames + ");";
+	sqlStatement = "INSERT INTO STATISTICS(USERNAME, AVGTIME ,CORRECT ,TOTAL ,GAMES) VALUES(" + values;
+	
+	newStatement = sqlStatement.c_str();
+	if (newList->empty())
+	{
+		sendToServer(db, newStatement);
+
+	}
+	else
+	{
+		string sqlStatement = "DELETE FROM STATISTICS WHERE NAME=\""+name+"\";";
+		const char* newStatement = sqlStatement.c_str();
+		sendToServer(db, newStatement);
+		sqlStatement = "INSERT INTO STATISTICS(USERNAME, AVGTIME ,CORRECT ,TOTAL ,GAMES) VALUES(" + values;
+	    newStatement = sqlStatement.c_str();
+		sendToServer(db, newStatement);
+
+
+	}
+
+
+}
+
+
 
 bool SqliteDataBase::doesPasswordMatch(string username, string password)
 {
@@ -261,6 +304,8 @@ const vector<Question> SqliteDataBase::getQuestions()
 	sendCallBackQuestions(db, newStatement, newList);
 	return *newList;
 }
+
+
 
 const std::list<StatsUser> SqliteDataBase::getStats(string username)
 {
@@ -304,7 +349,7 @@ int SqliteDataBase::getNumOfTotalAnswers(string username)
 	if (newList.size() == 0) {
 		return 0;
 	}
-	return newList.front().getTotal();
+	return newList.front().getTotalAnswers();
 }
 
 int SqliteDataBase::getNumOfPlayerGames(string username)

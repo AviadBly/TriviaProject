@@ -165,9 +165,6 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	//first create the login requestHandler
 	request.newHandler = this->m_handlerFactory.createLoginRequestHandler();
 	
-	//request.newHandler = m_handlerFactory.createGameRequestHandler(m_handlerFactory.getRoomManager().getSingleRoom(1), LoggedUser("shajj", "1426"), true);
-	
-	
 	
 	try {
 		while (true) {
@@ -195,10 +192,17 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 			
 		}
 	}
+	catch (const ServerException& serverException) {
+		ErrorResponse er(serverException);
+		//sends an error msg
+		sendMsg(clientSocket, Helper::convertBitsToString(JsonResponsePacketSerializer::serializeErrorResponse(er)));
+		closesocket(clientSocket);
+	}
 	catch(std::exception e) {
 		// Closing the socket (in the level of the TCP protocol)
 		closesocket(clientSocket);
 	}
+	
 	
 	
 	

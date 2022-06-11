@@ -60,16 +60,19 @@ public:
 	}
 	StatsUser() = default;
 
-	void setName(std::string name);
+	void setName(const string& name);
 	void setTime(double time);
 	void setCorrect(int correct);
-	void setTotal(int total);
+	void setTotalAnswers(int total);
 	void setGames(int games);
-	const std::string& getName() const;
-	const int getCorrect();
-	const int getTotal();
-	const int getGames();
-	const double getTime();
+	int getCorrect() const;
+	int getTotalAnswers() const;
+	int getGames() const;
+	double getTime() const;
+	 
+	static double getNewAverage(const StatsUser& user, int numberOfAnswers, double otherAvg);
+
+	bool operator <(const StatsUser& otherUser) const;
 
 private:
 	double m_time;

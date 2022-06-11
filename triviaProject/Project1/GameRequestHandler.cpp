@@ -8,9 +8,9 @@ GameRequestHandler::GameRequestHandler(const Room room, const LoggedUser user, b
 	else {
 		m_game = gameManager.joinGame(room.getData().id);
 	}
-	
-	m_user = user;
 
+	hasAddedStatsYet = false;
+	m_user = user;
 }
 
 
@@ -46,6 +46,10 @@ RequestResult GameRequestHandler::handleRequest(const RequestInfo& requestInfo)
 		
 		}
 
+	}	
+	catch (const ServerException& serverException) {
+		m_gameManager.removeUser(m_user, m_game); // remove user from game
+		throw serverException;
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what() << "\n";
@@ -82,9 +86,11 @@ RequestResult GameRequestHandler::getQuestion()
 	RequestResult requestResult;
 	GetQuestionResponse getQuestionResponse;
 
-	
-	if (m_game.hasEnded()) {
+
+	if (m_game.hasPlayerFinishedGame(m_user)) {
 		getQuestionResponse.status = getQuestionResponse.noMoreQuestionStatus;
+		
+		
 	}
 	else {
 		Question userQuestion = m_game.getQuestionForUser(m_user);
@@ -96,14 +102,25 @@ RequestResult GameRequestHandler::getQuestion()
 	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeGetQuestionResponse(getQuestionResponse);
 	
-	time(&sendingTime);		//get the current time to sendingTime
+	time(&sendingTime);		//sendingTime = current time
 
 	return requestResult;
 }
 
+
 RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 {
+	const double ALLOWED_DELAYED_TIME = 1.5; //in seconds
+
 	double answerTime = difftime(requestInfo.receivalTime, sendingTime);
+
+	if (answerTime > ALLOWED_DELAYED_TIME + m_game.getTimePerQuestion()){
+		throw ServerException(ERROR_MSG_USER_DELAY, ServerException::ACTIVELY_DISCONECT_USER_CODE);	//disconnect from user
+	}
+
+	if (answerTime > m_game.getTimePerQuestion()) {
+		answerTime = m_game.getTimePerQuestion();
+	}
 	std::cout << "Answer time:" << answerTime << "\n";
 
 	RequestResult requestResult;
@@ -126,11 +143,17 @@ RequestResult GameRequestHandler::getGameResults()
 	RequestResult requestResult;
 	GetGameResultsResponse getGameResultsResponse;
 	
-	if (m_game.hasEnded()) {
+	if (m_game.hasPlayerFinishedGame(m_user)) {
 		getGameResultsResponse.status = getGameResultsResponse.status_ok;
 		getGameResultsResponse.results = m_game.getGameResults();
+
+		if (!hasAddedStatsYet) {
+			hasAddedStatsYet = true;
+			addStatistics();
+		}
+
 	}
-	else {//if game has not ended yet
+	else { //if game has not ended yet
 		getGameResultsResponse.status = getGameResultsResponse.noResultsStatus;		
 	}
 	
@@ -138,4 +161,19 @@ RequestResult GameRequestHandler::getGameResults()
 
 
 	return requestResult;
+}
+
+void GameRequestHandler::addStatistics()
+{
+	StatsUser oldUserStats = m_handlerFactory.getStatisticsManager().getStatsUser(m_user.getName());
+
+	StatsUser newUserStats = m_game.getCurrectStatisticsOnUser(m_user);
+
+	oldUserStats.setGames(oldUserStats.getGames() + newUserStats.getGames());
+	oldUserStats.setCorrect(oldUserStats.getCorrect() + newUserStats.getCorrect());
+	oldUserStats.setTime(newUserStats.getNewAverage(oldUserStats, newUserStats.getTotalAnswers(), newUserStats.getTime()));
+	oldUserStats.setTotalAnswers(oldUserStats.getTotalAnswers() + newUserStats.getTotalAnswers());
+
+
+	m_handlerFactory.getStatisticsManager().insertStats(oldUserStats);
 }
