@@ -279,7 +279,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveGameResponse(const
 
 }
 
-vector<BYTE> JsonResponsePacketSerializer::serializeStartSecureConnectionResponse(const StartSecureConnectionResponse& startSecureConnectionResponse)
+vector<BYTE> JsonResponsePacketSerializer::serializeGetPrimesResponse(const StartSecureConnectionResponse& startSecureConnectionResponse)
 {
 	std::vector<BYTE> bytes;
 
@@ -302,6 +302,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::intToBytes(int numInteger)
 
 	return arrayOfByte;
 }
+
 
 //return a vector of bits from the given jsonFormat message + 4 bits of the length of the message + the code
 std::vector<BYTE> JsonResponsePacketSerializer::convertJsonToBits(const json& jsonFormat, BYTE code)
@@ -331,4 +332,33 @@ std::vector<BYTE> JsonResponsePacketSerializer::convertJsonToBits(const json& js
 	}
 
 	return jsonBits;
+}
+
+string JsonResponsePacketSerializer::getMessageInFormat(const std::vector<BYTE>& bytes, BYTE code)
+{
+
+
+	//convert the json format to string
+	std::string jsonString = Helper::convertBitsToString(bytes);
+	std::vector<BYTE> jsonBits;
+
+	//add the msg code
+	jsonBits.push_back(code);
+
+	//add the length of the data 
+	unsigned int length = jsonString.length();
+	std::vector<BYTE> tempLengthBytes = intToBytes(length);
+
+	//runs 4 times because an integer is 32 bytes and each byte is 8, so 32/8=4
+	for (unsigned int i = 0; i < 4; i++) {
+		jsonBits.push_back(tempLengthBytes[i]);
+	}
+
+	//std::cout << jsonString << "\n";
+	//add the json string
+	for (unsigned int i = 0; i < jsonString.length(); i++) {
+		jsonBits.push_back(jsonString[i]);
+	}
+
+	return Helper::convertBitsToString(jsonBits);
 }
