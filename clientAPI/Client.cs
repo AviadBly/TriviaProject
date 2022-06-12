@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text.Json;
 using clientAPI.Requests_and_Responses;
 using System.Security.Cryptography;
-
+using System.Numerics;
 
 namespace clientAPI
 {
@@ -39,7 +39,7 @@ namespace clientAPI
     {
         private NetworkStream m_socket;
 
-        
+        private byte[] sharedKey;
             public Client(String server, Int32 port) {
             try
             {
@@ -49,7 +49,7 @@ namespace clientAPI
                 this.m_socket = client.GetStream();
                 m_socket.ReadTimeout = 60000;   //we should lower this later, but for now we are just testing
 
-                //getKey();
+                keyExchange();
                 //// Close everything.
                 //stream.Close();
                 //client.Close();
@@ -61,49 +61,40 @@ namespace clientAPI
 
             
         }
-        private void getKey()
+        
+
+        private void keyExchange()
         {
-            string publicClientKey = "";
-            ECCurve curve = ECCurve.CreateFromValue("1.3.36.3.3.2.8.1.1.1");
+            ReceivedMessage msg = receiver();
 
-            using (ECDiffieHellmanCng alice = new ECDiffieHellmanCng(curve))
-            {
+            byte[] generator = msg.Message;
+            printByteArray(generator, "modulus:");
+            BigInteger G = new BigInteger(generator);
+            
+            //int G = generator[0];
+            Console.WriteLine("G:");
+            Console.WriteLine(G.ToString("X"));
+            
+            msg = receiver();
 
+            byte[] modulus = msg.Message;
+            printByteArray(modulus, "modulus:");
+            BigInteger M = new BigInteger(modulus);
+            //long M = BitConverter.ToInt64(modulus);
+            Console.WriteLine("M:");
+            Console.WriteLine(M.ToString("X"));
+            
 
-                alice.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
-                alice.HashAlgorithm = CngAlgorithm.Sha256;
-                byte[] alicePublicKey = alice.PublicKey.ToByteArray();
-                byte[] a = alice.ExportSubjectPublicKeyInfo();
-                //ECParameters p =  alice.PublicKey.ExportParameters();
-                ECParameters p = alice.ExportParameters(true);
-                ECParameters sp = alice.ExportExplicitParameters(true);
-
-                printByteArray(a);
-                printByteArray(alicePublicKey);
-                Console.WriteLine(Encoding.UTF8.GetString(alicePublicKey));
-
-                sender(Encoding.UTF8.GetString(alicePublicKey), 100);
-
-                Console.WriteLine("");
-
-                ReceivedMessage msg = receiver();
-
-                byte[] serverPublicKey = msg.Message;
-                CngKey bobKey = CngKey.Import(serverPublicKey, CngKeyBlobFormat.EccPublicBlob);
-                //byte[] aliceKey = alice.DeriveKeyMaterial(bobKey);
-                //byte[] encryptedMessage = null;
-                //byte[] iv = null;
-                //Send(aliceKey, "Secret message", out encryptedMessage, out iv);
-                //bob.Receive(encryptedMessage, iv);
-            }
-
+           
         }
 
-        private void printByteArray(byte[] arr)
+
+        private void printByteArray(byte[] arr, string msg)
         {
+            Console.WriteLine(msg + ", length =" + arr.Length);
             for(int i = 0; i < arr.Length; i++)
             {
-                Console.Write((int)arr[i] + ", ");
+                Console.Write(arr[i].ToString("X") + ", ");
             }
             Console.WriteLine("\n");
         }
@@ -229,5 +220,46 @@ namespace clientAPI
             return serverMsg;  //if no error
         }
 
+        private void getKey()
+        {
+            string publicClientKey = "";
+            ECCurve curve = ECCurve.CreateFromValue("1.3.36.3.3.2.8.1.1.1");
+
+            using (ECDiffieHellmanCng alice = new ECDiffieHellmanCng(curve))
+            {
+
+
+                alice.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
+                alice.HashAlgorithm = CngAlgorithm.Sha256;
+                byte[] alicePublicKey = alice.PublicKey.ToByteArray();
+                byte[] a = alice.ExportSubjectPublicKeyInfo();
+                //ECParameters p =  alice.PublicKey.ExportParameters();
+                ECParameters p = alice.ExportParameters(true);
+                ECParameters sp = alice.ExportExplicitParameters(true);
+                byte[] privateKey = alice.ExportECPrivateKey();
+
+                printByteArray(privateKey, "PrivateKey: ");
+                printByteArray(a, "PublicKeyINfo: ");
+                printByteArray(alicePublicKey, "Public key:");
+                Console.WriteLine(Encoding.UTF8.GetString(alicePublicKey));
+
+                sender(Encoding.UTF8.GetString(alicePublicKey), 100);
+
+                Console.WriteLine("");
+
+                ReceivedMessage msg = receiver();
+
+                byte[] serverPublicKey = msg.Message;
+                CngKey bobKey = CngKey.Import(serverPublicKey, CngKeyBlobFormat.EccPublicBlob);
+                //byte[] aliceKey = alice.DeriveKeyMaterial(bobKey);
+                //byte[] encryptedMessage = null;
+                //byte[] iv = null;
+                //Send(aliceKey, "Secret message", out encryptedMessage, out iv);
+                //bob.Receive(encryptedMessage, iv);
+            }
+
+        }
     }
+
+
 }
