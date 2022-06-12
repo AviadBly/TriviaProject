@@ -157,7 +157,7 @@ void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 void printByteArr(BYTE arr[], int len, string msg) {
 	cout << msg << " length:" << len << "\n";
 	for (int i = 0; i < len; i++) {
-		cout << arr[i] << ", ";
+		cout << short(arr[i]) << ", ";
 	}
 	cout << "\n\n";
 }
@@ -189,9 +189,11 @@ SecByteBlock Communicator::diffiHellmanKeyExchange(SOCKET socket)
 	Integer M, Q, G;
 	CryptoPP::PrimeAndGenerator pg;
 
-	const int QnumberOfBits = 511;
-	const int MnumberOfBits = 512;
-	pg.Generate(1, prng, MnumberOfBits, QnumberOfBits);		//publicKey = G ^ privateKey % M
+	
+	const int ModulusnumberOfBits = 512;
+	const int QnumberOfBits = ModulusnumberOfBits - 1;
+
+	pg.Generate(1, prng, ModulusnumberOfBits, QnumberOfBits);		//publicKey = G ^ privateKey % M
 	M = pg.Prime();	//modulus
 	Q = pg.SubPrime();
 	G = pg.Generator();	
@@ -207,16 +209,16 @@ SecByteBlock Communicator::diffiHellmanKeyExchange(SOCKET socket)
 	Integer k1(privateKey, privateKey.size()), k2(publicKey, publicKey.size());
 
 	cout << "Private key:\n";
-	cout << hex << k1 << endl;
+	cout <<  k1 << endl;
 	cout << "Public key:\n";
-	cout << hex << k2 << endl;
+	cout << k2 << endl;
 
 	cout << "M:\n";
-	cout << hex << M << endl;
+	cout << M << endl;
 	cout << "Q:\n";
-	cout << hex << Q << endl;
+	cout << Q << endl;
 	cout << "G:\n";
-	cout << hex << G << endl;
+	cout << G << endl;
 	//private 6h, public: 71h
 
 	//int result = (int)pow(19, 6) % 131;
@@ -226,20 +228,42 @@ SecByteBlock Communicator::diffiHellmanKeyExchange(SOCKET socket)
 
 	SecByteBlock modulus;
 	UnsignedIntegerToByteBlock(M, modulus);
+
+	SecByteBlock subOrder;
+	UnsignedIntegerToByteBlock(Q, subOrder);
+
 	if (G > 255) {
 		cout << "Problem\n";
 	}
-	//cout << "Generator byte len: " << generator.size() << "\n";
 	printByteArr(generator, generator.size(), "Generator:");
 	sendMsg(socket, returnMsgFromBytes(generator, 99));
 
-	//cout << "Modulues byte len: " << modulus.size() << "\n";
 	printByteArr(modulus, modulus.size(), "Modulus:");
-
 	sendMsg(socket, returnMsgFromBytes(modulus, 98));
 
+	printByteArr(subOrder, subOrder.size(), "SubOrder:");
+	sendMsg(socket, returnMsgFromBytes(subOrder, 97));
 
-	return SecByteBlock();
+	printByteArr(publicKey, publicKey.size(), "PublicKey:");
+	sendMsg(socket, returnMsgFromBytes(publicKey, 96));
+
+	cout << "\n\n\n\n\n";
+	string clientMsg = recvMsg(socket).substr(5);
+	SecByteBlock clientPublicKey(clientMsg.length());
+	for (int i = 0; i < clientMsg.length(); i++) {
+		clientPublicKey[i] = clientMsg[i];
+	}
+
+	printByteArr(clientPublicKey, clientPublicKey.size(), "clientPublicKey:");
+
+	SecByteBlock secretKey(dh.AgreedValueLength());
+	
+	printByteArr(secretKey, secretKey.size(), "secretKey:");
+
+	if (!dh.Agree(secretKey, privateKey, clientPublicKey))
+		throw ("NO SECURE CONNECTION");
+
+	return secretKey;
 }
 
 void Communicator::handleNewClient(SOCKET clientSocket)
