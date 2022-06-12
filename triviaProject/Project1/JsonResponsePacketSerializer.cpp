@@ -4,6 +4,7 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeServerException(const S
 
 	
 	std::vector<BYTE> jsonBits;
+	
 
 	return jsonBits;
 
@@ -276,6 +277,15 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveGameResponse(const
 
 	return jsonBits;
 
+}
+
+vector<BYTE> JsonResponsePacketSerializer::serializeStartSecureConnectionResponse(const StartSecureConnectionResponse& startSecureConnectionResponse)
+{
+	std::vector<BYTE> bytes;
+
+	bytes = startSecureConnectionResponse.serverPublicKey;	//maybe change later
+
+	return bytes;
 }
 
 
