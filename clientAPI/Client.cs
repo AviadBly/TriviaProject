@@ -62,6 +62,7 @@ namespace clientAPI
             
         }
         
+       
 
         private void keyExchange()
         {
@@ -79,13 +80,63 @@ namespace clientAPI
 
             byte[] modulus = msg.Message;
             printByteArray(modulus, "modulus:");
-            BigInteger M = new BigInteger(modulus);
-            //long M = BitConverter.ToInt64(modulus);
+            BigInteger M = new BigInteger(modulus, true);
+            if(M < 0)
+            {
+                Console.WriteLine("Minus!!\n");
+            }
             Console.WriteLine("M:");
-            Console.WriteLine(M.ToString("X"));
-            
+            Console.WriteLine(M);
 
-           
+            msg = receiver();
+
+            byte[] subOrderBytes = msg.Message;
+            printByteArray(subOrderBytes, "subOrder:");
+            BigInteger subOrder = new BigInteger(subOrderBytes, true);
+            if (M < 0)
+            {
+                Console.WriteLine("Minus!!\n");
+            }
+            Console.WriteLine("subOrder:");
+            Console.WriteLine(subOrder);
+
+
+            msg = receiver();
+
+            byte[] serverPublicKeyBytes = msg.Message;
+            printByteArray(serverPublicKeyBytes, "serverPublicKey:");
+            BigInteger serverPublicKey = new BigInteger(serverPublicKeyBytes, true);
+
+            Console.WriteLine("\n\n\n\n");
+            Console.WriteLine("serverPublicKey:");
+            Console.WriteLine(serverPublicKey);
+
+            const int numberOfBytesOfPrivateKey = 63;
+
+            BigInteger privateKey;
+            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
+            {
+                byte[] tokenData = new byte[numberOfBytesOfPrivateKey];
+                rng.GetBytes(tokenData);
+                printByteArray(tokenData, "privateKey:");
+                privateKey = new BigInteger(tokenData, true);                
+            }
+
+            Console.WriteLine("privateKey:");
+            Console.WriteLine(privateKey);
+
+            BigInteger publicKey = BigInteger.ModPow(G, privateKey, M);
+            Console.WriteLine("publicKey:");
+            Console.WriteLine(publicKey);
+
+            sender(Encoding.UTF8.GetString(publicKey.ToByteArray()), 160);
+
+
+
+            BigInteger secretKey = BigInteger.ModPow(serverPublicKey, privateKey, M);
+            Console.WriteLine("SecretKey:");
+            Console.WriteLine(publicKey);
+
         }
 
 
@@ -94,7 +145,7 @@ namespace clientAPI
             Console.WriteLine(msg + ", length =" + arr.Length);
             for(int i = 0; i < arr.Length; i++)
             {
-                Console.Write(arr[i].ToString("X") + ", ");
+                Console.Write(arr[i] + ", ");
             }
             Console.WriteLine("\n");
         }
@@ -216,7 +267,7 @@ namespace clientAPI
 
             //if its an error msg
             serverMsg.IsErrorMsg = serverMsg.Code == ErrorResponse.errorMsgCode;
-            Console.WriteLine("Message:" + Encoding.Default.GetString(serverMsg.Message) + ", len:" + serverMsg.Length);
+            //Console.WriteLine("Message:" + Encoding.Default.GetString(serverMsg.Message) + ", len:" + serverMsg.Length);
             return serverMsg;  //if no error
         }
 
