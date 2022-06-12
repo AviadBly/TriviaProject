@@ -37,7 +37,7 @@ namespace clientAPI
         {
 
             InitializeComponent();
-            roomName.Text = MainProgram.MainUsername+ "'s Cool Room :D";
+            roomName.Text = MainProgram.MainUsername+ "'s Room";
             Time.Text = constants.DEFAULT.ToString();
             Players.Text=constants.DEFAULT.ToString(); 
             Questions.Text=constants.DEFAULT.ToString();
@@ -46,11 +46,8 @@ namespace clientAPI
 
         private void clickExit(object sender, RoutedEventArgs e)
         {
-            
-            menu menu = new menu(MainProgram.MainUsername);
-            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            menu.Show();
+            menu.goToMenu();
             this.Close();
         }
 
@@ -61,7 +58,6 @@ namespace clientAPI
             uint time = Convert.ToUInt32(Time.Text);
             uint questions = Convert.ToUInt32(Questions.Text);
 
-            
 
             CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, questions, time);
 
@@ -74,16 +70,12 @@ namespace clientAPI
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
             
             CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Message);
-           
-            //login failed
-            if (createRoomResponse.Status == Response.status_error)
+
+            if (returnMsg.IsErrorMsg)   //if error
             {
-                Console.Write("NOPE room BAD ROOM");
+                MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
                 return;
             }
-            
-            Console.Write("Createed room succesfully");
-           
 
             RoomData metaData = new RoomData(0, roomName.Text, players, questions, time, false);
 

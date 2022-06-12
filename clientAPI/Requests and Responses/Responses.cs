@@ -41,7 +41,7 @@ namespace clientAPI.Requests_and_Responses
 	internal class  ErrorResponse : Response
 	{
 		
-        public const uint errorMsgCode = 15;
+        public const uint errorMsgCode = 50;
         public const uint SERVER_DICONECT_CODE = 66;
         public ErrorResponse(string message, byte status) : base(status)
         {
@@ -195,7 +195,7 @@ namespace clientAPI.Requests_and_Responses
     }
 
     internal class PlayerResults
-    {//"{\"Results\":[[\"shahar\",3,7,1.0]],\"Status\":2}"
+    {
         public PlayerResults(string username, uint correctAnswerCount, uint wrongAnswerCount, double averageAnswerTime)
         {
             Username = username;
@@ -209,10 +209,10 @@ namespace clientAPI.Requests_and_Responses
         public uint WrongAnswerCount { get; set; }
         public double AverageAnswerTime { get; set; }
     }
-    //TODO
+    
     /*************************************************/
     internal class GetGameResultsResponse : Response
-    {    //"{\"Results\":[[\"shahar\",3,7,1.0]],\"Status\":2}"
+    {    
         public GetGameResultsResponse(List<PlayerResults> results, byte status) : base(status)
         {
             Results = results;

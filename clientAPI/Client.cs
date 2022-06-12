@@ -50,10 +50,6 @@ namespace clientAPI
                 this.m_socket = client.GetStream();
                 m_socket.ReadTimeout = 100000;   //we should lower this later, but for now we are just testing
 
-                
-                //// Close everything.
-                //stream.Close();
-                //client.Close();
             }
             catch (Exception ex) //error with creating socket
             {
@@ -93,12 +89,13 @@ namespace clientAPI
             byte[] finalMsg = new byte[1 + 4 + msg.Length];
             byte[] intBytes = intToBytes(len);
             finalMsg[0] = code;
-            //len - 4 bytes
+            //add the length - 4 bytes
             for (int i = 1; i <= 4; i++)
             {
                 finalMsg[i] = intBytes[i - 1];
             }
             
+            //add the msg
             for(int i = 5; i < len + 5; i++)
             {
                 finalMsg[i] = (byte)(msg[i - 5]);
@@ -153,9 +150,8 @@ namespace clientAPI
             const uint BUFFER_SIZE = 1024;
 
             byte[] messageDataBytes = new Byte[serverMsg.Length];   //stores the entire message
-            //byte[] buffer = new byte[BUFFER_SIZE];  //read from the socket in parts
-
-            
+           
+          
             try
             {
                 m_socket.ReadTimeout = 600000;   //we should lower this later, but for now we are just testing
@@ -179,18 +175,22 @@ namespace clientAPI
 
             serverMsg.Message = messageDataBytes;
 
-            //code + len + data
-            //byte[] trimedMsg = serverBytes.Take(1 + 4 + msgLength).ToArray();
-            //responseData = System.Text.Encoding.UTF8.GetString(trimedMsg);
-            //Console.WriteLine("Received: {0}", responseData);
 
-            if(serverMsg.Code == ErrorResponse.SERVER_DICONECT_CODE)
+            //if server disconnects you, throw error and disconect
+            if (serverMsg.Code == ErrorResponse.SERVER_DICONECT_CODE)    
             {
                 throw new Exception(System.Text.Encoding.UTF8.GetString(serverMsg.Message));
             }
 
             //if its an error msg
             serverMsg.IsErrorMsg = serverMsg.Code == ErrorResponse.errorMsgCode;
+
+            if (serverMsg.IsErrorMsg)
+            {
+                string errorString = JsonHelpers.JsonFormatDeserializer.ErrorResponseDeserializer(serverMsg.Message).Message;
+                serverMsg.Message = Encoding.UTF8.GetBytes(errorString);
+            }
+
             Console.WriteLine("Message:" + Encoding.Default.GetString(serverMsg.Message) + ", len:" + serverMsg.Length);
             return serverMsg;  //if no error
         }

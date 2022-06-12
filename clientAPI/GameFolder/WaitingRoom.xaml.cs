@@ -79,13 +79,12 @@ namespace clientAPI.GameFolder
             if (players.Item1 == GetRoomStateResponse.statusRoomNotFound)    //go back to menu
             {
                 Application.Current.Dispatcher.Invoke((Action)delegate {
-                    menu menu = new menu(MainProgram.MainUsername);
-                    menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                    menu.Show();
+                    menu.goToMenu();
 
                     stopTask();
 
                     byte status = sendLeaveRoom();
+                    
                     if (status == Response.status_error) {
                         return;
                     }
@@ -177,19 +176,14 @@ namespace clientAPI.GameFolder
 
         private void leaveRoom()
         {
-            MessageBox.Show("Left Room");
-           
+                      
             byte status = sendLeaveRoom();
 
             if(status == Response.status_error) {
                 return;
             }
 
-
-            //go to menu
-            menu menuWindow = new menu(MainProgram.MainUsername);
-            menuWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            menuWindow.Show();
+            menu.goToMenu();
             Close();
         }
 
@@ -286,11 +280,10 @@ namespace clientAPI.GameFolder
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
 
-            if (returnMsg.IsErrorMsg)
+            if (returnMsg.IsErrorMsg)   //if error
             {
-                //Signup failed
-                MessageBox.Show("Error");
-
+                MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
+                return Response.status_error;
             }
 
             StartGameResponse startGameResponse = JsonHelpers.JsonFormatDeserializer.StartGameResponseDeserializer(returnMsg.Message);

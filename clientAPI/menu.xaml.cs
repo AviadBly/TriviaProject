@@ -50,6 +50,13 @@ namespace clientAPI
             updateUsername(username);
         }
         
+        public static void goToMenu()
+        {
+            menu menu = new menu(MainProgram.MainUsername);
+            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            menu.Show();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             
