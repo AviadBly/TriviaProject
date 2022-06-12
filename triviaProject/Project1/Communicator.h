@@ -55,7 +55,9 @@ using namespace CryptoPP::ASN1;
 #include "integer.h"
 using CryptoPP::Integer;
 
+#include "nbtheory.h"
 
+#include "dh.h"
 
 
 class Communicator
@@ -68,13 +70,15 @@ public:
 private:
 	void handleNewClient(SOCKET clientSocket);
 	void acceptClient();
-	std::string recvMsg(SOCKET socket);
+	static std::string recvMsg(SOCKET socket);
 
-	void sendMsg(SOCKET clientSocket, std::string msg);
+	static void sendMsg(SOCKET clientSocket, std::string msg);
 	
+	static SecByteBlock diffiHellmanKeyExchange(SOCKET socket);
+
 	SecByteBlock getKeyForSecureConnection(SOCKET socket);
 
-	SecByteBlock m_key;
+	//SecByteBlock m_key;
 
 	RequestHandlerFactory& m_handlerFactory;
 	std::map<SOCKET, IRequestHandler*> m_clients;

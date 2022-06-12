@@ -8,6 +8,9 @@
 #include <bitset>
 #include "JsonRequestPacketDeserializer.h"
 #include "ServerException.h"
+#include "HelperFunctions.h"
+#include <secblock.h>
+
 
 #define STATUS_TEXT "Status"
 #define MESSAGE_TEXT "Message"
@@ -32,6 +35,7 @@
 #define WRONG_ANSWER_COUNT_TEXT "WrongAnswerCount"
 #define AVERAGE_ANSWER_TIME_TEXT "AverageAnswerTime"
 #define QUESTION_STRING_TEXT "QuestionText"
+
 
 
 using json = nlohmann::json;
@@ -79,10 +83,15 @@ public:
 
 	static std::vector<BYTE> serializeLeaveGameResponse(const LeaveGameResponse& leaveGameResponse);
 
-	static std::vector<BYTE> serializeStartSecureConnectionResponse(const StartSecureConnectionResponse& startSecureConnectionResponse);
+	//encryption
+	static std::vector<BYTE> serializeGetPrimesResponse(const StartSecureConnectionResponse& startSecureConnectionResponse);
+	
+	static string getMessageInFormat(const std::vector<BYTE>& bytes, BYTE code);
 
 private:
 	static std::vector<BYTE> convertJsonToBits(const json& jsonFormat, BYTE code);
+
+	
 	
 	static std::vector<BYTE> intToBytes(int numInteger);
 };
