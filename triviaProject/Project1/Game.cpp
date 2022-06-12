@@ -114,6 +114,7 @@ unsigned int Game::submitAnswer(const User& user, unsigned int answerId, double 
 	if (correctAnswerId == -1) {
 		throw ("Error");
 	}
+
 	return correctAnswerId;
 	
 }
