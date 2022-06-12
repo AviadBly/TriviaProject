@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Room.h"
 #include <vector>
-         
+#include "ServerException.h"
 
 
 using namespace std;
@@ -14,7 +14,7 @@ public:
 	RoomManager();
 	unsigned int createRoom(LoggedUser user,RoomData data);
 	void deleteRoom(int ID);
-	unsigned int getRoomState(int ID);
+	//unsigned int getRoomState(int ID);
 	vector<Room> getRooms();
 
 	
