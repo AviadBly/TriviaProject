@@ -116,3 +116,8 @@ struct GetGameResultsResponse : public Response
 	const unsigned int noResultsStatus = 0;
 	vector<PlayerResults> results;
 };
+
+struct CreateQuestionResponse : public Response
+{
+
+};

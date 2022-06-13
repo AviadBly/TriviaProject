@@ -101,6 +101,22 @@ SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerReques
 	return submitAnswerRequest;
 }
 
+CreateQuestionRequest JsonRequestPacketDeserializer::deserializeCreateQuestionRequest(const vector<BYTE>& jsonRequestBits)
+{
+	CreateQuestionRequest createQuestionRequest;
+	//get json format from bits
+	json jsonData = getJsonFromBits(jsonRequestBits);
+
+	createQuestionRequest.question = jsonData.at(QUESTION_TEXT);
+	createQuestionRequest.answer1 = jsonData.at(ANSWER1_TEXT);
+	createQuestionRequest.answer2 = jsonData.at(ANSWER2_TEXT);
+	createQuestionRequest.answer3 = jsonData.at(ANSWER3_TEXT);
+	createQuestionRequest.correct = jsonData.at(CORRECT_TEXT);
+
+
+	return createQuestionRequest;
+}
+
 
 //ErrorResponse JsonRequestPacketDeserializer::deserializeErrorResponse(vector<BYTE> jsonResponseBits)
 //{

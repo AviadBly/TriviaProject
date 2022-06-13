@@ -278,7 +278,17 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveGameResponse(const
 
 }
 
+std::vector<BYTE> JsonResponsePacketSerializer::serializeCreateQuestionResponse(const CreateQuestionResponse& createQuestionResponse) {
 
+	//init json
+	json jsonResponse;
+	jsonResponse[STATUS_TEXT] = createQuestionResponse.status;
+
+	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
+
+	return jsonBits;
+
+}
 
 
 

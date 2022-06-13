@@ -1,4 +1,6 @@
-﻿using System;
+﻿using clientAPI.Requests_and_Responses;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +19,10 @@ namespace clientAPI
     /// <summary>
     /// Interaction logic for Statistics.xaml
     /// </summary>
-    public partial class Statistics : Window
+    public partial class StatisticsWindow : Window
     {
         
-        public Statistics()
+        public StatisticsWindow()
         {
             
             InitializeComponent();
@@ -54,7 +56,30 @@ namespace clientAPI
 
         private void AddQuestion(object sender, RoutedEventArgs e)
         {
-            
+            MainProgram.appClient.sender("", Requests.GET_PERSONAL_STATISTICS_REQUEST_CODE);
+
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+
+
+            GetPersonalStatsResponse getPersonalStatsResponse = JsonHelpers.JsonFormatDeserializer.GetPersonalStatsResponseDeserializer(returnMsg.Message);
+
+            if (returnMsg.IsErrorMsg)   //if error
+            {
+                MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
+                return;
+            }
+
+            if(Int32.Parse(getPersonalStatsResponse.PersonalStatistics[1]) < 25)
+            {
+                MessageBox.Show("Player must have at least 25 correct answers in order to insert a question!");
+
+            }
+            else
+            {
+                clientAPI.Statistics.AddQuestion addQuestion = new clientAPI.Statistics.AddQuestion();
+                addQuestion.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                addQuestion.Show();
+            }
         }
     }
 }

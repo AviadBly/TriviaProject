@@ -79,6 +79,8 @@ public:
 
 	static std::vector<BYTE> serializeLeaveGameResponse(const LeaveGameResponse& leaveGameResponse);
 
+	std::vector<BYTE> serializeCreateQuestionResponse(const CreateQuestionResponse& createQuestionResponse);
+
 
 private:
 	static std::vector<BYTE> convertJsonToBits(const json& jsonFormat, BYTE code);

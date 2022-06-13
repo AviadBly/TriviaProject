@@ -100,7 +100,7 @@ namespace clientAPI
 
         private void clickStats(object sender, RoutedEventArgs e)
         {
-            Statistics statsWindow = new Statistics();
+            StatisticsWindow statsWindow = new StatisticsWindow();
             statsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             statsWindow.Show();

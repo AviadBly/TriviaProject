@@ -19,6 +19,12 @@
 
 #define ANSWER_ID_TEXT "AnswerId"
 
+#define QUESTION_TEXT "Question"
+#define ANSWER1_TEXT "Answer1"
+#define ANSWER2_TEXT "Answer2"
+#define ANSWER3_TEXT "Answer3"
+#define CORRECT_TEXT "Correct"
+
 using json = nlohmann::json;
 using namespace std;
 
@@ -35,6 +41,8 @@ public:
 
 	//game
 	static SubmitAnswerRequest deserializeSubmitAnswerRequest(const vector<BYTE>& jsonRequestBits);
+
+	CreateQuestionRequest deserializeCreateQuestionRequest(const vector<BYTE>& jsonRequestBits);
 	
 private:
 	static json getJsonFromBits(const std::vector<BYTE>& constJsonBits);

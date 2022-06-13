@@ -24,7 +24,7 @@
 #define SUBMIT_ANSWER_REQUEST_CODE 48
 #define GET_GAME_RESULT_REQUEST_CODE 49
 
-
+#define CREATE_QUESTION_REQUEST_CODE 60
 
 
 struct LoginRequest {
@@ -55,4 +55,12 @@ struct CreateRoomRequest {
 struct SubmitAnswerRequest
 {
 	unsigned int answerId;
+};
+
+struct CreateQuestionRequest {
+	std::string question;
+	std::string answer1;
+	std::string answer2;
+	std::string answer3;
+	std::string correct;
 };
