@@ -49,7 +49,10 @@ namespace clientAPI
                 this.m_socket = client.GetStream();
                 m_socket.ReadTimeout = 60000;   //we should lower this later, but for now we are just testing
 
-                keyExchange();
+                KeyExchangeManager keyManager = new KeyExchangeManager(this);
+
+                keyManager.getSecretKey();
+
                 //// Close everything.
                 //stream.Close();
                 //client.Close();
@@ -62,88 +65,22 @@ namespace clientAPI
             
         }
         
-       
+        
 
         private void keyExchange()
         {
-            ReceivedMessage msg = receiver();
 
-            byte[] generator = msg.Message;
-            printByteArray(generator, "modulus:");
-            BigInteger G = new BigInteger(generator);
+           
             
-            //int G = generator[0];
-            Console.WriteLine("G:");
-            Console.WriteLine(G.ToString("X"));
+
             
-            msg = receiver();
-
-            byte[] modulus = msg.Message;
-            printByteArray(modulus, "modulus:");
-            BigInteger M = new BigInteger(modulus, true);
-            if(M < 0)
-            {
-                Console.WriteLine("Minus!!\n");
-            }
-            Console.WriteLine("M:");
-            Console.WriteLine(M);
-
-            msg = receiver();
-
-            byte[] subOrderBytes = msg.Message;
-            printByteArray(subOrderBytes, "subOrder:");
-            BigInteger subOrder = new BigInteger(subOrderBytes, true);
-            if (M < 0)
-            {
-                Console.WriteLine("Minus!!\n");
-            }
-            Console.WriteLine("subOrder:");
-            Console.WriteLine(subOrder);
-
-
-            msg = receiver();
-
-            byte[] serverPublicKeyBytes = msg.Message;
-            printByteArray(serverPublicKeyBytes, "serverPublicKey:");
-            BigInteger serverPublicKey = new BigInteger(serverPublicKeyBytes, true);
-
-            Console.WriteLine("\n\n\n\n");
-            Console.WriteLine("serverPublicKey:");
-            Console.WriteLine(serverPublicKey);
-
-            const int numberOfBytesOfPrivateKey = 63;
-
-            BigInteger privateKey;
-            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
-            {
-                byte[] tokenData = new byte[numberOfBytesOfPrivateKey];
-                rng.GetBytes(tokenData);
-                printByteArray(tokenData, "privateKey:");
-                privateKey = new BigInteger(tokenData, true);                
-            }
-
-            Console.WriteLine("privateKey:");
-            Console.WriteLine(privateKey);
-
-            BigInteger publicKey = BigInteger.ModPow(G, privateKey, M);
-            Console.WriteLine("publicKey:");
-            Console.WriteLine(publicKey);
-
-            sender(Encoding.UTF8.GetString(publicKey.ToByteArray()), 160);
-
-
-
-            BigInteger secretKey = BigInteger.ModPow(serverPublicKey, privateKey, M);
-            Console.WriteLine("SecretKey:");
-            Console.WriteLine(publicKey);
 
         }
-
 
         private void printByteArray(byte[] arr, string msg)
         {
             Console.WriteLine(msg + ", length =" + arr.Length);
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 Console.Write(arr[i] + ", ");
             }
@@ -157,6 +94,20 @@ namespace clientAPI
 
             return intBytes;
         }
+
+        private void addCodeAndLength(byte[] finalMsg, int msgLen, byte code)
+        {
+            
+            //code - 1 byte, len - 4 bytes, msg - depends on length
+            
+            byte[] intBytes = intToBytes(msgLen);
+            finalMsg[0] = code;
+            //len - 4 bytes
+            for (int i = 1; i <= 4; i++)
+            {
+                finalMsg[i] = intBytes[i - 1];
+            }
+        }
         public void sender(string msg, byte code)
         {
             if (m_socket == null)
@@ -164,34 +115,52 @@ namespace clientAPI
                 return;
             }
 
-            int len = msg.Length;
-            //code - 1 byte, len - 4 bytes, msg - depends on length
             byte[] finalMsg = new byte[1 + 4 + msg.Length];
-            byte[] intBytes = intToBytes(len);
-            finalMsg[0] = code;
-            //len - 4 bytes
-            for (int i = 1; i <= 4; i++)
-            {
-                finalMsg[i] = intBytes[i - 1];
-            }
+            addCodeAndLength(finalMsg, msg.Length, code);
             
-            for(int i = 5; i < len + 5; i++)
+            for(int i = 5; i < msg.Length + 5; i++)
             {
                 finalMsg[i] = (byte)(msg[i - 5]);
             }
 
-            try
-            {
-                
-                //write the msg with the format: code + length of data + data
-                this.m_socket.Write(finalMsg);
-            } catch(Exception ex)
-            {
-                Console.WriteLine("Error with server: " + ex.Message);
-            }
+            printByteArray(finalMsg, "final msg:");
+
+            safeSend(finalMsg);
             
         }
 
+        public void sender(byte[] msg, byte code)
+        {
+            if (m_socket == null)
+            {
+                return;
+            }
+
+            byte[] finalMsg = new byte[1 + 4 + msg.Length];
+            addCodeAndLength(finalMsg, msg.Length, code);
+
+            for (int i = 5; i < msg.Length + 5; i++)
+            {
+                finalMsg[i] = msg[i - 5];
+            }
+
+            printByteArray(finalMsg, "final msg:");
+            safeSend(finalMsg);
+        }
+
+        private void safeSend(byte[] message)
+        {
+            try
+            {
+
+                //write the msg with the format: code + length of data + data
+                this.m_socket.Write(message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error with server: " + ex.Message);
+            }
+        }
 
         //returns a byte array and a boolean indicating if its an error msg
         public ReceivedMessage receiver()
@@ -271,45 +240,45 @@ namespace clientAPI
             return serverMsg;  //if no error
         }
 
-        private void getKey()
-        {
-            string publicClientKey = "";
-            ECCurve curve = ECCurve.CreateFromValue("1.3.36.3.3.2.8.1.1.1");
+        //private void getKey()
+        //{
+        //    string publicClientKey = "";
+        //    ECCurve curve = ECCurve.CreateFromValue("1.3.36.3.3.2.8.1.1.1");
 
-            using (ECDiffieHellmanCng alice = new ECDiffieHellmanCng(curve))
-            {
+        //    using (ECDiffieHellmanCng alice = new ECDiffieHellmanCng(curve))
+        //    {
 
 
-                alice.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
-                alice.HashAlgorithm = CngAlgorithm.Sha256;
-                byte[] alicePublicKey = alice.PublicKey.ToByteArray();
-                byte[] a = alice.ExportSubjectPublicKeyInfo();
-                //ECParameters p =  alice.PublicKey.ExportParameters();
-                ECParameters p = alice.ExportParameters(true);
-                ECParameters sp = alice.ExportExplicitParameters(true);
-                byte[] privateKey = alice.ExportECPrivateKey();
+        //        alice.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
+        //        alice.HashAlgorithm = CngAlgorithm.Sha256;
+        //        byte[] alicePublicKey = alice.PublicKey.ToByteArray();
+        //        byte[] a = alice.ExportSubjectPublicKeyInfo();
+        //        //ECParameters p =  alice.PublicKey.ExportParameters();
+        //        ECParameters p = alice.ExportParameters(true);
+        //        ECParameters sp = alice.ExportExplicitParameters(true);
+        //        byte[] privateKey = alice.ExportECPrivateKey();
 
-                printByteArray(privateKey, "PrivateKey: ");
-                printByteArray(a, "PublicKeyINfo: ");
-                printByteArray(alicePublicKey, "Public key:");
-                Console.WriteLine(Encoding.UTF8.GetString(alicePublicKey));
+        //        printByteArray(privateKey, "PrivateKey: ");
+        //        printByteArray(a, "PublicKeyINfo: ");
+        //        printByteArray(alicePublicKey, "Public key:");
+        //        Console.WriteLine(Encoding.UTF8.GetString(alicePublicKey));
 
-                sender(Encoding.UTF8.GetString(alicePublicKey), 100);
+        //        sender(Encoding.UTF8.GetString(alicePublicKey), 100);
 
-                Console.WriteLine("");
+        //        Console.WriteLine("");
 
-                ReceivedMessage msg = receiver();
+        //        ReceivedMessage msg = receiver();
 
-                byte[] serverPublicKey = msg.Message;
-                CngKey bobKey = CngKey.Import(serverPublicKey, CngKeyBlobFormat.EccPublicBlob);
-                //byte[] aliceKey = alice.DeriveKeyMaterial(bobKey);
-                //byte[] encryptedMessage = null;
-                //byte[] iv = null;
-                //Send(aliceKey, "Secret message", out encryptedMessage, out iv);
-                //bob.Receive(encryptedMessage, iv);
-            }
+        //        byte[] serverPublicKey = msg.Message;
+        //        CngKey bobKey = CngKey.Import(serverPublicKey, CngKeyBlobFormat.EccPublicBlob);
+        //        //byte[] aliceKey = alice.DeriveKeyMaterial(bobKey);
+        //        //byte[] encryptedMessage = null;
+        //        //byte[] iv = null;
+        //        //Send(aliceKey, "Secret message", out encryptedMessage, out iv);
+        //        //bob.Receive(encryptedMessage, iv);
+        //    }
 
-        }
+        //}
     }
 
 
