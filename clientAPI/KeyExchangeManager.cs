@@ -18,7 +18,7 @@ namespace clientAPI
         
         private BigInteger m_generator;
         private BigInteger m_modulus;
-        private BigInteger m_subOrder;
+        private BigInteger m_maxExponent;
 
         private void printByteArray(byte[] arr, string msg)
         {
@@ -41,7 +41,9 @@ namespace clientAPI
 
             sendPublicKey();
 
-            return new byte[1];
+            createSecretKey();
+
+            return m_secretKey.ToByteArray();
         }
 
         private BigInteger getNumberFromArray(byte[] arr, string msg)
@@ -71,10 +73,10 @@ namespace clientAPI
             m_modulus = modulus;
             
             msg = m_client.receiver();
-            byte[] subOrderBytes = msg.Message;
+            byte[] maxExponentBytes = msg.Message;
             
-            BigInteger subOrder = getNumberFromArray(subOrderBytes, "subOrder:");
-            m_subOrder = subOrder;
+            BigInteger maxExponent = getNumberFromArray(maxExponentBytes, "subOrder:");
+            m_maxExponent = maxExponent;
 
 
             msg = m_client.receiver();
@@ -89,12 +91,12 @@ namespace clientAPI
         private void sendPublicKey()
         {
 
-            const int numberOfBytesOfPrivateKey = 63;
 
             BigInteger privateKey;
             using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
             {
-                byte[] tokenData = new byte[numberOfBytesOfPrivateKey];
+                //byte[] tokenData = new byte[m_maxExponent.GetByteCount() - 1];
+                byte[] tokenData = new byte[16];
                 rng.GetBytes(tokenData);
                 
                 privateKey = getNumberFromArray(tokenData, "privateKey:");
@@ -105,8 +107,8 @@ namespace clientAPI
 
             BigInteger publicKey = BigInteger.ModPow(m_generator, privateKey, m_modulus);
             m_publicKey = publicKey;
-            Console.WriteLine("publicKey:");
-            Console.WriteLine(publicKey);
+            //Console.WriteLine("publicKey:");
+            //Console.WriteLine(publicKey);
             printByteArray(publicKey.ToByteArray(), "publicKey:");
 
             m_client.sender(publicKey.ToByteArray(), 160);
@@ -116,10 +118,10 @@ namespace clientAPI
         private void createSecretKey()
         {
             BigInteger secretKey = BigInteger.ModPow(m_serverPublicKey, m_privateKey, m_modulus);
-            Console.WriteLine("SecretKey:");
-            Console.WriteLine(secretKey);
+            
 
-
+            byte[] secretKeyBytes = secretKey.ToByteArray();
+            printByteArray(secretKeyBytes, "secretkey");
         }
 
     }

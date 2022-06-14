@@ -144,7 +144,7 @@ namespace clientAPI
                 finalMsg[i] = msg[i - 5];
             }
 
-            printByteArray(finalMsg, "final msg:");
+            //printByteArray(finalMsg, "final msg:");
             safeSend(finalMsg);
         }
 
