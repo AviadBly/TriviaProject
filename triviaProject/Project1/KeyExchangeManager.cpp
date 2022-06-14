@@ -1,6 +1,51 @@
 #include "KeyExchangeManager.h"
 
 
+
+
+void KeyExchange::UnsignedIntegerToByteBlock(const Integer& x, SecByteBlock& bytes)
+{
+	size_t encodedSize = x.MinEncodedSize(Integer::UNSIGNED);
+	bytes.resize(encodedSize);
+	x.Encode(bytes.BytePtr(), encodedSize, Integer::UNSIGNED);
+}
+
+void KeyExchange::printByteArr(BYTE arr[], int len, string msg) {
+	cout << msg << " length:" << len << "\n";
+	for (int i = 0; i < len; i++) {
+		cout << short(arr[i]) << ", ";
+	}
+	cout << "\n\n";
+}
+
+
+SecByteBlock KeyExchange::getPublicKey() const
+{
+	return this->m_publicKey;
+}
+
+SecByteBlock KeyExchange::getPrivateKey() const
+{
+	return this->m_privateKey;
+}
+
+SecByteBlock KeyExchange::getClientPublicKey() const
+{
+	return this->m_clientPublicKey;
+}
+
+
+string KeyExchange::returnMsgFromBytes(SecByteBlock bytes, BYTE code) {
+
+	vector<BYTE> message;
+
+	for (int i = 0; i < bytes.size(); i++) {
+		message.push_back(bytes[i]);
+	}
+
+	return JsonResponsePacketSerializer::getMessageInFormat(message, code);
+}
+
 void KeyExchange::initializeParameters()
 {
 	AutoSeededRandomPool prng;
@@ -20,7 +65,7 @@ void KeyExchange::initializeParameters()
 	//Q = 7;
 	//G = 19;
 
-	m_DHC =  CryptoPP::DH(M, Q, G);
+	m_DHC = CryptoPP::DH(M, Q, G);
 
 	SecByteBlock privateKey(m_DHC.PrivateKeyLength()), publicKey(m_DHC.PublicKeyLength());
 	m_DHC.GenerateKeyPair(prng, privateKey, publicKey);
@@ -43,63 +88,6 @@ void KeyExchange::initializeParameters()
 	cout << G << endl;
 }
 
-void KeyExchange::UnsignedIntegerToByteBlock(const Integer& x, SecByteBlock& bytes)
-{
-	size_t encodedSize = x.MinEncodedSize(Integer::UNSIGNED);
-	bytes.resize(encodedSize);
-	x.Encode(bytes.BytePtr(), encodedSize, Integer::UNSIGNED);
-}
-
-void KeyExchange::printByteArr(BYTE arr[], int len, string msg) {
-	cout << msg << " length:" << len << "\n";
-	for (int i = 0; i < len; i++) {
-		cout << short(arr[i]) << ", ";
-	}
-	cout << "\n\n";
-}
-
-string KeyExchange::returnMsgFromBytes(SecByteBlock bytes, BYTE code) {
-
-	vector<BYTE> message;
-
-	for (int i = 0; i < bytes.size(); i++) {
-		message.push_back(bytes[i]);
-	}
-
-	return JsonResponsePacketSerializer::getMessageInFormat(message, code);
-}
-
-SecByteBlock KeyExchange::getPublicKey() const
-{
-	return this->m_publicKey;
-}
-
-SecByteBlock KeyExchange::getPrivateKey() const
-{
-	return this->m_privateKey;
-}
-
-SecByteBlock KeyExchange::getClientPublicKey() const
-{
-	return this->m_clientPublicKey;
-}
-
-
-
-void KeyExchange::getClientPublicKey(SOCKET socket)
-{
-	cout << "\n\n\n\n\n";
-	string clientMsg = Communicator::recvMsg(socket).substr(5);
-	SecByteBlock clientPublicKeyBytes(clientMsg.length());
-	for (int i = 0; i < clientMsg.length(); i++) {
-		clientPublicKeyBytes[i] = clientMsg[i];
-	}
-	m_clientPublicKey = clientPublicKeyBytes;
-
-	printByteArr(m_clientPublicKey, m_clientPublicKey.size(), "clientPublicKey:");
-
-
-}
 
 
 void KeyExchange::sendParameters(SOCKET socket)
@@ -129,16 +117,36 @@ void KeyExchange::sendParameters(SOCKET socket)
 
 }
 
-SecByteBlock KeyExchange::getKey(SOCKET socket)
+void KeyExchange::sendGetClientPublicKey(SOCKET socket)
+{
+	cout << "\n\n\n\n\n";
+	string clientMsg = Communicator::recvMsg(socket).substr(5);
+	SecByteBlock clientPublicKeyBytes(clientMsg.length());
+
+	for (int i = 0; i < clientMsg.length(); i++) {
+		clientPublicKeyBytes[i] = clientMsg[i];
+	}
+	m_clientPublicKey = clientPublicKeyBytes;
+
+	printByteArr(m_clientPublicKey, m_clientPublicKey.size(), "clientPublicKey:");
+
+
+}
+
+
+SecByteBlock KeyExchange::getSecretKey(SOCKET socket)
 {
 
-	
-	SecByteBlock secretKey(m_DHC.AgreedValueLength());
+	initializeParameters();
+	sendParameters(socket);
+	sendGetClientPublicKey(socket);
 
-	printByteArr(secretKey, secretKey.size(), "secretKey:");
+	SecByteBlock secretKey(m_DHC.AgreedValueLength());
 
 	if (!m_DHC.Agree(secretKey, getPrivateKey(), getClientPublicKey()))
 		throw ("NO SECURE CONNECTION");
+
+	printByteArr(secretKey, secretKey.size(), "secretKey:");
 
 	return secretKey;
 }

@@ -163,7 +163,7 @@ SecByteBlock Communicator::diffiHellmanKeyExchange(SOCKET socket)
 
 	KeyExchange keyManager;
 
-	return keyManager.getKey(socket);
+	return keyManager.getSecretKey(socket);
 }
 
 void Communicator::handleNewClient(SOCKET clientSocket)
@@ -180,7 +180,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	//first create the login requestHandler
 	request.newHandler = this->m_handlerFactory.createLoginRequestHandler();
 	
-	
+
 	try {
 		while (true) {
 

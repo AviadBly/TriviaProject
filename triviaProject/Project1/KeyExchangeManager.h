@@ -51,12 +51,12 @@ class KeyExchange {
 
 public:
 	
-	SecByteBlock getKey(SOCKET socket);
+	SecByteBlock getSecretKey(SOCKET socket);
 
 private:
 	void initializeParameters();
 	void sendParameters(SOCKET socket);
-	void getClientPublicKey(SOCKET socket);
+	void sendGetClientPublicKey(SOCKET socket);
 
 
 	void UnsignedIntegerToByteBlock(const Integer& x, SecByteBlock& bytes);
