@@ -75,10 +75,13 @@ void KeyExchange::initializeParameters()
 
 	Integer k1(privateKey, privateKey.size()), k2(publicKey, publicKey.size());
 
-	cout << "Private key:\n";
-	cout << k1 << endl;
+
+	/*cout << "Private key:\n";
+	cout << k1 << endl;*/
 	cout << "Public key:\n";
 	cout << k2 << endl;
+
+	printByteArr(privateKey, privateKey.size(), "Private key:");
 
 	cout << "M:\n";
 	cout << M << endl;
@@ -99,8 +102,8 @@ void KeyExchange::sendParameters(SOCKET socket)
 	SecByteBlock modulus;
 	UnsignedIntegerToByteBlock(m_DHC.GetGroupParameters().GetModulus(), modulus);
 
-	SecByteBlock subOrder;
-	UnsignedIntegerToByteBlock(m_DHC.GetGroupParameters().GetSubgroupOrder(), subOrder);
+	SecByteBlock MaxExponenet;
+	UnsignedIntegerToByteBlock(m_DHC.GetGroupParameters().GetMaxExponent(), MaxExponenet);
 
 
 	printByteArr(generator, generator.size(), "Generator:");
@@ -109,8 +112,8 @@ void KeyExchange::sendParameters(SOCKET socket)
 	printByteArr(modulus, modulus.size(), "Modulus:");
 	Communicator::sendMsg(socket, returnMsgFromBytes(modulus, 98));
 
-	printByteArr(subOrder, subOrder.size(), "SubOrder:");
-	Communicator::sendMsg(socket, returnMsgFromBytes(subOrder, 97));
+	printByteArr(MaxExponenet, MaxExponenet.size(), "MaxExponenet:");
+	Communicator::sendMsg(socket, returnMsgFromBytes(MaxExponenet, 97));
 
 	printByteArr(getPublicKey(), getPublicKey().size(), "PublicKey:");
 	Communicator::sendMsg(socket, returnMsgFromBytes(getPublicKey(), 96));
@@ -141,7 +144,20 @@ SecByteBlock KeyExchange::getSecretKey(SOCKET socket)
 	sendParameters(socket);
 	sendGetClientPublicKey(socket);
 
+	Integer M = m_DHC.GetGroupParameters().GetModulus();
+	Integer G_B(m_clientPublicKey, true);
+
+	Integer privateK(m_privateKey, true);
+	CryptoPP::ModularArithmetic MM(M);
+	Integer secret = MM.Exponentiate(G_B, privateK);
+
 	SecByteBlock secretKey(m_DHC.AgreedValueLength());
+	cout << "value: " + m_DHC.AgreedValueLength() <<  "   len:" + secret.ByteCount() << "\n";
+
+	UnsignedIntegerToByteBlock(secret, secretKey);
+	printByteArr(secretKey, secretKey.size(), "secret: ");
+	
+
 
 	if (!m_DHC.Agree(secretKey, getPrivateKey(), getClientPublicKey()))
 		throw ("NO SECURE CONNECTION");

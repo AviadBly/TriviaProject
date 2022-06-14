@@ -46,6 +46,8 @@ using CryptoPP::Integer;
 
 #include "dh.h"
 
+#include "modarith.h."
+
 
 class KeyExchange {
 
