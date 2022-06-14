@@ -15,7 +15,7 @@
 #include "IRequestHandler.h"
 #include "LoginRequestHandler.h"
 #include "ServerException.h"
-
+#include "KeyExchangeManager.h"
 
 #include <iostream>
 using std::cout;
@@ -67,16 +67,18 @@ public:
 	~Communicator();
 	void serve(int port);
 
-private:
-	void handleNewClient(SOCKET clientSocket);
-	void acceptClient();
 	static std::string recvMsg(SOCKET socket);
 
 	static void sendMsg(SOCKET clientSocket, std::string msg);
+
+private:
+	void handleNewClient(SOCKET clientSocket);
+	void acceptClient();
+	
 	
 	static SecByteBlock diffiHellmanKeyExchange(SOCKET socket);
 
-	SecByteBlock getKeyForSecureConnection(SOCKET socket);
+	//SecByteBlock getKeyForSecureConnection(SOCKET socket);
 
 	//SecByteBlock m_key;
 

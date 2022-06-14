@@ -42,8 +42,33 @@ using namespace CryptoPP::ASN1;
 #include "integer.h"
 using CryptoPP::Integer;
 
+#include "nbtheory.h"
+
+#include "dh.h"
+
+
 class KeyExchange {
 
-	string getKey(SOCKET socket);
+public:
+	
+	SecByteBlock getSecretKey(SOCKET socket);
 
+private:
+	void initializeParameters();
+	void sendParameters(SOCKET socket);
+	void sendGetClientPublicKey(SOCKET socket);
+
+
+	void UnsignedIntegerToByteBlock(const Integer& x, SecByteBlock& bytes);
+	void printByteArr(BYTE arr[], int len, string msg);
+	string returnMsgFromBytes(SecByteBlock bytes, BYTE code);
+
+	SecByteBlock getPublicKey() const;
+	SecByteBlock getPrivateKey() const;
+	SecByteBlock getClientPublicKey() const;
+
+	CryptoPP::DH m_DHC; //short for - diffie-hellman-connection
+	SecByteBlock m_publicKey;
+	SecByteBlock m_privateKey;
+	SecByteBlock m_clientPublicKey;
 };

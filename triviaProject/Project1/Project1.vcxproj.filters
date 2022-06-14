@@ -126,7 +126,7 @@
     <ClCompile Include="GameRequestHandler.cpp">
       <Filter>Source Files\Requests and Responses</Filter>
     </ClCompile>
-    <ClCompile Include="KeyExchange.cpp">
+    <ClCompile Include="KeyExchangeManager.cpp">
       <Filter>Source Files\Cryptography</Filter>
     </ClCompile>
     <ClCompile Include="D:\Homework\Magshimim\Crypto\osrng.cpp">
@@ -227,7 +227,7 @@
     <ClInclude Include="ICryptoAlgorithm.h">
       <Filter>Header Files\Cryptography</Filter>
     </ClInclude>
-    <ClInclude Include="KeyExchange.h">
+    <ClInclude Include="KeyExchangeManager.h">
       <Filter>Header Files\Cryptography</Filter>
     </ClInclude>
   </ItemGroup>

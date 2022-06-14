@@ -153,93 +153,17 @@ void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 }
 
 
-
-void printByteArr(BYTE arr[], int len, string msg) {
-	cout << msg << " length:" << len << "\n";
-	for (int i = 0; i < len; i++) {
-		cout << arr[i] << ", ";
-	}
-	cout << "\n\n";
-}
-
-string returnMsgFromBytes(SecByteBlock bytes, BYTE code) {
-
-	vector<BYTE> message;
-
-	for (int i = 0; i < bytes.size(); i++) {
-		message.push_back(bytes[i]);
-	}
-
-
-	return JsonResponsePacketSerializer::getMessageInFormat(message, code);
-}
-
-void UnsignedIntegerToByteBlock(const Integer& x, SecByteBlock& bytes)
-{
-	size_t encodedSize = x.MinEncodedSize(Integer::UNSIGNED);
-	bytes.resize(encodedSize);
-	x.Encode(bytes.BytePtr(), encodedSize, Integer::UNSIGNED);
-}
-
-
 SecByteBlock Communicator::diffiHellmanKeyExchange(SOCKET socket)
 {
 
-	AutoSeededRandomPool prng;
-	Integer M, Q, G;
-	CryptoPP::PrimeAndGenerator pg;
-
-	const int QnumberOfBits = 511;
-	const int MnumberOfBits = 512;
-	pg.Generate(1, prng, MnumberOfBits, QnumberOfBits);		//publicKey = G ^ privateKey % M
-	M = pg.Prime();	//modulus
-	Q = pg.SubPrime();
-	G = pg.Generator();	
 	
-	//M = 131;	//modulus
-	//Q = 7;
-	//G = 19;
-
-	CryptoPP::DH dh(M, Q, G);
-
-	SecByteBlock privateKey(dh.PrivateKeyLength()), publicKey(dh.PublicKeyLength());
-	dh.GenerateKeyPair(prng, privateKey, publicKey);
-	Integer k1(privateKey, privateKey.size()), k2(publicKey, publicKey.size());
-
-	cout << "Private key:\n";
-	cout << hex << k1 << endl;
-	cout << "Public key:\n";
-	cout << hex << k2 << endl;
-
-	cout << "M:\n";
-	cout << hex << M << endl;
-	cout << "Q:\n";
-	cout << hex << Q << endl;
-	cout << "G:\n";
-	cout << hex << G << endl;
 	//private 6h, public: 71h
 
 	//int result = (int)pow(19, 6) % 131;
 
-	SecByteBlock generator;
-	UnsignedIntegerToByteBlock(G, generator);
+	KeyExchange keyManager;
 
-	SecByteBlock modulus;
-	UnsignedIntegerToByteBlock(M, modulus);
-	if (G > 255) {
-		cout << "Problem\n";
-	}
-	//cout << "Generator byte len: " << generator.size() << "\n";
-	printByteArr(generator, generator.size(), "Generator:");
-	sendMsg(socket, returnMsgFromBytes(generator, 99));
-
-	//cout << "Modulues byte len: " << modulus.size() << "\n";
-	printByteArr(modulus, modulus.size(), "Modulus:");
-
-	sendMsg(socket, returnMsgFromBytes(modulus, 98));
-
-
-	return SecByteBlock();
+	return keyManager.getSecretKey(socket);
 }
 
 void Communicator::handleNewClient(SOCKET clientSocket)
@@ -256,7 +180,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	//first create the login requestHandler
 	request.newHandler = this->m_handlerFactory.createLoginRequestHandler();
 	
-	
+
 	try {
 		while (true) {
 
@@ -297,76 +221,73 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 }
 
 
-
-
-
-SecByteBlock Communicator::getKeyForSecureConnection(SOCKET socket)
-{
-
-	OID CURVE = brainpoolP160r1();
-	AutoSeededRandomPool rng;
-
-	ECDH < ECP >::Domain dhA(CURVE);
-
-
-	// Don't worry about point compression. Its amazing that Certicom got
-	// a patent for solving an algebraic equation....
-	// dhA.AccessGroupParameters().SetPointCompression(true);
-	// dhB.AccessGroupParameters().SetPointCompression(true);
-	cout << "length:" << dhA.AgreedValueLength() << "\n";
-
-	//generates the public and private keys, which are byte array
-	SecByteBlock privA(dhA.PrivateKeyLength()), pubA(dhA.PublicKeyLength());
-
-	dhA.GenerateKeyPair(rng, privA, pubA);
-
-	//cout << "public: " << pubA.data() << "\nprivate: " << privA.data() << "\b";
-	auto g = dhA.GetGenerator();
-
-	auto h = dhA.GetGroupParameters();
-
-	//CryptoParameters y = dhA.GetCryptoParameters();
-
-
-	printByteArr(privA, dhA.PrivateKeyLength(), "Private:");
-
-	printByteArr(pubA, dhA.PublicKeyLength(), "Public: ");
-
-	std::string userMsg = recvMsg(socket);
-
-	if (userMsg[0] != SECURE_CONNECTION_REQUEST) {
-		throw ("NO SECURE CONNECTION!");
-	}
-
-	vector<BYTE> byteData = Helper::convertStringToBits(userMsg.substr(5));
-
-	BYTE* clientPublicKey = new BYTE[byteData.size()];
-
-	int i = 0;
-	for (auto& b : byteData) {
-		clientPublicKey[i] = b;
-	}
-
-	printByteArr(clientPublicKey, byteData.size(), "Client public: ");
-
-	GetPublicKeyRequest getPublicKeyRequest = JsonRequestPacketDeserializer::deserializeGetPublicKeyRequest(byteData);
-
-	if (byteData.size() != dhA.AgreedValueLength()) {
-		throw ("LENGTH ERROR");
-	}
-
-	SecByteBlock sharedA(dhA.AgreedValueLength()); //this will be the shared key
-
-	const bool wasAgreed = dhA.Agree(sharedA, privA, clientPublicKey);
-
-	StartSecureConnectionResponse startResponse;
-
-	for (int i = 0; i < pubA.size(); i++) {
-		startResponse.serverPublicKey.push_back(pubA[i]);
-	}
-	//vector<BYTE> goingMsg = JsonResponsePacketSerializer::serializeStartSecureConnectionResponse(startResponse);
-
-	//sendMsg(socket, Helper::convertBitsToString(goingMsg));
-
-	return sharedA;
-}
+//SecByteBlock Communicator::getKeyForSecureConnection(SOCKET socket)
+//{
+//
+//	OID CURVE = brainpoolP160r1();
+//	AutoSeededRandomPool rng;
+//
+//	ECDH < ECP >::Domain dhA(CURVE);
+//
+//
+//	// Don't worry about point compression. Its amazing that Certicom got
+//	// a patent for solving an algebraic equation....
+//	// dhA.AccessGroupParameters().SetPointCompression(true);
+//	// dhB.AccessGroupParameters().SetPointCompression(true);
+//	cout << "length:" << dhA.AgreedValueLength() << "\n";
+//
+//	//generates the public and private keys, which are byte array
+//	SecByteBlock privA(dhA.PrivateKeyLength()), pubA(dhA.PublicKeyLength());
+//
+//	dhA.GenerateKeyPair(rng, privA, pubA);
+//
+//	//cout << "public: " << pubA.data() << "\nprivate: " << privA.data() << "\b";
+//	auto g = dhA.GetGenerator();
+//
+//	auto h = dhA.GetGroupParameters();
+//
+//	//CryptoParameters y = dhA.GetCryptoParameters();
+//
+//
+//	printByteArr(privA, dhA.PrivateKeyLength(), "Private:");
+//
+//	printByteArr(pubA, dhA.PublicKeyLength(), "Public: ");
+//
+//	std::string userMsg = recvMsg(socket);
+//
+//	if (userMsg[0] != SECURE_CONNECTION_REQUEST) {
+//		throw ("NO SECURE CONNECTION!");
+//	}
+//
+//	vector<BYTE> byteData = Helper::convertStringToBits(userMsg.substr(5));
+//
+//	BYTE* clientPublicKey = new BYTE[byteData.size()];
+//
+//	int i = 0;
+//	for (auto& b : byteData) {
+//		clientPublicKey[i] = b;
+//	}
+//
+//	printByteArr(clientPublicKey, byteData.size(), "Client public: ");
+//
+//	GetPublicKeyRequest getPublicKeyRequest = JsonRequestPacketDeserializer::deserializeGetPublicKeyRequest(byteData);
+//
+//	if (byteData.size() != dhA.AgreedValueLength()) {
+//		throw ("LENGTH ERROR");
+//	}
+//
+//	SecByteBlock sharedA(dhA.AgreedValueLength()); //this will be the shared key
+//
+//	const bool wasAgreed = dhA.Agree(sharedA, privA, clientPublicKey);
+//
+//	StartSecureConnectionResponse startResponse;
+//
+//	for (int i = 0; i < pubA.size(); i++) {
+//		startResponse.serverPublicKey.push_back(pubA[i]);
+//	}
+//	//vector<BYTE> goingMsg = JsonResponsePacketSerializer::serializeStartSecureConnectionResponse(startResponse);
+//
+//	//sendMsg(socket, Helper::convertBitsToString(goingMsg));
+//
+//	return sharedA;
+//}
