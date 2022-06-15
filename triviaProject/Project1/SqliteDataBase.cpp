@@ -280,14 +280,14 @@ bool  SqliteDataBase::insertQuestion(const Question question) const
 {
 	string questionText = question.getQuestionString();
 	map<unsigned int,string> questionsMap = question.getPossibleAnswers();
-	string answer1 = questionsMap[1];
-	string answer2= questionsMap[2];
-	string answer3= questionsMap[3];
-	string answer4= questionsMap[4];
+	string answer1 = questionsMap[0];
+	string answer2= questionsMap[1];
+	string answer3= questionsMap[2];
+	string answer4= questionsMap[3];
 	
-	string values = "\"" + questionText + "\",\"" + answer1 + "\,\"" + answer2 + "\",\"" + answer3 + "\"," + answer4 + "\");";
+	string values = "\"" + questionText + "\",\"" + answer1 + "\",\"" + answer2 + "\",\"" + answer3 + "\",\"" + answer4 + "\");";
 
-	string sqlStatement = "INSERT INTO QUESTIONS(QUESTION, ANSWER1 ,ANSWER2 ,ANSWER3 ,ANSWER3) VALUES(" + values;
+	string sqlStatement = "INSERT INTO QUESTIONS(QUESTION, ANSWER1 ,ANSWER2 ,ANSWER3 ,ANSWER4) VALUES(" + values;
 	const char* newStatement = sqlStatement.c_str();
 	if (sendToServer(db, newStatement))
 	{
