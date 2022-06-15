@@ -17,11 +17,11 @@
         <Border Background="#85C1E9" Margin="30,162,29,10" CornerRadius="40" Grid.RowSpan="3"  >
             <StackPanel Margin="20,20,10,10">
                 <Label Content="Question:" FontSize="30" Foreground="Purple" FontWeight="Bold"/>
-                <TextBlock Name="QuestionText" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="44"/>
+                <TextBlock Text="" Name="QuestionText" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="44"/>
                 <Label Content="3 false answers:" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="63"/>
-                <TextBlock Name="False1" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="44"/>
-                <TextBlock Name="False2" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="44"/>
-                <TextBlock Name="False3" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="44"/>
+                <TextBlock Name="False1" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="44" Text=""/>
+                <TextBlock Text="" Name="False2" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="44"/>
+                <TextBlock Text="" Name="False3" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="44"/>
                 <Label Content="correct answer:" FontSize="30" Foreground="Purple" FontWeight="Bold"/>
                 <TextBlock Name="Correct" FontSize="40" Foreground="Purple" FontWeight="Bold" Height="44"/>
             </StackPanel>

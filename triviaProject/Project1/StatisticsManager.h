@@ -16,7 +16,7 @@ public:
 
 	StatsUser getStatsUser(const string& username);
 
-	void CreateQuestion(string question, string answer1, string answer2, string answer3, string correct);
+	bool CreateQuestion(string question, string answer1, string answer2, string answer3, string correct);
 	
 	void insertStats(const StatsUser& user);
 

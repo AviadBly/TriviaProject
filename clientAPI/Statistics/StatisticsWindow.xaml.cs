@@ -69,7 +69,7 @@ namespace clientAPI
                 return;
             }
 
-            if(Int32.Parse(getPersonalStatsResponse.PersonalStatistics[1]) < 25)
+            if(Int32.Parse(getPersonalStatsResponse.PersonalStatistics[1]) < 5)
             {
                 MessageBox.Show("Player must have at least 25 correct answers in order to insert a question!");
 

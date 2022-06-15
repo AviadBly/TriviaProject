@@ -276,7 +276,7 @@ void SqliteDataBase::insertStats(const StatsUser& user)
 
 }
 
-void  SqliteDataBase::insertQuestion(const Question question) const
+bool  SqliteDataBase::insertQuestion(const Question question) const
 {
 	string questionText = question.getQuestionString();
 	map<unsigned int,string> questionsMap = question.getPossibleAnswers();
@@ -289,7 +289,11 @@ void  SqliteDataBase::insertQuestion(const Question question) const
 
 	string sqlStatement = "INSERT INTO QUESTIONS(QUESTION, ANSWER1 ,ANSWER2 ,ANSWER3 ,ANSWER3) VALUES(" + values;
 	const char* newStatement = sqlStatement.c_str();
-	sendToServer(db, newStatement);
+	if (sendToServer(db, newStatement))
+	{
+		return true;
+	}
+	return false;
 }
 
 

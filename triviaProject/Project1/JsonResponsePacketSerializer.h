@@ -79,7 +79,7 @@ public:
 
 	static std::vector<BYTE> serializeLeaveGameResponse(const LeaveGameResponse& leaveGameResponse);
 
-	std::vector<BYTE> serializeCreateQuestionResponse(const CreateQuestionResponse& createQuestionResponse);
+	static std::vector<BYTE> serializeCreateQuestionResponse(const CreateQuestionResponse& createQuestionResponse);
 
 
 private:
