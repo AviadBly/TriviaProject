@@ -75,18 +75,26 @@ void KeyExchange::initializeParameters()
 
 	Integer k1(privateKey, privateKey.size()), k2(publicKey, publicKey.size());
 
+	CryptoPP::ModularArithmetic MM(M);
+	Integer pub = MM.Exponentiate(G, k1);
+
 
 	/*cout << "Private key:\n";
 	cout << k1 << endl;*/
-	cout << "Public key:\n";
-	cout << k2 << endl;
+	if ((k2 - pub) == 0) {
+		cout << "Public key!!!!!!!!!!:\n";
+		
+	}
+	
 
 	printByteArr(privateKey, privateKey.size(), "Private key:");
 
 	cout << "M:\n";
 	cout << M << endl;
-	cout << "Q:\n";
-	cout << Q << endl;
+	
+
+	/*cout << "Q:\n";
+	cout << Q << endl;*/
 	cout << "G:\n";
 	cout << G << endl;
 }
@@ -101,6 +109,9 @@ void KeyExchange::sendParameters(SOCKET socket)
 
 	SecByteBlock modulus;
 	UnsignedIntegerToByteBlock(m_DHC.GetGroupParameters().GetModulus(), modulus);
+
+	Integer m(modulus, modulus.size());
+	cout << "REAL M:" << m << "\n";
 
 	SecByteBlock MaxExponenet;
 	UnsignedIntegerToByteBlock(m_DHC.GetGroupParameters().GetMaxExponent(), MaxExponenet);
@@ -133,7 +144,9 @@ void KeyExchange::sendGetClientPublicKey(SOCKET socket)
 
 	printByteArr(m_clientPublicKey, m_clientPublicKey.size(), "clientPublicKey:");
 
-
+	Integer pub(m_clientPublicKey, m_clientPublicKey.size() , CryptoPP::Integer::UNSIGNED, CryptoPP::ByteOrder::LITTLE_ENDIAN_ORDER);
+	
+	cout << "PUB: " << pub << "\n";
 }
 
 
@@ -145,24 +158,32 @@ SecByteBlock KeyExchange::getSecretKey(SOCKET socket)
 	sendGetClientPublicKey(socket);
 
 	Integer M = m_DHC.GetGroupParameters().GetModulus();
-	Integer G_B(m_clientPublicKey, true);
+	Integer G_B(getClientPublicKey(), getClientPublicKey().size());
+	cout << "m:" << M << "\n";
+	cout << "G_B:" << G_B << "\n";
 
-	Integer privateK(m_privateKey, true);
+	Integer privateK(m_privateKey, m_privateKey.size());
+	cout << "PRIV:" << privateK << "\n";
+	
 	CryptoPP::ModularArithmetic MM(M);
 	Integer secret = MM.Exponentiate(G_B, privateK);
 
+	cout << secret << "\n";
+
 	SecByteBlock secretKey(m_DHC.AgreedValueLength());
-	cout << "value: " + m_DHC.AgreedValueLength() <<  "   len:" + secret.ByteCount() << "\n";
+	cout << " len:" + secret.ByteCount() << "\n";
 
 	UnsignedIntegerToByteBlock(secret, secretKey);
 	printByteArr(secretKey, secretKey.size(), "secret: ");
 	
-
-
 	if (!m_DHC.Agree(secretKey, getPrivateKey(), getClientPublicKey()))
 		throw ("NO SECURE CONNECTION");
 
+	Integer sec(secretKey, secretKey.size());
+	
 	printByteArr(secretKey, secretKey.size(), "secretKey:");
+
+	cout << "SECRET FLAG:" << sec << "\n";
 
 	return secretKey;
 }
