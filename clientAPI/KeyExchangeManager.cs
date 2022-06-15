@@ -48,11 +48,11 @@ namespace clientAPI
 
         private BigInteger getNumberFromArray(byte[] arr, string msg)
         {
-            BigInteger result = new BigInteger(arr, true);  //number is unsigned
-            printByteArray(arr, msg);
+            BigInteger result = new BigInteger(arr, true, true);  //number is unsigned
+            //printByteArray(arr, msg);
 
-            Console.WriteLine(msg + "Number:");
-            Console.WriteLine(result.ToString("X"));
+            Console.WriteLine(msg + "Number: ");
+            Console.WriteLine(result);
 
             return result;
         }
@@ -107,11 +107,11 @@ namespace clientAPI
 
             BigInteger publicKey = BigInteger.ModPow(m_generator, privateKey, m_modulus);
             m_publicKey = publicKey;
-            //Console.WriteLine("publicKey:");
-            //Console.WriteLine(publicKey);
-            printByteArray(publicKey.ToByteArray(), "publicKey:");
+            Console.WriteLine("publicKey:");
+            Console.WriteLine(publicKey);
+            printByteArray(publicKey.ToByteArray(true, true), "publicKey:");
 
-            m_client.sender(publicKey.ToByteArray(), 160);
+            m_client.sender(publicKey.ToByteArray(true, true), 160);
 
         }
 
@@ -120,8 +120,10 @@ namespace clientAPI
             BigInteger secretKey = BigInteger.ModPow(m_serverPublicKey, m_privateKey, m_modulus);
             
 
-            byte[] secretKeyBytes = secretKey.ToByteArray();
+            byte[] secretKeyBytes = secretKey.ToByteArray(true, true);
             printByteArray(secretKeyBytes, "secretkey");
+
+            Console.WriteLine("SECY:" + secretKey);
         }
 
     }
