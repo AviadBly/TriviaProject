@@ -128,7 +128,7 @@ std::string Communicator::recvMsg(SOCKET socket) {
 				
 		return received;
 	
-	}
+	}*
 	catch (const std::exception& e)
 	{
 		std::cout << e.what();

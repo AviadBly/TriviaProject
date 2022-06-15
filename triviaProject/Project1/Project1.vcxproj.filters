@@ -49,12 +49,6 @@
     <Filter Include="Source Files\Cryptography">
       <UniqueIdentifier>{49d41305-e324-4a8c-8031-5d9508adefa6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Crypto++">
-      <UniqueIdentifier>{7c398889-0655-4848-bfa6-258995d70162}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Crypto++">
-      <UniqueIdentifier>{6f9d0d23-cb33-4ea3-8ce9-60839364682a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -129,11 +123,8 @@
     <ClCompile Include="KeyExchangeManager.cpp">
       <Filter>Source Files\Cryptography</Filter>
     </ClCompile>
-    <ClCompile Include="D:\Homework\Magshimim\Crypto\osrng.cpp">
-      <Filter>Source Files\Crypto++</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\Homework\Magshimim\Crypto\eccrypto.cpp">
-      <Filter>Source Files\Crypto++</Filter>
+    <ClCompile Include="AesEncryptor.cpp">
+      <Filter>Source Files\Cryptography</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +219,9 @@
       <Filter>Header Files\Cryptography</Filter>
     </ClInclude>
     <ClInclude Include="KeyExchangeManager.h">
+      <Filter>Header Files\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="AesEncryptor.h">
       <Filter>Header Files\Cryptography</Filter>
     </ClInclude>
   </ItemGroup>
