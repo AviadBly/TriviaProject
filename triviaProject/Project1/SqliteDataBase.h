@@ -12,7 +12,7 @@ public:
 	virtual void create() ;
 	virtual bool doesUserExist(string username) ;
 	virtual void insertStats(const StatsUser& user);
-	virtual bool insertQuestion(const Question question) const;
+	virtual bool insertQuestion(string question, string answer1, string answer2, string answer3, string correct) const;
 	virtual bool doesPasswordMatch(string username, string password) ;
 	const std::list<StatsUser> getStats(string username);
 	const std::list<StatsUser> getStatsGeneral();

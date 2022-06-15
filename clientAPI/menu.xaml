@@ -24,7 +24,7 @@
         <Button Content="Surprise" HorizontalAlignment="Left" Margin="407,578,0,0" VerticalAlignment="Top" Height="82" Width="152" FontSize="30" Click="clickSurprise"  Background="red" Foreground="#1F618D" FontWeight="bold"/>
         <Button Content="Log out / Switch Accounts " FontSize="30" HorizontalAlignment="Center" Margin="0,458,0,0" VerticalAlignment="Top" Width="412" Height="93" Click="clickLogOut"/>
         <TextBox Name="username" HorizontalAlignment="Center" Height="76" Margin="0,355,0,0" TextWrapping="Wrap" VerticalContentAlignment="Center" Text="TextBox" VerticalAlignment="Top" Width="334" FontSize="35" TextAlignment="Center" Background="AliceBlue" Foreground="#1F618D"/>
-        <Image Margin="362,135,79,498" Source="/Pictures/Image1.png" Stretch="Fill"/>
+        <Image Margin="362,121,79,498" Source="/Pictures/Image1.png" Stretch="Fill"/>
 
     </Grid>
 

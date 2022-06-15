@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         
         mc:Ignorable="d"
-         Title="Game Room" Height="768" Width="600" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
+         Title="Game Room" Height="768" Width="658" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
     <Grid Margin="0,0,10,24">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="237*"/>
@@ -30,7 +30,7 @@
 
                 <Separator Margin="10"></Separator>
 
-                <Label Name="questionLabel"  VerticalContentAlignment="Center" FontSize="30" Foreground="Purple" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="447" Height="69" />
+                <Label Name="questionLabel"  VerticalContentAlignment="Center" FontSize="20" Foreground="Purple" FontStyle="Oblique" FontStretch="UltraCondensed"  FontWeight="bold" RenderTransformOrigin="0.5,0.5" Width="533" Height="69" />
                 <Separator Margin="10"></Separator>
                 <Button Name="Answer1"  Height="70" Width="484" FontSize="35" Click="AnswerClicked"/>
                 <Separator Margin="10"></Separator>

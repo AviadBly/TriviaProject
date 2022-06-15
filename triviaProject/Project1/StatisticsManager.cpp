@@ -118,8 +118,8 @@ StatsUser StatisticsManager::getStatsUser(const string& username)
 bool StatisticsManager::CreateQuestion(string question, string answer1, string answer2, string answer3, string correct)
 {
 	correct = "*" + correct;
-	Question param= Question(question, answer1, answer2, answer3, correct);
-	if (m_database->insertQuestion(param))
+	
+	if (m_database->insertQuestion( question, answer1, answer2, answer3, correct))
 	{
 		return true;
 	}
