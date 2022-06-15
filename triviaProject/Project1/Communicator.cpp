@@ -128,7 +128,7 @@ std::string Communicator::recvMsg(SOCKET socket) {
 				
 		return received;
 	
-	}*
+	}
 	catch (const std::exception& e)
 	{
 		std::cout << e.what();
@@ -171,6 +171,8 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	
 	//m_key = getKeyForSecureConnection(clientSocket);
 	SecByteBlock key = diffiHellmanKeyExchange(clientSocket);
+	AesEncryptor encryptor(key);
+
 	std::string userMsg = "";
 	
 	

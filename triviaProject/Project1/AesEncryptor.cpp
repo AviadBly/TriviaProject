@@ -12,8 +12,6 @@ AesEncryptor::AesEncryptor(const SecByteBlock& sharedSecretKey)
 	SecByteBlock key(SHA256::DIGESTSIZE);
 	SHA256().CalculateDigest(key, m_privateKey, m_privateKey.size());
 
-	
-
 }
 
 string AesEncryptor::encrypt(const string& message) const
@@ -22,7 +20,7 @@ string AesEncryptor::encrypt(const string& message) const
 
 	// Generate a random IV
 	byte iv[AES::BLOCKSIZE];
-	rng.GenerateBlock(iv, AES::BLOCKSIZE);
+	//rng.GenerateBlock(iv, AES::BLOCKSIZE);
 
 	CryptoPP::CFB_Mode<AES>::Encryption cfbEncryption(m_privateKey, aesKeyLength, iv);	//encrypt
 
@@ -36,10 +34,12 @@ string AesEncryptor::encrypt(const string& message) const
 string AesEncryptor::decrypt(const string& encryptedMessage) const
 {
 
+	byte iv[AES::BLOCKSIZE];
 
+	string decryptedMessage = encryptedMessage;
 
-	CFB_Mode<AES>::Decryption cfbDecryption(key, aesKeyLength, iv);
-	cfbDecryption.ProcessData((byte*)message, (byte*)message, messageLen);
+	CFB_Mode<AES>::Decryption cfbDecryption(m_privateKey, aesKeyLength, iv);
+	cfbDecryption.ProcessData((byte*)decryptedMessage.c_str(), (byte*)encryptedMessage.c_str(), decryptedMessage.size());
 
-	return string();
+	return decryptedMessage;
 }

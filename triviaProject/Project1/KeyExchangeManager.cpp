@@ -1,8 +1,5 @@
 #include "KeyExchangeManager.h"
 
-
-
-
 void KeyExchange::UnsignedIntegerToByteBlock(const Integer& x, SecByteBlock& bytes)
 {
 	size_t encodedSize = x.MinEncodedSize(Integer::UNSIGNED);
