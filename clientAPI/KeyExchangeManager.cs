@@ -14,7 +14,7 @@ namespace clientAPI
         private BigInteger m_publicKey;
         private BigInteger m_privateKey;
         private BigInteger m_serverPublicKey;
-        private BigInteger m_secretKey;
+        private byte[] m_secretKey;
         
         private BigInteger m_generator;
         private BigInteger m_modulus;
@@ -43,7 +43,7 @@ namespace clientAPI
 
             createSecretKey();
 
-            return m_secretKey.ToByteArray();
+            return m_secretKey;
         }
 
         private BigInteger getNumberFromArray(byte[] arr, string msg)
@@ -59,27 +59,27 @@ namespace clientAPI
 
         private void getParametersFromServer()
         {
-            ReceivedMessage msg = m_client.receiver();
+            ReceivedMessage msg = m_client.receiver(false);
 
             byte[] generatorBytes = msg.Message;           
             BigInteger generator = getNumberFromArray(generatorBytes, "Generator:");          
 
             m_generator = generator;
 
-            msg = m_client.receiver();
+            msg = m_client.receiver(false);
             byte[] modulusBytes = msg.Message;     
             
             BigInteger modulus = getNumberFromArray(modulusBytes, "modulus:");
             m_modulus = modulus;
             
-            msg = m_client.receiver();
+            msg = m_client.receiver(false);
             byte[] maxExponentBytes = msg.Message;
             
             BigInteger maxExponent = getNumberFromArray(maxExponentBytes, "subOrder:");
             m_maxExponent = maxExponent;
 
 
-            msg = m_client.receiver();
+            msg = m_client.receiver(false);
             byte[] serverPublicKeyBytes = msg.Message;
 
             BigInteger serverPublicKey = getNumberFromArray(serverPublicKeyBytes, "serverPublicKey: ");
@@ -119,10 +119,9 @@ namespace clientAPI
         {
             BigInteger secretKey = BigInteger.ModPow(m_serverPublicKey, m_privateKey, m_modulus);
             
-
             byte[] secretKeyBytes = secretKey.ToByteArray(true, true);
             printByteArray(secretKeyBytes, "secretkey");
-
+            m_secretKey = secretKeyBytes;
             Console.WriteLine("SECY:" + secretKey);
         }
 

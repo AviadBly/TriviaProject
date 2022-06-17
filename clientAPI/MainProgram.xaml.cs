@@ -39,6 +39,7 @@ namespace clientAPI
             try
             {
                 appClient = new Client("127.0.0.1", 8200);
+                
                 //InitializeComponent();
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.Show();
@@ -48,11 +49,7 @@ namespace clientAPI
                 MessageBox.Show(ex.Message);
 
                 System.Windows.Application.Current.Shutdown();
-            }
-            
-            
-
-
+            }                       
     }
 
             private void load(object sender, EventArgs e)
