@@ -87,14 +87,13 @@ namespace clientAPI
                         cs.Close();
                         string message = Encoding.UTF8.GetString(plaintext.ToArray());
                         Console.WriteLine(message);
+                        return plaintext.ToArray();
                     }
                 }
             }
 
-            return encryptedMessage;
+            return new byte[16];
         }
-
-
 
 
 
