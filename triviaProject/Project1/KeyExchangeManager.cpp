@@ -36,7 +36,7 @@ string KeyExchange::returnMsgFromBytes(SecByteBlock bytes, BYTE code) {
 
 	vector<BYTE> message;
 
-	for (int i = 0; i < bytes.size(); i++) {
+	for (unsigned int i = 0; i < bytes.size(); i++) {
 		message.push_back(bytes[i]);
 	}
 
@@ -134,7 +134,7 @@ void KeyExchange::sendGetClientPublicKey(SOCKET socket)
 	string clientMsg = Communicator::recvMsg(socket).substr(5);
 	SecByteBlock clientPublicKeyBytes(clientMsg.length());
 
-	for (int i = 0; i < clientMsg.length(); i++) {
+	for (unsigned int i = 0; i < clientMsg.length(); i++) {
 		clientPublicKeyBytes[i] = clientMsg[i];
 	}
 	m_clientPublicKey = clientPublicKeyBytes;

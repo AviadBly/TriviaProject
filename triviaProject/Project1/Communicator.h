@@ -23,7 +23,7 @@ class Communicator
 public:
 	Communicator(RequestHandlerFactory& handlerFactory);
 	~Communicator();
-	void serve(int port);
+	void serve(short port);
 
 	static std::string recvMsg(SOCKET socket);
 
@@ -34,6 +34,8 @@ private:
 	void acceptClient();
 	
 	static SecByteBlock diffiHellmanKeyExchange(SOCKET socket);
+
+	string encryptMessageData(const string& message, AesEncryptor& encryptor);
 
 	//SecByteBlock getKeyForSecureConnection(SOCKET socket);
 

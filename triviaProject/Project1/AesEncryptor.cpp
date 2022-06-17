@@ -1,45 +1,91 @@
 #include "AesEncryptor.h"
 
 
+void printByteArr(SecByteBlock arr, int len, string msg) {
+	cout << msg << " length:" << len << "\n";
+	for (int i = 0; i < len; i++) {
+		cout << (int)arr[i] << ", ";
+	}
+	cout << "\n\n";
+}
 
+void printStringBytes(string str) {
+	for (int i = 0; i < str.length(); i++) {
+		cout << (int)str[i] << ", ";
+	}
+	cout << "\n\n";
+}
 
 AesEncryptor::AesEncryptor(const SecByteBlock& sharedSecretKey)
 {
 	
 	m_privateKey = sharedSecretKey;
+	cout << "\n\n\n\n\n";
 
 	// Calculate a SHA-256 hash over the Diffie-Hellman session key
 	SecByteBlock key(SHA256::DIGESTSIZE);
-	SHA256().CalculateDigest(key, m_privateKey, m_privateKey.size());
+	printByteArr(sharedSecretKey, sharedSecretKey.size(), "SharedKey: ");
 
+	SHA256().CalculateDigest(key, sharedSecretKey, sharedSecretKey.size());
+	m_privateKey = key;
+
+	printByteArr(m_privateKey, m_privateKey.size(), "Hash key:");
+	cout << "Private hashed : " << m_privateKey << "\n\n\n\n\n";
+
+	//string msg = "{jgjgjkg}";
+	//// Generate a random IV
+	CryptoPP::byte initi[AES::BLOCKSIZE];
+
+	//CryptoPP::AutoSeededRandomPool rng;
+	//rng.GenerateBlock(this->iv, AES::BLOCKSIZE);
+	
+	
+	/*string encryptedText = encrypt(msg);
+	string decrypted = decrypt(encryptedText);
+	cout << decrypted << "\n";*/
 }
 
-string AesEncryptor::encrypt(const string& message) const
+string AesEncryptor::encrypt(string message) const
 {
-	CryptoPP::AutoSeededRandomPool rng;
+	cout << "IV: " << iv << "\n";
+	CBC_Mode<AES>::Encryption cbcEncryption(m_privateKey, aesKeyLength, iv);	//encrypt
+	
+	string encryptedMessage;
+	string originalMsg = message;
+	// The StreamTransformationFilter adds padding
+	//  as required. ECB and CBC Mode must be padded
+	//  to the block size of the cipher.
+	CryptoPP::StringSource ss(originalMsg, true,
+		new CryptoPP::StreamTransformationFilter(cbcEncryption,
+			new CryptoPP::StringSink(encryptedMessage)
+		) // StreamTransformationFilter      
+	); // StringSource
 
-	// Generate a random IV
-	byte iv[AES::BLOCKSIZE];
-	//rng.GenerateBlock(iv, AES::BLOCKSIZE);
-
-	CryptoPP::CFB_Mode<AES>::Encryption cfbEncryption(m_privateKey, aesKeyLength, iv);	//encrypt
-
-	string encryptedMessage = message;
-
-	cfbEncryption.ProcessData((byte*)encryptedMessage.c_str(), (byte*)message.c_str(), encryptedMessage.size());
+	//cbcEncryption.ProcessData((CryptoPP::byte*)encryptedMessage.c_str(), (CryptoPP::byte*)message.c_str(), encryptedMessage.size());
 
 	return encryptedMessage;
 }
 
-string AesEncryptor::decrypt(const string& encryptedMessage) const
+string AesEncryptor::decrypt(string encryptedMessage) const
 {
+	
+	//CryptoPP::byte iv[AES::BLOCKSIZE];	
 
-	byte iv[AES::BLOCKSIZE];
+	string decryptedMessage;
+	string encryptedMsg = encryptedMessage;
+	//printStringBytes(decryptedMessage);
 
-	string decryptedMessage = encryptedMessage;
+	CBC_Mode<AES>::Decryption cbcDecryption(m_privateKey, aesKeyLength, iv);
+	//cfbDecryption.ProcessData((CryptoPP::byte*)decryptedMessage.c_str(), (CryptoPP::byte*)encryptedMessage.c_str(), decryptedMessage.size());
 
-	CFB_Mode<AES>::Decryption cfbDecryption(m_privateKey, aesKeyLength, iv);
-	cfbDecryption.ProcessData((byte*)decryptedMessage.c_str(), (byte*)encryptedMessage.c_str(), decryptedMessage.size());
+	// The StreamTransformationFilter removes
+	//  padding as required.
+	CryptoPP::StringSource ss(encryptedMsg, true,
+		new CryptoPP::StreamTransformationFilter(cbcDecryption,
+			new CryptoPP::StringSink(decryptedMessage)
+		) // StreamTransformationFilter
+	); // StringSource
 
+	//printStringBytes(decryptedMessage);
 	return decryptedMessage;
 }
