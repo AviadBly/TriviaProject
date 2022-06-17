@@ -24,7 +24,7 @@ Communicator::~Communicator()
 	catch (...) {}
 }
 
-void Communicator::serve(int port)
+void Communicator::serve(short port)
 {
 
 	struct sockaddr_in sa = { 0 };
@@ -138,6 +138,7 @@ std::string Communicator::recvMsg(SOCKET socket) {
 
 	
 }
+
 //send string msg
 void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 	try
@@ -155,15 +156,23 @@ void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 
 SecByteBlock Communicator::diffiHellmanKeyExchange(SOCKET socket)
 {
-
-	
 	//private 6h, public: 71h
-
 	//int result = (int)pow(19, 6) % 131;
 
 	KeyExchange keyManager;
 
 	return keyManager.getSecretKey(socket);
+}
+
+string Communicator::encryptMessageData(const string& message, AesEncryptor& encryptor) {
+
+	string codeAndLength = message.substr(0, 5);
+
+	string encryptedData = encryptor.encrypt(message.substr(5));
+
+	string fullMsg = codeAndLength + encryptedData;
+
+	return fullMsg;
 }
 
 void Communicator::handleNewClient(SOCKET clientSocket)
@@ -187,14 +196,16 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		while (true) {
 
 			userMsg = recvMsg(clientSocket);
-
-			std::cout << "LoggedUser msg:" << userMsg.substr(5) << "\n";
-
 			info.code = userMsg[0];
-			std::cout << "code: " << info.code << "\n";
 			info.receivalTime = time(NULL);
+			userMsg = encryptor.decrypt(userMsg.substr(5));
+			std::cout << "LoggedUser msg:" << userMsg << "\n";
+
 			
-			info.buffer = Helper::convertStringToBits(userMsg.substr(5));
+			std::cout << "code: " << info.code << "\n";
+			
+			
+			info.buffer = Helper::convertStringToBits(userMsg);
 
 
 			if (!request.newHandler->isRequestRelevant(info)) {
@@ -205,7 +216,10 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 			request = request.newHandler->handleRequest(info);
 			this->m_clients[clientSocket] = request.newHandler;
 			
-			sendMsg(clientSocket, Helper::convertBitsToString(request.buffer));
+			string msg = Helper::convertBitsToString(request.buffer);
+			string encryptedMessage = encryptMessageData(msg, encryptor);
+
+			sendMsg(clientSocket, encryptedMessage);
 			
 		}
 	}
@@ -221,75 +235,3 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	}
 	
 }
-
-
-//SecByteBlock Communicator::getKeyForSecureConnection(SOCKET socket)
-//{
-//
-//	OID CURVE = brainpoolP160r1();
-//	AutoSeededRandomPool rng;
-//
-//	ECDH < ECP >::Domain dhA(CURVE);
-//
-//
-//	// Don't worry about point compression. Its amazing that Certicom got
-//	// a patent for solving an algebraic equation....
-//	// dhA.AccessGroupParameters().SetPointCompression(true);
-//	// dhB.AccessGroupParameters().SetPointCompression(true);
-//	cout << "length:" << dhA.AgreedValueLength() << "\n";
-//
-//	//generates the public and private keys, which are byte array
-//	SecByteBlock privA(dhA.PrivateKeyLength()), pubA(dhA.PublicKeyLength());
-//
-//	dhA.GenerateKeyPair(rng, privA, pubA);
-//
-//	//cout << "public: " << pubA.data() << "\nprivate: " << privA.data() << "\b";
-//	auto g = dhA.GetGenerator();
-//
-//	auto h = dhA.GetGroupParameters();
-//
-//	//CryptoParameters y = dhA.GetCryptoParameters();
-//
-//
-//	printByteArr(privA, dhA.PrivateKeyLength(), "Private:");
-//
-//	printByteArr(pubA, dhA.PublicKeyLength(), "Public: ");
-//
-//	std::string userMsg = recvMsg(socket);
-//
-//	if (userMsg[0] != SECURE_CONNECTION_REQUEST) {
-//		throw ("NO SECURE CONNECTION!");
-//	}
-//
-//	vector<BYTE> byteData = Helper::convertStringToBits(userMsg.substr(5));
-//
-//	BYTE* clientPublicKey = new BYTE[byteData.size()];
-//
-//	int i = 0;
-//	for (auto& b : byteData) {
-//		clientPublicKey[i] = b;
-//	}
-//
-//	printByteArr(clientPublicKey, byteData.size(), "Client public: ");
-//
-//	GetPublicKeyRequest getPublicKeyRequest = JsonRequestPacketDeserializer::deserializeGetPublicKeyRequest(byteData);
-//
-//	if (byteData.size() != dhA.AgreedValueLength()) {
-//		throw ("LENGTH ERROR");
-//	}
-//
-//	SecByteBlock sharedA(dhA.AgreedValueLength()); //this will be the shared key
-//
-//	const bool wasAgreed = dhA.Agree(sharedA, privA, clientPublicKey);
-//
-//	StartSecureConnectionResponse startResponse;
-//
-//	for (int i = 0; i < pubA.size(); i++) {
-//		startResponse.serverPublicKey.push_back(pubA[i]);
-//	}
-//	//vector<BYTE> goingMsg = JsonResponsePacketSerializer::serializeStartSecureConnectionResponse(startResponse);
-//
-//	//sendMsg(socket, Helper::convertBitsToString(goingMsg));
-//
-//	return sharedA;
-//}
