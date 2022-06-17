@@ -38,6 +38,7 @@ namespace clientAPI
     public class Client
     {
         private NetworkStream m_socket;
+        AesEncryptor m_encryptor;
 
         private byte[] sharedKey;
             public Client(String server, Int32 port) {
@@ -51,7 +52,10 @@ namespace clientAPI
 
                 KeyExchangeManager keyManager = new KeyExchangeManager(this);
 
-                keyManager.getSecretKey();
+                byte[] secretKey = keyManager.getSecretKey();
+
+
+                m_encryptor = new AesEncryptor(secretKey);
 
                 //// Close everything.
                 //stream.Close();
@@ -64,19 +68,7 @@ namespace clientAPI
 
             
         }
-        
-        
-
-        private void keyExchange()
-        {
-
-           
-            
-
-            
-
-        }
-
+       
         private void printByteArray(byte[] arr, string msg)
         {
             Console.WriteLine(msg + ", length =" + arr.Length);
@@ -86,6 +78,7 @@ namespace clientAPI
             }
             Console.WriteLine("\n");
         }
+
         private byte[] intToBytes(int numInteger)
         {
             byte[] intBytes = BitConverter.GetBytes(numInteger);
@@ -110,23 +103,31 @@ namespace clientAPI
         }
         public void sender(string msg, byte code)
         {
-            if (m_socket == null)
-            {
-                return;
-            }
-
-            byte[] finalMsg = new byte[1 + 4 + msg.Length];
-            addCodeAndLength(finalMsg, msg.Length, code);
             
-            for(int i = 5; i < msg.Length + 5; i++)
+            byte[] data = new byte[msg.Length];
+            for (int i = 0; i < msg.Length; i++)
             {
-                finalMsg[i] = (byte)(msg[i - 5]);
+                data[i] = (byte)(msg[i]);
+            }
+            data = m_encryptor.encrypt(data);
+
+            byte[] finalMsg = new byte[1 + 4 + data.Length];
+            
+
+            addCodeAndLength(finalMsg, data.Length, code);
+                       
+            
+            printByteArray(data, "DATA encryptd:");
+
+            for (int i = 5; i < data.Length + 5; i++)
+            {
+                finalMsg[i] = data[i - 5];
             }
 
             printByteArray(finalMsg, "final msg:");
 
             safeSend(finalMsg);
-            
+
         }
 
         public void sender(byte[] msg, byte code)
@@ -163,7 +164,7 @@ namespace clientAPI
         }
 
         //returns a byte array and a boolean indicating if its an error msg
-        public ReceivedMessage receiver()
+        public ReceivedMessage receiver(bool isEncrypted = true)
         {
             
             ReceivedMessage serverMsg = new ReceivedMessage();
@@ -223,13 +224,15 @@ namespace clientAPI
             }
 
             serverMsg.Message = messageDataBytes;
-
+            if (isEncrypted)
+            {
+                serverMsg.Message = m_encryptor.decrypt(serverMsg.Message);
+            }
+            
             //code + len + data
             //byte[] trimedMsg = serverBytes.Take(1 + 4 + msgLength).ToArray();
-            //responseData = System.Text.Encoding.UTF8.GetString(trimedMsg);
-            //Console.WriteLine("Received: {0}", responseData);
-
-            if(serverMsg.Code == ErrorResponse.SERVER_DICONECT_CODE)
+            
+            if (serverMsg.Code == ErrorResponse.SERVER_DICONECT_CODE)
             {
                 throw new Exception(System.Text.Encoding.UTF8.GetString(serverMsg.Message));
             }
@@ -239,46 +242,7 @@ namespace clientAPI
             //Console.WriteLine("Message:" + Encoding.Default.GetString(serverMsg.Message) + ", len:" + serverMsg.Length);
             return serverMsg;  //if no error
         }
-
-        //private void getKey()
-        //{
-        //    string publicClientKey = "";
-        //    ECCurve curve = ECCurve.CreateFromValue("1.3.36.3.3.2.8.1.1.1");
-
-        //    using (ECDiffieHellmanCng alice = new ECDiffieHellmanCng(curve))
-        //    {
-
-
-        //        alice.KeyDerivationFunction = ECDiffieHellmanKeyDerivationFunction.Hash;
-        //        alice.HashAlgorithm = CngAlgorithm.Sha256;
-        //        byte[] alicePublicKey = alice.PublicKey.ToByteArray();
-        //        byte[] a = alice.ExportSubjectPublicKeyInfo();
-        //        //ECParameters p =  alice.PublicKey.ExportParameters();
-        //        ECParameters p = alice.ExportParameters(true);
-        //        ECParameters sp = alice.ExportExplicitParameters(true);
-        //        byte[] privateKey = alice.ExportECPrivateKey();
-
-        //        printByteArray(privateKey, "PrivateKey: ");
-        //        printByteArray(a, "PublicKeyINfo: ");
-        //        printByteArray(alicePublicKey, "Public key:");
-        //        Console.WriteLine(Encoding.UTF8.GetString(alicePublicKey));
-
-        //        sender(Encoding.UTF8.GetString(alicePublicKey), 100);
-
-        //        Console.WriteLine("");
-
-        //        ReceivedMessage msg = receiver();
-
-        //        byte[] serverPublicKey = msg.Message;
-        //        CngKey bobKey = CngKey.Import(serverPublicKey, CngKeyBlobFormat.EccPublicBlob);
-        //        //byte[] aliceKey = alice.DeriveKeyMaterial(bobKey);
-        //        //byte[] encryptedMessage = null;
-        //        //byte[] iv = null;
-        //        //Send(aliceKey, "Secret message", out encryptedMessage, out iv);
-        //        //bob.Receive(encryptedMessage, iv);
-        //    }
-
-        //}
+      
     }
 
 
