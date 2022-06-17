@@ -52,6 +52,7 @@ string AesEncryptor::encrypt(string message) const
 	
 	string encryptedMessage;
 	string originalMsg = message;
+
 	// The StreamTransformationFilter adds padding
 	//  as required. ECB and CBC Mode must be padded
 	//  to the block size of the cipher.

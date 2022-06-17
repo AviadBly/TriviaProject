@@ -88,10 +88,13 @@ public:
 	
 	static string getMessageInFormat(const std::vector<BYTE>& bytes, BYTE code);
 
+	static void addLength(string& msg, int len);
+
 private:
 	static std::vector<BYTE> convertJsonToBits(const json& jsonFormat, BYTE code);
 
 	
+
 	
 	static std::vector<BYTE> intToBytes(int numInteger);
 };

@@ -166,9 +166,11 @@ SecByteBlock Communicator::diffiHellmanKeyExchange(SOCKET socket)
 
 string Communicator::encryptMessageData(const string& message, AesEncryptor& encryptor) {
 
+	string encryptedData = encryptor.encrypt(message.substr(5));
 	string codeAndLength = message.substr(0, 5);
 
-	string encryptedData = encryptor.encrypt(message.substr(5));
+	JsonResponsePacketSerializer::addLength(codeAndLength, encryptedData.size());
+	
 
 	string fullMsg = codeAndLength + encryptedData;
 
