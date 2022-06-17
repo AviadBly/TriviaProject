@@ -290,10 +290,6 @@ vector<BYTE> JsonResponsePacketSerializer::serializeGetPrimesResponse(const Star
 
 
 
-
-
-
-
 std::vector<BYTE> JsonResponsePacketSerializer::intToBytes(int numInteger)
 {
 	vector<BYTE> arrayOfByte(4);
@@ -333,6 +329,19 @@ std::vector<BYTE> JsonResponsePacketSerializer::convertJsonToBits(const json& js
 
 	return jsonBits;
 }
+
+void JsonResponsePacketSerializer::addLength(string& msg, int len)
+{
+
+	std::vector<BYTE> tempLengthBytes = intToBytes(len);
+
+	//runs 4 times because an integer is 32 bytes and each byte is 8, so 32/8=4
+	for (unsigned int i = 1; i < 5; i++) {
+		msg[i] = tempLengthBytes[i - 1];
+	}
+
+}
+
 
 string JsonResponsePacketSerializer::getMessageInFormat(const std::vector<BYTE>& bytes, BYTE code)
 {
