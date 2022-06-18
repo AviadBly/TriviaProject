@@ -44,51 +44,35 @@ namespace clientAPI
         {
             rooms = getRooms();
             showActiveRooms();
-            rooms.Clear();
             
-            
+                       
         }
+
         private void clickExit(object sender, RoutedEventArgs e)
         {
 
             dispatcherTimer.Stop();
             Close();
             menu.goToMenu();
-            dispatcherTimer.Stop();
+           
         }
 
         
         private void showActiveRooms()
         {
-            foreach(Room room in this.rooms)
+            roomsList.Items.Clear();
+            if(rooms == null) { return; }
+
+            foreach (Room room in this.rooms)
             {
                 
                 string fullRoom = room.Metadata.Name;
-                if (roomsList.Items.Contains(fullRoom)==false)
-                {
-                        
+                if (!roomsList.Items.Contains(fullRoom))
+                {                       
                     roomsList.Items.Add(fullRoom);
-                }
-                    
-                
-                
+                }                                               
             }
-            foreach (string item in roomsList.Items)
-            {
-                bool check = false;
-                foreach (Room room in rooms)
-                {
-                    if (room.Metadata.Name == item)
-                    {
-                        check = true;
-                    }
-                }
-                if (!check)
-                {
-                    roomsList.Items.Remove(item);
-                    break;
-                }
-            }
+           
         }
        
         private List<Room> getRooms()
@@ -98,21 +82,17 @@ namespace clientAPI
             MainProgram.appClient.sender("", Requests.GET_ROOM_REQUEST);    //ask for rooms
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
-            Console.WriteLine(returnMsg);
+            
 
             if (returnMsg.IsErrorMsg)
             {
-                //Signup failed
-
-                //MessageBox.Show("Error: Username already exists");
+              
                 MessageBox.Show(returnMsg.Message.ToString());
                 return new List<Room>(); ;
 
             }
 
             GetRoomsResponse getRoomsResponse = JsonHelpers.JsonFormatDeserializer.GetRoomsResponseDeserializer(returnMsg.Message);
-
-            Console.Write(getRoomsResponse.ToString());
             
             return getRoomsResponse.Rooms;
         }
@@ -120,54 +100,45 @@ namespace clientAPI
         private void clickJoin(object sender, RoutedEventArgs e)
         {
             
-            uint id = 0;
             rooms = getRooms();
             dispatcherTimer.Stop();
-            if (roomsList.SelectedItem != null)
+            if (roomsList.SelectedItem == null)
             {
-
-                
-                string item= roomsList.SelectedItem.ToString();
-                foreach (Room room in this.rooms)
-                {
-                    if (room.Metadata.Name == item)
-                    {
-                        id = room.Metadata.Id;
-                        break;
-                    }
-                }
-                if(id==0)
-                {
-                    MessageBox.Show("Selection Error!");
-                }
-                else
-                {
-                    if (sendJoinRoomRequest(id))
-                    {
-                        RoomData metaData = getRoomData(id);
-
-                        WaitingRoom waitingRoom = new WaitingRoom(metaData, false);
-                        waitingRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                        waitingRoom.Show();
-                        Close();
-                    }
-                }
-               
-            }
-            else
-            {
-                
                 MessageBox.Show("Selection Empty!");
+                return;
             }
-              
-                    
+
+            string? roomName = roomsList.SelectedItem.ToString();
+
+            if(roomName == null)
+            {
+                MessageBox.Show("Selection Error!");
+                return;
+            }
+            RoomData? roomMetaData = getRoomData(roomName);
+
+            if(roomMetaData == null)
+            {
+                MessageBox.Show("Room not found");
+                return;
+            }
+
+            if (sendJoinRoomRequest(roomMetaData.Id))
+            {
+                
+                WaitingRoom waitingRoom = new WaitingRoom(roomMetaData, false);
+                waitingRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                waitingRoom.Show();
+                Close();
+            }
+                            
         }
 
-        private RoomData? getRoomData(uint id)
+        private RoomData? getRoomData(string roomName)
         {
-            foreach (Room room in this.rooms)
+            foreach (Room room in rooms)
             {
-                if (room.Metadata.Id == id)
+                if (room.Metadata.Name == roomName)
                 {
                     return room.Metadata;
                 }
@@ -185,7 +156,7 @@ namespace clientAPI
             MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.JOIN_ROOM_REQUEST_CODE);
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
-            Console.Write(returnMsg);
+            
 
             if (returnMsg.IsErrorMsg)   //if error
             {
@@ -195,8 +166,6 @@ namespace clientAPI
 
             JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Message);
 
-            
-            
             return true;
         }
 

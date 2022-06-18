@@ -44,6 +44,7 @@ namespace clientAPI
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.Show();
                 Hide();
+
             } catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
