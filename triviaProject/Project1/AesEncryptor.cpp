@@ -18,7 +18,7 @@ void printStringBytes(string str) {
 
 void AesEncryptor::updateInitializationVector(const SecByteBlock arr) {
 
-	SecByteBlock temp(m_iv.size());
+	SecByteBlock temp(SHA256::DIGESTSIZE);
 	SHA256().CalculateDigest(temp, arr, arr.size());
 
 	cout << "\n\nIV: ";
@@ -51,7 +51,7 @@ AesEncryptor::AesEncryptor(const SecByteBlock& sharedSecretKey)
 
 	//string msg = "{jgjgjkg}";
 	//// Generate a random IV
-	CryptoPP::byte initi[AES::BLOCKSIZE];
+	//CryptoPP::byte initi[AES::BLOCKSIZE];
 
 	
 }

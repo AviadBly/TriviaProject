@@ -185,12 +185,12 @@ SecByteBlock KeyExchange::getSecretKey(SOCKET socket)
 	return secretKey;
 }
 
-KeyExchange::~KeyExchange()
-{
-	
-	m_DHC.~DH_Domain();
-	m_publicKey.~SecBlock();
-	m_privateKey.~SecBlock();
-	m_clientPublicKey.~SecBlock();
-}
+//KeyExchange::~KeyExchange()
+//{
+//	
+//	m_DHC.~DH_Domain();
+//	m_publicKey.~SecBlock();
+//	m_privateKey.~SecBlock();
+//	m_clientPublicKey.~SecBlock();
+//}
 
