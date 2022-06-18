@@ -52,19 +52,20 @@ vector<string> Room::getAllUsersNames() const
 }
 vector<User> Room::getAllUsers() const
 {
+
 	vector<User> users(0);
 	for (auto iter = m_users.begin(); iter != m_users.end(); iter++)
 	{
 		users.push_back(*iter);
 	}
-
+	
 	return users;
 }
 
 //returns true if the room isnt full and isnt active
 bool Room::canNewUserJoin()
 {
-	return this->m_users.size() < this->m_metadata.maxPlayers && !this->m_metadata.isActive;  
+	return this->m_users.size() < this->m_metadata.maxPlayers && !(this->m_metadata.isActive);  
 }
 
 void Room::setIsActive(bool isActive)

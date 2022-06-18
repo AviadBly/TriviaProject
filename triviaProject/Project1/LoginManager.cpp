@@ -24,9 +24,8 @@ void LoginManager::signup(const string& username, const string& password, const 
 		return;
 	}
 	
-	throw ServerException("Error: Username already exists!", 9);
+	throw ServerException("Error: Username already exists!", ServerException::USERNAME_ALREADY_EXIST_CODE);
 	
-
 }
 
 void LoginManager::login(const string& username, const string& password)
@@ -35,14 +34,12 @@ void LoginManager::login(const string& username, const string& password)
 	bool passwordMatch = m_database->doesPasswordMatch(username, password);
 
 	if (doesExist && passwordMatch) {
-
 		LoggedUser newUser(username, password);
 		m_loggedUsers.push_back(newUser);
 		return;
-
 	}
 	
-	throw ServerException("Error: Wrong Username or password", 4);
+	throw ServerException("Error: Username or password Are invalid", ServerException::WRONG_USERNAME_OR_PASSWORD_CODE);
 	
 }
 
@@ -59,6 +56,6 @@ void LoginManager::logout(const string& username)
 		}
 	}
 	
-	throw ServerException("Error: no such username!", 6);
+	throw ServerException("Error: no such username!", ServerException::USERNAME_NOT_FOUND);
 	
 }

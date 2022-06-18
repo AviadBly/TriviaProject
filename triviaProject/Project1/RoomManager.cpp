@@ -27,8 +27,7 @@ Room& RoomManager::getSingleRoom(unsigned int ID)
 		}
 	}
 	
-	throw ("No room with the given id");
-
+	throw ServerException("No room with the given id", ServerException::ACTIVELY_DISCONECT_USER_CODE);
 }
 
 bool RoomManager::doesRoomExist(unsigned int ID) {
@@ -58,20 +57,20 @@ void RoomManager::deleteRoom(int ID)
 	}
 }
 
-unsigned int RoomManager::getRoomState(int ID)
-{
-	
-	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
-	{
-		if (it->first == ID)
-		{
-			RoomData currData=it->second.getData();
-			return currData.isActive;
-		}
-	}
-	return false;
-	throw ServerException("Error!: No such ID! ", 5);
-}
+//unsigned int RoomManager::getRoomState(int ID)
+//{
+//	
+//	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
+//	{
+//		if (it->first == ID)
+//		{
+//			RoomData currData=it->second.getData();
+//			return currData.isActive;
+//		}
+//	}
+//	return false;
+//	throw ServerException("Error!: No such ID! ", 5);
+//}
 
 vector<Room> RoomManager::getRooms()
 {

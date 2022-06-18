@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Yevarechecha__hebrew______Mashiach____Hassidic_Music___Jewish_Music" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Yevarechecha (hebrew)  -  Mashiach  - Hassidic Music - Jewish Music.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="mixkit_arcade_game_complete_or_approved_mission_205" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Music\mixkit-arcade-game-complete-or-approved-mission-205.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="mixkit_wrong_answer_fail_notification_946" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Music\mixkit-wrong-answer-fail-notification-946.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

@@ -50,6 +50,10 @@ RequestResult MenuRequestHandler::handleRequest(const RequestInfo& requestInfo)
 		}
 
 	}
+	catch (const ServerException& serverException) {
+		
+		throw serverException;
+	}
 	catch (const std::exception& e) {
 		std::cout << e.what() << "\n";
 	}
@@ -148,16 +152,16 @@ RequestResult MenuRequestHandler::joinRoom(const RequestInfo& requestInfo)
 	
 	
 	//checks if a new user can join
-	if (wantedRoom.canNewUserJoin()) {
-
-		joinRoomResponse.status = joinRoomResponse.status_ok;
-		
-		wantedRoom.addUser(m_user);		
-		
-		requestResult.newHandler = m_handlerFactory.createRoomMemberRequestHandler(m_user, wantedRoom);	
+	if (!wantedRoom.canNewUserJoin()) {
+		throw ServerException("Room is full", ServerException::ROOM_IS_FULL_CODE);
 	}
-	
 
+	joinRoomResponse.status = joinRoomResponse.status_ok;
+		
+	wantedRoom.addUser(m_user);		
+		
+	requestResult.newHandler = m_handlerFactory.createRoomMemberRequestHandler(m_user, wantedRoom);	
+	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeJoinRoomResponse(joinRoomResponse);
 	
 	return requestResult;

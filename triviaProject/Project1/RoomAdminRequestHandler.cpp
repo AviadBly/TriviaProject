@@ -52,11 +52,16 @@ RequestResult RoomAdminRequestHandler::startGame()
 	m_room.setIsActive(true); 
 	m_roomManager.setRoomActive(m_room.getData().id);
 	StartRoomResponse.status = StartRoomResponse.status_ok;
-	this->m_roomManager.deleteRoom(m_room.getData().id);
-
+	
+	
 	requestResult.buffer = JsonResponsePacketSerializer::serializeStartGameResponse(StartRoomResponse);
 		
-	requestResult.newHandler = m_handlerFactory.createGameRequestHandler(m_room, m_user, true);
+	requestResult.newHandler = m_handlerFactory.createGameRequestHandler(m_roomManager.getSingleRoom(recentRoomId), m_user, true);
+	
+	//if you are the only user, delete the room
+	if (--m_roomManager.getSingleRoom(recentRoomId).numberOfPlayersActive == 0) {
+		m_roomManager.deleteRoom(recentRoomId);
+	}
 
 	return requestResult;
 }
@@ -69,6 +74,7 @@ RequestResult RoomAdminRequestHandler::closeRoom()
 	requestResult = leaveRoom();		//maybe add this later to leave the room
 	this->m_roomManager.deleteRoom(m_room.getData().id);
 
+		
 	closeRoomResponse.status = closeRoomResponse.status_ok;
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeCloseRoomResponse(closeRoomResponse);

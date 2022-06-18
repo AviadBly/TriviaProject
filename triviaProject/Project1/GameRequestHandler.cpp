@@ -1,14 +1,8 @@
 #include "GameRequestHandler.h"
 
-GameRequestHandler::GameRequestHandler(const Room room, const LoggedUser user, bool isAdmin, GameManager& gameManager, RequestHandlerFactory& handleFactory) : m_gameManager(gameManager), m_handlerFactory(handleFactory)
+GameRequestHandler::GameRequestHandler(Game& game, const LoggedUser user, GameManager& gameManager, RequestHandlerFactory& handleFactory) : m_gameManager(gameManager), m_handlerFactory(handleFactory), m_game(game)
 {
-	if (isAdmin) {
-		m_game = gameManager.createGame(room.getAllUsers(), room.getData().timePerQuestion, room.getData().id);
-	}
-	else {
-		m_game = gameManager.joinGame(room.getData().id);
-	}
-
+	
 	hasAddedStatsYet = false;
 	m_user = user;
 }
@@ -90,7 +84,6 @@ RequestResult GameRequestHandler::getQuestion()
 	if (m_game.hasPlayerFinishedGame(m_user)) {
 		getQuestionResponse.status = getQuestionResponse.noMoreQuestionStatus;
 		
-		
 	}
 	else {
 		Question userQuestion = m_game.getQuestionForUser(m_user);
@@ -148,6 +141,7 @@ RequestResult GameRequestHandler::getGameResults()
 		getGameResultsResponse.results = m_game.getGameResults();
 
 		if (!hasAddedStatsYet) {
+			
 			hasAddedStatsYet = true;
 			addStatistics();
 		}

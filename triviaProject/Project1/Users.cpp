@@ -33,12 +33,13 @@ void User::setName(const std::string& name)
 
 bool User::operator <(const User& otherUser) const
 {
-	return this->getId() < otherUser.getId();	//compares based on id												
+	return this->getName().compare(otherUser.getName()) < 0;	//compares based on alphabetical order
+														//returns true if this.name < otherUser.name											
 }
 
 bool User::operator ==(const User& otherUser) const
 {
-	return this->getId() == otherUser.getId();	//compares based on id												
+	return this->getName() == otherUser.getName();	//compares based on name												
 }
 
 //****************************************************** Logged user

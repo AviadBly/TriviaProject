@@ -54,9 +54,7 @@ namespace clientAPI
 
             dispatcherTimer.Stop();
             Close();
-            menu menu = new menu(MainProgram.MainUsername);
-            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            menu.Show();
+            menu.goToMenu();
             dispatcherTimer.Stop();
         }
 
@@ -75,6 +73,22 @@ namespace clientAPI
                     
                 
                 
+            }
+            foreach (string item in roomsList.Items)
+            {
+                bool check = false;
+                foreach (Room room in rooms)
+                {
+                    if (room.Metadata.Name == item)
+                    {
+                        check = true;
+                    }
+                }
+                if (!check)
+                {
+                    roomsList.Items.Remove(item);
+                    break;
+                }
             }
         }
        
@@ -174,14 +188,10 @@ namespace clientAPI
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
             Console.Write(returnMsg);
 
-            if (returnMsg.IsErrorMsg)
+            if (returnMsg.IsErrorMsg)   //if error
             {
-                //Signup failed
-
-                //MessageBox.Show("Error: Username already exists");
-                MessageBox.Show(returnMsg.Message.ToString());
+                MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
                 return false;
-
             }
 
             JoinRoomResponse joinRoomResponse = JsonHelpers.JsonFormatDeserializer.JoinRoomResponseDeserializer(returnMsg.Message);

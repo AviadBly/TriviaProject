@@ -19,9 +19,7 @@ using clientAPI.Requests_and_Responses;
 using clientAPI.JsonHelpers;
 using clientAPI;
 using clientAPI.Create_and_Join;
-using System.Collections.Generic;
 using clientAPI.GameFolder;
-using System;
 
 namespace clientAPI
 {
@@ -33,20 +31,9 @@ namespace clientAPI
 
         
         public LoginWindow()
-        {
-            
+        {            
             
             InitializeComponent();
-
-            //"{\"Results\":[[\"shahar\",3,7,1.0]],\"Status\":2}"
-            //"{\"Results\":[{\"Username\":\"jojo\",\"CorrectAnswerCount\":6,\"WrongAnswerCount\":4,\"AverageAnswerTime\":2.3}],\"Status\":5}"
-            //List<PlayerResults> results = new List<PlayerResults>();
-            //results.Add(new PlayerResults("jojo", 6, 4, 2.3));
-            //GetGameResultsResponse getGameResultsResponse = new GetGameResultsResponse(results, 5);
-            //string resultStringJson = JsonSerializer.Serialize(getGameResultsResponse);
-
-            //Console.WriteLine(resultStringJson);
-
         }
 
 
@@ -59,46 +46,42 @@ namespace clientAPI
             
             if (username == null || password == null)
             {
-                MessageBox.Show("Please Enter a valid username!");
+                MessageBox.Show("Please Enter a valid username/password!");
                 return;
             }
-            else
+            
+            //create a login request
+            LoginRequest loginRequest = new LoginRequest(username, password);
+
+            byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
+
+            MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.LOGIN_REQUEST_CODE);
+
+            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+
+            if (returnMsg.IsErrorMsg)   //if error
             {
-                //create a login request
-                LoginRequest loginRequest = new LoginRequest(username, password);
-
-                byte[] data = JsonHelpers.JsonFormatSerializer.loginSerializer(loginRequest);
-
-                MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.LOGIN_REQUEST_CODE);
-
-                ReceivedMessage returnMsg = MainProgram.appClient.receiver();
-
-                if (returnMsg.IsErrorMsg)   //if error
-                {
-                    //MessageBox.Show("Error! Username or password is incorrect!");
-                    MessageBox.Show(returnMsg.Message.ToString());
-                    return;
-                }
-
-                Console.Write(returnMsg);
-
-                LoginResponse loginResponse = JsonHelpers.JsonFormatDeserializer.loginResponseDeserializer(returnMsg.Message);
-
-                //login failed
-                if (loginResponse.Status == Response.status_error)
-                {
-                    MessageBox.Show("Error ");
-                    return;
-                }
-
-
-
-                MainProgram.MainUsername = username;
-                menu menuWindow = new menu(username);
-                menuWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                menuWindow.Show();
-                Close();
+                MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
+                return;
             }
+
+            Console.Write(returnMsg);
+
+            LoginResponse loginResponse = JsonHelpers.JsonFormatDeserializer.loginResponseDeserializer(returnMsg.Message);
+
+            //login failed
+            if (loginResponse.Status == Response.status_error)
+            {
+                MessageBox.Show("Error ");
+                return;
+            }
+
+
+
+            MainProgram.MainUsername = username;
+            menu.goToMenu();
+            Close();
+            
 
            
         }

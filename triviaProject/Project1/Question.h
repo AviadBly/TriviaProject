@@ -15,7 +15,7 @@ public:
 	
 	const string& getQuestionString() const;
 
-	map<unsigned int, string> getPossibleAnswers();
+	map<unsigned int, string> getPossibleAnswers() const;
 	string getCorrectAnswer() const;	//the correct answer start with '*'
 
 	int getIdOfAnswer(const string& answer) const;
