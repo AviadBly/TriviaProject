@@ -161,7 +161,8 @@ SecByteBlock Communicator::diffiHellmanKeyExchange(SOCKET socket)
 
 	KeyExchange keyManager;
 
-	return keyManager.getSecretKey(socket);
+	SecByteBlock secretKey = keyManager.getSecretKey(socket);
+	return secretKey;
 }
 
 string Communicator::encryptMessageData(const string& message, AesEncryptor& encryptor) {
