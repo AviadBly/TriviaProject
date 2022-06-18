@@ -43,9 +43,7 @@ namespace clientAPI.GameFolder
             m_room.PlayersUpdated += RoomPlayersUpdated;
 
             this.Loaded += WaitingRoom_Loaded;
-            //this.Closed += WaitingRoom_Closed;
-
-            // Task.Run(TimelyUpdatePlayers);
+            
         }
 
         private void WaitingRoom_Loaded(object sender, RoutedEventArgs e)
@@ -119,7 +117,7 @@ namespace clientAPI.GameFolder
             m_updatePlayersCancellationToken?.Cancel();
             m_updatePlayersTask.Wait(TimeSpan.FromSeconds(PLAYERS_UPDATE_INTERVAL_SECONDS * 0.1));
         }
-        //TO DO, ask getPlayers every 1 second
+        
        
         private (byte, IList<string>) getPlayers()
         {
@@ -135,9 +133,7 @@ namespace clientAPI.GameFolder
                 return (0, new List<string>());
             }
 
-            Console.WriteLine(getRoomStateResponse.Players);
-
-            Console.WriteLine(getRoomStateResponse.Status);
+            
             switch (getRoomStateResponse.Status)
             {
                 
@@ -203,11 +199,7 @@ namespace clientAPI.GameFolder
 
             if (returnMsg.IsErrorMsg)
             {
-                //Signup failed
-
-                //MessageBox.Show("Error: Username already exists");
-                MessageBox.Show(returnMsg.Message.ToString());
-                
+                MessageBox.Show(returnMsg.Message.ToString());                
                 return Response.status_error;
             }
 
