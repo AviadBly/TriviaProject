@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:local="clr-namespace:clientAPI"
         mc:Ignorable="d"
         Title="Statistics" Height="730" Width="565" FontStretch="ExtraExpanded" FontSize="16" Background="#273746">
@@ -17,6 +18,16 @@
         <Button Click="ClickPersonal" Content="Personal Statistics" HorizontalAlignment="Center" Margin="0,140,0,0" VerticalAlignment="Top" Height="135" Width="352"  FontSize="40" FontStyle="Oblique"  Background="#76D7C4" Foreground="#1F618D"/>
         <Button Click="ClickScores" Content="High Scores" HorizontalAlignment="Center" Margin="0,357,0,0" VerticalAlignment="Top" Height="135" Width="352"  FontSize="40" FontStyle="Oblique"  Background="#76D7C4" Foreground="#1F618D" Grid.RowSpan="2"/>
         <Button Content="Go Back" HorizontalAlignment="Left" FontSize="30" Height="86" Margin="334,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="167" Click="backClick"/>
-
+        <Grid
+  Width="124"/>
+        <Button
+    Style="{StaticResource MaterialDesignRaisedButton}"
+    materialDesign:ButtonProgressAssist.Value="-1"
+    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+    materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+    Content="Add Question!"
+            FontSize="25"
+    Margin="38,0,313,0"
+    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Grid.Row="2" Height="86" VerticalAlignment="Center" Click="AddQuestion" />
     </Grid>
 </Window>

@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Media;
+using clientAPI.Properties;
 
 namespace clientAPI.GameFolder
 {
@@ -22,7 +24,7 @@ namespace clientAPI.GameFolder
         bool isUserAnswered;
         uint totalWaitingTime; //in miliseconds
 
-        const int ANSWER_SHOW_TIME = 1300; //in miliseconds
+        const int ANSWER_SHOW_TIME = 1000; //in miliseconds
         const int REFRESH_TIME = 100; //in miliseconds
         const uint FAKE_WRONG_ID = 999;
 
@@ -137,7 +139,8 @@ namespace clientAPI.GameFolder
 
         private async void AnswerClicked(object sender, RoutedEventArgs e)
         {
-            
+            if (isUserAnswered){ return; }  //if answer was already chosen, ignore this click
+
             string buttonId = (sender as Button).Name.ToString();
             char charId = buttonId[buttonId.Length - 1];
             uint id = Convert.ToUInt32(charId.ToString()) - 1;  //id start with 0
@@ -168,8 +171,20 @@ namespace clientAPI.GameFolder
             }
 
             switchColors(id, submitAnswerResponse.CorrectAnswerId == id);//switch the user answer to the required color
+            if(submitAnswerResponse.CorrectAnswerId==id)
+            {
+                SoundPlayer s = new SoundPlayer(Properties.Resources.mixkit_arcade_game_complete_or_approved_mission_205);
+                s.Play();
+            }
+            else
+            {
+                SoundPlayer s = new SoundPlayer(Properties.Resources.mixkit_wrong_answer_fail_notification_946);
+                s.Play();
+            }
+
             switchColors(submitAnswerResponse.CorrectAnswerId, true); //turn the correct answer to green
-            if (isUserAnswered)
+            
+            if (isUserAnswered) //show the answer for sometime
             {
                 await Task.Delay(ANSWER_SHOW_TIME);
                 tempTime = timePerQuestion-1;
@@ -236,9 +251,7 @@ namespace clientAPI.GameFolder
 
 
             Close();
-            menu menu = new menu(MainProgram.MainUsername);
-            menu.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            menu.Show();
+            menu.goToMenu();
         }
     }
 }

@@ -114,12 +114,13 @@ unsigned int Game::submitAnswer(const User& user, unsigned int answerId, double 
 	if (correctAnswerId == -1) {
 		throw ("Error");
 	}
+
 	return correctAnswerId;
 	
 }
 
 bool Game::removePlayer(const User& user)
-{
+{	
 	return m_players.erase(user);	//if succesfull returns true
 }
 
@@ -127,6 +128,8 @@ PlayerResults Game::getPlayerResults(const User& user)
 {
 	PlayerResults playerResults;
 	
+
+
 	GameData userGameData = m_players[user];
 	playerResults.averageAnswerTime = userGameData.averageAnswerTime;
 	playerResults.correctAnswerCount = userGameData.correctAnswerCount;

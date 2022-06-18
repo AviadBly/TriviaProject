@@ -41,7 +41,7 @@ int SqliteDataBase::callbackStats(void* data, int argc, char** argv, char** azCo
 			user.setName((argv[i]));
 		}
 		else if (string(azColName[i]) == "AVGTIME") {
-			user.setTime(stoi(argv[i]));
+			user.setTime(stod(argv[i]));
 		}
 		else if (string(azColName[i]) == "CORRECT")
 		{
@@ -263,7 +263,7 @@ void SqliteDataBase::insertStats(const StatsUser& user)
 	}
 	else
 	{
-		string sqlStatement = "DELETE FROM STATISTICS WHERE NAME=\""+name+"\";";
+		string sqlStatement = "DELETE FROM STATISTICS WHERE USERNAME=\""+name+"\";";
 		const char* newStatement = sqlStatement.c_str();
 		sendToServer(db, newStatement);
 		sqlStatement = "INSERT INTO STATISTICS(USERNAME, AVGTIME ,CORRECT ,TOTAL ,GAMES) VALUES(" + values;
@@ -276,6 +276,22 @@ void SqliteDataBase::insertStats(const StatsUser& user)
 
 }
 
+void  SqliteDataBase::insertQuestion(const Question question) const
+{
+	string questionText = question.getQuestionString();
+	map<unsigned int,string> questionsMap = question.getPossibleAnswers();
+	string answer1 = questionsMap[1];
+	string answer2= questionsMap[2];
+	string answer3= questionsMap[3];
+	string answer4= questionsMap[4];
+	string correct = question.getCorrectAnswer();
+	correct = "*" + correct;
+	string values = "\"" + questionText + "\",\"" + answer1 + "\,\"" + answer2 + "\",\"" + answer3 + "\"," + answer4 + "\");";
+
+	string sqlStatement = "INSERT INTO QUESTIONS(QUESTION, ANSWER1 ,ANSWER2 ,ANSWER3 ,ANSWER3) VALUES(" + values;
+	const char* newStatement = sqlStatement.c_str();
+	sendToServer(db, newStatement);
+}
 
 
 bool SqliteDataBase::doesPasswordMatch(string username, string password)
@@ -296,13 +312,22 @@ bool SqliteDataBase::doesPasswordMatch(string username, string password)
 	return false;
 }
 
-const vector<Question> SqliteDataBase::getQuestions()
+const vector<Question> SqliteDataBase::getQuestions(unsigned int numberOfQuestions)
 {
 	vector<Question>* newList = new vector<Question>;
 	string sqlStatement = "SELECT * FROM QUESTIONS;";
 	const char* newStatement = sqlStatement.c_str();
 	sendCallBackQuestions(db, newStatement, newList);
-	return *newList;
+	vector<Question> retList;
+	for (int i = 0; i < numberOfQuestions; i++)
+	{
+		int randomNum= rand() % newList->size() + 0;
+		Question current = (* newList)[randomNum];
+		newList->erase(newList->begin() + randomNum);
+		retList.push_back(current);
+
+	}
+	return retList;
 }
 
 

@@ -36,9 +36,16 @@ RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(co
 
 GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(const Room& room, const LoggedUser& user, bool isAdmin)
 {
-	return new GameRequestHandler(room, user, isAdmin, m_gameManager, *this);
+	
+	if (isAdmin) {
+		//create new room
+		RoomData metaData = room.getData();
+		return new GameRequestHandler(m_gameManager.createGame(room.getAllUsers(), metaData.timePerQuestion, metaData.id, metaData.numOfQuestionsInGame), //this is the new game
+			user, m_gameManager, *this);
+	}
+	//join room
+	return new GameRequestHandler(m_gameManager.joinGame(room.getData().id), user, m_gameManager, *this);
 }
-
 
 //getters
 LoginManager& RequestHandlerFactory::getLoginManger()
