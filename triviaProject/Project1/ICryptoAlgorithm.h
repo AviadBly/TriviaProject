@@ -8,8 +8,8 @@ using namespace std;
 
 class ICryptoAlgorithm {
 public:
-	virtual string encrypt(string message) const = 0;
-	virtual string decrypt(string encryptedMessage) const = 0;
+	virtual string encrypt(string message) = 0;
+	virtual string decrypt(string encryptedMessage) = 0;
 
 protected:
 	SecByteBlock m_privateKey;

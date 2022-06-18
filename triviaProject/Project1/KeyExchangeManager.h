@@ -55,6 +55,7 @@ public:
 	
 	SecByteBlock getSecretKey(SOCKET socket);
 
+	~KeyExchange();
 private:
 	void initializeParameters();
 	void sendParameters(SOCKET socket);

@@ -16,14 +16,18 @@ using CryptoPP::SHA256;
 class AesEncryptor : public ICryptoAlgorithm {
 
 public:
+	
 	AesEncryptor(const SecByteBlock& sharedSecretKey);
 
-	virtual string encrypt(string message) const;
-	virtual string decrypt(string encryptedMessage) const;
+	virtual string encrypt(string message);
+	virtual string decrypt(string encryptedMessage);
 
 private:
 	const int aesKeyLength = SHA256::DIGESTSIZE; // 32 bytes = 256 bit key
 	const int defBlockSize = AES::BLOCKSIZE;
 
-	CryptoPP::byte iv[AES::BLOCKSIZE];
+	
+	SecByteBlock m_iv;
+	//CryptoPP::byte m_iv[AES::BLOCKSIZE];
+	void updateInitializationVector(SecByteBlock arr);
 };
