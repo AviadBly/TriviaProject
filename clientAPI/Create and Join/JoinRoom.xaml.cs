@@ -45,8 +45,7 @@ namespace clientAPI
             rooms = getRooms();
             showActiveRooms();
             rooms.Clear();
-            
-            
+                       
         }
         private void clickExit(object sender, RoutedEventArgs e)
         {
@@ -60,7 +59,8 @@ namespace clientAPI
         
         private void showActiveRooms()
         {
-            foreach(Room room in this.rooms)
+            roomsList.Items.Clear();
+            foreach (Room room in this.rooms)
             {
                 
                 string fullRoom = room.Metadata.Name;
@@ -73,22 +73,22 @@ namespace clientAPI
                 
                 
             }
-            foreach (string item in roomsList.Items)
-            {
-                bool check = false;
-                foreach (Room room in rooms)
-                {
-                    if (room.Metadata.Name == item)
-                    {
-                        check = true;
-                    }
-                }
-                if (!check)
-                {
-                    roomsList.Items.Remove(item);
-                    break;
-                }
-            }
+            //foreach (string item in roomsList.Items)
+            //{
+            //    bool check = false;
+            //    foreach (Room room in rooms)
+            //    {
+            //        if (room.Metadata.Name == item)
+            //        {
+            //            check = true;
+            //        }
+            //    }
+            //    if (!check)
+            //    {
+            //        roomsList.Items.Remove(item);
+            //        break;
+            //    }
+            //}
         }
        
         private List<Room> getRooms()

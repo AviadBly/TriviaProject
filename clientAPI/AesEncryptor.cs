@@ -59,8 +59,7 @@ namespace clientAPI
           
             for(int i = 0; i < m_aesBlockSize; i++)
             {
-                this.IV[i] = hashBytes[i];
-                
+                IV[i] = hashBytes[i];               
             }
         }
 
@@ -111,8 +110,6 @@ namespace clientAPI
 
             throw new Exception("Decryption error");
         }
-
-
 
     }
 }

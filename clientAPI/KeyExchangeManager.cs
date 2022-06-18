@@ -18,7 +18,7 @@ namespace clientAPI
         
         private BigInteger m_generator;
         private BigInteger m_modulus;
-        private BigInteger m_maxExponent;
+        
 
         private const int keyNumberOfBytes = 16;
 
@@ -91,11 +91,9 @@ namespace clientAPI
         private void createSecretKey()
         {
             BigInteger secretKey = BigInteger.ModPow(m_serverPublicKey, m_privateKey, m_modulus);
-            
-            byte[] secretKeyBytes = secretKey.ToByteArray(true, true);
-            
-            m_secretKey = secretKeyBytes;
-           
+
+            m_secretKey = secretKey.ToByteArray(true, true);
+                      
         }
 
     }
