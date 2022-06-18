@@ -101,7 +101,7 @@ namespace clientAPI
             using (Aes aes = new AesCryptoServiceProvider())
             {
                 aes.Key = m_privateKey;
-                aes.IV = new byte[16];
+                aes.IV = IV;
 
                 // Decrypt the message
                 using (MemoryStream plaintext = new MemoryStream())

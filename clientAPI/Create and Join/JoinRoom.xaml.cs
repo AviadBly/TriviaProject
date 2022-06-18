@@ -26,6 +26,7 @@ namespace clientAPI
         private List<Room> rooms;
         private DispatcherTimer dispatcherTimer;
 
+        private const int GET_ROOMS_REFRESH_TIME = 3; //in seconds
         public JoinRoom()
         {
 
@@ -34,11 +35,9 @@ namespace clientAPI
             //  DispatcherTimer setup
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, GET_ROOMS_REFRESH_TIME);
             dispatcherTimer.Start();
             
-
-
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
