@@ -21,6 +21,7 @@ namespace clientAPI.GameFolder
         uint numberOfQuestions;
         uint timePerQuestion; //in seconds
 
+        bool isGameExited;
         bool isUserAnswered;
         uint totalWaitingTime; //in miliseconds
 
@@ -43,7 +44,7 @@ namespace clientAPI.GameFolder
             timer.Interval = new TimeSpan(0, 0, 0,0, 993);
             
             timer.Tick += Timer_Tick;
-        
+            
             startGame();
         }
 
@@ -124,6 +125,7 @@ namespace clientAPI.GameFolder
         
         public async Task displayQuestionOnScreen()
         {
+            if (isGameExited) { return; }
             timer.Start();
             ResetColors();
             Question question = GetNextQuestion();
@@ -133,7 +135,8 @@ namespace clientAPI.GameFolder
             Answer2.Content = question.Answers[1].ToString();
             Answer3.Content = question.Answers[2].ToString();
             Answer4.Content = question.Answers[3].ToString();
-            //await Task.Delay(ANSWER_SHOW_TIME * 4);
+
+            
             await QuestionWaiter();
         }
 
@@ -152,7 +155,7 @@ namespace clientAPI.GameFolder
 
         private async Task SubmitAnswer(uint id)
         {
-            
+            if (isGameExited) { return; }
             SubmitAnswerRequest submitAnswerRequest = new SubmitAnswerRequest(id);
             byte[] data = JsonHelpers.JsonFormatSerializer.SubmitAnswerSerializer(submitAnswerRequest);
             Console.WriteLine(data);
@@ -236,6 +239,7 @@ namespace clientAPI.GameFolder
 
         private void ClickExit(object sender, RoutedEventArgs e)
         {
+            timer.Stop();
             MainProgram.appClient.sender("", Requests.LEAVE_GAME_REQUEST_CODE);    //ask for rooms
 
             ReceivedMessage returnMsg = MainProgram.appClient.receiver();
@@ -249,9 +253,12 @@ namespace clientAPI.GameFolder
 
             }
 
+            isGameExited = true;
 
             Close();
             menu.goToMenu();
+
+
         }
     }
 }

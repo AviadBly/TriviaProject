@@ -40,8 +40,7 @@ namespace clientAPI
 
         public AesEncryptor(byte[] key)
         {
-            Console.WriteLine("\n\n\n\n\n");
-            printByteArray(key, "sharedKey:");
+            
 
             byte[] secretKeyHashed = ComputeSha256Hash(key);
             m_privateKey = secretKeyHashed;
@@ -51,23 +50,18 @@ namespace clientAPI
 
             updateInitializationVector(m_privateKey);
 
-            Console.WriteLine("\n\n\n\n\nhashed key: " + m_privateKey);
-            printByteArray(m_privateKey, "HASHED:");
+            
         }
 
         private void updateInitializationVector(byte[] rawArr)
         {
             byte[] hashBytes = ComputeSha256Hash(rawArr);
-
-            Console.Write("\n\nIV: ");
+          
             for(int i = 0; i < m_aesBlockSize; i++)
             {
                 this.IV[i] = hashBytes[i];
-                Console.Write(IV[i] + ", ");
+                
             }
-
-            Console.WriteLine("\n");
-
         }
 
         public byte[] encrypt(byte[] originalMessage)
@@ -105,20 +99,17 @@ namespace clientAPI
 
                 // Decrypt the message
                 using (MemoryStream plaintext = new MemoryStream())
-                {
-                    
+                {                   
                     using (CryptoStream cs = new CryptoStream(plaintext, aes.CreateDecryptor(), CryptoStreamMode.Write))
                     {
                         cs.Write(encryptedMessage, 0, encryptedMessage.Length);
                         cs.Close();
-                        string message = Encoding.UTF8.GetString(plaintext.ToArray());
-                        Console.WriteLine(message);
                         return plaintext.ToArray();
                     }
                 }
             }
 
-            return new byte[16];
+            throw new Exception("Decryption error");
         }
 
 
