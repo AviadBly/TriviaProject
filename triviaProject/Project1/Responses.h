@@ -5,8 +5,11 @@
 #include "Room.h"
 #include "ServerException.h"
 #include "Requests.h"
+
+
 typedef unsigned char BYTE;
 using namespace std;
+
 
 struct Response {
 	unsigned int status = 0;

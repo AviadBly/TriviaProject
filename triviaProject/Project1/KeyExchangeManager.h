@@ -53,9 +53,8 @@ class KeyExchange {
 
 public:
 	
-	SecByteBlock getSecretKey(SOCKET socket);
+	SecByteBlock getSharedSecretKeySecretKey(SOCKET socket);
 
-	//~KeyExchange();
 private:
 	void initializeParameters();
 	void sendParameters(SOCKET socket);

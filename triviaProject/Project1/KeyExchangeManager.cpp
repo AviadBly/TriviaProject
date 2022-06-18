@@ -7,6 +7,7 @@ void KeyExchange::UnsignedIntegerToByteBlock(const Integer& x, SecByteBlock& byt
 	x.Encode(bytes.BytePtr(), encodedSize, Integer::UNSIGNED);
 }
 
+//for debug
 void KeyExchange::printByteArr(BYTE arr[], int len, string msg) {
 	cout << msg << " length:" << len << "\n";
 	for (int i = 0; i < len; i++) {
@@ -58,10 +59,6 @@ void KeyExchange::initializeParameters()
 	Q = pg.SubPrime();
 	G = pg.Generator();
 
-	//M = 131;	//modulus
-	//Q = 7;
-	//G = 19;
-
 	m_DHC = CryptoPP::DH(M, Q, G);
 
 	SecByteBlock privateKey(m_DHC.PrivateKeyLength()), publicKey(m_DHC.PublicKeyLength());
@@ -70,30 +67,6 @@ void KeyExchange::initializeParameters()
 	this->m_privateKey = privateKey;
 	this->m_publicKey = publicKey;
 
-	Integer k1(privateKey, privateKey.size()), k2(publicKey, publicKey.size());
-
-	CryptoPP::ModularArithmetic MM(M);
-	Integer pub = MM.Exponentiate(G, k1);
-
-
-	/*cout << "Private key:\n";
-	cout << k1 << endl;*/
-	if ((k2 - pub) == 0) {
-		cout << "Public key!!!!!!!!!!:\n";
-		
-	}
-	
-
-	printByteArr(privateKey, privateKey.size(), "Private key:");
-
-	cout << "M:\n";
-	cout << M << endl;
-	
-
-	/*cout << "Q:\n";
-	cout << Q << endl;*/
-	cout << "G:\n";
-	cout << G << endl;
 }
 
 
@@ -107,30 +80,18 @@ void KeyExchange::sendParameters(SOCKET socket)
 	SecByteBlock modulus;
 	UnsignedIntegerToByteBlock(m_DHC.GetGroupParameters().GetModulus(), modulus);
 
-	Integer m(modulus, modulus.size());
-	cout << "REAL M:" << m << "\n";
-
-	SecByteBlock MaxExponenet;
-	UnsignedIntegerToByteBlock(m_DHC.GetGroupParameters().GetMaxExponent(), MaxExponenet);
-
-
-	printByteArr(generator, generator.size(), "Generator:");
 	Communicator::sendMsg(socket, returnMsgFromBytes(generator, 99));
 
-	printByteArr(modulus, modulus.size(), "Modulus:");
+	
 	Communicator::sendMsg(socket, returnMsgFromBytes(modulus, 98));
 
-	printByteArr(MaxExponenet, MaxExponenet.size(), "MaxExponenet:");
-	Communicator::sendMsg(socket, returnMsgFromBytes(MaxExponenet, 97));
-
-	printByteArr(getPublicKey(), getPublicKey().size(), "PublicKey:");
 	Communicator::sendMsg(socket, returnMsgFromBytes(getPublicKey(), 96));
 
 }
 
 void KeyExchange::sendGetClientPublicKey(SOCKET socket)
 {
-	cout << "\n\n\n\n\n";
+	
 	string clientMsg = Communicator::recvMsg(socket).substr(5);
 	SecByteBlock clientPublicKeyBytes(clientMsg.length());
 
@@ -139,15 +100,11 @@ void KeyExchange::sendGetClientPublicKey(SOCKET socket)
 	}
 	m_clientPublicKey = clientPublicKeyBytes;
 
-	printByteArr(m_clientPublicKey, m_clientPublicKey.size(), "clientPublicKey:");
 
-	Integer pub(m_clientPublicKey, m_clientPublicKey.size() , CryptoPP::Integer::UNSIGNED, CryptoPP::ByteOrder::LITTLE_ENDIAN_ORDER);
-	
-	cout << "PUB: " << pub << "\n";
 }
 
 
-SecByteBlock KeyExchange::getSecretKey(SOCKET socket)
+SecByteBlock KeyExchange::getSharedSecretKeySecretKey(SOCKET socket)
 {
 
 	initializeParameters();
@@ -156,41 +113,19 @@ SecByteBlock KeyExchange::getSecretKey(SOCKET socket)
 
 	Integer M = m_DHC.GetGroupParameters().GetModulus();
 	Integer G_B(getClientPublicKey(), getClientPublicKey().size());
-	cout << "m:" << M << "\n";
-	cout << "G_B:" << G_B << "\n";
 
 	Integer privateK(m_privateKey, m_privateKey.size());
-	cout << "PRIV:" << privateK << "\n";
+	
 	
 	CryptoPP::ModularArithmetic MM(M);
 	Integer secret = MM.Exponentiate(G_B, privateK);
 
-	cout << secret << "\n";
-
 	SecByteBlock secretKey(m_DHC.AgreedValueLength());
-	cout << " len:" + secret.ByteCount() << "\n";
-
-	UnsignedIntegerToByteBlock(secret, secretKey);
-	printByteArr(secretKey, secretKey.size(), "secret: ");
 	
+	UnsignedIntegerToByteBlock(secret, secretKey);
+		
 	if (!m_DHC.Agree(secretKey, getPrivateKey(), getClientPublicKey()))
 		throw ("NO SECURE CONNECTION");
 
-	Integer sec(secretKey, secretKey.size());
-	
-	printByteArr(secretKey, secretKey.size(), "secretKey:");
-
-	cout << "SECRET FLAG:" << sec << "\n";
-
 	return secretKey;
 }
-
-//KeyExchange::~KeyExchange()
-//{
-//	
-//	m_DHC.~DH_Domain();
-//	m_publicKey.~SecBlock();
-//	m_privateKey.~SecBlock();
-//	m_clientPublicKey.~SecBlock();
-//}
-
