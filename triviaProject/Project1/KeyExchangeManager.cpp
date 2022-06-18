@@ -64,8 +64,8 @@ void KeyExchange::initializeParameters()
 	SecByteBlock privateKey(m_DHC.PrivateKeyLength()), publicKey(m_DHC.PublicKeyLength());
 	m_DHC.GenerateKeyPair(prng, privateKey, publicKey);
 
-	this->m_privateKey = privateKey;
-	this->m_publicKey = publicKey;
+	m_privateKey = privateKey;
+	m_publicKey = publicKey;
 
 }
 
@@ -82,7 +82,6 @@ void KeyExchange::sendParameters(SOCKET socket)
 
 	Communicator::sendMsg(socket, returnMsgFromBytes(generator, 99));
 
-	
 	Communicator::sendMsg(socket, returnMsgFromBytes(modulus, 98));
 
 	Communicator::sendMsg(socket, returnMsgFromBytes(getPublicKey(), 96));
