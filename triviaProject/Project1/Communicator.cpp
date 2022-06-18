@@ -43,20 +43,7 @@ void Communicator::serve(short port)
 		throw std::exception(__FUNCTION__ " - listen");
 	std::cout << "Listening on port " << port << std::endl;
 
-	RoomData d;
-	d.id = 1;
-	d.maxPlayers = 5;
-	d.name = "firstR";
-	d.numOfQuestionsInGame = 6;
-	d.timePerQuestion = 12;
-
-	this->m_handlerFactory.getRoomManager().createRoom(LoggedUser("sha", "123"), d);
-	d.id = 2;
-	d.name = "secondRoom";
-	d.numOfQuestionsInGame = 11;
-	d.timePerQuestion = 20;
-	this->m_handlerFactory.getRoomManager().createRoom(LoggedUser("gal", "568"), d);
-
+	
 	while (true)
 	{
 		// the main thread is only accepting clients 
@@ -216,7 +203,6 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 				if (irreleventRequestCount > 5) {
 					throw ServerException("Too many invalid requests", ServerException::ACTIVELY_DISCONECT_USER_CODE);
 				}
-
 				std::cout << "Irrelevent request\n";
 				continue;
 			}
