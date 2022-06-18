@@ -227,6 +227,7 @@ namespace clientAPI
             if (isEncrypted)
             {
                 serverMsg.Message = m_encryptor.decrypt(serverMsg.Message);
+                Console.WriteLine("Msg:" + Encoding.UTF8.GetString(serverMsg.Message));
             }
             
             //code + len + data
