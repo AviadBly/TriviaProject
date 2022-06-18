@@ -14,6 +14,8 @@ namespace clientAPI
     {
         private byte[] m_privateKey;
         private byte[] IV;
+        int m_aesKeySize;
+        const int m_aesBlockSize = 16;
 
         private void printByteArray(byte[] arr, string msg)
         {
@@ -40,20 +42,43 @@ namespace clientAPI
         {
             Console.WriteLine("\n\n\n\n\n");
             printByteArray(key, "sharedKey:");
+
             byte[] secretKeyHashed = ComputeSha256Hash(key);
             m_privateKey = secretKeyHashed;
+
+            this.IV = new byte[m_aesBlockSize];
+            m_aesKeySize = m_privateKey.Length;
+
+            updateInitializationVector(m_privateKey);
+
             Console.WriteLine("\n\n\n\n\nhashed key: " + m_privateKey);
             printByteArray(m_privateKey, "HASHED:");
+        }
+
+        private void updateInitializationVector(byte[] rawArr)
+        {
+            byte[] hashBytes = ComputeSha256Hash(rawArr);
+
+            Console.Write("\n\nIV: ");
+            for(int i = 0; i < m_aesBlockSize; i++)
+            {
+                this.IV[i] = hashBytes[i];
+                Console.Write(IV[i] + ", ");
+            }
+
+            Console.WriteLine("\n");
+
         }
 
         public byte[] encrypt(byte[] originalMessage)
         {
             byte[] encryptedMessage = new byte[originalMessage.Length];
+            updateInitializationVector(IV);
 
             using (Aes aes = new AesCryptoServiceProvider())
             {
                 aes.Key = m_privateKey;
-                aes.IV = new byte[16];
+                aes.IV = this.IV;
 
                 // Encrypt the message
                 using (MemoryStream ciphertext = new MemoryStream())
@@ -71,11 +96,12 @@ namespace clientAPI
 
         public byte[] decrypt(byte[] encryptedMessage)
         {
+            updateInitializationVector(IV);
 
             using (Aes aes = new AesCryptoServiceProvider())
             {
                 aes.Key = m_privateKey;
-                aes.IV = new byte[16];
+                aes.IV = IV;
 
                 // Decrypt the message
                 using (MemoryStream plaintext = new MemoryStream())
