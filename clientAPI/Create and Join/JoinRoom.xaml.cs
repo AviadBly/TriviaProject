@@ -44,7 +44,7 @@ namespace clientAPI
         {
             rooms = getRooms();
             showActiveRooms();
-            rooms.Clear();
+            
                        
         }
 
@@ -61,11 +61,13 @@ namespace clientAPI
         private void showActiveRooms()
         {
             roomsList.Items.Clear();
+            if(rooms == null) { return; }
+
             foreach (Room room in this.rooms)
             {
                 
                 string fullRoom = room.Metadata.Name;
-                if (roomsList.Items.Contains(fullRoom)==false)
+                if (!roomsList.Items.Contains(fullRoom))
                 {                       
                     roomsList.Items.Add(fullRoom);
                 }                                               

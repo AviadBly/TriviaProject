@@ -189,7 +189,13 @@ namespace clientAPI
             
             //if its an error msg
             serverMsg.IsErrorMsg = serverMsg.Code == ErrorResponse.errorMsgCode;
-           
+
+            if (serverMsg.IsErrorMsg)
+            {
+                string errorMsg = JsonHelpers.JsonFormatDeserializer.ErrorResponseDeserializer(serverMsg.Message).Message;
+                serverMsg.Message = Encoding.UTF8.GetBytes(errorMsg);
+            }
+
             return serverMsg;  //if no error
         }
       

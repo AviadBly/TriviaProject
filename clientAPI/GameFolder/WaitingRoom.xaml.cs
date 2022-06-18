@@ -222,33 +222,15 @@ namespace clientAPI.GameFolder
             Current.Content = m_room.Metadata.Name.ToString();
             MaxPlayers.Content = m_room.Metadata.MaxPlayers.ToString();
 
+            PlayerList.Items.Clear();
+
             foreach (string player in players)
             {
-                if (!PlayerList.Items.Contains(player))
-                {
-                    PlayerList.Items.Add(player);
-                }              
-            }
-            foreach(string item in PlayerList.Items)
-            {
-                bool check = false;
-                foreach(string player in players)
-                {
-                    if(player==item)
-                    {
-                        check = true;
-                    }
-                }
-                if(!check)
-                {
-                    PlayerList.Items.Remove(item);
-                    break;
-                }
+                
+                PlayerList.Items.Add(player);
+                              
             }
             
-            
-
-
         }
 
         private void StartClick(object sender, RoutedEventArgs e)
