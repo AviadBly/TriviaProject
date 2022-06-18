@@ -156,13 +156,11 @@ void Communicator::sendMsg(SOCKET clientSocket, std::string msg) {
 
 SecByteBlock Communicator::diffiHellmanKeyExchange(SOCKET socket)
 {
-	//private 6h, public: 71h
-	//int result = (int)pow(19, 6) % 131;
 
 	KeyExchange keyManager;
 
-	SecByteBlock secretKey = keyManager.getSecretKey(socket);
-	return secretKey;
+	
+	return keyManager.getSharedSecretKeySecretKey(socket);
 }
 
 string Communicator::encryptMessageData(const string& message, AesEncryptor& encryptor) {
@@ -172,7 +170,6 @@ string Communicator::encryptMessageData(const string& message, AesEncryptor& enc
 
 	JsonResponsePacketSerializer::addLength(codeAndLength, encryptedData.size());
 	
-
 	string fullMsg = codeAndLength + encryptedData;
 
 	return fullMsg;
@@ -194,6 +191,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 	//first create the login requestHandler
 	request.newHandler = this->m_handlerFactory.createLoginRequestHandler();
 	
+	int irreleventRequestCount = 0;
 
 	try {
 		while (true) {
@@ -201,6 +199,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 			userMsg = recvMsg(clientSocket);
 			info.code = userMsg[0];
 			info.receivalTime = time(NULL);
+
 			userMsg = encryptor.decrypt(userMsg.substr(5));
 			std::cout << "LoggedUser msg:" << userMsg << "\n";
 
@@ -212,12 +211,18 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 
 
 			if (!request.newHandler->isRequestRelevant(info)) {
+				irreleventRequestCount++;
+
+				if (irreleventRequestCount > 5) {
+					throw ServerException("Too many invalid requests", ServerException::ACTIVELY_DISCONECT_USER_CODE);
+				}
+
 				std::cout << "Irrelevent request\n";
 				continue;
 			}
 			
 			request = request.newHandler->handleRequest(info);
-			this->m_clients[clientSocket] = request.newHandler;
+			m_clients[clientSocket] = request.newHandler;
 			
 			string msg = Helper::convertBitsToString(request.buffer);
 			string encryptedMessage = encryptMessageData(msg, encryptor);

@@ -25,9 +25,9 @@ public:
 	~Communicator();
 	void serve(short port);
 
-	static std::string recvMsg(SOCKET socket);
+	static string recvMsg(SOCKET socket);
 
-	static void sendMsg(SOCKET clientSocket, std::string msg);
+	static void sendMsg(SOCKET clientSocket, string msg);
 
 private:
 	void handleNewClient(SOCKET clientSocket);
@@ -37,13 +37,8 @@ private:
 
 	string encryptMessageData(const string& message, AesEncryptor& encryptor);
 
-	//SecByteBlock getKeyForSecureConnection(SOCKET socket);
-
-	//SecByteBlock m_key;
 
 	RequestHandlerFactory& m_handlerFactory;
-	std::map<SOCKET, IRequestHandler*> m_clients;
+	map<SOCKET, IRequestHandler*> m_clients;
 	SOCKET m_serverSocket;
-
-
 };
