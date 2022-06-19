@@ -5,6 +5,9 @@
 #include "Question.h"
 using namespace std;
 #include <list>
+
+
+//Abstract class, we use it to get access to the SQLITE database.
 class IDatabase
 {
 public:

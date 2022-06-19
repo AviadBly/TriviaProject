@@ -1,5 +1,14 @@
 #include "JsonRequestPacketDeserializer.h"
 
+
+
+/*
+Deserializer functions: get json data as a paramater from the client, and return the data after it's "cleaned".
+
+
+*/
+
+
 //convert the bits vector to json
 json JsonRequestPacketDeserializer::getJsonFromBits(const vector<BYTE>& constJsonBits)
 {

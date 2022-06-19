@@ -1,5 +1,9 @@
 #include "GameRequestHandler.h"
 
+//RELEVANT FOR ALL THE HANDLER FILES: the handler receive a request from the client, deserializes the data using the deserialization functions
+//and then sends the data to the  managers. the managers usually will access the database and apply the changes accordingly.
+
+
 GameRequestHandler::GameRequestHandler(Game& game, const LoggedUser user, GameManager& gameManager, RequestHandlerFactory& handleFactory) : m_gameManager(gameManager), m_handlerFactory(handleFactory), m_game(game)
 {
 	

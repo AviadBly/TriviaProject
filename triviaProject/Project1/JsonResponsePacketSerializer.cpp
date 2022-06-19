@@ -1,5 +1,8 @@
 #include "JsonResponsePacketSerializer.h"
 
+
+//Serializer functions: take a server response as a parameter, returns the data as json bits. in order to be sent to the server.
+
 std::vector<BYTE> JsonResponsePacketSerializer::serializeServerException(const ServerException& leaveGameResponse) {
 
 	

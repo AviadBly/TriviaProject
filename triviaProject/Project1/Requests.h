@@ -32,6 +32,8 @@ using namespace std;
 
 #define SECURE_CONNECTION_REQUEST 100
 
+//All of these structs hold the information sent from the Client in a specific response, and went through json serialization.
+
 struct LoginRequest {
 	std::string username;
 	std::string password;

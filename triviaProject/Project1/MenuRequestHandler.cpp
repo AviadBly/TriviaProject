@@ -1,6 +1,9 @@
 #include "MenuRequestHandler.h"
 
 
+//RELEVANT FOR ALL THE HANDLER FILES: the handler receive a request from the client, deserializes the data using the deserialization functions
+//and then sends the data to the  managers. the managers usually will access the database and apply the changes accordingly.
+
 MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& handlerFactory, LoggedUser newUser) : m_handlerFactory(handlerFactory), m_statisticsManager(handlerFactory.getStatisticsManager()), m_roomManager(handlerFactory.getRoomManager())
 {
 	
@@ -46,6 +49,7 @@ RequestResult MenuRequestHandler::handleRequest(const RequestInfo& requestInfo)
 		case LOGOUT_REQUEST_CODE:
 			requestResult = logOut();
 			delete this;
+			return requestResult;
 			break;
 		case CREATE_QUESTION_REQUEST_CODE:
 			requestResult = CreateQuestion(requestInfo);

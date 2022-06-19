@@ -54,6 +54,7 @@ Question Game::getQuestionForUser(const User& user)
 	return newQuestion;	
 }
 
+// will update every time a question is up, until question is answered, on repeat.
 double Game::calculateNewAverageAnswerTime(double answerTime, const User& user){
 	double newAnswerTime = m_players[user].averageAnswerTime;
 
@@ -124,6 +125,7 @@ bool Game::removePlayer(const User& user)
 	return m_players.erase(user);	//if succesfull returns true
 }
 
+//for the results screen
 PlayerResults Game::getPlayerResults(const User& user)
 {
 	PlayerResults playerResults;

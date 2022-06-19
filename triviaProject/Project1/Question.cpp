@@ -27,6 +27,7 @@ const string& Question::getQuestionString() const
     return this->m_question;
 }
 
+//removes the identifcation sign * for an astethic reason.
 map<unsigned int, string> Question::getPossibleAnswers()  const
 {
     map<unsigned int, string> temp = m_possibleAnswers;

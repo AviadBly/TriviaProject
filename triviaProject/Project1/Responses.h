@@ -7,6 +7,8 @@
 #include "Requests.h"
 
 
+//All responses are sent from the server to the client. all empty structs include a Yes/No answer. 
+
 typedef unsigned char BYTE;
 using namespace std;
 
@@ -124,6 +126,7 @@ struct CreateQuestionResponse : public Response
 {
 
 };
+
 
 struct StartSecureConnectionResponse : public Response
 {

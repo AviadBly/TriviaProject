@@ -13,6 +13,7 @@ LoginManager::LoginManager(IDatabase* database)
 	this->m_database = database;
 }
 
+//creates new user in case it doesnt exist already.
 void LoginManager::signup(const string& username, const string& password, const string& email)
 {
 	
@@ -27,7 +28,7 @@ void LoginManager::signup(const string& username, const string& password, const 
 	throw ServerException("Error: Username already exists!", ServerException::USERNAME_ALREADY_EXIST_CODE);
 	
 }
-
+//checks if user exists and if the password matches.
 void LoginManager::login(const string& username, const string& password)
 {
 	bool doesExist = m_database->doesUserExist(username);

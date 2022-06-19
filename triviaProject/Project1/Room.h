@@ -5,7 +5,7 @@
 #include <list>
 using namespace std;
 
-
+//This struct holds all the information the room uses.
 struct RoomData
 {
 	RoomData() {

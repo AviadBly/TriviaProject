@@ -10,7 +10,7 @@ public:
 	LoginManager();
 	LoginManager(IDatabase* database);
 
-	//to do
+
 	void signup(const string& username, const string& password, const string& email);
 	void login(const string& username, const string& password);
 	void logout(const string& username);

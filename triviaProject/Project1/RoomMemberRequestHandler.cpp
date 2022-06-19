@@ -1,5 +1,10 @@
 #include "RoomRequestHandlers.h"
 
+
+//RELEVANT FOR ALL THE HANDLER FILES: the handler receive a request from the client, deserializes the data using the deserialization functions
+//and then sends the data to the  managers. the managers usually will access the database and apply the changes accordingly.
+
+
 RoomMemberRequestHandler::RoomMemberRequestHandler(const LoggedUser& user, const Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
 {
 

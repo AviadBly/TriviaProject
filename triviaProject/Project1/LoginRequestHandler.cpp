@@ -3,6 +3,9 @@
 #include "Requests.h"
 
 
+//RELEVANT FOR ALL THE HANDLER FILES: the handler receive a request from the client, deserializes the data using the deserialization functions
+//and then sends the data to the  managers. the managers usually will access the database and apply the changes accordingly.
+
 LoginRequestHandler::LoginRequestHandler(LoginManager& loginManager, RequestHandlerFactory& handleFactory) : m_loginManager(loginManager) , m_handleFactory(handleFactory)
 {
 }

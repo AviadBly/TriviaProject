@@ -17,6 +17,7 @@ unsigned int RoomManager::createRoom(LoggedUser user, RoomData data)
 	return data.id;
 }
 
+//gets room by ID
 Room& RoomManager::getSingleRoom(unsigned int ID)
 {
 	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
@@ -30,6 +31,7 @@ Room& RoomManager::getSingleRoom(unsigned int ID)
 	throw ServerException("No room with the given id", ServerException::ACTIVELY_DISCONECT_USER_CODE);
 }
 
+//Check for correctness.
 bool RoomManager::doesRoomExist(unsigned int ID) {
 
 	
@@ -42,7 +44,7 @@ bool RoomManager::doesRoomExist(unsigned int ID) {
 	}
 	return false;
 }
-
+//in case admin leaves or any other possible case.
 void RoomManager::deleteRoom(int ID)
 {
 	
@@ -57,20 +59,6 @@ void RoomManager::deleteRoom(int ID)
 	}
 }
 
-//unsigned int RoomManager::getRoomState(int ID)
-//{
-//	
-//	for (auto it = m_rooms.begin(); it != m_rooms.end(); it++)
-//	{
-//		if (it->first == ID)
-//		{
-//			RoomData currData=it->second.getData();
-//			return currData.isActive;
-//		}
-//	}
-//	return false;
-//	throw ServerException("Error!: No such ID! ", 5);
-//}
 
 vector<Room> RoomManager::getRooms()
 {
@@ -94,6 +82,7 @@ void RoomManager::addUserToRoom(int ID, LoggedUser user)
 	m_rooms[ID].addUser(user);
 }
 
+//if a user leaves the room after he already joined.
 void RoomManager::removeUser(User user, unsigned int roomId)
 {
 	for (auto r = m_rooms.begin(); r != m_rooms.end(); r++) {

@@ -35,6 +35,7 @@ void GameManager::removeUser(const User& user, const Game& game)
     wantedGame->removePlayer(user);
 }
 
+//iterates over IDs until a match is found.
 Game& GameManager::joinGame(unsigned int id)
 {
     for (auto iter = m_games.begin(); iter != m_games.end(); iter++)

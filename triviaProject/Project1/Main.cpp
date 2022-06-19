@@ -8,7 +8,7 @@
 
 int main()
 {
-	
+	//initializes the server, the database and is ready to accept the clients :D
 	try
 	{
 		WSAInitializer wsa;

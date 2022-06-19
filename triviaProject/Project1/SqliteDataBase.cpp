@@ -10,7 +10,7 @@ using namespace std;
 
 
 
-
+//Function used on startup, loads up the database for free use.
 bool SqliteDataBase::open()
 {
 
@@ -29,6 +29,12 @@ bool SqliteDataBase::open()
 
 	return true;
 }
+
+//Callback functions: accesses the database and uses the value key words in order to return object with the right information.
+//return value is 0 by default.
+
+
+//sendcallback functions: the pipe between the callback functions and the database.
 
 int SqliteDataBase::callbackStats(void* data, int argc, char** argv, char** azColName)
 {
@@ -59,6 +65,7 @@ int SqliteDataBase::callbackStats(void* data, int argc, char** argv, char** azCo
 	stats->push_back(user);
 	return 0;
 }
+
 
 void SqliteDataBase::sendCallBackStats(sqlite3* db, const char* sqlStatement, list<StatsUser>* albums)
 {
@@ -149,7 +156,7 @@ void SqliteDataBase::sendCallBackUsers(sqlite3* db, const char* sqlStatement, li
 }
 
 
-
+//default function to send request to database, when no return value is needed.
 bool SqliteDataBase::sendToServer(sqlite3* db, const char* sqlStatement)
 {
 	char** errMessage = nullptr;
@@ -161,7 +168,7 @@ bool SqliteDataBase::sendToServer(sqlite3* db, const char* sqlStatement)
 	return true;
 }
 
-
+//activates when a new database with default paramaters is needed. (in case the last one was deleted by accident)
 void SqliteDataBase::create()
 {
 	
@@ -195,6 +202,8 @@ void SqliteDataBase::create()
 	}
 }
 
+//GET.. FUNCTIONS: return all the values from a single category.
+
 const std::list<LoggedUser> SqliteDataBase::getUsers()
 {
 	list<LoggedUser>* newList = new list<LoggedUser>;
@@ -217,6 +226,7 @@ void SqliteDataBase::addUser(string username, string password, string mail)
 	}
 }
 
+//checks if user exists in the database by name.
 bool SqliteDataBase::doesUserExist(string username)
 {
 	list<LoggedUser>* newList = new list<LoggedUser>;
@@ -234,6 +244,7 @@ bool SqliteDataBase::doesUserExist(string username)
 	return false;
 }
 
+//used to update the statistics for players. activates at the end of each game.
 void SqliteDataBase::insertStats(const StatsUser& user)
 {
 	list<StatsUser>* newList = new list<StatsUser>;

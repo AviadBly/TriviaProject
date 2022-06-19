@@ -21,10 +21,10 @@ void StatisticsManager::insertStats(const StatsUser& user)
 	
 }
 
-
+//we dont talk about this function.
 vector<string> StatisticsManager::getHighScore()
 {
-	//confusing function but don't blame me because instructions were confusing too >:( !!
+	
 	
 	int* top3 = new int[3];
 	list<StatsUser> allStats = m_database->getStatsGeneral();
@@ -86,7 +86,7 @@ vector<string> StatisticsManager::getHighScore()
 
 	return top3names;
 }
-
+//retuns a vector of all nessecary stats for the personal statistics page.
 vector<string> StatisticsManager::getUserStatistics(const string& username)
 {
 	vector<string> stats;
@@ -100,7 +100,7 @@ vector<string> StatisticsManager::getUserStatistics(const string& username)
 	return stats;
 
 }
-
+//same functions but returns the user itself.
 StatsUser StatisticsManager::getStatsUser(const string& username)
 {
 	StatsUser user(username, 
@@ -114,7 +114,7 @@ StatsUser StatisticsManager::getStatsUser(const string& username)
 
 }
 
-
+//for the Create-Question Bonus.
 bool StatisticsManager::CreateQuestion(string question, string answer1, string answer2, string answer3, string correct)
 {
 	correct = "*" + correct;

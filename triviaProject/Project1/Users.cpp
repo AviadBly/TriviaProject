@@ -4,6 +4,9 @@
 unsigned int User::nextId;
 
 //user
+
+//This file includes everything about the user- information and operators.
+
 User::User(const string& name)
 {
 	m_name = name;
