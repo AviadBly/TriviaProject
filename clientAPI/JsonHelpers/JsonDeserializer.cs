@@ -252,7 +252,18 @@ namespace clientAPI.JsonHelpers
             return response;
         }
 
+        public static CreateQuestionResponse? createQuestionResponseDeserializer(byte[] buffer)
+        {
+            if (buffer == null || buffer.Length == 0)
+                return null;
 
+            string jsonString = Encoding.Default.GetString(buffer);
+
+           
+            CreateQuestionResponse? response = JsonSerializer.Deserialize<CreateQuestionResponse>(jsonString);
+
+            return response;
+        }
 
 
     }

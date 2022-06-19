@@ -15,7 +15,7 @@ bool MenuRequestHandler::isRequestRelevant(const RequestInfo& requestInfo) const
 	unsigned int code = requestInfo.code;
 	return code == CREATE_ROOM_CODE || code == GET_ROOMS_REQUEST || code == GET_PLAYERS_IN_ROOM_REQUEST_CODE
 		|| code == JOIN_ROOM_REQUEST_CODE || code == GET_PERSONAL_STATISTICS_REQUEST_CODE || code == LOGOUT_REQUEST_CODE
-		|| code == GET_HIGH_SCORES_REQUEST_CODE;
+		|| code == GET_HIGH_SCORES_REQUEST_CODE||code==CREATE_QUESTION_REQUEST_CODE;
 }
 
 RequestResult MenuRequestHandler::handleRequest(const RequestInfo& requestInfo)
@@ -208,6 +208,29 @@ RequestResult MenuRequestHandler::logOut()
 
 	requestResult.buffer = JsonResponsePacketSerializer::serializeLogoutResponse(logoutResponse);
 	requestResult.newHandler = m_handlerFactory.createLoginRequestHandler();
+
+	return requestResult;
+}
+
+RequestResult MenuRequestHandler::CreateQuestion(const RequestInfo& requestInfo)
+{
+	CreateQuestionResponse createQuestionResponse;
+	CreateQuestionRequest createQuestionRequest;
+	RequestResult requestResult;
+
+	createQuestionRequest = JsonRequestPacketDeserializer::deserializeCreateQuestionRequest(requestInfo.buffer);
+
+
+	if (m_statisticsManager.CreateQuestion(createQuestionRequest.question, createQuestionRequest.answer1, createQuestionRequest.answer2, createQuestionRequest.answer3, createQuestionRequest.correct))
+	{
+		createQuestionResponse.status = createQuestionResponse.status_ok;
+	}
+	else
+	{
+		createQuestionResponse.status = createQuestionResponse.status_error;
+	}
+	
+	requestResult.buffer = JsonResponsePacketSerializer::serializeCreateQuestionResponse(createQuestionResponse);
 
 	return requestResult;
 }

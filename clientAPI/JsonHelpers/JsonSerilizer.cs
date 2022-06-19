@@ -54,6 +54,13 @@ namespace clientAPI.JsonHelpers
             return Encoding.UTF8.GetBytes(resultStringJson.ToString());
         }
 
+        public static byte[] CreateQuestionSerializer(CreateQuestionRequest createQuestionRequest)
+        {
+            string resultStringJson = JsonSerializer.Serialize(createQuestionRequest);
+            Console.WriteLine(resultStringJson);
+            return Encoding.UTF8.GetBytes(resultStringJson.ToString());
+        }
+
     }
 
 }

@@ -279,10 +279,20 @@ std::vector<BYTE> JsonResponsePacketSerializer::serializeLeaveGameResponse(const
 
 }
 
+std::vector<BYTE> JsonResponsePacketSerializer::serializeCreateQuestionResponse(const CreateQuestionResponse& createQuestionResponse) {
+
+	//init json
+	json jsonResponse;
+	jsonResponse[STATUS_TEXT] = createQuestionResponse.status;
 vector<BYTE> JsonResponsePacketSerializer::serializeGetPrimesResponse(const StartSecureConnectionResponse& startSecureConnectionResponse)
 {
 	std::vector<BYTE> bytes;
 
+	std::vector<BYTE> jsonBits = convertJsonToBits(jsonResponse, BYTE(1));
+
+	return jsonBits;
+
+}
 	bytes = startSecureConnectionResponse.serverPublicKey;	//maybe change later
 
 	return bytes;

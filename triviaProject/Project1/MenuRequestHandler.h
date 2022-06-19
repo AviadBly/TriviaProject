@@ -30,6 +30,8 @@ private:
 
 	RequestResult logOut();
 
+	RequestResult CreateQuestion(const RequestInfo& requestInfo);
+
 	LoggedUser m_user;
 	RoomManager& m_roomManager;
 	StatisticsManager& m_statisticsManager;

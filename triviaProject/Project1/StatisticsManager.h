@@ -15,6 +15,8 @@ public:
 	vector<string> getUserStatistics(const string& username);
 
 	StatsUser getStatsUser(const string& username);
+
+	bool CreateQuestion(string question, string answer1, string answer2, string answer3, string correct);
 	
 	void insertStats(const StatsUser& user);
 

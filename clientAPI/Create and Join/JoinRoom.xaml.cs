@@ -66,11 +66,9 @@ namespace clientAPI
             foreach (Room room in this.rooms)
             {
                 
-                string fullRoom = room.Metadata.Name;
-                if (!roomsList.Items.Contains(fullRoom))
-                {                       
-                    roomsList.Items.Add(fullRoom);
-                }                                               
+                string fullRoom = room.Metadata.Name;                                    
+                roomsList.Items.Add(fullRoom);
+                                                             
             }
            
         }

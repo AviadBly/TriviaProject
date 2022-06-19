@@ -23,7 +23,7 @@ namespace clientAPI.GameFolder
 
         bool isGameExited;
         bool isUserAnswered;
-        uint totalWaitingTime; //in miliseconds
+        
 
         const int ANSWER_SHOW_TIME = 1000; //in miliseconds
         const int REFRESH_TIME = 100; //in miliseconds
@@ -67,7 +67,7 @@ namespace clientAPI.GameFolder
         public async void startGame()
         {
 
-            totalWaitingTime = timePerQuestion * numberOfQuestions * 1000;
+            
 
             for (int i = 0; i < numberOfQuestions; i++)
             {
@@ -90,7 +90,7 @@ namespace clientAPI.GameFolder
             for(int i = 0; i < timePerQuestion * 1000 / REFRESH_TIME; i++)
             {
                 if (!isUserAnswered) {
-                    totalWaitingTime -= REFRESH_TIME;
+                    
                     await Task.Delay(REFRESH_TIME);
                 }
                 else

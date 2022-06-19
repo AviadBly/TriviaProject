@@ -210,7 +210,7 @@ namespace clientAPI.Requests_and_Responses
         public double AverageAnswerTime { get; set; }
     }
     
-    /*************************************************/
+    
     internal class GetGameResultsResponse : Response
     {    
         public GetGameResultsResponse(List<PlayerResults> results, byte status) : base(status)
@@ -220,6 +220,12 @@ namespace clientAPI.Requests_and_Responses
         public List<PlayerResults> Results { get; set; }
     }
 
-    /****************************************************/
+    internal class CreateQuestionResponse : Response
+    {
+        public CreateQuestionResponse(byte status) : base(status)
+        {
+
+        }
+    }
 
 }
