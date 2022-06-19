@@ -54,6 +54,7 @@ namespace clientAPI
             this.Close();
         }
 
+        //gives the user access to add a question, only if hes trusted (25  correct answers)
         private void AddQuestion(object sender, RoutedEventArgs e)
         {
             MainProgram.appClient.sender("", Requests.GET_PERSONAL_STATISTICS_REQUEST_CODE);
@@ -69,7 +70,7 @@ namespace clientAPI
                 return;
             }
 
-            if(Int32.Parse(getPersonalStatsResponse.PersonalStatistics[1]) < 5)
+            if(Int32.Parse(getPersonalStatsResponse.PersonalStatistics[1]) < 25)
             {
                 MessageBox.Show("Player must have at least 25 correct answers in order to insert a question!");
 

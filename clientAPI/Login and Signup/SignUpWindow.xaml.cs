@@ -32,10 +32,6 @@ namespace clientAPI
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void clickSignUp(object sender, RoutedEventArgs e)
         {
@@ -48,6 +44,8 @@ namespace clientAPI
             string search = "@";
             int indexSearch = email.IndexOf(search);
             string subEmail = email.Substring(indexSearch+1);
+
+            //weakness checks
 
             if (username.Length > 10 || password.Length > 10 || username.Length < 4 || password.Length < 4)
             {

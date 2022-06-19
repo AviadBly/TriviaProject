@@ -31,10 +31,12 @@ namespace clientAPI.GameFolder
         private Task m_updatePlayersTask;
         private bool isAdmin;
         
+//Instead of disapatcher timer, "Task" was used in this file.
         public WaitingRoom(RoomData metaData, bool isUserAdmin)
         {
             InitializeComponent();
             isAdmin = isUserAdmin;
+            //checks for each client if he's the admin. only admin can start the game.
             if(isAdmin)
             {
                 StartButton.Visibility = Visibility.Visible;
@@ -69,6 +71,7 @@ namespace clientAPI.GameFolder
             m_updatePlayersTask = null;
         }
 
+        //will add new players joined, and remove the ones who left.
         private void UpdatePlayers()
         {
             var players = getPlayers();

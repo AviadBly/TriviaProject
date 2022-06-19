@@ -49,7 +49,7 @@ namespace clientAPI
                 MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
                 return new string[3];
             }
-
+            //checks if there are enough names to present in the high scores.
             string[] place = new string[3];
             if(highScoreResponse.HighScorePlayers.Count<3)
             {

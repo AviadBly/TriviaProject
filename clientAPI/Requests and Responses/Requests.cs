@@ -8,6 +8,7 @@ namespace clientAPI.Requests_and_Responses
 {
 
  
+    //CODES: sent for identification for the server.
     internal class Requests
     {
         public const byte SIGN_UP_REQUEST_CODE  = 10;
@@ -36,6 +37,7 @@ namespace clientAPI.Requests_and_Responses
 
     }
 
+    //Requests: hold the information to be serialized and sent to server.
     internal class LoginRequest
     {
         

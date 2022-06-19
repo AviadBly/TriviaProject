@@ -55,7 +55,7 @@ namespace clientAPI
                 statsArr[i] = stat;
                 i++;
             }
-
+            //this string array holds all the personal statistics.
             return statsArr;
         }
       

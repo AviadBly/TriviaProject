@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 using clientAPI.Requests_and_Responses;
 using System.Text.Json;
 
+
+//APPLIES FOR ALL DESRIALIZER FUNCTIONS: simply uses the json data received from the server and turns it to readable data, and then sends it to matching functions.
+
 namespace clientAPI.JsonHelpers
 {
+    
     internal class JsonFormatDeserializer
     {
         //byte[0] - code, byte[1,2,3,4] - length, rest = jsonstring

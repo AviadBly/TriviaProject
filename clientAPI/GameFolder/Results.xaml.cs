@@ -26,7 +26,7 @@ namespace clientAPI.GameFolder
 
         private const int REFRESH_SEND_TIME = 3; //in seconds
         
-
+        //DISPATCHER TIMER: will refresh every 3 seconds, for every other player that finished the game.
         public Results()
         {
 
@@ -88,7 +88,7 @@ namespace clientAPI.GameFolder
             }
             return getGameResultsResponse;
         }
-
+        //will display stats according to each user being selected.
         private void PlayerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string username = PlayerList.SelectedItem.ToString();

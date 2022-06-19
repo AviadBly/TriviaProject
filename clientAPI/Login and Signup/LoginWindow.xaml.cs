@@ -43,7 +43,7 @@ namespace clientAPI
             string username = UsernameText.Text;
             string password = PasswordText.Password.ToString();
 
-            
+            //checks for simple cases of weakness
             if (username == null || password == null)
             {
                 MessageBox.Show("Please Enter a valid username/password!");
@@ -85,7 +85,7 @@ namespace clientAPI
 
            
         }
-        
+        //if a new user is required.
         private void signClick(object sender, RoutedEventArgs e)
         {
             
@@ -94,7 +94,7 @@ namespace clientAPI
             window.Show();
             Close();
         }
-
+        //for lazy people who want to use the keyboard only.
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

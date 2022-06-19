@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 
+
+//applies for all: serializes the specific data and sends it to server for updating.
+
 namespace clientAPI.JsonHelpers
 {
     internal class JsonFormatSerializer

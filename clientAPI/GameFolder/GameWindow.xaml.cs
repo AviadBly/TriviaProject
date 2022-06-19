@@ -28,10 +28,12 @@ namespace clientAPI.GameFolder
         const int ANSWER_SHOW_TIME = 1000; //in miliseconds
         const int REFRESH_TIME = 100; //in miliseconds
         const uint FAKE_WRONG_ID = 999;
+        const int DISPATCHER_TICK = 993;
 
         uint tempTime;
         private DispatcherTimer timer;
 
+        //DISPATCHER TIMER: responsible for the visual timer to use the countdown.
         public GameWindow(uint timePerQuestion, string name, uint numberOfQuestions)
         {
             InitializeComponent();
@@ -41,7 +43,7 @@ namespace clientAPI.GameFolder
             tempTime = timePerQuestion;
             TimerLabel.Content = tempTime;
             timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 0,0, 993);
+            timer.Interval = new TimeSpan(0, 0, 0,0, DISPATCHER_TICK);
             
             timer.Tick += Timer_Tick;
             
@@ -195,7 +197,7 @@ namespace clientAPI.GameFolder
             
             
         }
-
+        //marks the correct answer green, and the wrong one red.
         private void switchColors(uint id, bool isCorrect)
         {
             if(isCorrect)
@@ -228,7 +230,7 @@ namespace clientAPI.GameFolder
             }
             
         }
-
+        //every new question. for the answers to return to their original colors.
         private void ResetColors()
         {
             Answer1.Background= new SolidColorBrush(Color.FromArgb(100, 103, 58, 183));

@@ -40,6 +40,7 @@ namespace clientAPI
             
         }
 
+        //DISPATCHERTIMER: will refresh the rooms list every 3 seconds in case new rooms are created.
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             rooms = getRooms();
@@ -167,9 +168,6 @@ namespace clientAPI
             return true;
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
+        
     }
 }

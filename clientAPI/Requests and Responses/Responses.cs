@@ -7,6 +7,8 @@ using clientAPI.Create_and_Join;
 using clientAPI.GameFolder;
 namespace clientAPI.Requests_and_Responses
 {
+
+    //Responses: hold the information received back from the server and deserialized
 	internal class Response
 	{
 
