@@ -46,7 +46,10 @@ RequestResult MenuRequestHandler::handleRequest(const RequestInfo& requestInfo)
 		case LOGOUT_REQUEST_CODE:
 			requestResult = logOut();
 			delete this;
-			return requestResult;
+			break;
+		case CREATE_QUESTION_REQUEST_CODE:
+			requestResult = CreateQuestion(requestInfo);
+			break;
 		}
 
 	}
