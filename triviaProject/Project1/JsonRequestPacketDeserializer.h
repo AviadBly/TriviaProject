@@ -42,7 +42,7 @@ public:
 	//game
 	static SubmitAnswerRequest deserializeSubmitAnswerRequest(const vector<BYTE>& jsonRequestBits);
 
-	static CreateQuestionRequest deserializeCreateQuestionRequest(const vector<BYTE>& jsonRequestBits);
+	static  deserializeCreateQuestionRequest(const vector<BYTE>& jsonRequestBits);
 	
 	//game
 	static GetPublicKeyRequest deserializeGetPublicKeyRequest(const vector<BYTE>& jsonRequestBits);

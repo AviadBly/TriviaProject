@@ -126,9 +126,6 @@
     <ClCompile Include="AesEncryptor.cpp">
       <Filter>Source Files\Cryptography</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Downloads\AES-CBC-Filter\Crypto++ CBC Test\Driver.cpp">
-      <Filter>Source Files\Server</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelperFunctions.h">
