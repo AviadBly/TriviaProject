@@ -65,3 +65,11 @@ struct SubmitAnswerRequest
 {
 	unsigned int answerId;
 };
+
+struct CreateQuestionRequest {
+	std::string question;
+	std::string answer1;
+	std::string answer2;
+	std::string answer3;
+	std::string correct;
+};

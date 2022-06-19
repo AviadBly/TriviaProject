@@ -9,7 +9,7 @@
 #include "JsonRequestPacketDeserializer.h"
 #include "ServerException.h"
 #include "HelperFunctions.h"
-#include <secblock.h>
+#include "secblock.h"
 
 
 #define STATUS_TEXT "Status"
