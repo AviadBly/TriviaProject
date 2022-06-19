@@ -28,8 +28,9 @@ using namespace std;
 #define SUBMIT_ANSWER_REQUEST_CODE 48
 #define GET_GAME_RESULT_REQUEST_CODE 49
 
-#define SECURE_CONNECTION_REQUEST 100
+#define CREATE_QUESTION_REQUEST_CODE 60
 
+#define SECURE_CONNECTION_REQUEST 100
 
 struct LoginRequest {
 	std::string username;
@@ -64,4 +65,3 @@ struct SubmitAnswerRequest
 {
 	unsigned int answerId;
 };
-

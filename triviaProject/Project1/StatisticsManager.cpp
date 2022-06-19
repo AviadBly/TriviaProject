@@ -6,6 +6,8 @@
 
 
 using namespace std;
+
+
 StatisticsManager::StatisticsManager(IDatabase* database)
 {
 	this->m_database = database;
@@ -109,5 +111,18 @@ StatsUser StatisticsManager::getStatsUser(const string& username)
 
 
 	return user;
+
+}
+
+
+bool StatisticsManager::CreateQuestion(string question, string answer1, string answer2, string answer3, string correct)
+{
+	correct = "*" + correct;
+	
+	if (m_database->insertQuestion( question, answer1, answer2, answer3, correct))
+	{
+		return true;
+	}
+	return false;
 
 }

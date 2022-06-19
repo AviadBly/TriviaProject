@@ -120,6 +120,12 @@ struct GetGameResultsResponse : public Response
 	vector<PlayerResults> results;
 };
 
+struct CreateQuestionResponse : public Response
+{
+
+};
+};
+
 struct StartSecureConnectionResponse : public Response
 {
 	vector<BYTE> serverPublicKey;

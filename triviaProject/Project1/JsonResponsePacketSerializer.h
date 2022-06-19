@@ -90,6 +90,9 @@ public:
 
 	static void addLength(string& msg, int len);
 
+	static std::vector<BYTE> serializeCreateQuestionResponse(const CreateQuestionResponse& createQuestionResponse);
+
+
 private:
 	static std::vector<BYTE> convertJsonToBits(const json& jsonFormat, BYTE code);
 
