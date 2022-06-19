@@ -124,7 +124,7 @@ struct CreateQuestionResponse : public Response
 {
 
 };
-};
+
 
 struct StartSecureConnectionResponse : public Response
 {
