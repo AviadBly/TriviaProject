@@ -57,33 +57,40 @@ namespace clientAPI
             uint players = Convert.ToUInt32(Players.Text);
             uint time = Convert.ToUInt32(Time.Text);
             uint questions = Convert.ToUInt32(Questions.Text);
-
-
-            CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, questions, time);
-
-            
-            Console.Write(createRoomRequest);
-            byte[] data = JsonHelpers.JsonFormatSerializer.createSerializer(createRoomRequest);
-
-            MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.CREATE_ROOM_CODE);
-
-            ReceivedMessage returnMsg = MainProgram.appClient.receiver();
-            
-            CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Message);
-
-            if (returnMsg.IsErrorMsg)   //if error
+            if(questions>15)
             {
-                MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
-                return;
+                MessageBox.Show("Max is 15 questions :D");
+            }
+            else
+            {
+                CreateRoomRequest createRoomRequest = new CreateRoomRequest(roomName.Text, players, questions, time);
+
+
+                Console.Write(createRoomRequest);
+                byte[] data = JsonHelpers.JsonFormatSerializer.createSerializer(createRoomRequest);
+
+                MainProgram.appClient.sender(System.Text.Encoding.Default.GetString(data), Requests.CREATE_ROOM_CODE);
+
+                ReceivedMessage returnMsg = MainProgram.appClient.receiver();
+
+                CreateRoomResponse createRoomResponse = JsonHelpers.JsonFormatDeserializer.CreateRoomResponseDeserializer(returnMsg.Message);
+
+                if (returnMsg.IsErrorMsg)   //if error
+                {
+                    MessageBox.Show(Encoding.UTF8.GetString(returnMsg.Message));
+                    return;
+                }
+
+                RoomData metaData = new RoomData(0, roomName.Text, players, questions, time, false);
+
+                WaitingRoom waitingRoom = new WaitingRoom(metaData, true);
+                waitingRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+                waitingRoom.Show();
+                Close();
             }
 
-            RoomData metaData = new RoomData(0, roomName.Text, players, questions, time, false);
-
-            WaitingRoom waitingRoom = new WaitingRoom(metaData, true);
-            waitingRoom.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            waitingRoom.Show();
-            Close();
+            
 
         }
 
