@@ -80,6 +80,7 @@ namespace clientAPI
                 clientAPI.Statistics.AddQuestion addQuestion = new clientAPI.Statistics.AddQuestion();
                 addQuestion.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 addQuestion.Show();
+                Close();
             }
         }
     }
