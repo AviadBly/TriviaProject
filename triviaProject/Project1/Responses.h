@@ -7,7 +7,7 @@
 #include "Requests.h"
 
 
-//All responses are sent from the server to the client. all empty structs include a Yes/No answer. 
+//All responses are sent from the server to the client. all empty structs include a Yes/No answer. Client uses the answers to handle the information.
 
 typedef unsigned char BYTE;
 using namespace std;

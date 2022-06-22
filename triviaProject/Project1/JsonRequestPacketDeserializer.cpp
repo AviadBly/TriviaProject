@@ -2,11 +2,9 @@
 
 
 
-/*
-Deserializer functions: get json data as a paramater from the client, and return the data after it's "cleaned".
 
+//Deserializer functions: get json data as a paramater from the client, and return the data after it's "cleaned".
 
-*/
 
 
 //convert the bits vector to json
@@ -136,20 +134,3 @@ GetPublicKeyRequest JsonRequestPacketDeserializer::deserializeGetPublicKeyReques
 
 	return getPublicKeyRequest;
 }
-
-
-//ErrorResponse JsonRequestPacketDeserializer::deserializeErrorResponse(vector<BYTE> jsonResponseBits)
-//{
-//	ErrorResponse errorRequest;
-//	//get json format from bits
-//	json jsonData = getJsonFromBits(jsonResponseBits);
-//
-//	try {
-//		errorRequest.message = jsonData.at("message");
-//	}
-//	catch (const exception& e) {
-//		throw exception(e.what());
-//	}
-//	
-//	return errorRequest;
-//}

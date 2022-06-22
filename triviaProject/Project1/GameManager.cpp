@@ -49,22 +49,6 @@ Game& GameManager::joinGame(unsigned int id)
     throw ServerException("Error: no such Game ID", 3);
 }
 
-//Game GameManager::getGameResults(unsigned int id)
-//{
-//    for (auto iter = m_games.begin(); iter != m_games.end(); iter++)
-//    {
-//        if (iter->getId() == id)  //if ID is identical
-//        {
-//            for (auto& p : *iter) {
-//                p.
-//            }
-//           
-//        }
-//    }
-//
-//    throw ServerException("Error: no such Game ID", 3);
-//    return Game();
-//}
 
 //returns an iter to the wanted game
 vector<Game>::iterator GameManager::getGame(const Game& game)
@@ -77,7 +61,7 @@ vector<Game>::iterator GameManager::getGame(const Game& game)
         }
     }
     throw ServerException("Error: no such Game ID", 3);
-   // return m_games.end();
+  
 }
 
 

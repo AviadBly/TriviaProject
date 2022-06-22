@@ -287,6 +287,8 @@ void SqliteDataBase::insertStats(const StatsUser& user)
 
 }
 
+
+//used  for the Add-Question bonus. 
 bool  SqliteDataBase::insertQuestion(string question, string answer1, string answer2, string answer3, string correct) const
 {
 	
