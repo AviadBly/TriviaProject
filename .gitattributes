@@ -1,0 +1,2 @@
+cryptlib.lib filter=lfs diff=lfs merge=lfs -text
+triviaProject/Project1/Cryptopp/cryptlib.lib filter=lfs diff=lfs merge=lfs -text
